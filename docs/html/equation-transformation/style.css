@@ -1,0 +1,272 @@
+:root {
+    --bg: #0f172a;
+    /* slate-900 */
+    --card: #111827;
+    /* gray-900 */
+    --text: #e5e7eb;
+    /* gray-200 */
+    --muted: #a5b4fc;
+    /* indigo-300 */
+    --accent: #60a5fa;
+    /* blue-400 */
+    --ok: #10b981;
+    /* emerald-500 */
+    --ng: #ef4444;
+    /* red-500 */
+    --ring: rgba(96, 165, 250, 0.35);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans JP, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    background: linear-gradient(180deg, #0b1022, var(--bg));
+    color: var(--text);
+}
+
+.site-header,
+.site-footer {
+    padding: 16px 20px;
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.site-header h1 {
+    margin: 0 0 4px 0;
+    font-size: 1.6rem;
+}
+
+.site-header .sub {
+    margin: 0;
+    color: #c7d2fe;
+    font-size: .95rem;
+}
+
+.container {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.controls input[type="number"] {
+    width: 6rem;
+    padding: 6px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: var(--text);
+}
+
+.question {
+    counter-increment: q;
+}
+
+.question h3::before {
+    content: "Q" counter(q) " ";
+}
+
+.question p {
+    margin-top: 6px;
+}
+
+.question label {
+    display: block;
+    padding: 10px 12px;
+    margin: 8px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+}
+
+.question label:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--ring);
+}
+
+label.right {
+    border-color: var(--ok);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+label.wrong {
+    border-color: var(--ng);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.explain summary {
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.explain {
+    margin-top: 8px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 24px 0;
+}
+
+.btn-primary,
+.btn-ghost {
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #0b1022;
+    border: 0;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-ghost:hover {
+    border-color: var(--accent);
+}
+
+.result h2 {
+    margin: 8px 0 0 0;
+}
+
+.result p {
+    margin: 6px 0;
+}
+
+.feedback {
+    color: #c7d2fe;
+}
+
+/* ===== 印刷（A4）設定 ===== */
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+.only-print {
+    display: none;
+}
+
+.no-print {
+    display: block;
+}
+/* 横並び用の選択肢コンテナ */
+.choices {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;         /* 折り返し */
+  align-items: flex-start;
+}
+
+/* コンテナ内の各ラベルをカードっぽく */
+.choices label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  margin: 6px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  min-width: clamp(220px, 48%, 420px);  /* 2列〜可変 */
+}
+
+/* 既存のホバー/正誤スタイルはそのまま有効 */
+@media (max-width: 600px) {
+  .choices { gap: 8px; }
+  .choices label { min-width: 100%; }  /* スマホは1列表示 */
+}
+
+@media print {
+
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .only-print {
+        display: block !important;
+    }
+
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    .card {
+        background: #fff;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        margin: 0 0 10mm 0;
+    }
+
+    .question label {
+        border: 1px solid #000;
+        border-radius: 6px;
+        padding: 6px 8px;
+    }
+
+    .question label.right,
+    .question label.wrong {
+        background: transparent;
+        border-color: #000;
+    }
+
+    .explain,
+    #result {
+        display: none !important;
+    }
+
+    .print-footer {
+        position: fixed;
+        bottom: 6mm;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 11px;
+        color: #000;
+    }
+}
