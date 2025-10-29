@@ -1,0 +1,347 @@
+/* コンピュータの発達 ホームページ用スタイル */
+
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#475569;
+  --accent:#2563eb;
+  --border:#e2e8f0;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+
+header{
+  padding:48px 16px 24px;
+  text-align:center;
+  background:linear-gradient(180deg, #e2e8f0 0%, #f8fafc 100%);
+  border-bottom:1px solid var(--border);
+}
+
+h1{
+  margin:0 0 8px 0;
+  font-size: clamp(28px, 5vw, 40px);
+  letter-spacing: .02em;
+}
+
+.sub{
+  color:var(--muted);
+  margin:0;
+  font-size:clamp(14px, 2.4vw, 16px);
+}
+
+main{
+  max-width:1000px;
+  margin:24px auto 56px;
+  padding:0 16px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 6px 20px rgba(2,6,23,.06);
+  margin-bottom:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size: clamp(12px, 2.2vw, 15px);
+}
+
+th, td{
+  border:1px solid var(--border);
+  padding:10px 12px;
+  vertical-align:middle;
+  text-align:center;
+}
+
+thead th{
+  background:#f1f5f9;
+  font-weight:700;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:16px;
+}
+
+@media (max-width: 800px){
+  .grid{grid-template-columns:1fr;}
+}
+
+figure{
+  margin:0;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+}
+
+figure img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+figcaption{
+  padding:10px 12px;
+  font-size:14px;
+  background:#fafafa;
+  border-top:1px solid var(--border);
+}
+
+.caption-meta{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:24px 16px 48px;
+}
+
+a{ color: var(--accent); }
+
+/* スムーズスクロール（アンカーでも滑らかに） */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ハイライト用 */
+.highlight-flash {
+  position: relative;
+  outline: 3px solid rgba(255, 200, 0, 0.9);
+  outline-offset: 4px;
+  animation: flash 1.2s ease-out 0s 2;
+  border-radius: 8px;
+}
+
+@keyframes flash {
+  0%   { box-shadow: 0 0 0px rgba(255, 200, 0, 0.0); }
+  40%  { box-shadow: 0 0 24px rgba(255, 200, 0, 0.8); }
+  100% { box-shadow: 0 0 0px rgba(255, 200, 0, 0.0); }
+}
+
+/* 画像クリック焦点の見やすさ */
+figure:focus-within,
+figure:focus {
+  outline: 3px solid var(--accent, #4d7cfe);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* =========================
+   Photos: カード風・ホバー演出
+   ========================= */
+.grid {
+  gap: 20px; /* ちょい広め */
+}
+
+/* カード化＋微浮遊 */
+.grid figure {
+  position: relative;
+  border-radius: 14px;
+  overflow: clip;               /* 角を綺麗に切る（Safariはoverflow:hiddenでもOK） */
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(2,6,23,.06);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  border: 1px solid var(--border);
+}
+.grid figure:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(2,6,23,.10);
+  border-color: color-mix(in oklab, var(--border) 60%, var(--accent) 40%);
+}
+
+/* 画像を統一比率でトリミング（16:10）＋ズーム演出 */
+.grid figure img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.0);
+  transition: transform .55s ease, opacity .4s ease;
+  opacity: 0;            /* 後述のJSで .is-loaded を付けてフェードイン */
+}
+.grid figure:hover img { transform: scale(1.03); }
+.grid figure img.is-loaded { opacity: 1; }
+
+/* キャプションをすっきり */
+.grid figure figcaption {
+  position: relative;
+  padding: 12px 14px;
+  font-size: 14px;
+  background: #fff;      /* 既存の薄グレー→白でスッキリ */
+  border-top: 1px solid var(--border);
+}
+.grid figure figcaption::before {
+  /* 画像→キャプションの境目をふんわり */
+  content:"";
+  position:absolute;
+  left:0; right:0; top:-12px; height:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(250,250,250,.9) 100%);
+}
+
+/* キャプション内のメタを弱めに */
+.caption-meta { color: var(--muted); opacity: .9; }
+
+/* アクセシビリティ：フォーカス時のリング（既存と整合） */
+figure:focus-within,
+figure:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+/* 画像クリックで拡大：ライトボックス */
+.lb-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, 0.78);
+  display: none;
+  place-items: center;
+  z-index: 1000;
+  padding: 24px;
+  backdrop-filter: blur(2px);
+}
+.lb-overlay.open { display: grid; }
+.lb-content {
+  max-width: min(92vw, 1280px);
+  max-height: 86vh;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+  background: #000;
+  position: relative;
+}
+.lb-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 86vh;
+  height: auto;
+  width: auto;
+}
+.lb-close {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  width: 36px; height: 36px;
+  cursor: pointer;
+  font-size: 20px; line-height: 36px; text-align: center;
+}
+.lb-caption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 12px 14px;
+  color: #fff;
+  font-size: 14px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.55) 100%);
+}
+
+/* 動きが苦手な人向け */
+@media (prefers-reduced-motion: reduce) {
+  .grid figure, .grid figure img { transition: none; }
+}
+/* 既存の色・カード・表などはそのまま（あなたのCSSを前方に置いてOK） */
+
+/* タイトル横のボタン */
+.table-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+.btn{
+  appearance:none; border:1px solid var(--border);
+  border-radius:10px; padding:8px 12px; cursor:pointer;
+  background:#fff; color:var(--accent); font-weight:600;
+  box-shadow:0 2px 10px rgba(2,6,23,.04);
+}
+.btn:hover{ background: #f8fafc; }
+
+/* ===== Carousel ===== */
+.carousel{ position:relative; margin-top:14px; }
+.car-viewport{
+  overflow:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling: touch;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 6px 20px rgba(2,6,23,.06);
+  padding:10px;
+  position:relative;
+}
+.car-track{
+  display:flex; gap:12px;
+}
+.car-slide{
+  scroll-snap-align:start;
+  flex: 0 0 clamp(260px, 60vw, 360px);
+}
+.car-slide figure{
+  margin:0; border:1px solid var(--border);
+  border-radius:12px; overflow:hidden; background:#fff;
+  box-shadow:0 4px 16px rgba(2,6,23,.06);
+  transition: transform .25s ease;
+}
+.car-slide:hover figure{ transform: translateY(-2px); }
+.car-slide img{
+  display:block; width:100%; aspect-ratio:16/10; object-fit:cover;
+}
+.car-slide figcaption{
+  padding:10px 12px; font-size:14px; border-top:1px solid var(--border);
+  background:#fafafa;
+}
+
+.car-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:40px; height:40px; border-radius:999px;
+  border:1px solid var(--border); background:#fff; cursor:pointer;
+  box-shadow:0 4px 14px rgba(2,6,23,.10);
+  font-size:22px; line-height:40px; text-align:center; color:var(--text);
+}
+.car-btn:hover{ background:#f8fafc; }
+.car-btn.prev{ left:-6px; }
+.car-btn.next{ right:-6px; }
+
+.car-note{ color:var(--muted); font-size:12px; margin-top:8px; }
+
+/* 表内リンクの視認性 */
+a.jump{ text-decoration: underline; text-underline-offset: 2px; }
+
+/* スムーズスクロール */
+html{ scroll-behavior:smooth; }
+
+/* スライドのハイライト（ジャンプ時に一瞬光る） */
+.car-slide.highlight{
+  outline: 3px solid rgba(255,200,0,.9);
+  outline-offset: 4px; border-radius: 12px;
+  animation: carflash 1.2s ease-out 0s 2;
+}
+@keyframes carflash{
+  0% { box-shadow: 0 0 0 rgba(255,200,0,0); }
+  40%{ box-shadow: 0 0 24px rgba(255,200,0,.8); }
+  100%{ box-shadow: 0 0 0 rgba(255,200,0,0); }
+}
+
+/* 動きが苦手な人向け */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+}
