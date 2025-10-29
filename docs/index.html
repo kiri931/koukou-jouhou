@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高校情報 - 教材・資料集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card h2 {
+            color: #4a5568;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .category-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .link-list {
+            list-style: none;
+        }
+
+        .link-list li {
+            margin-bottom: 0.8rem;
+        }
+
+        .link-list a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .link-list a:hover {
+            background: #e2e8f0;
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .link-list a::before {
+            content: "📄";
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .class-links a::before {
+            content: "🎓";
+        }
+
+        .tools-links a::before {
+            content: "🔧";
+        }
+
+        .docs-links a::before {
+            content: "📚";
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .badge.new {
+            background: #ed8936;
+        }
+
+        .badge.interactive {
+            background: #805ad5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .category-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>高校情報</h1>
+            <p>教材・資料・ツール集</p>
+        </header>
+
+        <div class="content-grid">
+            <!-- 授業・クラス関連 -->
+            <div class="category-card">
+                <h2>授業・クラス</h2>
+                <p>授業で使用する資料やクラス活動に関する情報です。</p>
+                <ul class="link-list class-links">
+                    <li>
+                        <a href="class/fieldtrip/2025/">
+                            1T3 校外学習 2025
+                            <span class="badge new">New</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 学習ツール・アプリ -->
+            <div class="category-card">
+                <h2>学習ツール</h2>
+                <p>インタラクティブな学習ツールやWebアプリケーションです。</p>
+                <ul class="link-list tools-links">
+                    <li>
+                        <a href="html/equation-transformation/">
+                            等式の変形テスト
+                            <span class="badge interactive">Interactive</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 学習資料・ドキュメント -->
+            <div class="category-card">
+                <h2>学習資料</h2>
+                <p>各種学習用のドキュメントや資料集です。</p>
+                <ul class="link-list docs-links">
+                    <li>
+                        <a href="md/github.md">
+                            GitHub学習テキスト
+                        </a>
+                    </li>
+                    <li>
+                        <a href="md/word.md">
+                            Word学習用テキスト
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 開発中・準備中 -->
+            <div class="category-card">
+                <h2>開発中</h2>
+                <p>現在準備中または開発中のコンテンツです。</p>
+                <ul class="link-list">
+                    <li style="color: #999; font-style: italic;">
+                        C言語学習資料（準備中）
+                    </li>
+                    <li style="color: #999; font-style: italic;">
+                        その他のプログラミング資料（準備中）
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 高校情報 教材・資料集 | 最終更新: 2025年10月29日</p>
+        </footer>
+    </div>
+</body>
+
+</html>
