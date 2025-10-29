@@ -1,0 +1,276 @@
+/* ====== ベース設定 ====== */
+body {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+  line-height: 1.8;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ====== タイトル強調 ====== */
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 0;
+  color: #1a202c;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+h2, h3, h4, h5, h6 {
+  color: #2d3748;
+  margin-top: 2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.3em;
+}
+
+/* ====== テキスト要素 ====== */
+p {
+  margin: 1em 0;
+}
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+ul, ol {
+  margin-left: 2em;
+}
+li {
+  margin-bottom: 0.5em;
+}
+blockquote {
+  border-left: 4px solid #ccc;
+  background-color: #f9f9f9;
+  padding: 0.8em 1em;
+  margin: 1.5em 0;
+  color: #555;
+  border-radius: 4px;
+}
+
+/* ====== コード系 ====== */
+code, pre {
+  background-color: #f6f8fa;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+  border-radius: 4px;
+}
+code {
+  padding: 0.2em 0.4em;
+}
+pre {
+  padding: 1em;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* ====== テーブル ====== */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.6em;
+  text-align: left;
+  background-color: #fff;
+}
+
+/* ====== チェックリスト・フォーム ====== */
+input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+/* ====== アラートブロック ====== */
+.markdown-alert {
+  border-left: 5px solid #3182ce;
+  background-color: #ebf8ff;
+  padding: 1em;
+  margin: 1.5em 0;
+  border-radius: 4px;
+}
+.markdown-alert-title {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+/* ====== 区切り線 ====== */
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 2em 0;
+}
+
+/* ====== ダークモード対応（JSクラス方式） ====== */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+}
+
+body.dark-mode h1 {
+  color: #ffffff;
+  border-color: #666;
+}
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+body.dark-mode a {
+  color: #4fc3f7;
+}
+
+body.dark-mode blockquote {
+  background-color: #2a2a2a;
+  border-left-color: #666;
+  color: #ccc;
+}
+
+body.dark-mode code,
+body.dark-mode pre {
+  background-color: #2d2d2d;
+  color: #e6e6e6;
+}
+
+body.dark-mode table th,
+body.dark-mode table td {
+  background-color: #2a2a2a;
+  border-color: #555;
+}
+
+body.dark-mode .markdown-alert {
+  background-color: #2a4365;
+  border-left-color: #63b3ed;
+}
+
+body.dark-mode .markdown-alert-title {
+  color: #e2e8f0;
+}
+
+/* ====== レスポンシブ対応 ====== */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 1rem;
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  table, pre {
+    font-size: 0.9em;
+  }
+}
+
+/* ====== テーマトグル ヘッダー ====== */
+.theme-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5em;
+  padding: 1rem 2rem;
+}
+
+.theme-header button {
+  background-color: #007acc;
+  color: #fff;
+  border: none;
+  padding: 0.4em 0.8em;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.theme-header button:hover {
+  background-color: #005fa3;
+}
+
+body.dark-mode .theme-header {
+  background-color: #2a2a2a;
+  border-bottom: 1px solid #444;
+}
+
+body.dark-mode .theme-header button {
+  background-color: #4fc3f7;
+  color: #000;
+}
+/* ====== 目次（TOC）折りたたみ＋スクロール対応 ====== */
+.toc-container {
+  position: fixed;
+  top: 120px;
+  left: 20px;
+  z-index: 998;
+  width: 220px;
+}
+
+.toc-toggle {
+  width: 100%;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 0.6em;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.toc-toggle:hover {
+  background-color: #005fa3;
+}
+
+.toc {
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toc.collapsed {
+  display: none;
+}
+
+body.dark-mode .toc {
+  background-color: #2a2a2a;
+  border-color: #555;
+  color: #ccc;
+}
+
+body.dark-mode .toc a {
+  color: #4fc3f7;
+}
+
+body.dark-mode .toc-toggle {
+  background-color: #4fc3f7;
+  color: black;
+}
+
+@media screen and (max-width: 800px) {
+  .toc-container {
+    display: none;
+  }
+}

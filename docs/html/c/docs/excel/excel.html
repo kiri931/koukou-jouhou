@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Excel（エクセル）
+  </title>
+  <style>
+   /* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+  </style>
+  <link href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css" rel="stylesheet"/>
+  <style>
+   body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+  </style>
+  <style>
+   .task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+  </style>
+  <style>
+   :root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+  </style>
+  <style>
+   @media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+  </style>
+  <style>
+   .markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+  </style>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js">
+  </script>
+  <script>
+   hljs.highlightAll();
+  </script>
+ </head>
+ <body class="vscode-body vscode-light">
+  <div class="toc-container">
+   <button class="toc-toggle">
+    📖 目次を表示
+   </button>
+   <div class="toc collapsed">
+    <h2 id="目次">
+     目次
+    </h2>
+    <ul>
+     <li>
+      <a href="#excel%E3%82%A8%E3%82%AF%E3%82%BB%E3%83%AB">
+       Excel（エクセル）
+      </a>
+      <ul>
+       <li>
+        <a href="#%E7%9B%AE%E6%AC%A1">
+         目次
+        </a>
+       </li>
+       <li>
+        <a href="#-excel%E3%81%A3%E3%81%A6%E3%81%A9%E3%82%93%E3%81%AA%E3%82%A2%E3%83%97%E3%83%AA">
+         📌 Excelってどんなアプリ？
+        </a>
+       </li>
+       <li>
+        <a href="#%EF%B8%8F-%E3%81%A7%E3%81%8D%E3%82%8B%E3%81%93%E3%81%A8%E4%B8%80%E8%A6%A7">
+         🖥️ できること一覧
+        </a>
+       </li>
+       <li>
+        <a href="#-excel%E3%81%AE%E7%94%BB%E9%9D%A2%E6%A7%8B%E6%88%90">
+         📊 Excelの画面構成
+        </a>
+       </li>
+       <li>
+        <a href="#-excel%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">
+         📝 Excelの基本操作
+        </a>
+        <ul>
+         <li>
+          <a href="#%E3%82%BB%E3%83%AB%E3%81%B8%E3%81%AE%E5%85%A5%E5%8A%9B">
+           セルへの入力
+          </a>
+         </li>
+         <li>
+          <a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E8%B2%BC%E3%82%8A%E4%BB%98%E3%81%91">
+           データのコピー・貼り付け
+          </a>
+         </li>
+         <li>
+          <a href="#%E8%A1%8C%E3%82%84%E5%88%97%E3%81%AE%E8%BF%BD%E5%8A%A0%E5%89%8A%E9%99%A4">
+           行や列の追加・削除
+          </a>
+         </li>
+         <li>
+          <a href="#%E3%82%BB%E3%83%AB%E3%81%AE%E7%B5%90%E5%90%88">
+           セルの結合
+          </a>
+         </li>
+         <li>
+          <a href="#%E3%82%B7%E3%83%BC%E3%83%88%E3%81%AE%E8%BF%BD%E5%8A%A0%E5%90%8D%E5%89%8D%E5%A4%89%E6%9B%B4">
+           シートの追加・名前変更
+          </a>
+         </li>
+         <li>
+          <a href="#%E4%BF%9D%E5%AD%98">
+           保存
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86">
+         使ってみよう
+        </a>
+        <ul>
+         <li>
+          <a href="#%E5%A4%AA%E5%AD%97%E3%81%AB%E3%81%97%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86">
+           太字にしてみよう
+          </a>
+         </li>
+         <li>
+          <a href="#%E6%9E%A0%E7%B7%9A%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%97%E3%82%88%E3%81%86">
+           枠線を追加しよう
+          </a>
+         </li>
+         <li>
+          <a href="#%E3%81%84%E3%82%8D%E3%81%84%E3%82%8D%E3%81%AA%E7%BD%AB%E7%B7%9A%E3%81%AE%E8%BF%BD%E5%8A%A0%E6%96%B9%E6%B3%95">
+           いろいろな罫線の追加方法
+          </a>
+         </li>
+         <li>
+          <a href="#%E8%A1%A8%E3%82%92%E8%A6%8B%E3%82%84%E3%81%99%E3%81%8F%E3%81%99%E3%82%8B%E5%B7%A5%E5%A4%AB">
+           表を見やすくする工夫
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#excel%E3%81%AA%E3%82%89%E3%81%A7%E3%81%AF%E3%81%AE%E6%A9%9F%E8%83%BD">
+         Excelならではの機能
+        </a>
+       </li>
+       <li>
+        <a href="#%E8%A8%88%E7%AE%97%E5%BC%8F%E3%82%84%E9%96%A2%E6%95%B0">
+         計算式や関数
+        </a>
+       </li>
+       <li>
+        <a href="#-excel%E3%81%AF%E3%81%A9%E3%82%93%E3%81%AA%E3%81%A8%E3%81%8D%E3%81%AB%E4%BD%BF%E3%81%86">
+         🎯 Excelはどんなときに使う？
+        </a>
+       </li>
+       <li>
+        <a href="#-%E3%81%BE%E3%81%A8%E3%82%81">
+         ✨ まとめ
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <a href="#-excel-%E6%95%B0%E5%BC%8F%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C">
+       📘 Excel 数式練習問題
+      </a>
+      <ul>
+       <li>
+        <a href="#%E4%BE%8B%E9%A1%8C%E5%A3%B2%E4%B8%8A%E8%A1%A8%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E8%A8%88%E7%AE%97">
+         例題：売上表を使った計算
+        </a>
+        <ul>
+         <li>
+          <a href="#-%E5%A3%B2%E4%B8%8A%E8%A1%A8%E4%BE%8B">
+           💡 売上表（例）
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#-%E5%95%8F%E9%A1%8C1%E5%B0%8F%E8%A8%88%E3%81%AE%E8%A8%88%E7%AE%97">
+         📝 問題1：小計の計算
+        </a>
+       </li>
+       <li>
+        <a href="#-%E5%95%8F%E9%A1%8C2%E5%90%88%E8%A8%88%E9%87%91%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97">
+         📝 問題2：合計金額の計算
+        </a>
+       </li>
+       <li>
+        <a href="#-%E5%95%8F%E9%A1%8C3%E5%B9%B3%E5%9D%87%E5%8D%98%E4%BE%A1%E3%81%AE%E8%A8%88%E7%AE%97">
+         📝 問題3：平均単価の計算
+        </a>
+       </li>
+       <li>
+        <a href="#-%E5%95%8F%E9%A1%8C4if%E9%96%A2%E6%95%B0%E3%81%AE%E7%B7%B4%E7%BF%92%E5%BF%9C%E7%94%A8">
+         📝 問題4：IF関数の練習（応用）
+        </a>
+       </li>
+       <li>
+        <a href="#-%E3%81%BE%E3%81%A8%E3%82%81-1">
+         ✨ まとめ
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+  </div>
+  <header class="theme-header">
+   <span>
+    🌓 テーマ:
+   </span>
+   <button id="theme-toggle">
+    ライトモード
+   </button>
+  </header>
+  <h1 id="excelエクセル">
+   Excel（エクセル）
+  </h1>
+  <h2 id="-excelってどんなアプリ">
+   📌 Excelってどんなアプリ？
+  </h2>
+  <p>
+   <strong>
+    Excel（エクセル）
+    <strong>
+     は、Microsoft（マイクロソフト）社が作った
+    </strong>
+    表計算ソフト
+   </strong>
+   です。
+  </p>
+  <p>
+   <strong>
+    表計算ソフト
+   </strong>
+   とは、数字や文字を「表（テーブル）」の形で管理し、計算したりグラフを作ったりすることができます。
+  </p>
+  <blockquote>
+   <p>
+    🔰 一言でいうと、「表を使って、計算やデータの整理ができるアプリ」です。
+   </p>
+  </blockquote>
+  <hr/>
+  <h2 id="️-できること一覧">
+   🖥️ できること一覧
+  </h2>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      機能
+     </th>
+     <th>
+      内容
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      ✅ 表作成
+     </td>
+     <td>
+      行と列でデータを整理して一覧表を作れる
+     </td>
+    </tr>
+    <tr>
+     <td>
+      ✅ 自動計算
+     </td>
+     <td>
+      計算式や関数で、足し算・平均などを自動で出せる
+     </td>
+    </tr>
+    <tr>
+     <td>
+      ✅ グラフ化
+     </td>
+     <td>
+      表のデータをもとに、グラフを簡単に作れる
+     </td>
+    </tr>
+    <tr>
+     <td>
+      ✅ データ分析
+     </td>
+     <td>
+      並べ替え・フィルター・集計も簡単にできる
+     </td>
+    </tr>
+    <tr>
+     <td>
+      ✅ 自動化
+     </td>
+     <td>
+      マクロ（VBA）で作業を自動化できる（応用編）
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <hr/>
+  <h2 id="-excelの画面構成">
+   📊 Excelの画面構成
+  </h2>
+  <ul>
+   <li>
+    <strong>
+     セル（Cell）
+    </strong>
+    ：データを入力する「マス目」のこと（例：A1, B3 など）
+   </li>
+   <li>
+    <strong>
+     列（Column）
+    </strong>
+    ：縦の並び。A, B, C, ...で表される
+   </li>
+   <li>
+    <strong>
+     行（Row）
+    </strong>
+    ：横の並び。1, 2, 3, ...で表される
+   </li>
+   <li>
+    <strong>
+     リボン
+    </strong>
+    ：上部にあるボタンの集まり。図の挿入や計算の操作をする
+   </li>
+  </ul>
+  <hr/>
+  <h2 id="-excelの基本操作">
+   📝 Excelの基本操作
+  </h2>
+  <h3 id="セルへの入力">
+   セルへの入力
+  </h3>
+  <ul>
+   <li>
+    セルをクリックして、文字や数字を直接入力します。
+   </li>
+   <li>
+    入力後、
+    <code>
+     Enter
+    </code>
+    キーで確定、
+    <code>
+     Tab
+    </code>
+    キーで右のセルに移動します。
+   </li>
+  </ul>
+  <h3 id="データのコピー貼り付け">
+   データのコピー・貼り付け
+  </h3>
+  <ul>
+   <li>
+    コピーしたいセルを選択し、
+    <code>
+     Ctrl + C
+    </code>
+    （コピー）、
+    <code>
+     Ctrl + V
+    </code>
+    （貼り付け）を使います。
+   </li>
+   <li>
+    右下の「フィルハンドル」をドラッグすると、連続データも簡単に入力できます。
+   </li>
+  </ul>
+  <h3 id="行や列の追加削除">
+   行や列の追加・削除
+  </h3>
+  <ul>
+   <li>
+    行や列番号を右クリックして「挿入」や「削除」を選びます。
+   </li>
+  </ul>
+  <h3 id="セルの結合">
+   セルの結合
+  </h3>
+  <ul>
+   <li>
+    複数のセルを選択し、「ホーム」タブの「セルを結合して中央揃え」をクリックします。
+   </li>
+  </ul>
+  <h3 id="シートの追加名前変更">
+   シートの追加・名前変更
+  </h3>
+  <ul>
+   <li>
+    画面下部の「＋」ボタンで新しいシートを追加できます。
+   </li>
+   <li>
+    シート名をダブルクリックして名前を変更します。
+   </li>
+  </ul>
+  <h3 id="保存">
+   保存
+  </h3>
+  <ul>
+   <li>
+    <code>
+     Ctrl + S
+    </code>
+    でファイルを保存します。
+   </li>
+   <li>
+    「ファイル」→「名前を付けて保存」から新しいファイルとして保存もできます。
+   </li>
+  </ul>
+  <p>
+   これらがExcelの基本的な操作です。
+  </p>
+  <hr/>
+  <h2 id="使ってみよう">
+   使ってみよう
+  </h2>
+  <p>
+   次のような表を作ってみよう
+  </p>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      氏名
+     </th>
+     <th>
+      国語
+     </th>
+     <th>
+      数学
+     </th>
+     <th>
+      英語
+     </th>
+     <th>
+      理科
+     </th>
+     <th>
+      社会
+     </th>
+     <th>
+      合計
+     </th>
+     <th>
+      平均
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      山田 太郎
+     </td>
+     <td>
+      80
+     </td>
+     <td>
+      90
+     </td>
+     <td>
+      85
+     </td>
+     <td>
+      70
+     </td>
+     <td>
+      88
+     </td>
+     <td>
+     </td>
+     <td>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      佐藤 花子
+     </td>
+     <td>
+      75
+     </td>
+     <td>
+      65
+     </td>
+     <td>
+      78
+     </td>
+     <td>
+      82
+     </td>
+     <td>
+      80
+     </td>
+     <td>
+     </td>
+     <td>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      鈴木 一郎
+     </td>
+     <td>
+      92
+     </td>
+     <td>
+      88
+     </td>
+     <td>
+      91
+     </td>
+     <td>
+      95
+     </td>
+     <td>
+      89
+     </td>
+     <td>
+     </td>
+     <td>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   このように表で情報をまとめることができます。
+  </p>
+  <h3 id="太字にしてみよう">
+   太字にしてみよう
+  </h3>
+  <p>
+   セルの文字を
+   <strong>
+    太字
+   </strong>
+   にするには、次の手順で操作します。
+  </p>
+  <ol>
+   <li>
+    太字にしたいセルを選択します。
+   </li>
+   <li>
+    Excel画面上部の「ホーム」タブをクリックします。
+   </li>
+   <li>
+    「B」のアイコン（
+    <strong>
+     太字
+    </strong>
+    ボタン）をクリックします。
+   </li>
+  </ol>
+  <blockquote>
+   <p>
+    <strong>
+     ショートカットキー
+    </strong>
+    ：
+    <br/>
+    Windowsの場合 →
+    <code>
+     Ctrl
+    </code>
+    +
+    <code>
+     B
+    </code>
+    <br/>
+    Macの場合 →
+    <code>
+     command
+    </code>
+    +
+    <code>
+     B
+    </code>
+   </p>
+  </blockquote>
+  <h3 id="枠線を追加しよう">
+   枠線を追加しよう
+  </h3>
+  <p>
+   セルに**枠線（罫線）**を追加するには、次の手順で操作します。
+  </p>
+  <ol>
+   <li>
+    枠線を付けたいセル範囲を選択します。
+   </li>
+   <li>
+    Excel画面上部の「ホーム」タブをクリックします。
+   </li>
+   <li>
+    「罫線」アイコン（格子状のボタン）をクリックします。
+   </li>
+   <li>
+    メニューから追加したい罫線の種類を選びます。
+   </li>
+  </ol>
+  <h3 id="いろいろな罫線の追加方法">
+   いろいろな罫線の追加方法
+  </h3>
+  <ul>
+   <li>
+    <strong>
+     外枠のみ
+    </strong>
+    ：
+    <code>
+     外枠
+    </code>
+    を選ぶと、選択範囲の外側だけに線が引かれます。
+   </li>
+   <li>
+    <strong>
+     すべての枠線
+    </strong>
+    ：
+    <code>
+     すべての罫線
+    </code>
+    を選ぶと、セルの内側も含めて全てに線が引かれます。
+   </li>
+   <li>
+    <strong>
+     太い枠線
+    </strong>
+    ：
+    <code>
+     太い外枠
+    </code>
+    を選ぶと、外側だけ太い線になります。
+   </li>
+   <li>
+    <strong>
+     上下・左右だけ
+    </strong>
+    ：
+    <code>
+     上罫線
+    </code>
+    や
+    <code>
+     下罫線
+    </code>
+    など、特定の位置だけに線を引くこともできます。
+   </li>
+   <li>
+    <strong>
+     罫線の色やスタイル変更
+    </strong>
+    ：「その他の罫線」を選ぶと、線の色や太さ、点線なども細かく設定できます。
+   </li>
+  </ul>
+  <h3 id="表を見やすくする工夫">
+   表を見やすくする工夫
+  </h3>
+  <ul>
+   <li>
+    <p>
+     <strong>
+      セルの色を変える
+     </strong>
+     <br/>
+     行や列ごとに背景色を付けると、データが区切られて見やすくなります。
+     <br/>
+     セルを選択し、「ホーム」タブの「塗りつぶしの色」から色を選びます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      文字の配置を調整する
+     </strong>
+     <br/>
+     セル内の文字を中央揃えや右揃えにすると、表が整って見えます。
+     <br/>
+     「ホーム」タブの「配置」グループで調整できます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      列幅・行の高さを調整する
+     </strong>
+     <br/>
+     データが見切れている場合は、列や行の境界をドラッグして幅や高さを広げましょう。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      フォントサイズや種類を変える
+     </strong>
+     <br/>
+     見出しや重要な部分はフォントサイズを大きくしたり、種類を変えると強調できます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      条件付き書式を使う
+     </strong>
+     <br/>
+     特定の条件（例：80点以上は緑色）でセルの色を自動で変えることができます。
+     <br/>
+     「ホーム」タブの「条件付き書式」から設定します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      行や列を固定する
+     </strong>
+     <br/>
+     表が大きい場合、見出し行や列を固定するとスクロールしても常に表示されて便利です。
+     <br/>
+     「表示」タブの「ウィンドウ枠の固定」を使います。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      フィルター機能を使う
+     </strong>
+     <br/>
+     データが多い場合はフィルターを設定して、特定の条件で絞り込むことができます。
+     <br/>
+     「データ」タブの「フィルター」をクリックします。
+    </p>
+   </li>
+  </ul>
+  <p>
+   これらの工夫で、Excelの表をより見やすく整理できます。
+  </p>
+  <hr/>
+  <h2 id="excelならではの機能">
+   Excelならではの機能
+  </h2>
+  <p>
+   上記内容であれば、Wordで作れてしまう。
+  </p>
+  <p>
+   先ほどの内容を次のように書き換えてみよう。
+  </p>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      氏名
+     </th>
+     <th>
+      国語
+     </th>
+     <th>
+      数学
+     </th>
+     <th>
+      英語
+     </th>
+     <th>
+      理科
+     </th>
+     <th>
+      社会
+     </th>
+     <th>
+      合計
+     </th>
+     <th>
+      平均
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      山田 太郎
+     </td>
+     <td>
+      80
+     </td>
+     <td>
+      90
+     </td>
+     <td>
+      85
+     </td>
+     <td>
+      70
+     </td>
+     <td>
+      88
+     </td>
+     <td>
+      =SUM(B2:F2)
+     </td>
+     <td>
+      =AVERAGE(B2:F2)
+     </td>
+    </tr>
+    <tr>
+     <td>
+      佐藤 花子
+     </td>
+     <td>
+      75
+     </td>
+     <td>
+      65
+     </td>
+     <td>
+      78
+     </td>
+     <td>
+      82
+     </td>
+     <td>
+      80
+     </td>
+     <td>
+      =SUM(B3:F3)
+     </td>
+     <td>
+      =AVERAGE(B3:F3)
+     </td>
+    </tr>
+    <tr>
+     <td>
+      鈴木 一郎
+     </td>
+     <td>
+      92
+     </td>
+     <td>
+      88
+     </td>
+     <td>
+      91
+     </td>
+     <td>
+      95
+     </td>
+     <td>
+      89
+     </td>
+     <td>
+      =SUM(B4:F4)
+     </td>
+     <td>
+      =AVERAGE(B4:F4)
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <blockquote>
+   <p>
+    🔸「合計」列には
+    <code>
+     =SUM(科目の範囲)
+    </code>
+    を、
+    <br/>
+    🔸「平均」列には
+    <code>
+     =AVERAGE(科目の範囲)
+    </code>
+    を入れます。
+   </p>
+  </blockquote>
+  <hr/>
+  <h2 id="計算式や関数">
+   計算式や関数
+  </h2>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      関数
+     </th>
+     <th>
+      役割
+     </th>
+     <th>
+      例（数式）
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      +, -, *, /
+     </td>
+     <td>
+      四則演算（足し算・引き算・掛け算・割り算）
+     </td>
+     <td>
+      <code>
+       =A1+B1
+      </code>
+      ,
+      <code>
+       =A1-B1
+      </code>
+      ,
+      <code>
+       =A1*B1
+      </code>
+      ,
+      <code>
+       =A1/B1
+      </code>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      SUM
+     </td>
+     <td>
+      合計を出す
+     </td>
+     <td>
+      <code>
+       =SUM(A1:A5)
+      </code>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      AVERAGE
+     </td>
+     <td>
+      平均を出す
+     </td>
+     <td>
+      <code>
+       =AVERAGE(B1:B5)
+      </code>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      MAX
+     </td>
+     <td>
+      最大値を出す
+     </td>
+     <td>
+      <code>
+       =MAX(C1:C5)
+      </code>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      MIN
+     </td>
+     <td>
+      最小値を出す
+     </td>
+     <td>
+      <code>
+       =MIN(D1:D5)
+      </code>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      IF
+     </td>
+     <td>
+      条件によって結果を変える
+     </td>
+     <td>
+      <code>
+       =IF(E1&gt;=80,"合格","不合格")
+      </code>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <h2 id="-excelはどんなときに使う">
+   🎯 Excelはどんなときに使う？
+  </h2>
+  <ul>
+   <li>
+    <p>
+     家計簿をつけたいとき
+    </p>
+   </li>
+   <li>
+    <p>
+     テストの点数をまとめたいとき
+    </p>
+   </li>
+   <li>
+    <p>
+     クラスの出席表を作りたいとき
+    </p>
+   </li>
+   <li>
+    <p>
+     グラフで見やすくしたいとき
+    </p>
+   </li>
+   <li>
+    <p>
+     アンケート結果を集計したいとき
+    </p>
+   </li>
+  </ul>
+  <h2 id="-まとめ">
+   ✨ まとめ
+  </h2>
+  <p>
+   Excelは「表＋計算＋グラフ」の便利ツール
+  </p>
+  <blockquote>
+   <p>
+    基本は「セルに入力」「関数で計算」「表やグラフでまとめる」
+   </p>
+  </blockquote>
+  <hr/>
+  <h1 id="-excel-数式練習問題">
+   📘 Excel 数式練習問題
+  </h1>
+  <h2 id="例題売上表を使った計算">
+   例題：売上表を使った計算
+  </h2>
+  <p>
+   以下の「売上表」をもとに、指定された数式を使って計算をしてみよう。
+  </p>
+  <h3 id="-売上表例">
+   💡 売上表（例）
+  </h3>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      商品名
+     </th>
+     <th>
+      単価（円）
+     </th>
+     <th>
+      個数
+     </th>
+     <th>
+      小計（円）
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      ノート
+     </td>
+     <td>
+      120
+     </td>
+     <td>
+      3
+     </td>
+     <td>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      消しゴム
+     </td>
+     <td>
+      80
+     </td>
+     <td>
+      5
+     </td>
+     <td>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      定規
+     </td>
+     <td>
+      150
+     </td>
+     <td>
+      2
+     </td>
+     <td>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      鉛筆
+     </td>
+     <td>
+      100
+     </td>
+     <td>
+      4
+     </td>
+     <td>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      合計金額
+     </td>
+     <td>
+     </td>
+     <td>
+     </td>
+     <td>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <hr/>
+  <h2 id="-問題1小計の計算">
+   📝 問題1：小計の計算
+  </h2>
+  <p>
+   各商品の「小計」を出しましょう。セルにどんな式を入力すればよいですか？
+  </p>
+  <hr/>
+  <h2 id="-問題2合計金額の計算">
+   📝 問題2：合計金額の計算
+  </h2>
+  <p>
+   すべての小計を合計し、「合計金額」に表示しましょう。
+  </p>
+  <h2 id="-問題3平均単価の計算">
+   📝 問題3：平均単価の計算
+  </h2>
+  <p>
+   B列（単価）の平均を求めましょう。
+  </p>
+  <h2 id="-問題4if関数の練習応用">
+   📝 問題4：IF関数の練習（応用）
+  </h2>
+  <p>
+   それぞれの商品の個数が
+   <strong>
+    3個以上なら「◎」
+   </strong>
+   、**それ未満なら「×」**と表示する列を作りましょう。
+  </p>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      商品名
+     </th>
+     <th>
+      個数
+     </th>
+     <th>
+      判定
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      ノート
+     </td>
+     <td>
+      3
+     </td>
+     <td>
+      ◎
+     </td>
+    </tr>
+    <tr>
+     <td>
+      ...
+     </td>
+     <td>
+      ...
+     </td>
+     <td>
+      ...
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <hr/>
+  <h2 id="-まとめ-1">
+   ✨ まとめ
+  </h2>
+  <p>
+   Excelの数式は、「=（イコール）」から始まります。
+   <br/>
+   数式や関数を使うことで、計算や条件判定を自動化できます。
+  </p>
+  <hr/>
+  <script>
+   const toggleBtn = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  const setHighlightTheme = (darkMode) => {
+    document.getElementById("hljs-light").disabled = darkMode;
+    document.getElementById("hljs-dark").disabled = !darkMode;
+  };
+
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    toggleBtn.textContent = 'ダークモード';
+    setHighlightTheme(true);
+  } else {
+    setHighlightTheme(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    toggleBtn.textContent = isDark ? 'ダークモード' : 'ライトモード';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    setHighlightTheme(isDark);
+  });
+  </script>
+ </body>
+</html>

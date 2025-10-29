@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   情報プログレス
+  </title>
+  <style>
+   /* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+  </style>
+  <link href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css" rel="stylesheet"/>
+  <style>
+   body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+  </style>
+  <style>
+   .task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+  </style>
+  <style>
+   :root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+  </style>
+  <style>
+   @media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+  </style>
+  <style>
+   .markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+  </style>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js">
+  </script>
+  <script>
+   hljs.highlightAll();
+  </script>
+ </head>
+ <body class="vscode-body vscode-light">
+  <header class="theme-header">
+   <span>
+    🌓 テーマ:
+   </span>
+   <button id="theme-toggle">
+    ライトモード
+   </button>
+  </header>
+  <h1 id="情報プログレス">
+   情報プログレス
+  </h1>
+  <ul>
+   <li>
+    <a href="#%E6%83%85%E5%A0%B1%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9">
+     情報プログレス
+    </a>
+    <ul>
+     <li>
+      <a href="#github">
+       GitHub
+      </a>
+     </li>
+     <li>
+      <a href="#github%E3%81%AE%E5%BD%B9%E5%89%B2">
+       GitHubの役割
+      </a>
+     </li>
+     <li>
+      <a href="#github%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">
+       GitHubの使い方
+      </a>
+      <ul>
+       <li>
+        <a href="#%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9">
+         アカウントの作り方
+        </a>
+       </li>
+       <li>
+        <a href="#%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E8%BF%BD%E5%8A%A0">
+         リポジトリの追加
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <a href="#codespaces%E3%81%AE%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95">
+       Codespacesの利用方法
+      </a>
+      <ul>
+       <li>
+        <a href="#codespaces%E3%81%AE%E4%BD%9C%E6%88%90">
+         Codespacesの作成
+        </a>
+       </li>
+       <li>
+        <a href="#codespaces%E3%81%A7%E3%81%AE%E4%BD%9C%E6%A5%AD">
+         Codespacesでの作業
+        </a>
+       </li>
+       <li>
+        <a href="#%E4%BD%9C%E6%A5%AD%E5%86%85%E5%AE%B9%E3%81%AE%E4%BF%9D%E5%AD%98">
+         作業内容の保存
+        </a>
+       </li>
+       <li>
+        <a href="#codespaces%E3%81%AE%E7%B5%82%E4%BA%86">
+         Codespacesの終了
+        </a>
+       </li>
+       <li>
+        <a href="#%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">
+         拡張機能のインストール
+        </a>
+        <ul>
+         <li>
+          <a href="#cc-extension-pack">
+           C/C++ Extension Pack
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#c%E8%A8%80%E8%AA%9E%E3%81%AE%E5%AE%9F%E8%A1%8C%E6%89%8B%E9%A0%86">
+         C言語の実行手順
+        </a>
+       </li>
+       <li>
+        <a href="#c%E8%A8%80%E8%AA%9E%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%AE%E3%81%A4%E3%81%91%E6%96%B9">
+         C言語のファイル名のつけ方
+        </a>
+       </li>
+       <li>
+        <a href="#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3%E3%81%AE%E8%A1%A8%E7%A4%BA">
+         コマンドラインの表示
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%AE%9F%E8%A1%8C%E6%96%B9%E6%B3%95">
+         実行方法
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%AE%E3%81%A4%E3%81%91%E6%96%B9">
+       ファイル名のつけ方
+      </a>
+     </li>
+     <li>
+      <a href="#%E5%AE%9F%E8%A1%8C%E6%96%B9%E6%B3%95-1">
+       実行方法
+      </a>
+     </li>
+     <li>
+      <a href="#c%E8%A8%80%E8%AA%9E-%E5%9F%BA%E7%A4%8E%E5%95%8F%E9%A1%8C">
+       C言語 基礎問題
+      </a>
+      <ul>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C1-hello-world-%E3%82%92%E5%87%BA%E5%8A%9B%E3%81%97%E3%82%88%E3%81%86">
+         問題1: Hello, World! を出力しよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C2-%E5%A4%89%E6%95%B0%E3%81%AB%E5%80%A4%E3%82%92%E4%BB%A3%E5%85%A5%E3%81%97%E3%81%A6%E8%A1%A8%E7%A4%BA%E3%81%97%E3%82%88%E3%81%86">
+         問題2: 変数に値を代入して表示しよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C3-2%E3%81%A4%E3%81%AE%E6%95%B4%E6%95%B0%E3%82%92%E5%85%A5%E5%8A%9B%E3%81%97%E3%81%A6%E5%90%88%E8%A8%88%E3%82%92%E6%B1%82%E3%82%81%E3%82%88%E3%81%86">
+         問題3: 2つの整数を入力して合計を求めよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C4-%E5%81%B6%E6%95%B0%E5%A5%87%E6%95%B0%E3%82%92%E5%88%A4%E5%AE%9A%E3%81%97%E3%82%88%E3%81%86">
+         問題4: 偶数・奇数を判定しよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C5-if%E6%96%87%E3%81%AE%E7%B7%B4%E7%BF%92%E6%88%90%E7%B8%BE%E8%A9%95%E4%BE%A1">
+         問題5: if文の練習：成績評価
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C6-for%E6%96%87%E3%81%AE%E7%B7%B4%E7%BF%92110%E3%81%BE%E3%81%A7%E5%87%BA%E5%8A%9B%E3%81%97%E3%82%88%E3%81%86">
+         問題6: for文の練習：1〜10まで出力しよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C7-while%E6%96%87%E3%81%A7%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%83%80%E3%82%A6%E3%83%B3%E3%81%97%E3%82%88%E3%81%86">
+         問題7: while文でカウントダウンしよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C8-%E6%8E%9B%E3%81%91%E7%AE%97%E4%B9%9D%E4%B9%9D%E3%81%AE1%E3%81%AE%E6%AE%B5%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%82%88%E3%81%86">
+         問題8: 掛け算九九の1の段を表示しよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C9-%E9%85%8D%E5%88%97%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%85%A5%E3%82%8C%E3%81%A6%E8%A1%A8%E7%A4%BA%E3%81%97%E3%82%88%E3%81%86">
+         問題9: 配列にデータを入れて表示しよう
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C10-%E9%96%A2%E6%95%B0%E3%82%92%E4%BD%9C%E3%81%A3%E3%81%A6%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86">
+         問題10: 関数を作って使ってみよう
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <a href="#-c%E8%A8%80%E8%AA%9E%E9%96%A2%E6%95%B0%E3%81%A8%E3%81%AF">
+       📘 C言語：関数とは？
+      </a>
+      <ul>
+       <li>
+        <a href="#-%E9%96%A2%E6%95%B0%E3%81%A8%E3%81%AF">
+         ✅ 関数とは？
+        </a>
+       </li>
+       <li>
+        <a href="#-%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%A7%8B%E9%80%A0">
+         🧱 関数の基本構造
+        </a>
+       </li>
+       <li>
+        <a href="#-%E4%BE%8B%E6%95%B0%E3%82%922%E5%80%8D%E3%81%AB%E3%81%97%E3%81%A6%E8%BF%94%E3%81%99%E9%96%A2%E6%95%B0">
+         🔹 例：数を2倍にして返す関数
+        </a>
+       </li>
+       <li>
+        <a href="#-main%E9%96%A2%E6%95%B0%E3%82%82%E9%96%A2%E6%95%B0%E3%81%AE%E3%81%B2%E3%81%A8%E3%81%A4">
+         🛠 main関数も関数のひとつ
+        </a>
+       </li>
+       <li>
+        <a href="#-%E5%BC%95%E6%95%B0%E3%81%A8%E3%81%AF">
+         📥 引数とは？
+        </a>
+       </li>
+       <li>
+        <a href="#-%E6%88%BB%E3%82%8A%E5%80%A4%E3%81%A8%E3%81%AF">
+         📤 戻り値とは？
+        </a>
+       </li>
+       <li>
+        <a href="#-%E7%B7%B4%E7%BF%92%E8%87%AA%E5%88%86%E3%81%A7%E9%96%A2%E6%95%B0%E3%82%92%E6%9B%B8%E3%81%84%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86">
+         🧪 練習：自分で関数を書いてみよう！
+        </a>
+        <ul>
+         <li>
+          <a href="#-%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C">
+           🔹 練習問題
+          </a>
+         </li>
+         <li>
+          <a href="#-%E8%A7%A3%E7%AD%94%E4%BE%8B">
+           🔸 解答例
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#-%E3%81%BE%E3%81%A8%E3%82%81">
+         ✅ まとめ
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <a href="#-c%E8%A8%80%E8%AA%9E%E9%96%A2%E6%95%B0%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C%E9%9B%86">
+       🧪 C言語「関数」練習問題集
+      </a>
+      <ul>
+       <li>
+        <a href="#-%E5%9F%BA%E7%A4%8E%E7%B7%A8">
+         🔰 基礎編
+        </a>
+        <ul>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C12%E3%81%A4%E3%81%AE%E6%95%B4%E6%95%B0%E3%81%AE%E5%92%8C%E3%82%92%E8%BF%94%E3%81%99%E9%96%A2%E6%95%B0%E3%82%92%E4%BD%9C%E3%82%8D%E3%81%86">
+           問題1：2つの整数の和を返す関数を作ろう
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C2%E5%BC%95%E6%95%B0%E3%81%A7%E4%B8%8E%E3%81%88%E3%82%89%E3%82%8C%E3%81%9F%E6%95%B4%E6%95%B0%E3%81%8C%E5%81%B6%E6%95%B0%E3%81%8B%E5%A5%87%E6%95%B0%E3%81%8B%E3%82%92%E5%88%A4%E5%AE%9A%E3%81%97%E3%82%88%E3%81%86">
+           問題2：引数で与えられた整数が偶数か奇数かを判定しよう
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C3%E6%95%B4%E6%95%B0%E3%82%922%E4%B9%97%E3%81%97%E3%81%A6%E8%BF%94%E3%81%99%E9%96%A2%E6%95%B0%E3%82%92%E4%BD%9C%E3%82%8D%E3%81%86">
+           問題3：整数を2乗して返す関数を作ろう
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#-%E5%BF%9C%E7%94%A8%E7%B7%A8">
+         🧩 応用編
+        </a>
+        <ul>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C43%E3%81%A4%E3%81%AE%E6%95%B4%E6%95%B0%E3%81%AE%E3%81%86%E3%81%A1%E6%9C%80%E5%A4%A7%E5%80%A4%E3%82%92%E8%BF%94%E3%81%99%E9%96%A2%E6%95%B0">
+           問題4：3つの整数のうち、最大値を返す関数
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C5%E6%96%87%E5%AD%97%E5%88%97%E3%81%AE%E9%95%B7%E3%81%95%E3%82%92%E8%BF%94%E3%81%99%E9%96%A2%E6%95%B0%E6%A8%99%E6%BA%96%E9%96%A2%E6%95%B0%E3%82%92%E4%BD%BF%E3%82%8F%E3%81%9A%E3%81%AB">
+           問題5：文字列の長さを返す関数（標準関数を使わずに）
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C6%E5%BC%95%E6%95%B0%E3%81%A7%E4%B8%8E%E3%81%88%E3%82%89%E3%82%8C%E3%81%9F%E6%95%B0%E3%81%8C%E7%B4%A0%E6%95%B0%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E5%88%A4%E5%AE%9A%E3%81%99%E3%82%8B%E9%96%A2%E6%95%B0">
+           問題6：引数で与えられた数が素数かどうか判定する関数
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a href="#-%E3%81%8A%E3%81%BE%E3%81%91">
+         📝 おまけ
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <a href="#%E6%BC%94%E7%BF%92%E5%95%8F%E9%A1%8C">
+       演習問題
+      </a>
+      <ul>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C1-%E5%9B%9B%E5%89%87%E6%BC%94%E7%AE%97">
+         問題1: 四則演算
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C2-%E5%81%B6%E6%95%B0%E5%A5%87%E6%95%B0%E5%88%A4%E5%AE%9A">
+         問題2: 偶数・奇数判定
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C3-%E6%95%B0%E5%88%97%E3%81%AE%E5%90%88%E8%A8%88">
+         問題3: 数列の合計
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C4-%E3%83%95%E3%82%A3%E3%83%9C%E3%83%8A%E3%83%83%E3%83%81%E6%95%B0%E5%88%97">
+         問題4: フィボナッチ数列
+        </a>
+       </li>
+       <li>
+        <a href="#%E5%95%8F%E9%A1%8C5-%E6%95%B0%E5%BD%93%E3%81%A6%E3%82%B2%E3%83%BC%E3%83%A0">
+         問題5: 数当てゲーム
+        </a>
+       </li>
+       <li>
+        <a href="#%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0">
+         サンプルプログラム
+        </a>
+        <ul>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C1-%E5%9B%9B%E5%89%87%E6%BC%94%E7%AE%97-1">
+           問題1: 四則演算
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C2-%E5%81%B6%E6%95%B0%E5%A5%87%E6%95%B0%E5%88%A4%E5%AE%9A-1">
+           問題2: 偶数・奇数判定
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C3-%E6%95%B0%E5%88%97%E3%81%AE%E5%90%88%E8%A8%88-1">
+           問題3: 数列の合計
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C4-%E3%83%95%E3%82%A3%E3%83%9C%E3%83%8A%E3%83%83%E3%83%81%E6%95%B0%E5%88%97-1">
+           問題4: フィボナッチ数列
+          </a>
+         </li>
+         <li>
+          <a href="#%E5%95%8F%E9%A1%8C5-%E6%95%B0%E5%BD%93%E3%81%A6%E3%82%B2%E3%83%BC%E3%83%A0-1">
+           問題5: 数当てゲーム
+          </a>
+         </li>
+        </ul>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#paspberry-pi">
+     paspberry pi
+    </a>
+   </li>
+   <li>
+    <a href="#url">
+     URL
+    </a>
+   </li>
+  </ul>
+  <h2 id="github">
+   GitHub
+  </h2>
+  <p>
+   GitHubは、プログラムやコードを保存したり、他の人と共有したりするためのサービスです。以下に、GitHubの基本的な役割と使い方を簡単に説明します。
+  </p>
+  <h2 id="githubの役割">
+   GitHubの役割
+  </h2>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      コードの保存
+     </strong>
+     <br/>
+     GitHubは、あなたが書いたコードをインターネット上に安全に保存する場所です。これにより、どこからでもアクセスできます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      共同作業
+     </strong>
+     <br/>
+     他の人と一緒にコードを書くことができます。例えば、友達やチームメンバーと一緒にプロジェクトを進めるときに便利です。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      バージョン管理
+     </strong>
+     <br/>
+     コードの変更履歴を記録できます。間違った変更をしても、以前の状態に戻すことができます。
+    </p>
+   </li>
+  </ol>
+  <h2 id="githubの使い方">
+   GitHubの使い方
+  </h2>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      アカウントを作成する
+     </strong>
+     <br/>
+     <a href="https://github.com">
+      GitHub公式サイト
+     </a>
+     にアクセスして、無料のアカウントを作成します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      リポジトリを作成する
+     </strong>
+     <br/>
+     リポジトリとは、プロジェクトを保存するフォルダのようなものです。新しいリポジトリを作成して、そこにコードを保存します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      コードをアップロードする
+     </strong>
+     <br/>
+     自分のコンピュータで書いたコードをリポジトリにアップロードします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      他の人と共有する
+     </strong>
+     <br/>
+     リポジトリのリンクを共有することで、他の人にコードを見てもらったり、手伝ってもらったりできます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      Gitを使う
+     </strong>
+     <br/>
+     GitHubは「Git」というツールと一緒に使うことが多いです。Gitを使うと、コマンドを使って簡単にコードをアップロードしたり、変更を管理したりできます。
+    </p>
+   </li>
+  </ol>
+  <hr/>
+  <details>
+   <summary>
+    Gitの概要
+   </summary>
+   <p>
+    Gitは、ソースコードのバージョン管理を行うための分散型バージョン管理システムです。以下に、Gitの基本的な特徴を説明します。
+   </p>
+   <ol>
+    <li>
+     <p>
+      <strong>
+       バージョン管理
+      </strong>
+      <br/>
+      ファイルの変更履歴を記録し、過去のバージョンに戻すことができます。
+     </p>
+    </li>
+    <li>
+     <p>
+      <strong>
+       分散型
+      </strong>
+      <br/>
+      各ユーザーが完全なリポジトリのコピーを持つため、ネットワークに接続していなくても作業が可能です。
+     </p>
+    </li>
+    <li>
+     <p>
+      <strong>
+       ブランチ機能
+      </strong>
+      <br/>
+      新しい機能を開発する際に、既存のコードに影響を与えずに作業を進めることができます。
+     </p>
+    </li>
+    <li>
+     <p>
+      <strong>
+       マージ機能
+      </strong>
+      <br/>
+      ブランチで行った変更を統合することができます。
+     </p>
+    </li>
+   </ol>
+   <p>
+    Gitは、効率的な開発をサポートするための強力なツールです。GitHubと組み合わせることで、さらに便利に利用できます。
+   </p>
+  </details>
+  <hr/>
+  <h3 id="アカウントの作り方">
+   アカウントの作り方
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      GitHubのウェブサイトにアクセス
+     </strong>
+     <br/>
+     <a href="https://github.com">
+      GitHub公式サイト
+     </a>
+     にアクセスします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      サインアップページを開く
+     </strong>
+     <br/>
+     画面右上の「Sign up」ボタンをクリックします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      必要な情報を入力
+     </strong>
+    </p>
+    <ul>
+     <li>
+      <strong>
+       メールアドレス
+      </strong>
+      を入力します。
+     </li>
+     <li>
+      <strong>
+       パスワード
+      </strong>
+      を設定します。
+     </li>
+     <li>
+      <strong>
+       ユーザー名
+      </strong>
+      を決めます。
+     </li>
+     <li>
+      必要に応じて、GitHubからのメール通知を受け取るか選択します。
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     <strong>
+      アカウントを作成
+     </strong>
+     <br/>
+     「Create account」ボタンをクリックし、指示に従ってCAPTCHAを完了します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      プランを選択
+     </strong>
+     <br/>
+     無料プランを選択するか、有料プランを選択します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      メールアドレスを確認
+     </strong>
+     <br/>
+     登録したメールアドレスに送られてくる確認メールを開き、リンクをクリックしてアカウントを有効化します。
+    </p>
+   </li>
+  </ol>
+  <h3 id="リポジトリの追加">
+   リポジトリの追加
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      GitHubにログイン
+     </strong>
+     <br/>
+     作成したアカウントでGitHubにログインします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      新しいリポジトリを作成
+     </strong>
+    </p>
+    <ul class="contains-task-list">
+     <li>
+      画面右上の「+」アイコンをクリックし、「New repository」を選択します。
+     </li>
+     <li>
+      リポジトリ名を入力します（例:
+      <code>
+       c-programming
+      </code>
+      ）。
+     </li>
+     <li>
+      「Public」を選択して、リポジトリを公開状態にします。
+     </li>
+     <li class="task-list-item enabled">
+      <input checked="" class="task-list-item-checkbox" type="checkbox"/>
+      privateにしない
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     <strong>
+      READMEファイルを追加
+     </strong>
+    </p>
+    <ul>
+     <li>
+      「Add a README file」にチェックを入れます。
+     </li>
+     <li>
+      READMEファイルはリポジトリの概要を記述するためのファイルです。
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     <strong>
+      リポジトリを作成
+     </strong>
+    </p>
+    <ul>
+     <li>
+      「Create repository」ボタンをクリックします。
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     <strong>
+      リポジトリの確認
+     </strong>
+     <br/>
+     作成したリポジトリのページが表示され、READMEファイルが含まれていることを確認できます。
+    </p>
+   </li>
+  </ol>
+  <h2 id="codespacesの利用方法">
+   Codespacesの利用方法
+  </h2>
+  <p>
+   Codespacesは、GitHubが提供するクラウドベースの開発環境です。以下に、Codespacesの基本的な使い方を説明します。
+  </p>
+  <h3 id="codespacesの作成">
+   Codespacesの作成
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      リポジトリにアクセス
+     </strong>
+     <br/>
+     GitHubで作成したリポジトリのページを開きます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      Codespacesを起動
+     </strong>
+    </p>
+    <ul>
+     <li>
+      画面上部の「Code」ボタンをクリックします。
+     </li>
+     <li>
+      「Codespaces」タブを選択し、「Create codespace on main」をクリックします。
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     <strong>
+      環境の準備
+     </strong>
+     <br/>
+     Codespacesが起動し、開発環境が自動的にセットアップされます。
+    </p>
+   </li>
+  </ol>
+  <h3 id="codespacesでの作業">
+   Codespacesでの作業
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      コードの編集
+     </strong>
+     <br/>
+     ブラウザ上でコードを編集できます。VS Codeと同様のインターフェースを利用できます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      ターミナルの使用
+     </strong>
+     <br/>
+     内蔵ターミナルを使用して、Gitコマンドやビルドコマンドを実行できます。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      拡張機能の利用
+     </strong>
+     <br/>
+     必要に応じて、VS Codeの拡張機能をインストールして開発を効率化できます。
+    </p>
+   </li>
+  </ol>
+  <h3 id="作業内容の保存">
+   作業内容の保存
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      変更をコミット
+     </strong>
+     <br/>
+     編集したコードをリポジトリにコミットします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      プッシュ
+     </strong>
+     <br/>
+     変更をリモートリポジトリにプッシュして保存します。
+    </p>
+   </li>
+  </ol>
+  <h3 id="codespacesの終了">
+   Codespacesの終了
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      Codespacesを停止
+     </strong>
+     <br/>
+     作業が終わったら、Codespacesを停止してリソースを解放します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      再開
+     </strong>
+     <br/>
+     必要に応じて、停止したCodespacesを再開して作業を続けることができます。
+    </p>
+   </li>
+  </ol>
+  <p>
+   Codespacesを利用することで、どこからでも簡単に開発を始めることができます。
+  </p>
+  <h3 id="拡張機能のインストール">
+   拡張機能のインストール
+  </h3>
+  <h4 id="cc-extension-pack">
+   C/C++ Extension Pack
+  </h4>
+  <p>
+   C/C++の開発を効率化するために、以下の手順でC/C++ Extension Packをインストールします。
+  </p>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      拡張機能ビューを開く
+     </strong>
+     <br/>
+     VS Codeの左側にある「拡張機能」アイコン（四角形が重なったアイコン）をクリックします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      検索バーに入力
+     </strong>
+     <br/>
+     検索バーに「C/C++ Extension Pack」と入力します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      拡張機能を選択
+     </strong>
+     <br/>
+     検索結果から「C/C++ Extension Pack」を選択します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      インストール
+     </strong>
+     <br/>
+     「Install」ボタンをクリックして拡張機能をインストールします。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      インストール完了
+     </strong>
+     <br/>
+     インストールが完了すると、C/C++のコード補完やデバッグ機能が利用可能になります。
+    </p>
+   </li>
+  </ol>
+  <p>
+   C/C++ Extension Packをインストールすることで、開発環境がさらに便利になります。
+  </p>
+  <h3 id="c言語の実行手順">
+   C言語の実行手順
+  </h3>
+  <p>
+   C言語のプログラムを実行するには、以下の手順を行います。
+  </p>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      ソースコードの作成
+     </strong>
+     <br/>
+     テキストエディタを使用して、C言語のソースコードを作成します。ファイル名は拡張子
+     <code>
+      .c
+     </code>
+     を使用します（例:
+     <code>
+      hello.c
+     </code>
+     ）。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      コンパイル
+     </strong>
+     <br/>
+     作成したソースコードをコンパイラでコンパイルします。一般的には
+     <code>
+      gcc
+     </code>
+     を使用します。以下のコマンドを実行します。
+    </p>
+    <pre><code class="language-bash">gcc -o 実行ファイル名 ソースファイル名
+</code></pre>
+    <p>
+     例:
+    </p>
+    <pre><code class="language-bash">gcc -o hello hello.c
+</code></pre>
+   </li>
+   <li>
+    <p>
+     <strong>
+      実行
+     </strong>
+     <br/>
+     コンパイルが成功すると、実行可能ファイルが生成されます。以下のコマンドで実行します。
+    </p>
+    <pre><code class="language-bash">./実行ファイル名
+</code></pre>
+    <p>
+     例:
+    </p>
+    <pre><code class="language-bash">./hello
+</code></pre>
+   </li>
+  </ol>
+  <h3 id="c言語のファイル名のつけ方">
+   C言語のファイル名のつけ方
+  </h3>
+  <p>
+   C言語のファイル名をつける際のポイントは以下の通りです。
+  </p>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      拡張子を
+      <code>
+       .c
+      </code>
+      にする
+     </strong>
+     <br/>
+     C言語のソースコードファイルは必ず拡張子
+     <code>
+      .c
+     </code>
+     を使用します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      意味のある名前をつける
+     </strong>
+     <br/>
+     ファイル名はプログラムの内容を簡潔に表すものにします（例:
+     <code>
+      calculator.c
+     </code>
+     ,
+     <code>
+      sort.c
+     </code>
+     ）。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      スペースを使用しない
+     </strong>
+     <br/>
+     ファイル名にスペースを含めないようにします。代わりにアンダースコア（
+     <code>
+      _
+     </code>
+     ）を使用します（例:
+     <code>
+      my_program.c
+     </code>
+     ）。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      英数字とアンダースコアのみを使用
+     </strong>
+     <br/>
+     特殊文字や日本語は避け、英数字とアンダースコアを使用します。
+    </p>
+   </li>
+  </ol>
+  <h3 id="コマンドラインの表示">
+   コマンドラインの表示
+  </h3>
+  <p>
+   C言語のプログラムでコマンドラインにメッセージを表示するには、
+   <code>
+    printf
+   </code>
+   関数を使用します。以下は例です。
+  </p>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello, World!\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   このプログラムを実行すると、以下のように表示されます。
+  </p>
+  <pre><code class="language-bash">Hello, World!
+</code></pre>
+  <h3 id="実行方法">
+   実行方法
+  </h3>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      ソースコードを保存
+     </strong>
+     <br/>
+     例:
+     <code>
+      hello.c
+     </code>
+     という名前で保存します。
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      コンパイル
+     </strong>
+     <br/>
+     以下のコマンドを実行します。
+    </p>
+    <pre><code class="language-bash">gcc -o hello hello.c
+</code></pre>
+   </li>
+   <li>
+    <p>
+     <strong>
+      実行
+     </strong>
+     <br/>
+     以下のコマンドを実行します。
+    </p>
+    <pre><code class="language-bash">./hello
+</code></pre>
+   </li>
+   <li>
+    <p>
+     <strong>
+      結果の確認
+     </strong>
+     <br/>
+     プログラムの出力がコマンドラインに表示されます。
+    </p>
+   </li>
+  </ol>
+  <h2 id="ファイル名のつけ方">
+   ファイル名のつけ方
+  </h2>
+  <ul>
+   <li>
+    ファイル名は
+    <code>
+     YYYYMMDD_問題番号.c
+    </code>
+    の形式で保存してください（例:
+    <code>
+     20231005_1.c
+    </code>
+    ）。
+   </li>
+   <li>
+    実行ファイルは、ソースファイル名から拡張子を除いた名前で生成してください（例:
+    <code>
+     20231005_1
+    </code>
+    ）。
+   </li>
+  </ul>
+  <h2 id="実行方法-1">
+   実行方法
+  </h2>
+  <p>
+   これらのプログラムを保存し、以下の手順でコンパイルと実行を行ってください。
+  </p>
+  <ol>
+   <li>
+    <p>
+     ソースコードを保存します（例:
+     <code>
+      20250418_1.c
+     </code>
+     ）。
+    </p>
+   </li>
+   <li>
+    <p>
+     以下のコマンドでコンパイルします。
+    </p>
+    <pre><code class="language-bash">gcc -o 20250418_1 20250418_1.c
+</code></pre>
+   </li>
+   <li>
+    <p>
+     以下のコマンドで実行します。
+    </p>
+    <pre><code class="language-bash">./20250418_1
+</code></pre>
+   </li>
+  </ol>
+  <h2 id="c言語-基礎問題">
+   C言語 基礎問題
+  </h2>
+  <h3 id="問題1-hello-world-を出力しよう">
+   問題1: Hello, World! を出力しよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-comment">// ここにコードを書こう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : Hello, World!と画面に表示させてください。
+  </p>
+  <hr/>
+  <h3 id="問題2-変数に値を代入して表示しよう">
+   問題2: 変数に値を代入して表示しよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> number;
+    <span class="hljs-comment">// ここで変数に10を代入して表示しよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 変数
+   <code>
+    number
+   </code>
+   に10を代入し、
+   <code>
+    number = 10
+   </code>
+   と表示してください。
+  </p>
+  <hr/>
+  <h3 id="問題3-2つの整数を入力して合計を求めよう">
+   問題3: 2つの整数を入力して合計を求めよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> a, b;
+    <span class="hljs-comment">// 入力を受け取り、合計を出力しよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : ユーザーから整数を2つ入力し、合計を出力してください。
+  </p>
+  <hr/>
+  <h3 id="問題4-偶数奇数を判定しよう">
+   問題4: 偶数・奇数を判定しよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> num;
+    <span class="hljs-comment">// 奇数か偶数かを判定しよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : ユーザーが入力した整数が偶数か奇数かを判定して表示してください。
+  </p>
+  <hr/>
+  <h3 id="問題5-if文の練習成績評価">
+   問題5: if文の練習：成績評価
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> score;
+    <span class="hljs-comment">// scoreが80以上なら「合格」と表示しよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 点数（整数）を入力し、80点以上なら「合格」、それ以外は「不合格」と表示してください。
+  </p>
+  <hr/>
+  <h3 id="問題6-for文の練習110まで出力しよう">
+   問題6: for文の練習：1〜10まで出力しよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-comment">// for文で1から10までを出力しよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 1から10までの整数を1つずつ表示してください。
+  </p>
+  <hr/>
+  <h3 id="問題7-while文でカウントダウンしよう">
+   問題7: while文でカウントダウンしよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> i = <span class="hljs-number">5</span>;
+    <span class="hljs-comment">// while文で5から1までカウントダウンしよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 変数
+   <code>
+    i
+   </code>
+   を使って「5 4 3 2 1」と表示してください。
+  </p>
+  <hr/>
+  <h3 id="問題8-掛け算九九の1の段を表示しよう">
+   問題8: 掛け算九九の1の段を表示しよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-comment">// 1の段：1×1〜1×9まで表示</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 1 x 1 = 1 から 1 x 9 = 9 までをfor文で出力してください。
+  </p>
+  <hr/>
+  <h3 id="問題9-配列にデータを入れて表示しよう">
+   問題9: 配列にデータを入れて表示しよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> scores[<span class="hljs-number">5</span>] = {<span class="hljs-number">90</span>, <span class="hljs-number">80</span>, <span class="hljs-number">70</span>, <span class="hljs-number">60</span>, <span class="hljs-number">50</span>};
+    <span class="hljs-comment">// for文を使ってscoresの中身を出力しよう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 配列
+   <code>
+    scores
+   </code>
+   の全ての要素を1行ずつ出力してください。
+  </p>
+  <hr/>
+  <h3 id="問題10-関数を作って使ってみよう">
+   問題10: 関数を作って使ってみよう
+  </h3>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-comment">// ここに関数を定義しよう</span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-comment">// 関数を呼び出そう</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <p>
+   <strong>
+    問題
+   </strong>
+   : 整数2つを引数に取り、足し算の結果を返す関数
+   <code>
+    add
+   </code>
+   を作成し、
+   <code>
+    3 + 5 = 8
+   </code>
+   を表示してください。
+  </p>
+  <hr/>
+  <h2 id="-c言語関数とは">
+   📘 C言語：関数とは？
+  </h2>
+  <h3 id="-関数とは">
+   ✅ 関数とは？
+  </h3>
+  <p>
+   関数とは、「特定の処理をまとめた部品」のようなものです。
+  </p>
+  <p>
+   プログラムの中で何度も使いたい処理を関数として定義することで、以下のメリットがあります：
+  </p>
+  <ul>
+   <li>
+    <p>
+     繰り返し使える
+    </p>
+   </li>
+   <li>
+    <p>
+     プログラムが読みやすくなる
+    </p>
+   </li>
+  </ul>
+  <hr/>
+  <h3 id="-関数の基本構造">
+   🧱 関数の基本構造
+  </h3>
+  <pre><code class="language-c">戻り値の型 関数名(引数の型 引数名, ...) {
+    <span class="hljs-comment">// 実行したい処理</span>
+    <span class="hljs-keyword">return</span> 戻り値;
+}
+</code></pre>
+  <hr/>
+  <h3 id="-例数を2倍にして返す関数">
+   🔹 例：数を2倍にして返す関数
+  </h3>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">doubleNumber</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> {
+    <span class="hljs-keyword">return</span> x * <span class="hljs-number">2</span>;
+}
+</code></pre>
+  <hr/>
+  <h3 id="-main関数も関数のひとつ">
+   🛠 main関数も関数のひとつ
+  </h3>
+  <p>
+   C言語のプログラムは、必ず
+   <code>
+    main()
+   </code>
+   関数から実行が始まります。
+  </p>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello, World!\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <hr/>
+  <h3 id="-引数とは">
+   📥 引数とは？
+  </h3>
+  <p>
+   関数に渡す値のことです。
+  </p>
+  <p>
+   例では
+   <code>
+    x
+   </code>
+   が引数で、呼び出し元から値を受け取っています。
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">doubleNumber</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> {
+    <span class="hljs-keyword">return</span> x * <span class="hljs-number">2</span>;
+}
+</code></pre>
+  <hr/>
+  <h3 id="-戻り値とは">
+   📤 戻り値とは？
+  </h3>
+  <p>
+   関数が処理を終えたあと、結果を返すための値です。
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> result = doubleNumber(<span class="hljs-number">5</span>); <span class="hljs-comment">// resultは10になる</span>
+</code></pre>
+  <hr/>
+  <h3 id="-練習自分で関数を書いてみよう">
+   🧪 練習：自分で関数を書いてみよう！
+  </h3>
+  <h4 id="-練習問題">
+   🔹 練習問題
+  </h4>
+  <p>
+   「2つの整数を足して返す関数」を作ってみよう！
+  </p>
+  <pre><code class="language-c"><span class="hljs-comment">// ここに関数を作ってね！</span>
+</code></pre>
+  <h4 id="-解答例">
+   🔸 解答例
+  </h4>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> {
+    <span class="hljs-keyword">return</span> a + b;
+}
+</code></pre>
+  <hr/>
+  <h3 id="-まとめ">
+   ✅ まとめ
+  </h3>
+  <table>
+   <thead>
+    <tr>
+     <th>
+      用語
+     </th>
+     <th>
+      意味
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>
+      <strong>
+       関数
+      </strong>
+     </td>
+     <td>
+      処理をまとめたブロック
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <strong>
+       引数
+      </strong>
+     </td>
+     <td>
+      関数に渡す入力データ
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <strong>
+       戻り値
+      </strong>
+     </td>
+     <td>
+      処理結果として返すデータ
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <strong>
+       main関数
+      </strong>
+     </td>
+     <td>
+      プログラムのスタート地点
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <hr/>
+  <h2 id="-c言語関数練習問題集">
+   🧪 C言語「関数」練習問題集
+  </h2>
+  <h3 id="-基礎編">
+   🔰 基礎編
+  </h3>
+  <h4 id="問題12つの整数の和を返す関数を作ろう">
+   問題1：2つの整数の和を返す関数を作ろう
+  </h4>
+  <p>
+   <strong>
+    関数名
+   </strong>
+   :
+   <code>
+    add
+   </code>
+   <br/>
+   <strong>
+    引数
+   </strong>
+   : 整数
+   <code>
+    a
+   </code>
+   , 整数
+   <code>
+    b
+   </code>
+   <br/>
+   <strong>
+    戻り値
+   </strong>
+   :
+   <code>
+    a + b
+   </code>
+   の値を返す
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span>;
+</code></pre>
+  <hr/>
+  <h4 id="問題2引数で与えられた整数が偶数か奇数かを判定しよう">
+   問題2：引数で与えられた整数が偶数か奇数かを判定しよう
+  </h4>
+  <p>
+   <strong>
+    関数名
+   </strong>
+   :
+   <code>
+    isEven
+   </code>
+   <br/>
+   <strong>
+    引数
+   </strong>
+   : 整数
+   <code>
+    x
+   </code>
+   <br/>
+   <strong>
+    戻り値
+   </strong>
+   : 偶数なら
+   <code>
+    1
+   </code>
+   、奇数なら
+   <code>
+    0
+   </code>
+   を返す
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">isEven</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span>;
+</code></pre>
+  <hr/>
+  <h4 id="問題3整数を2乗して返す関数を作ろう">
+   問題3：整数を2乗して返す関数を作ろう
+  </h4>
+  <p>
+   <strong>
+    関数名
+   </strong>
+   :
+   <code>
+    square
+   </code>
+   <br/>
+   <strong>
+    引数
+   </strong>
+   : 整数
+   <code>
+    x
+   </code>
+   <br/>
+   <strong>
+    戻り値
+   </strong>
+   :
+   <code>
+    x * x
+   </code>
+   の値を返す
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">square</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span>;
+</code></pre>
+  <hr/>
+  <h3 id="-応用編">
+   🧩 応用編
+  </h3>
+  <h4 id="問題43つの整数のうち最大値を返す関数">
+   問題4：3つの整数のうち、最大値を返す関数
+  </h4>
+  <p>
+   <strong>
+    関数名
+   </strong>
+   :
+   <code>
+    maxOfThree
+   </code>
+   <br/>
+   <strong>
+    引数
+   </strong>
+   : 整数
+   <code>
+    a
+   </code>
+   ,
+   <code>
+    b
+   </code>
+   ,
+   <code>
+    c
+   </code>
+   <br/>
+   <strong>
+    戻り値
+   </strong>
+   : 3つの中で最大の値を返す
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">maxOfThree</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span>;
+</code></pre>
+  <hr/>
+  <h4 id="問題5文字列の長さを返す関数標準関数を使わずに">
+   問題5：文字列の長さを返す関数（標準関数を使わずに）
+  </h4>
+  <p>
+   <strong>
+    関数名
+   </strong>
+   :
+   <code>
+    myStrLen
+   </code>
+   <br/>
+   <strong>
+    引数
+   </strong>
+   : 文字列（
+   <code>
+    char
+   </code>
+   の配列）
+   <br/>
+   <strong>
+    戻り値
+   </strong>
+   : 文字列の長さ（終端の
+   <code>
+    '\0'
+   </code>
+   までの文字数）
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">myStrLen</span><span class="hljs-params">(<span class="hljs-type">char</span> str[])</span>;
+</code></pre>
+  <hr/>
+  <h4 id="問題6引数で与えられた数が素数かどうか判定する関数">
+   問題6：引数で与えられた数が素数かどうか判定する関数
+  </h4>
+  <p>
+   <strong>
+    関数名
+   </strong>
+   :
+   <code>
+    isPrime
+   </code>
+   <br/>
+   <strong>
+    引数
+   </strong>
+   : 整数
+   <code>
+    x
+   </code>
+   <br/>
+   <strong>
+    戻り値
+   </strong>
+   : 素数なら
+   <code>
+    1
+   </code>
+   、そうでなければ
+   <code>
+    0
+   </code>
+   を返す
+  </p>
+  <pre><code class="language-c"><span class="hljs-type">int</span> <span class="hljs-title function_">isPrime</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span>;
+</code></pre>
+  <hr/>
+  <h3 id="-おまけ">
+   📝 おまけ
+  </h3>
+  <p>
+   すべての関数を
+   <code>
+    main()
+   </code>
+   関数から呼び出して動作確認してみよう！
+  </p>
+  <hr/>
+  <h2 id="演習問題">
+   演習問題
+  </h2>
+  <p>
+   以下の演習問題を解いて、C言語の基本的な構文や機能を学びましょう。
+  </p>
+  <h3 id="問題1-四則演算">
+   問題1: 四則演算
+  </h3>
+  <p>
+   <strong>
+    標準入力
+   </strong>
+   <br/>
+   2つの整数と1つの演算子（
+   <code>
+    +
+   </code>
+   ,
+   <code>
+    -
+   </code>
+   ,
+   <code>
+    *
+   </code>
+   ,
+   <code>
+    /
+   </code>
+   ）を入力として受け取り、計算結果を標準出力に表示するプログラムを作成してください。
+  </p>
+  <p>
+   <strong>
+    条件
+   </strong>
+  </p>
+  <ul>
+   <li>
+    割り算の場合、小数点以下を切り捨てて整数で出力してください。
+   </li>
+   <li>
+    無効な演算子が入力された場合は「Invalid operator」と表示してください。
+   </li>
+  </ul>
+  <p>
+   <strong>
+    例
+   </strong>
+   <br/>
+   入力:
+  </p>
+  <pre><code class="language-plaintext">10 5 +
+</code></pre>
+  <p>
+   出力:
+  </p>
+  <pre><code class="language-plaintext">15
+</code></pre>
+  <h3 id="問題2-偶数奇数判定">
+   問題2: 偶数・奇数判定
+  </h3>
+  <p>
+   <strong>
+    標準入力
+   </strong>
+   <br/>
+   1つの整数を入力として受け取り、その整数が偶数か奇数かを判定して標準出力に表示するプログラムを作成してください。
+  </p>
+  <p>
+   <strong>
+    条件
+   </strong>
+  </p>
+  <ul>
+   <li>
+    偶数の場合は「Even」、奇数の場合は「Odd」と表示してください。
+   </li>
+  </ul>
+  <p>
+   <strong>
+    例
+   </strong>
+   <br/>
+   入力:
+  </p>
+  <pre><code class="language-plaintext">7
+</code></pre>
+  <p>
+   出力:
+  </p>
+  <pre><code class="language-plaintext">Odd
+</code></pre>
+  <h3 id="問題3-数列の合計">
+   問題3: 数列の合計
+  </h3>
+  <p>
+   <strong>
+    標準入力
+   </strong>
+   <br/>
+   1つの整数
+   <code>
+    N
+   </code>
+   を入力として受け取り、1から
+   <code>
+    N
+   </code>
+   までの整数の合計を計算して標準出力に表示するプログラムを作成してください。
+  </p>
+  <p>
+   <strong>
+    条件
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <code>
+     N
+    </code>
+    は正の整数とします。
+   </li>
+  </ul>
+  <p>
+   <strong>
+    例
+   </strong>
+   <br/>
+   入力:
+  </p>
+  <pre><code class="language-plaintext">5
+</code></pre>
+  <p>
+   出力:
+  </p>
+  <pre><code class="language-plaintext">15
+</code></pre>
+  <h3 id="問題4-フィボナッチ数列">
+   問題4: フィボナッチ数列
+  </h3>
+  <p>
+   <strong>
+    標準入力
+   </strong>
+   <br/>
+   1つの整数
+   <code>
+    N
+   </code>
+   を入力として受け取り、フィボナッチ数列の最初の
+   <code>
+    N
+   </code>
+   項を標準出力に表示するプログラムを作成してください。
+  </p>
+  <p>
+   <strong>
+    条件
+   </strong>
+  </p>
+  <ul>
+   <li>
+    フィボナッチ数列は次のように定義されます:
+    <ul>
+     <li>
+      <code>
+       F(1) = 0, F(2) = 1
+      </code>
+     </li>
+     <li>
+      <code>
+       F(n) = F(n-1) + F(n-2) (n &gt; 2)
+      </code>
+     </li>
+    </ul>
+   </li>
+  </ul>
+  <p>
+   <strong>
+    例
+   </strong>
+   <br/>
+   入力:
+  </p>
+  <pre><code class="language-plaintext">6
+</code></pre>
+  <p>
+   出力:
+  </p>
+  <pre><code class="language-plaintext">0 1 1 2 3 5
+</code></pre>
+  <h3 id="問題5-数当てゲーム">
+   問題5: 数当てゲーム
+  </h3>
+  <p>
+   <strong>
+    標準入力
+   </strong>
+   <br/>
+   1から100までのランダムな整数を生成し、ユーザーにその数を当てさせるプログラムを作成してください。ユーザーが入力した数が正解より大きい場合は「Too high」、小さい場合は「Too low」と表示し、正解の場合は「Correct」と表示して終了します。
+  </p>
+  <p>
+   <strong>
+    条件
+   </strong>
+  </p>
+  <ul>
+   <li>
+    ユーザーが正解するまで繰り返します。
+   </li>
+  </ul>
+  <p>
+   <strong>
+    例
+   </strong>
+   <br/>
+   入力:
+  </p>
+  <pre><code class="language-plaintext">50
+</code></pre>
+  <p>
+   出力:
+  </p>
+  <pre><code class="language-plaintext">Too low
+</code></pre>
+  <h3 id="サンプルプログラム">
+   サンプルプログラム
+  </h3>
+  <p>
+   以下は、各問題のサンプルプログラムです。
+  </p>
+  <h4 id="問題1-四則演算-1">
+   問題1: 四則演算
+  </h4>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> a, b;
+    <span class="hljs-type">char</span> op;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Enter two integers and an operator (+, -, *, /): "</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d %d %c"</span>, &amp;a, &amp;b, &amp;op);
+
+    <span class="hljs-keyword">switch</span> (op) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'+'</span>:
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, a + b);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'-'</span>:
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, a - b);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'*'</span>:
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, a * b);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'/'</span>:
+            <span class="hljs-keyword">if</span> (b != <span class="hljs-number">0</span>) {
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, a / b);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Division by zero is not allowed.\n"</span>);
+            }
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Invalid operator\n"</span>);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <h4 id="問題2-偶数奇数判定-1">
+   問題2: 偶数・奇数判定
+  </h4>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> num;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Enter an integer: "</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;num);
+
+    <span class="hljs-keyword">if</span> (num % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Even\n"</span>);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Odd\n"</span>);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <h4 id="問題3-数列の合計-1">
+   問題3: 数列の合計
+  </h4>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> n, sum = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Enter a positive integer: "</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;n);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        sum += i;
+    }
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, sum);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <h4 id="問題4-フィボナッチ数列-1">
+   問題4: フィボナッチ数列
+  </h4>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> n;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Enter the number of terms: "</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;n);
+
+    <span class="hljs-type">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">1</span>, next;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>, a);
+        next = a + b;
+        a = b;
+        b = next;
+    }
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+  <h4 id="問題5-数当てゲーム-1">
+   問題5: 数当てゲーム
+  </h4>
+  <pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">int</span> target, guess;
+    srand(time(<span class="hljs-number">0</span>));
+    target = rand() % <span class="hljs-number">100</span> + <span class="hljs-number">1</span>;
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Guess a number between 1 and 100: "</span>);
+    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;guess);
+        <span class="hljs-keyword">if</span> (guess &gt; target) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Too high\n"</span>);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (guess &lt; target) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Too low\n"</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Correct\n"</span>);
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</code></pre>
+  <h1 id="paspberry-pi">
+   paspberry pi
+  </h1>
+  <p>
+   IP : 10.250.4.28
+固定してよい
+  </p>
+  <h1 id="url">
+   URL
+  </h1>
+  <p>
+   <a href="https://kiri931.github.io/C-programming/">
+    https://kiri931.github.io/C-programming/
+   </a>
+  </p>
+  <script>
+   const toggleBtn = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  const setHighlightTheme = (darkMode) => {
+    document.getElementById("hljs-light").disabled = darkMode;
+    document.getElementById("hljs-dark").disabled = !darkMode;
+  };
+
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    toggleBtn.textContent = 'ダークモード';
+    setHighlightTheme(true);
+  } else {
+    setHighlightTheme(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    toggleBtn.textContent = isDark ? 'ダークモード' : 'ライトモード';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    setHighlightTheme(isDark);
+  });
+  </script>
+ </body>
+</html>

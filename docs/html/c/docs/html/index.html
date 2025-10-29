@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テスト対策プリント</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>テスト対策プリント</h1>
+  </header>
+
+<section>
+    <h2>Webってなに？</h2>
+    <p>Webページは、インターネットで見られるページのことです。</p>
+    <p>Webページを作るには、次の3つのファイルを使います：</p>
+    <ul>
+        <li><strong>HTML（.html）</strong>：ページの内容や構造を決める</li>
+        <li><strong>CSS（.css）</strong>：色やデザインなど見た目を決める</li>
+        <li><strong>JavaScript（.js）</strong>：動きをつける</li>
+    </ul>
+    <p>作ったページをみんなに見せるには「Webサーバー」に置きます。</p>
+    <p>Webサーバーには「IPアドレス（例：192.168.0.1）」や「URL（例：https://example.com）」が必要です。</p>
+    <p>たくさんのデータを管理したいときは「データベース」を使います。</p>
+</section>
+
+<section>
+    <h2>HTMLとは？</h2>
+    <p>HTML（エイチティーエムエル）は、Webページの「骨組み」を作るための言語です。</p>
+    <ul>
+        <li><strong>HyperText</strong>：リンクで他のページに移動できる</li>
+        <li><strong>Markup</strong>：タグ（&lt;h1&gt;など）で文章の役割を示す</li>
+    </ul>
+    <p>たとえば、見出しは次のように書きます：</p>
+    <pre><code>&lt;h1&gt;見出し&lt;/h1&gt;</code></pre>
+    <p>HTMLは「タグ」で囲んで意味を伝えます。</p>
+</section>
+
+<section>
+    <h2>CSSとは？</h2>
+    <p>CSS（シーエスエス）は、Webページの色や文字の大きさ、レイアウトなど「見た目」を決めるための言語です。</p>
+    <p>たとえば、文字を赤くしたいときは次のように書きます：</p>
+    <pre><code>.kyocho {
+    color: red;
+}</code></pre>
+    <p>このように、CSSを使うと自分好みのデザインにできます。</p>
+</section>
+
+<section>
+    <h2>JavaScriptとは</h2>
+    <p>JavaScriptは、Webページに「動き」や「反応」を加えるためのプログラミング言語です。</p>
+    <ul>
+      <li>画像が自動で切り替わるスライドショー</li>
+      <li>スクロールするとアニメーションするページ</li>
+      <li>ボタンを押すとメニューが開く</li>
+    </ul>
+    <p>※「Java」と名前が似ていますが、まったく別の言語です。</p>
+</section>
+
+<section>
+    <h2>HTMLの基本構造</h2>
+    <p>HTMLファイルは、次のような決まった形（ひな形）で書き始めます。</p>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;ページのタイトル&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    ページの内容
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <ul>
+        <li><strong>&lt;!DOCTYPE html&gt;</strong>：HTML5で書くことを宣言します。</li>
+        <li><strong>&lt;html&gt; ～ &lt;/html&gt;</strong>：HTML文書の始まりと終わりを示します。</li>
+        <li><strong>&lt;head&gt; ～ &lt;/head&gt;</strong>：ページの情報（タイトルや文字コードなど）を書きます。</li>
+        <li><strong>&lt;body&gt; ～ &lt;/body&gt;</strong>：実際に画面に表示される内容を書きます。</li>
+    </ul>
+    <p>インデント（字下げ）を使うと、どこからどこまでがセットなのか分かりやすくなります。</p>
+</section>
+
+<section>
+    <h2>属性とグローバル属性</h2>
+    <p>属性（attribute）は、タグに「追加の情報」をつけるためのものです。</p>
+    <p>たとえば、ページの言語を指定するには次のように書きます：</p>
+    <pre><code>&lt;html lang="ja"&gt;</code></pre>
+    <p>この <code>lang="ja"</code> の部分が「属性」です。</p>
+    <p>どのタグでも使える「グローバル属性」には、次のようなものがあります：</p>
+    <ul>
+        <li><strong>class</strong>：CSSでデザインを変えたいときに使う名前</li>
+        <li><strong>id</strong>：ページ内で1つだけの特別な名前</li>
+        <li><strong>lang</strong>：その部分の言語を指定</li>
+        <li><strong>style</strong>：その場だけCSSを書きたいときに使う</li>
+        <li><strong>title</strong>：マウスを重ねると説明が表示される</li>
+    </ul>
+    <p>属性は、<code>タグ名 属性名="値"</code> の形で書きます。</p>
+</section>
+
+<section>
+    <h2>要素の分類とカテゴリ</h2>
+    <p>HTMLのタグ（要素）は、役割ごとに7つのグループ（カテゴリ）に分かれています。</p>
+    <ul>
+        <li><strong>メタデータ・コンテンツ</strong>：ページの情報（例：&lt;title&gt;や&lt;meta&gt;）</li>
+        <li><strong>フロー・コンテンツ</strong>：ページの主な流れを作る要素（例：&lt;p&gt;や&lt;div&gt;）</li>
+        <li><strong>見出しコンテンツ</strong>：見出しを表す要素（例：&lt;h1&gt;～&lt;h6&gt;）</li>
+        <li><strong>フレージング・コンテンツ</strong>：文章やその一部を表す要素（例：&lt;span&gt;や&lt;strong&gt;）</li>
+        <li><strong>埋め込みコンテンツ</strong>：画像や動画など、他のデータを埋め込む要素（例：&lt;img&gt;や&lt;video&gt;）</li>
+        <li><strong>インタラクティブ・コンテンツ</strong>：ユーザーが操作できる要素（例：&lt;a&gt;や&lt;button&gt;）</li>
+        <li><strong>セクショニング・コンテンツ</strong>：ページを区切る要素（例：&lt;section&gt;や&lt;nav&gt;）</li>
+    </ul>
+    <p>このように、タグの役割ごとにグループ分けされているので、どんな場面で使うかが分かりやすくなっています。</p>
+</section>
+
+<section>
+    <h2>特殊文字の書き方</h2>
+    <p>
+        HTMLでは、「&lt;」や「&gt;」などの記号をそのまま書くと、タグと間違われて正しく表示されません。<br>
+        そのため、特別な書き方（エスケープ）を使います。
+    </p>
+    <ul>
+        <li><strong>&lt;</strong>（小なり）は <code>&amp;lt;</code> と書きます</li>
+        <li><strong>&gt;</strong>（大なり）は <code>&amp;gt;</code> と書きます</li>
+        <li><strong>&amp;</strong>（アンド）は <code>&amp;amp;</code> と書きます</li>
+        <li><strong>"</strong>（ダブルクォーテーション）は <code>&amp;quot;</code> と書きます</li>
+    </ul>
+    <p>たとえば、次のように書くと…</p>
+    <p><code>&lt;p&gt;こんにちは&amp;lt;私は足立&amp;gt;です。&lt;/p&gt;</code></p>
+    <p>画面には「こんにちは&lt;私は足立&gt;です。」と表示されます。</p>
+</section>
+
+<section>
+    <h2>Webブラウザと開発者ツール</h2>
+    <p>
+        Webページを見るときは「Webブラウザ」（例：Chrome、Firefox、Edge、Safariなど）を使います。<br>
+        Webブラウザには「開発者ツール」という便利な機能があり、F12キーを押すと開くことができます。
+    </p>
+    <p>
+        開発者ツールでは、次のようなことができます：
+    </p>
+    <ul>
+        <li><strong>Elements（エレメンツ）</strong>：ページのHTMLやCSSを確認したり、その場で編集できます。</li>
+        <li><strong>Console（コンソール）</strong>：JavaScriptを実行したり、エラーやメッセージを確認できます。</li>
+    </ul>
+    <p>
+        これらを使うと、Webページの仕組みを調べたり、作ったページの動きをチェックしたりできます。<br>
+        初めての人も、いろいろ触ってみると理解が深まります。
+    </p>
+</section>
+
+<section>
+    <h2>ボックスモデル</h2>
+    <p>
+        Webページのパーツ（文字や画像など）は、すべて「四角い箱（ボックス）」として考えます。<br>
+        この箱は、次の4つの部分でできています：
+    </p>
+    <ul>
+        <li><strong>content（内容）</strong>：文字や画像など、実際に表示される部分</li>
+        <li><strong>padding（内側の余白）</strong>：内容のまわりのスペース。背景色もここまで広がります</li>
+        <li><strong>border（枠線）</strong>：箱のふちを囲む線</li>
+        <li><strong>margin（外側の余白）</strong>：他の箱との間をあけるスペース</li>
+    </ul>
+    <p>
+        たとえば、プレゼントの箱をイメージすると、<br>
+        <strong>内容</strong>がプレゼント、<strong>padding</strong>がクッション、<strong>border</strong>が箱のふち、<strong>margin</strong>が他の箱とのすき間です。
+    </p>
+</section>
+
+<section>
+    <h2>CSSの基本プロパティ</h2>
+    <p>
+        CSSには、よく使う「プロパティ（設定項目）」がいくつかあります。<br>
+        これらを使うと、文字の大きさや色、背景などを自由に変えられます。
+    </p>
+    <ul>
+        <li><strong>width / height</strong>：箱（要素）の横幅や高さを決めます</li>
+        <li><strong>font-size / font-weight</strong>：文字の大きさや太さを変えます</li>
+        <li><strong>text-align</strong>：文字を左・中央・右にそろえます（例：left/center/right）</li>
+        <li><strong>color</strong>：文字の色を指定します</li>
+        <li><strong>background-color / background-image</strong>：背景の色や画像を設定します</li>
+        <li><strong>border</strong>：枠線をつけます</li>
+    </ul>
+    <p>
+        たとえば、「文字を赤くして大きくしたい」「背景に色をつけたい」といったときに、これらのプロパティを使います。
+    </p>
+</section>
+
+<section>
+    <h2>Flexboxについて</h2>
+    <p>
+        Flexbox（フレックスボックス）は、Webページのレイアウトを簡単にきれいに並べるための仕組みです。<br>
+        たとえば、写真やボタンを横に並べたいとき、Flexboxを使うととても便利です。
+    </p>
+    <p>
+        まず、<strong>親要素</strong>に <code>display: flex;</code> を指定します。すると、その中にある<strong>子要素</strong>が自動的に横並びになります。
+    </p>
+    <pre><code>.container {
+    display: flex;
+}</code></pre>
+    <p>
+        これだけで、<code>.container</code> の中の要素が横に並びます。<br>
+        他にも、<code>justify-content</code> や <code>align-items</code> などを使うと、間隔や位置も自由に調整できます。
+    </p>
+    <ul>
+        <li><strong>justify-content</strong>：子要素の横方向の並び方を決める（例：中央寄せ、右寄せなど）</li>
+        <li><strong>align-items</strong>：子要素の縦方向の位置を決める</li>
+    </ul>
+    <p>
+        Flexboxを使うと、難しい計算をしなくても、思い通りに要素を並べることができます。
+    </p>
+</section>
+
+  <footer>
+    <h2>参考リンク</h2>
+    <ul>
+      <li><a href="https://html5exam.jp/" target="_blank">HTML5プロフェッショナル認定試験</a></li>
+      <li><a href="https://developer.mozilla.org/ja/" target="_blank">MDN Web Docs</a></li>
+      <li><a href="https://gihyo.jp/book/2022/978-4-297-13132-6" target="_blank">武器になるHTML（技術評論社）</a></li>
+    </ul>
+  </footer>
+</body>
+</html>
