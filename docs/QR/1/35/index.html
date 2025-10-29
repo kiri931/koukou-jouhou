@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>クールなダーク背景</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      color: #f0f0f0;
+      background: 
+        linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* うっすら光るラインを斜めに入れてみる */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.05) 2px,
+          transparent 2px,
+          transparent 20px
+        );
+      pointer-events: none;
+      z-index: 0;
+      animation: moveLines 30s linear infinite;
+    }
+
+    @keyframes moveLines {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100px 100px;
+      }
+    }
+
+    p {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      max-width: 600px;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      margin: 15px 0;
+      backdrop-filter: blur(6px);
+    }
+  </style>
+</head>
+<body>
+未来はまだ見ぬ朝の光、<br>
+闇を裂きて静かに差し込む希望の種。<br>
+その種は土の奥深く眠りながら、<br>
+永遠の時の中でそっと息をし、<br>
+やがて芽吹く日を夢見ている。<br>
+
+時の川は止まることなく流れ、<br>
+流れの中で古い記憶は砂となり、<br>
+新しい波は岸辺に歌を運ぶ。<br>
+昨日の影は遠く揺れ、<br>
+未来の風が帆を高く揚げる。<br>
+
+鋼鉄の心に灯る微かな光、<br>
+冷たき機械に宿る温もりは、<br>
+人の魂と交わり合い、<br>
+未知なる旋律を紡ぎ出す。<br>
+人工の手が織りなす優しさは、<br>
+孤独な夜の闇を溶かすだろう。<br>
+
+森の緑は囁き、風は歌い、<br>
+地球は深い呼吸を繰り返す。<br>
+新たな生命が芽吹き、<br>
+星々が空に輝きを増す時、<br>
+人はその調和の中で踊り出す。<br>
+
+未来は一つの物語ではなく、<br>
+無数の希望が織りなす織物。<br>
+その糸は手のひらにあり、<br>
+思いのままに色を紡げる。<br>
+愛と知恵が結ばれた糸が、<br>
+新しい世界を編み上げるのだ。<br>
+
+機械と人、人と自然、<br>
+すべてが響き合い調和し、<br>
+終わりなき旅の中で<br>
+共に歩む未来が開かれる。<br>
+恐れず、迷わず、ただ前へ、<br>
+心の灯を胸に抱いて。<br>
+
+未来は静かな約束、<br>
+まだ誰も見ぬ星の瞬き。<br>
+君の眼差しがそれを照らし、<br>
+一歩一歩、夢を実らせてゆく。<br>
+風が運ぶその声に耳を澄ませ、<br>
+今日という日から未来は始まる。<br>
+</body>
+</html>

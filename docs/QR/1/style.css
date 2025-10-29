@@ -1,0 +1,117 @@
+/* 体験型推理ミステリー向けダークテーマCSS */
+
+body {
+  background-color: #121212; /* 超暗めの背景 */
+  color: #c0c0c0;           /* 薄いグレー文字 */
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+}
+
+a {
+  color: #6699cc;           /* ミステリアスな青系リンク */
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+a:hover {
+  border-bottom: 1px solid #cc6666; /* 赤みのアクセント */
+  color: #cc6666;
+}
+
+h1, h2, h3, h4 {
+  color: #e0e0e0;
+  text-shadow: 0 0 5px #222; /* ぼんやりとした影で奥行き */
+}
+
+button, .btn {
+  background-color: #222;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+button:hover, .btn:hover {
+  background-color: #cc6666;
+  color: #121212;
+}
+
+input, textarea {
+  background-color: #222;
+  border: 1px solid #444;
+  color: #ddd;
+  padding: 8px;
+  border-radius: 3px;
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #6699cc;
+  box-shadow: 0 0 5px #6699cc;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #1c1c1c;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+/* ミステリーテーマに合わせた引用や強調 */
+blockquote {
+  border-left: 4px solid #cc6666;
+  margin: 1.5em 10px;
+  padding-left: 15px;
+  color: #bbb;
+  font-style: italic;
+  background-color: #222;
+  box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.bold {
+  font-weight: 900;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+/* フッター */
+.site-footer {
+  background-color: #1c1c1c;
+  border-top: 1px solid #333;
+  margin-top: 40px;
+  padding: 20px 0;
+  color: #888;
+  font-size: 0.9em;
+  text-align: center;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.5);
+}
+
+.site-footer .footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-nav a {
+  color: #6699cc;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color: #cc6666;
+  border-bottom: 1px solid #cc6666;
+}

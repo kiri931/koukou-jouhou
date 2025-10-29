@@ -1,0 +1,95 @@
+/* ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+   追加の見せ方CSS（ベースCSSに重ねる）
+   ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ */
+
+/* 画面いっぱいのヒーロー領域 */
+.hero {
+  min-height: 100svh;                /* モバイルでも正しく表示 */
+  display: grid;
+  place-items: center;
+  position: relative;
+  padding: clamp(16px, 6vw, 64px);
+  isolation: isolate;                 /* vignetteの下に文字を置かないように */
+}
+
+/* うっすら周辺減光（ダーク・ミステリ調を活かす） */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 50%,
+      transparent 0 60%,
+      rgba(0,0,0,0.25) 80%,
+      rgba(0,0,0,0.55) 100%);
+  z-index: -1;
+}
+
+.hero__inner {
+  max-width: 1200px;
+  width: min(1200px, 100%);
+}
+
+/* 行ごとのスタイル：大きく・読みやすく・中央揃え */
+.line {
+  margin: 0 0 0.6em 0;
+  font-weight: 700;
+  text-align: center;
+  color: #e6e6e6; /* ベースより一段明るく */
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  word-break: keep-all;
+  text-wrap: balance; /* 複数行のバランス調整（対応ブラウザで効く） */
+  /* フルイドな文字サイズ：スマホ～大型ディスプレイで自然に拡縮 */
+  font-size: clamp(1.4rem, 2.4vw + 1rem, 3.6rem);
+  /* ほんの少しの立体感 */
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.6))
+          drop-shadow(0 8px 24px rgba(0,0,0,0.35));
+  opacity: 0;
+  animation: fadeUp 0.9s ease both;
+}
+
+/* 段ごとにディレイをかけて余韻を作る */
+.l2 { animation-delay: 0.28s; }
+.l3 { animation-delay: 0.56s; }
+
+/* 先頭のキー語をやわらかく強調 */
+.lead {
+  color: #f0f0f0;
+  font-weight: 800;
+}
+
+/* 末尾の決めフレーズを色アクセントで強めに */
+.accent {
+  color: #cc6666; /* ベースCSSのアクセントカラーと統一 */
+  text-shadow: 0 0 10px rgba(204,102,102,0.15);
+}
+
+/* クレジット（任意） */
+.credit {
+  margin-top: clamp(0.5rem, 1.2vw, 1.5rem);
+  text-align: center;
+  color: #a9a9a9;
+  font-size: clamp(0.9rem, 0.7vw + 0.7rem, 1.2rem);
+  letter-spacing: 0.04em;
+}
+.credit .name { color: #cfcfcf; }
+
+/* 画面読み上げ用（視覚的には非表示） */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); overflow: hidden;
+}
+
+/* ふわっと持ち上がる登場アニメーション */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* タブレット以下：行間と余白を少しゆったりに */
+@media (max-width: 720px) {
+  .line { line-height: 1.45; }
+}

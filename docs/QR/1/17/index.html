@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>なぞなぞ</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 40px 50px;
+      border-radius: 12px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .riddle {
+      font-size: 1.6rem;
+      color: #444;
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #f8f8f8;
+      border-radius: 8px;
+    }
+
+    .answer {
+      font-size: 1.6rem;
+      margin-top: 20px;
+      padding: 15px;
+      color: #fff;
+      background-color: #27ae60;
+      /* 緑色 */
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .reveal-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      color: white;
+      background-color: #3498db;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .reveal-btn:hover {
+      background-color: #2980b9;
+    }
+  </style>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>なぞなぞ</h1>
+
+    <div class="riddle">
+      <p>問題：あるものを3つ並べると、1つ目は「口」、2つ目は「目」、3つ目は「耳」。さて、これは何でしょう？</p>
+    </div>
+
+    <button class="reveal-btn" onclick="revealAnswer()">答えを見る</button>
+
+    <div class="answer" id="answer" style="display: none;">
+      答え：**顔**
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-nav"><a href="../17/index2.html">next</a></nav>
+    </div>
+  </footer>
+  <script>
+    function revealAnswer() {
+      document.getElementById('answer').style.display = 'block';
+    }
+  </script>
+</body>
