@@ -1,0 +1,338 @@
+[
+  {
+    "question": "ねこ",
+    "answers": [
+      "neko"
+    ]
+  },
+  {
+    "question": "いぬ",
+    "answers": [
+      "inu"
+    ]
+  },
+  {
+    "question": "ありがとう",
+    "answers": [
+      "arigato",
+      "arigatoo",
+      "arigatou"
+    ]
+  },
+  {
+    "question": "たのしい",
+    "answers": [
+      "tanoshii",
+      "tanosii"
+    ]
+  },
+  {
+    "question": "おいしい",
+    "answers": [
+      "oishii",
+      "oisii"
+    ]
+  },
+  {
+    "question": "やすみ",
+    "answers": [
+      "yasumi"
+    ]
+  },
+  {
+    "question": "げんき",
+    "answers": [
+      "genki"
+    ]
+  },
+  {
+    "question": "きょう",
+    "answers": [
+      "kyo",
+      "kyou"
+    ]
+  },
+  {
+    "question": "あした",
+    "answers": [
+      "ashita",
+      "asita"
+    ]
+  },
+  {
+    "question": "すし",
+    "answers": [
+      "sushi",
+      "susi"
+    ]
+  },
+  {
+    "question": "おちゃ",
+    "answers": [
+      "ocha",
+      "otya"
+    ]
+  },
+  {
+    "question": "えがお",
+    "answers": [
+      "egao"
+    ]
+  },
+  {
+    "question": "ともだち",
+    "answers": [
+      "tomodachi",
+      "tomodati"
+    ]
+  },
+  {
+    "question": "でんわ",
+    "answers": [
+      "denwa"
+    ]
+  },
+  {
+    "question": "りんご",
+    "answers": [
+      "ringo"
+    ]
+  },
+  {
+    "question": "みず",
+    "answers": [
+      "mizu"
+    ]
+  },
+  {
+    "question": "ひこうき",
+    "answers": [
+      "hikouki"
+    ]
+  },
+  {
+    "question": "おかし",
+    "answers": [
+      "okashi",
+      "okasi"
+    ]
+  },
+  {
+    "question": "ふゆ",
+    "answers": [
+      "fuyu",
+      "huyu"
+    ]
+  },
+  {
+    "question": "はなび",
+    "answers": [
+      "hanabi"
+    ]
+  },
+  {
+    "question": "しごと",
+    "answers": [
+      "shigoto",
+      "sigoto"
+    ]
+  },
+  {
+    "question": "ゆき",
+    "answers": [
+      "yuki"
+    ]
+  },
+  {
+    "question": "こども",
+    "answers": [
+      "kodomo"
+    ]
+  },
+  {
+    "question": "せんせい",
+    "answers": [
+      "sensei"
+    ]
+  },
+  {
+    "question": "かさ",
+    "answers": [
+      "kasa"
+    ]
+  },
+  {
+    "question": "ゆめ",
+    "answers": [
+      "yume"
+    ]
+  },
+  {
+    "question": "あめ",
+    "answers": [
+      "ame"
+    ]
+  },
+  {
+    "question": "あさ",
+    "answers": [
+      "asa"
+    ]
+  },
+  {
+    "question": "ばんごはん",
+    "answers": [
+      "bangohan"
+    ]
+  },
+  {
+    "question": "ぎゅうにゅう",
+    "answers": [
+      "giyu-nyu-",
+      "giyuunyu",
+      "giyuunyuu",
+      "gyu-nyu-",
+      "gyuunyu",
+      "gyuunyuu"
+    ]
+  },
+  {
+    "question": "せかい",
+    "answers": [
+      "sekai"
+    ]
+  },
+  {
+    "question": "くも",
+    "answers": [
+      "kumo"
+    ]
+  },
+  {
+    "question": "あい",
+    "answers": [
+      "ai"
+    ]
+  },
+  {
+    "question": "こころ",
+    "answers": [
+      "kokoro"
+    ]
+  },
+  {
+    "question": "つき",
+    "answers": [
+      "tsuki",
+      "tuki"
+    ]
+  },
+  {
+    "question": "うみ",
+    "answers": [
+      "umi"
+    ]
+  },
+  {
+    "question": "おにぎり",
+    "answers": [
+      "onigiri"
+    ]
+  },
+  {
+    "question": "まち",
+    "answers": [
+      "machi",
+      "mati"
+    ]
+  },
+  {
+    "question": "にく",
+    "answers": [
+      "niku"
+    ]
+  },
+  {
+    "question": "やま",
+    "answers": [
+      "yama"
+    ]
+  },
+  {
+    "question": "たまご",
+    "answers": [
+      "tamago"
+    ]
+  },
+  {
+    "question": "こうえん",
+    "answers": [
+      "koen",
+      "kouen"
+    ]
+  },
+  {
+    "question": "でんき",
+    "answers": [
+      "denki"
+    ]
+  },
+  {
+    "question": "おはよう",
+    "answers": [
+      "ohayo",
+      "ohayou"
+    ]
+  },
+  {
+    "question": "ばす",
+    "answers": [
+      "basu"
+    ]
+  },
+  {
+    "question": "えんぴつ",
+    "answers": [
+      "enpitsu",
+      "enpitu"
+    ]
+  },
+  {
+    "question": "ほん",
+    "answers": [
+      "hon"
+    ]
+  },
+  {
+    "question": "てがみ",
+    "answers": [
+      "tegami"
+    ]
+  },
+  {
+    "question": "しんぶん",
+    "answers": [
+      "shinbun",
+      "sinbun"
+    ]
+  },
+  {
+    "question": "ほし*",
+    "answers": [
+      "hoshi*",
+      "hosi*"
+    ]
+  },
+  {
+    "question": "`あい`",
+    "answers": [
+      "`ai`"
+    ]
+  },
+  {
+    "question": "かお*",
+    "answers": [
+      "kao*"
+    ]
+  }
+]

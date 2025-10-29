@@ -1,0 +1,425 @@
+[
+  {
+    "question": "わたしは*がくせい*です",
+    "answers": [
+      "watashiwa*gakusei*desu",
+      "watasiwa*gakusei*desu"
+    ]
+  },
+  {
+    "question": "かいしゃ@しごとにいきます",
+    "answers": [
+      "kaisha@shigotoniikimasu",
+      "kaisha@sigotoniikimasu",
+      "kaisya@shigotoniikimasu",
+      "kaisya@sigotoniikimasu"
+    ]
+  },
+  {
+    "question": "\"おいしい\"ごはんをたべた",
+    "answers": [
+      "\"oishii\"gohanotabeta",
+      "\"oishii\"gohanwotabeta",
+      "\"oisii\"gohanotabeta",
+      "\"oisii\"gohanwotabeta"
+    ]
+  },
+  {
+    "question": "にちようび:べんきょうしました",
+    "answers": [
+      "nichiyoubi:benkyoshimashita",
+      "nichiyoubi:benkyosimasita",
+      "nichiyoubi:benkyoushimashita",
+      "nichiyoubi:benkyousimasita",
+      "nitiyoubi:benkyoshimashita",
+      "nitiyoubi:benkyosimasita",
+      "nitiyoubi:benkyoushimashita",
+      "nitiyoubi:benkyousimasita"
+    ]
+  },
+  {
+    "question": "ほんを14さつ,かいました",
+    "answers": [
+      "hono14satsu,kaimashita",
+      "hono14satsu,kaimasita",
+      "hono14satu,kaimashita",
+      "hono14satu,kaimasita",
+      "honwo14satsu,kaimashita",
+      "honwo14satsu,kaimasita",
+      "honwo14satu,kaimashita",
+      "honwo14satu,kaimasita"
+    ]
+  },
+  {
+    "question": "いま!じかんがあります",
+    "answers": [
+      "ima!jikangaarimasu",
+      "ima!zikangaarimasu"
+    ]
+  },
+  {
+    "question": "つぎの*しゅくだい*はむずかしい",
+    "answers": [
+      "tsugino*shukudai*hamuzukashii",
+      "tsugino*shukudai*hamuzukasii",
+      "tsugino*syukudai*hamuzukashii",
+      "tsugino*syukudai*hamuzukasii",
+      "tugino*shukudai*hamuzukashii",
+      "tugino*shukudai*hamuzukasii",
+      "tugino*syukudai*hamuzukashii",
+      "tugino*syukudai*hamuzukasii"
+    ]
+  },
+  {
+    "question": "でんわばんごうは\"1234\"",
+    "answers": [
+      "denwabangouwa\"1234\""
+    ]
+  },
+  {
+    "question": "`かんじ`のべんきょう",
+    "answers": [
+      "`kanji`nobenkyo",
+      "`kanji`nobenkyou",
+      "`kanzi`nobenkyo",
+      "`kanzi`nobenkyou"
+    ]
+  },
+  {
+    "question": "ともだち,いっしょにがっこうへ",
+    "answers": [
+      "tomodachi,isshonigakkouhe",
+      "tomodachi,issyonigakkouhe",
+      "tomodati,isshonigakkouhe",
+      "tomodati,issyonigakkouhe"
+    ]
+  },
+  {
+    "question": "らーめんがすき:まいにちたべる",
+    "answers": [
+      "ra-mengasuki:mainichitaberu",
+      "ra-mengasuki:mainititaberu",
+      "raamengasuki:mainichitaberu",
+      "raamengasuki:mainititaberu"
+    ]
+  },
+  {
+    "question": "せかいの@ニュースをみる",
+    "answers": [
+      "sekaino@nyu-suomiru",
+      "sekaino@nyu-suwomiru",
+      "sekaino@nyuusuomiru",
+      "sekaino@nyuusuwomiru"
+    ]
+  },
+  {
+    "question": "やま*のぼり*にいきました",
+    "answers": [
+      "yama*nobori*niikimashita",
+      "yama*nobori*niikimasita"
+    ]
+  },
+  {
+    "question": "てすと\"100てん\"とった！",
+    "answers": [
+      "tesuto\"100ten\"totta!"
+    ]
+  },
+  {
+    "question": "あさの*じかん*はたいせつ",
+    "answers": [
+      "asano*jikan*hataisetsu",
+      "asano*jikan*hataisetu",
+      "asano*zikan*hataisetsu",
+      "asano*zikan*hataisetu"
+    ]
+  },
+  {
+    "question": "すいようびは`すぽーつ`のひ",
+    "answers": [
+      "suiyoubiwa`supo-tsu`nohi",
+      "suiyoubiwa`supo-tu`nohi",
+      "suiyoubiwa`supootsu`nohi",
+      "suiyoubiwa`supootu`nohi"
+    ]
+  },
+  {
+    "question": "\"しごと,べんきょう\"のまいにち",
+    "answers": [
+      "\"shigoto,benkyo\"nomainichi",
+      "\"shigoto,benkyo\"nomainiti",
+      "\"shigoto,benkyou\"nomaïnichi",
+      "\"shigoto,benkyou\"nomaïniti",
+      "\"sigoto,benkyo\"nomainichi",
+      "\"sigoto,benkyo\"nomainiti",
+      "\"sigoto,benkyou\"nomaïnichi",
+      "\"sigoto,benkyou\"nomaïniti"
+    ]
+  },
+  {
+    "question": "おひる*ごはん*をたべた",
+    "answers": [
+      "ohiru*gohan*otabeta",
+      "ohiru*gohan*wotabeta"
+    ]
+  },
+  {
+    "question": "えいが:たのしかったです",
+    "answers": [
+      "eiga:tanoshikattadesu",
+      "eiga:tanosikattadesu"
+    ]
+  },
+  {
+    "question": "おおきな`いぬ`とあそぶ",
+    "answers": [
+      "ookina`inu`toasobu"
+    ]
+  },
+  {
+    "question": "ばんごはんに,さかなをたべた",
+    "answers": [
+      "bangohannisakanaotabeta",
+      "bangohannisakanawotabeta"
+    ]
+  },
+  {
+    "question": "こうえんで@ともだちにあった",
+    "answers": [
+      "kouende@tomodachiniatta",
+      "kouende@tomodatiniatta"
+    ]
+  },
+  {
+    "question": "すきー\"たいかい\"にでた",
+    "answers": [
+      "suki-\"taikai\"nideta",
+      "sukii\"taikai\"nideta"
+    ]
+  },
+  {
+    "question": "でんしゃ*のなか*はしずか",
+    "answers": [
+      "densha*nonaka*hashizuka",
+      "densha*nonaka*hasizuka",
+      "densya*nonaka*hashizuka",
+      "densya*nonaka*hasizuka"
+    ]
+  },
+  {
+    "question": "ぎんこう:おかねをいれる",
+    "answers": [
+      "ginkou:okaneoireru",
+      "ginkou:okanewoireru"
+    ]
+  },
+  {
+    "question": "あめ!かさがひつようです",
+    "answers": [
+      "ame!kasagahitsuyoudesu",
+      "ame!kasagahituyoudesu"
+    ]
+  },
+  {
+    "question": "けいたい\"でんわ\"をなくした",
+    "answers": [
+      "keitai\"denwa\"onakushita",
+      "keitai\"denwa\"onakusita",
+      "keitai\"denwa\"wonakushita",
+      "keitai\"denwa\"wonakusita"
+    ]
+  },
+  {
+    "question": "こうそく*どうろ*をつかった",
+    "answers": [
+      "kousoku*douro*otsukatta",
+      "kousoku*douro*otukatta",
+      "kousoku*douro*wotsukatta",
+      "kousoku*douro*wotukatta"
+    ]
+  },
+  {
+    "question": "きょうは*まいにち*のひとつ",
+    "answers": [
+      "kyouwa*mainichi*nohito",
+      "kyouwa*mainiti*nohito",
+      "kyowa*mainichi*nohito",
+      "kyowa*mainiti*nohito"
+    ]
+  },
+  {
+    "question": "ねこ@ねずみをおいかけた",
+    "answers": [
+      "neko@nezumiooikaketa",
+      "neko@nezumiwooikaketa"
+    ]
+  },
+  {
+    "question": "ぶんぽう\"のほん\"をよむ",
+    "answers": [
+      "bunpoo\"nohon\"oyomu",
+      "bunpoo\"nohon\"woyomu",
+      "bunpou\"nohon\"oyomu",
+      "bunpou\"nohon\"woyomu"
+    ]
+  },
+  {
+    "question": "かぞく*でりょこう*した",
+    "answers": [
+      "kazoku*deryoko*shita",
+      "kazoku*deryoko*sita",
+      "kazoku*deryokou*shita",
+      "kazoku*deryokou*sita"
+    ]
+  },
+  {
+    "question": "てがみ\"ありがとう\"をかく",
+    "answers": [
+      "tegami\"arigatoo\"okaku",
+      "tegami\"arigatoo\"wokaku",
+      "tegami\"arigatou\"okaku",
+      "tegami\"arigatou\"wokaku"
+    ]
+  },
+  {
+    "question": "おんがく:すきなきょく",
+    "answers": [
+      "ongaku:sukinakyoku"
+    ]
+  },
+  {
+    "question": "あしたは@しゅくだい",
+    "answers": [
+      "ashitawa@shukudai",
+      "ashitawa@syukudai",
+      "asitawa@shukudai",
+      "asitawa@syukudai"
+    ]
+  },
+  {
+    "question": "きのうの`てんき`はあめ",
+    "answers": [
+      "kinono`tenki`haame",
+      "kinouno`tenki`haame"
+    ]
+  },
+  {
+    "question": "*すいえい*のれんしゅう",
+    "answers": [
+      "*suiei*norenshuu",
+      "*suiei*norensyuu"
+    ]
+  },
+  {
+    "question": "まいにち!あさはやくおきる",
+    "answers": [
+      "mainichi!asahayakuokiru",
+      "mainiti!asahayakuokiru"
+    ]
+  },
+  {
+    "question": "しごとのあと\"おちゃ\"",
+    "answers": [
+      "shigotonoato\"ocha\"",
+      "shigotonoato\"otya\"",
+      "sigotonoato\"ocha\"",
+      "sigotonoato\"otya\""
+    ]
+  },
+  {
+    "question": "じしょ:いろいろなことば",
+    "answers": [
+      "jisho:iroironakotoba",
+      "jisyo:iroironakotoba",
+      "zisho:iroironakotoba",
+      "zisyo:iroironakotoba"
+    ]
+  },
+  {
+    "question": "おかし\"たべたい\"",
+    "answers": [
+      "okashi\"tabetai\"",
+      "okasi\"tabetai\""
+    ]
+  },
+  {
+    "question": "`しごと`がいそがしい",
+    "answers": [
+      "`shigoto`gaisogashii",
+      "`sigoto`gaisogasii"
+    ]
+  },
+  {
+    "question": "\"ほん\"をたくさんよむ",
+    "answers": [
+      "\"hon\"otakusanyomu",
+      "\"hon\"wotakusanyomu"
+    ]
+  },
+  {
+    "question": "かばんのなかに*えんぴつ*",
+    "answers": [
+      "kabannonakani*enpitsu*",
+      "kabannonakani*enpitu*"
+    ]
+  },
+  {
+    "question": "きょうも\"がんばる\"",
+    "answers": [
+      "kyomo\"ganbaru\"",
+      "kyoumo\"ganbaru\""
+    ]
+  },
+  {
+    "question": "かいしゃ*のともだち*",
+    "answers": [
+      "kaisha*notomodachi*",
+      "kaisha*notomodati*",
+      "kaisya*notomodachi*",
+      "kaisya*notomodati*"
+    ]
+  },
+  {
+    "question": "しつもん:なんですか？",
+    "answers": [
+      "shitsumon:nandesuka?",
+      "shitumon:nandesuka?",
+      "sitsumon:nandesuka?",
+      "situmon:nandesuka?"
+    ]
+  },
+  {
+    "question": "じゅぎょう@をうける",
+    "answers": [
+      "jugiyo@oukeru",
+      "jugiyo@woukeru",
+      "jugiyou@oukeru",
+      "jugiyou@woukeru",
+      "jugyo@oukeru",
+      "jugyo@woukeru",
+      "jugyou@oukeru",
+      "jugyou@woukeru",
+      "zyugiyo@oukeru",
+      "zyugiyo@woukeru",
+      "zyugiyou@oukeru",
+      "zyugiyou@woukeru",
+      "zyugyo@oukeru",
+      "zyugyo@woukeru",
+      "zyugyou@oukeru",
+      "zyugyou@woukeru"
+    ]
+  },
+  {
+    "question": "がっこうの\"きょうしつ\"",
+    "answers": [
+      "gakkouno\"kyoshitsu\"",
+      "gakkouno\"kyoshitu\"",
+      "gakkouno\"kyositsu\"",
+      "gakkouno\"kyositu\"",
+      "gakkouno\"kyoushitsu\"",
+      "gakkouno\"kyoushitu\"",
+      "gakkouno\"kyousitsu\"",
+      "gakkouno\"kyousitu\""
+    ]
+  }
+]

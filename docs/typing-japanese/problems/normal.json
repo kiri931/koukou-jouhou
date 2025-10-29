@@ -1,0 +1,403 @@
+[
+  {
+    "question": "こんにちは、せんせい",
+    "answers": [
+      "konnichiha,sensei",
+      "konnichiwa,sensei",
+      "konnitiha,sensei",
+      "konnitiwa,sensei"
+    ]
+  },
+  {
+    "question": "きょうはいいてんき",
+    "answers": [
+      "kyohaiitenki",
+      "kyouhaiitenki"
+    ]
+  },
+  {
+    "question": "がっこうにいきます",
+    "answers": [
+      "gakkouniikimasu"
+    ]
+  },
+  {
+    "question": "しゅくだいをします",
+    "answers": [
+      "shukudaioshimasu",
+      "shukudaiosimasu",
+      "shukudaiwoshimasu",
+      "shukudaiwosimasu",
+      "syukudaioshimasu",
+      "syukudaiosimasu",
+      "syukudaiwoshimasu",
+      "syukudaiwosimasu"
+    ]
+  },
+  {
+    "question": "ともだちとあそぶ",
+    "answers": [
+      "tomodachitoasobu",
+      "tomodatitoasobu"
+    ]
+  },
+  {
+    "question": "まいにちべんきょう",
+    "answers": [
+      "mainichibenkyo",
+      "mainichibenkyou",
+      "mainitibenkyo",
+      "mainitibenkyou"
+    ]
+  },
+  {
+    "question": "でんしゃでがっこう",
+    "answers": [
+      "denshadegakkou",
+      "densyadegakkou"
+    ]
+  },
+  {
+    "question": "おちゃをのみます",
+    "answers": [
+      "ochaonomimasu",
+      "ochawonomimasu",
+      "otyaonomimasu",
+      "otyawonomimasu"
+    ]
+  },
+  {
+    "question": "すいようびのばん",
+    "answers": [
+      "suiyoubinoban"
+    ]
+  },
+  {
+    "question": "おおきなさかなをみた",
+    "answers": [
+      "ookinasakanaomita",
+      "ookinasakanawomita"
+    ]
+  },
+  {
+    "question": "かぞくでりょこうした",
+    "answers": [
+      "kazokuderyokoshita",
+      "kazokuderyokosita",
+      "kazokuderyokoushita",
+      "kazokuderyokousita"
+    ]
+  },
+  {
+    "question": "にほんごのほんをよむ",
+    "answers": [
+      "nihongonohonoyomu",
+      "nihongonohonwoyomu"
+    ]
+  },
+  {
+    "question": "きのうはしごとした",
+    "answers": [
+      "kinohashigotoshita",
+      "kinohasigotosita",
+      "kinouhashigotoshita",
+      "kinouhasigotosita"
+    ]
+  },
+  {
+    "question": "まちでともだちにあう",
+    "answers": [
+      "machidetomodachiniaou",
+      "matidetomodatiniaou"
+    ]
+  },
+  {
+    "question": "きょうかしょをよむ",
+    "answers": [
+      "kyokashooyomu",
+      "kyokashowoyomu",
+      "kyokasyooyomu",
+      "kyokasyowoyomu",
+      "kyoukashooyomu",
+      "kyoukashowoyomu",
+      "kyoukasyooyomu",
+      "kyoukasyowoyomu"
+    ]
+  },
+  {
+    "question": "でんわばんごうをきく",
+    "answers": [
+      "denwabangouokiku",
+      "denwabangouwokiku"
+    ]
+  },
+  {
+    "question": "きんようびのひる",
+    "answers": [
+      "kinyoubinohiru"
+    ]
+  },
+  {
+    "question": "らーめんがすきです",
+    "answers": [
+      "ra-mengasukidesu",
+      "raamengasukidesu"
+    ]
+  },
+  {
+    "question": "おんがくをききます",
+    "answers": [
+      "ongakuokikimasu",
+      "ongakuwokikimasu"
+    ]
+  },
+  {
+    "question": "てがみをかきました",
+    "answers": [
+      "tegamiokakimashita",
+      "tegamiokakimasita",
+      "tegamiwokakimashita",
+      "tegamiwokakimasita"
+    ]
+  },
+  {
+    "question": "あたらしいぱそこん",
+    "answers": [
+      "atarashiipasokon",
+      "atarasiipasokon"
+    ]
+  },
+  {
+    "question": "ちいさなこえでいう",
+    "answers": [
+      "chiisanakoedeyuu",
+      "tiisanakoedeyuu"
+    ]
+  },
+  {
+    "question": "ゆうびんきょくにいく",
+    "answers": [
+      "yuubinkyokuniiku"
+    ]
+  },
+  {
+    "question": "ひるやすみにこうえん",
+    "answers": [
+      "hiruyasuminikoen",
+      "hiruyasuminikouen"
+    ]
+  },
+  {
+    "question": "でんきがついた",
+    "answers": [
+      "denkigatsuita",
+      "denkigatuita"
+    ]
+  },
+  {
+    "question": "はしをわたります",
+    "answers": [
+      "hashiowatarimasu",
+      "hashiwowatarimasu",
+      "hasiowatarimasu",
+      "hasiwowatarimasu"
+    ]
+  },
+  {
+    "question": "にわであそんだ",
+    "answers": [
+      "niwadeasonda"
+    ]
+  },
+  {
+    "question": "ちょこれーとをたべた",
+    "answers": [
+      "chokore-tootabeta",
+      "chokore-towotabeta",
+      "chokoreetootabeta",
+      "chokoreetowotabeta",
+      "tyokore-tootabeta",
+      "tyokore-towotabeta",
+      "tyokoreetootabeta",
+      "tyokoreetowotabeta"
+    ]
+  },
+  {
+    "question": "けいたいでんわをみる",
+    "answers": [
+      "keitaidenwaomiru",
+      "keitaidenwawomiru"
+    ]
+  },
+  {
+    "question": "しつもんがあります",
+    "answers": [
+      "shitsumonngaarimasu",
+      "shitumonngaarimasu",
+      "sitsumonngaarimasu",
+      "situmonngaarimasu"
+    ]
+  },
+  {
+    "question": "くうこうでひこうきをみた",
+    "answers": [
+      "kuukoudehikoukiomita",
+      "kuukoudehikoukiwomita"
+    ]
+  },
+  {
+    "question": "ひこうきにのりました",
+    "answers": [
+      "hikoukininorimashita",
+      "hikoukininorimasita"
+    ]
+  },
+  {
+    "question": "でんしゃでつうがくする",
+    "answers": [
+      "denshadetsuugakusuru",
+      "denshadetuugakusuru",
+      "densyadetsuugakusuru",
+      "densyadetuugakusuru"
+    ]
+  },
+  {
+    "question": "にちようびはやすみ",
+    "answers": [
+      "nichiyoubihayasumi",
+      "nichiyoubiyayasumi",
+      "nitiyoubihayasumi",
+      "nitiyoubiyayasumi"
+    ]
+  },
+  {
+    "question": "あついひでしたね",
+    "answers": [
+      "atsuihideshitane",
+      "atsuihidesitane",
+      "atuihideshitane",
+      "atuihidesitane"
+    ]
+  },
+  {
+    "question": "すきーをたのしむ",
+    "answers": [
+      "suki-otanoshimu",
+      "suki-otanosimu",
+      "suki-wotanoshimu",
+      "suki-wotanosimu",
+      "sukiitotanoshimu",
+      "sukiitotanosimu"
+    ]
+  },
+  {
+    "question": "しゅくだいを`やる`",
+    "answers": [
+      "shukudaio`yaru`",
+      "shukudaiwo`yaru`",
+      "syukudaio`yaru`",
+      "syukudaiwo`yaru`"
+    ]
+  },
+  {
+    "question": "*しごと*がある",
+    "answers": [
+      "*shigoto*gaaru",
+      "*sigoto*gaaru"
+    ]
+  },
+  {
+    "question": "とけいをみながらあるく",
+    "answers": [
+      "tokeiominagaraaruku",
+      "tokeiwominagaraaruku"
+    ]
+  },
+  {
+    "question": "あさごはんをたべます",
+    "answers": [
+      "asagohanotabemasu",
+      "asagohanwotabemasu"
+    ]
+  },
+  {
+    "question": "びじゅつかんにいく",
+    "answers": [
+      "bijutsukanniiku",
+      "bijutukanniiku",
+      "bizyutsukanniiku",
+      "bizyutukanniiku"
+    ]
+  },
+  {
+    "question": "えいがをみにいった",
+    "answers": [
+      "eigaominiitta",
+      "eigawominiitta"
+    ]
+  },
+  {
+    "question": "ともだちのたんじょうび",
+    "answers": [
+      "tomodachinotanjobi",
+      "tomodachinotanjoubi",
+      "tomodachinotanzyobi",
+      "tomodachinotanzyoubi",
+      "tomodatinotanjobi",
+      "tomodatinotanjoubi",
+      "tomodatinotanzyobi",
+      "tomodatinotanzyoubi"
+    ]
+  },
+  {
+    "question": "でんしゃがこみます",
+    "answers": [
+      "denshagakomimasu",
+      "densyagakomimasu"
+    ]
+  },
+  {
+    "question": "にっきをかいている",
+    "answers": [
+      "nikkiokaiteiru",
+      "nikkiwokaiteiru"
+    ]
+  },
+  {
+    "question": "いまはにじごろです",
+    "answers": [
+      "imahanijigorodesu",
+      "imahanizigorodesu"
+    ]
+  },
+  {
+    "question": "ふゆのさむさ",
+    "answers": [
+      "fuyunosamusa",
+      "huyunosamusa"
+    ]
+  },
+  {
+    "question": "かぞくとしょくじ",
+    "answers": [
+      "kazokutoshokujii",
+      "kazokutoshokuzii",
+      "kazokutosyokujii",
+      "kazokutosyokuzii"
+    ]
+  },
+  {
+    "question": "せんたくをする",
+    "answers": [
+      "sentakuosuru",
+      "sentakuwosuru"
+    ]
+  },
+  {
+    "question": "がっこうで*べんきょう*",
+    "answers": [
+      "gakkoude*benkyo*",
+      "gakkoude*benkyou*"
+    ]
+  }
+]

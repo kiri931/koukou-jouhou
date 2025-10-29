@@ -1,0 +1,310 @@
+[
+  {
+    "question": "printf(\"Hello, World!\\n\");",
+    "answers": [
+      "printf(\"Hello, World!\\n\");"
+    ]
+  },
+  {
+    "question": "let count = 0;",
+    "answers": [
+      "let count = 0;"
+    ]
+  },
+  {
+    "question": "#include <stdio.h>",
+    "answers": [
+      "#include <stdeo.h>",
+      "#include <stdio.h>"
+    ]
+  },
+  {
+    "question": "for(int i=0; i<10; i++)",
+    "answers": [
+      "for(int i=0; i<10; i++)"
+    ]
+  },
+  {
+    "question": "<!DOCTYPE html>",
+    "answers": [
+      "<!DOCTYPE html>"
+    ]
+  },
+  {
+    "question": "document.querySelector()",
+    "answers": [
+      "document.querySelector()"
+    ]
+  },
+  {
+    "question": "if (x == y) {",
+    "answers": [
+      "if (x == y) {"
+    ]
+  },
+  {
+    "question": "return 0;",
+    "answers": [
+      "return 0;"
+    ]
+  },
+  {
+    "question": "const PI = 3.14;",
+    "answers": [
+      "const PI = 3.14;"
+    ]
+  },
+  {
+    "question": "<input type=\"text\">",
+    "answers": [
+      "<input type=\"text\">"
+    ]
+  },
+  {
+    "question": "console.log(\"test\")",
+    "answers": [
+      "console.log(\"test\")"
+    ]
+  },
+  {
+    "question": "let x = `テンプレート`;",
+    "answers": [
+      "let x = `tenpure-to`;"
+    ]
+  },
+  {
+    "question": "int main(void)",
+    "answers": [
+      "int main(void)"
+    ]
+  },
+  {
+    "question": "function greet() {}",
+    "answers": [
+      "function greet() {}",
+      "hunction greet() {}"
+    ]
+  },
+  {
+    "question": "<!--コメント-->",
+    "answers": [
+      "<!--komento-->"
+    ]
+  },
+  {
+    "question": "$('div').hide();",
+    "answers": [
+      "$('dev').hide();",
+      "$('div').hide();"
+    ]
+  },
+  {
+    "question": "margin: 10px;",
+    "answers": [
+      "margin: 10px;"
+    ]
+  },
+  {
+    "question": "let arr = [1,2,3];",
+    "answers": [
+      "let arr = [1,2,3];"
+    ]
+  },
+  {
+    "question": "while(true) {}",
+    "answers": [
+      "while(true) {}"
+    ]
+  },
+  {
+    "question": "#define SIZE 100",
+    "answers": [
+      "#define SIZE 100"
+    ]
+  },
+  {
+    "question": "body { color: red; }",
+    "answers": [
+      "body { color: red; }"
+    ]
+  },
+  {
+    "question": "export default App;",
+    "answers": [
+      "export default App;"
+    ]
+  },
+  {
+    "question": "echo \"Hello\"",
+    "answers": [
+      "echo \"Hello\"",
+      "etyo \"Hello\""
+    ]
+  },
+  {
+    "question": "<a href=\"#\">link</a>",
+    "answers": [
+      "<a href=\"#\">link</a>"
+    ]
+  },
+  {
+    "question": "Math.max(1, 5);",
+    "answers": [
+      "Math.max(1, 5);"
+    ]
+  },
+  {
+    "question": "git commit -m \"初回\"",
+    "answers": [
+      "git commit -m \"syokai\""
+    ]
+  },
+  {
+    "question": "let flag = true;",
+    "answers": [
+      "let flag = true;"
+    ]
+  },
+  {
+    "question": "window.addEventListener()",
+    "answers": [
+      "uindow.addEventListener()",
+      "window.addEventListener()"
+    ]
+  },
+  {
+    "question": "h1 { font-size: 2em; }",
+    "answers": [
+      "h1 { font-size: 2em; }"
+    ]
+  },
+  {
+    "question": "document.getElementById()",
+    "answers": [
+      "document.getElementById()"
+    ]
+  },
+  {
+    "question": "setTimeout(fn, 1000);",
+    "answers": [
+      "setTimeout(fn, 1000);"
+    ]
+  },
+  {
+    "question": "scanf(\"%d\", &num);",
+    "answers": [
+      "scanf(\"%d\", &num);"
+    ]
+  },
+  {
+    "question": "let result = x > y;",
+    "answers": [
+      "let result = x > y;"
+    ]
+  },
+  {
+    "question": "<meta charset=\"UTF-8\">",
+    "answers": [
+      "<meta charset=\"UTF-8\">",
+      "<meta tyarset=\"UTF-8\">"
+    ]
+  },
+  {
+    "question": "try { ... } catch {}",
+    "answers": [
+      "try { ... } catch {}"
+    ]
+  },
+  {
+    "question": "`バッククォート`",
+    "answers": [
+      "`bakkukuxo-te`",
+      "`bakkuqo-to`",
+      "`bakkuqoto`"
+    ]
+  },
+  {
+    "question": "npm install express",
+    "answers": [
+      "npm install express"
+    ]
+  },
+  {
+    "question": "textarea { resize: none; }",
+    "answers": [
+      "textarea { resize: none; }"
+    ]
+  },
+  {
+    "question": "JSON.stringify(obj)",
+    "answers": [
+      "JSON.stringify(obj)"
+    ]
+  },
+  {
+    "question": "int a[10];",
+    "answers": [
+      "int a[10];"
+    ]
+  },
+  {
+    "question": "router.get(\"/\")",
+    "answers": [
+      "router.get(\"/\")"
+    ]
+  },
+  {
+    "question": "<script src=\"main.js\"></script>",
+    "answers": [
+      "<script src=\"main.js\"></script>"
+    ]
+  },
+  {
+    "question": "border: 1px solid #000;",
+    "answers": [
+      "border: 1px solid #000;"
+    ]
+  },
+  {
+    "question": "localStorage.setItem()",
+    "answers": [
+      "localStorage.setItem()"
+    ]
+  },
+  {
+    "question": "main() => runApp()",
+    "answers": [
+      "main() => runApp()"
+    ]
+  },
+  {
+    "question": "C:\\\\Program Files",
+    "answers": [
+      "C:\\\\Program Files"
+    ]
+  },
+  {
+    "question": "let user = { name: \"Tom\" };",
+    "answers": [
+      "let user = { name: \"Tom\" };"
+    ]
+  },
+  {
+    "question": "<!-- end of section -->",
+    "answers": [
+      "<!-- end of section -->"
+    ]
+  },
+  {
+    "question": "fetch('/api/data')",
+    "answers": [
+      "fetch('/api/data')"
+    ]
+  },
+  {
+    "question": "typeof null === \"object\"",
+    "answers": [
+      "typeof null === \"object\""
+    ]
+  }
+]
