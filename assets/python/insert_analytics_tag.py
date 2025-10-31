@@ -1,35 +1,26 @@
 import os
 
-# 対象ディレクトリ（あなたの構成に合わせて変更可能）
 BASE_DIR = os.path.join("..", "..", "docs")
 
-# 挿入するタグ
-INSERT_TAG = '<script src="/js/analytics.js"></script>'
+old_tag = '<script src="js/analytics.js"></script>'
+new_tag = '<script src="/js/analytics.js"></script>'
 
-def insert_tag_in_html(file_path):
+def fix_html(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # すでにタグが入っていたらスキップ
-    if INSERT_TAG in content:
-        print(f"✔ 既に挿入済み: {file_path}")
-        return
-
-    # <head> の直後に挿入
-    if "<head>" in content:
-        new_content = content.replace("<head>", f"<head>\n    {INSERT_TAG}")
+    if old_tag in content:
+        new_content = content.replace(old_tag, new_tag)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
-        print(f"✅ 挿入完了: {file_path}")
-    else:
-        print(f"⚠ <head>タグが見つかりません: {file_path}")
+        print(f"✅ 修正済み: {file_path}")
 
 def main():
-    for root, _, files in os.walk(BASE_DIR):
+    docs_dir = os.path.abspath(BASE_DIR)
+    for root, _, files in os.walk(docs_dir):
         for file in files:
             if file.endswith(".html"):
-                file_path = os.path.join(root, file)
-                insert_tag_in_html(file_path)
+                fix_html(os.path.join(root, file))
 
 if __name__ == "__main__":
     main()
