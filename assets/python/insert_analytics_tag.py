@@ -1,3 +1,4 @@
+# アナリティクスようのタグのパスを修正するスクリプト
 import os
 
 BASE_DIR = os.path.join("..", "..", "docs")
