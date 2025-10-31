@@ -4,7 +4,7 @@ import os
 BASE_DIR = os.path.join("..", "..", "docs")
 
 # 挿入するタグ
-INSERT_TAG = '<script src="js/analytics.js"></script>'
+INSERT_TAG = '<script src="/js/analytics.js"></script>'
 
 def insert_tag_in_html(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
