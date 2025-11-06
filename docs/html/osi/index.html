@@ -1,68 +1,15 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OSI参照モデルとTCP/IPモデル（図解・対応表）</title>
-  <style>
-    :root{
-      --bg: #0b0c10; --card:#121319; --fg:#e8eef7; --muted:#a9b4c2; --acc:#7cc0ff; --ok:#6ee7b7;
-      --table-border:#2a2f3a;
-    }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f9fc; --card:#ffffff; --fg:#111827; --muted:#475569; --acc:#0ea5e9; --ok:#059669;
-        --table-border:#e5e7eb;
-      }
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN",
-      "Yu Gothic", "Noto Sans JP", "Meiryo", sans-serif;
-      color:var(--fg); background:linear-gradient(180deg, var(--bg), #161823 30%, var(--bg));
-      line-height:1.65;
-    }
-    header{
-      position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px);
-      background:color-mix(in oklab, var(--bg) 85%, transparent);
-      border-bottom:1px solid var(--table-border); z-index:10;
-    }
-    .wrap{max-width:1000px; margin:0 auto; padding:16px;}
-    h1{font-size:clamp(1.4rem, 2.4vw, 2rem); margin:.3rem 0 0.6rem}
-    h2{margin:2rem 0 0.6rem; font-size:1.2rem; border-left:4px solid var(--acc); padding-left:.6rem}
-    h3{margin:1.4rem 0 .4rem; font-size:1.05rem; color:var(--acc)}
-    p.lead{color:var(--muted); margin:.2rem 0 0.8rem}
-    .grid{display:grid; gap:16px}
-    @media (min-width:900px){ .grid{grid-template-columns: 1.1fr 1fr} }
-    .card{
-      background:var(--card); border:1px solid var(--table-border);
-      border-radius:14px; padding:16px; box-shadow:0 10px 24px rgba(0,0,0,.14);
-    }
-    .kpi{display:flex; gap:12px; flex-wrap:wrap}
-    .pill{border:1px solid var(--table-border); padding:.25rem .6rem; border-radius:999px; color:var(--muted)}
-    table{width:100%; border-collapse:collapse; overflow:auto; display:block}
-    th,td{border-bottom:1px solid var(--table-border); padding:.55rem .6rem; vertical-align:top}
-    th{text-align:left; color:var(--muted); font-weight:600; background:color-mix(in oklab, var(--card), black 4%)}
-    code, pre{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Roboto Mono", monospace; font-size:.92em}
-    pre{
-      margin:0; padding:12px 14px; background:color-mix(in oklab, var(--card), black 6%);
-      border:1px dashed var(--table-border); border-radius:12px; overflow:auto
-    }
-    .note{font-size:.92em; color:var(--muted)}
-    .ok{color:var(--ok)}
-    .footer{color:var(--muted); font-size:.9em; margin-top:24px}
-    .toc a{color:inherit; text-decoration:none}
-    .toc ol{margin:.3rem 0 .6rem 1.1rem}
-    .toc li{margin:.15rem 0}
-    .print-only{display:none}
-    @media print{
-      header{position:static; backdrop-filter:none; background:#fff; border:0}
-      body{background:#fff}
-      .card{box-shadow:none}
-      .print-only{display:block}
-    }
-  </style>
+  <meta name="description"
+    content="OSI参照モデルとTCP/IPモデルの違いと対応関係を、図解・表・例でわかりやすく解説。高校情報・ITパスポート・ネットワーク入門向け教材。" />
+  <link rel="stylesheet" href="../../assets/css/study.css" />
 </head>
+
 <body>
   <header>
     <div class="wrap">
@@ -72,6 +19,7 @@
   </header>
 
   <main class="wrap">
+
     <section class="card toc">
       <h2>目次</h2>
       <ol>
@@ -80,7 +28,11 @@
         <li><a href="#mapping">対応関係（どの層がどれに相当？）</a></li>
         <li><a href="#protocols">各層の代表的プロトコル（対応表）</a></li>
         <li><a href="#encap">通信の流れ（カプセル化のイメージ）</a></li>
+        <li><a href="#history">背景と成り立ち</a></li>
+        <li><a href="#keywords">各層のキーワード早見表</a></li>
+        <li><a href="#pdu">データ単位（PDU）</a></li>
         <li><a href="#summary">まとめ（試験・実務の要点）</a></li>
+        <li><a href="quiz.html">理解チェック（別ページ）</a></li>
       </ol>
     </section>
 
@@ -101,51 +53,59 @@
 
     <section id="diagram" class="grid">
       <div class="card">
-        <h2>2. 図解：層構造（OSI → TCP/IP）</h2>
-        <pre aria-label="OSIの7層">
-┌────────────────────────────┐
-│        OSI基本参照モデル        │
-├────────────────────────────┤
-│ 7. アプリケーション層           │
-│ 6. プレゼンテーション層         │
-│ 5. セッション層                 │
-│ 4. トランスポート層             │
-│ 3. ネットワーク層               │
-│ 2. データリンク層               │
-│ 1. 物理層                       │
-└────────────────────────────┘
-        </pre>
+        <h2>OSI基本参照モデル（7層）</h2>
+        <div class="layer osi">
+          <div>7. アプリケーション層</div>
+          <div>6. プレゼンテーション層</div>
+          <div>5. セッション層</div>
+          <div>4. トランスポート層</div>
+          <div>3. ネットワーク層</div>
+          <div>2. データリンク層</div>
+          <div>1. 物理層</div>
+        </div>
       </div>
+
       <div class="card">
-        <h3 style="margin-top:0">TCP/IPモデル（実運用）</h3>
-        <pre aria-label="TCP/IPの4層">
-┌────────────────────────────┐
-│          TCP/IPモデル           │
-├────────────────────────────┤
-│ 4. アプリケーション層           │ ← OSIの7〜5層に相当
-│ 3. トランスポート層             │ ← OSIの4層
-│ 2. インターネット層             │ ← OSIの3層
-│ 1. ネットワークインターフェース層 │ ← OSIの2〜1層
-└────────────────────────────┘
-        </pre>
+        <h2>TCP/IPモデル（実運用）</h2>
+        <div class="layer tcpip">
+          <div>4. アプリケーション層 <span>← OSIの7〜5層</span></div>
+          <div>3. トランスポート層 <span>← OSIの4層</span></div>
+          <div>2. インターネット層 <span>← OSIの3層</span></div>
+          <div>1. ネットワークインターフェース層 <span>← OSIの2〜1層</span></div>
+        </div>
       </div>
     </section>
 
     <section id="mapping" class="card">
       <h2>3. 対応関係（どの層がどれに相当？）</h2>
-      <pre aria-label="対応の図">
-┌──────────────────────────────┐
-│ OSI基本参照モデル              │     TCP/IPモデル
-├──────────────────────────────┤
-│ 7. アプリケーション層           │ ←┐
-│ 6. プレゼンテーション層         │   ├─▶ アプリケーション層
-│ 5. セッション層                 │ ←┘
-│ 4. トランスポート層             │ ─▶ トランスポート層
-│ 3. ネットワーク層               │ ─▶ インターネット層
-│ 2. データリンク層               │ ←┐
-│ 1. 物理層                       │ ←┘ ─▶ ネットワークインターフェース層
-└──────────────────────────────┘
-      </pre>
+      <div class="mapping-diagram">
+        <div class="osi">
+          <div>7. アプリケーション層</div>
+          <div>6. プレゼンテーション層</div>
+          <div>5. セッション層</div>
+          <div>4. トランスポート層</div>
+          <div>3. ネットワーク層</div>
+          <div>2. データリンク層</div>
+          <div>1. 物理層</div>
+        </div>
+
+        <div class="arrows">
+          <div>⬅︎</div>
+          <div>⬅︎</div>
+          <div>⬅︎</div>
+          <div>⬅︎</div>
+          <div>⬅︎</div>
+          <div>⬅︎</div>
+          <div>⬅︎</div>
+        </div>
+
+        <div class="tcpip">
+          <div>4. アプリケーション層<br><span>（OSIの7〜5層）</span></div>
+          <div>3. トランスポート層<br><span>（OSIの4層）</span></div>
+          <div>2. インターネット層<br><span>（OSIの3層）</span></div>
+          <div>1. ネットワークインターフェース層<br><span>（OSIの2〜1層）</span></div>
+        </div>
+      </div>
     </section>
 
     <section id="protocols" class="card">
@@ -164,13 +124,13 @@
             <td><strong>アプリケーション層</strong></td>
             <td>OSIの7〜5層</td>
             <td>アプリ同士のやり取り</td>
-            <td>HTTP/HTTPS（Web）、FTP（ファイル転送）、SMTP（送信）／POP3・IMAP（受信）、DNS（名前解決）、SSH、TLS など</td>
+            <td>HTTP/HTTPS（Web）、FTP（ファイル転送）、SMTP／POP3／IMAP（メール）、DNS、SSH、TLS など</td>
           </tr>
           <tr>
             <td><strong>トランスポート層</strong></td>
             <td>OSIの4層</td>
             <td>信頼性・順序制御・多重化</td>
-            <td>TCP（信頼性あり）、UDP（軽量・高速、信頼性なし）</td>
+            <td>TCP（信頼性あり）、UDP（軽量・高速）</td>
           </tr>
           <tr>
             <td><strong>インターネット層</strong></td>
@@ -182,40 +142,94 @@
             <td><strong>ネットワークインターフェース層</strong></td>
             <td>OSIの2〜1層</td>
             <td>物理/リンク伝送</td>
-            <td>Ethernet、Wi-Fi、PPP、MACアドレス、フレーム、ビット/電気信号</td>
+            <td>Ethernet、Wi-Fi、PPP、MACアドレス、フレーム、電気信号</td>
           </tr>
         </tbody>
       </table>
-      <p class="note">※ 試験では「DNSはアプリ層」「ARPはインターネット層寄り（L3補助）」などの位置づけを問われがちです。</p>
+      <p class="note">
+        ※ 「DNSはアプリ層」「ARPはインターネット層寄り（L3補助）」のように、試験では位置づけを問われがちです。<br>
+        💡 例：<strong>Ping</strong>はインターネット層(ICMP)を利用して疎通確認を行い、<strong>Traceroute</strong>は経路上のルータを確認するツールです。
+      </p>
     </section>
 
     <section id="encap" class="card">
       <h2>5. 通信の流れ（カプセル化のイメージ）</h2>
-      <pre aria-label="カプセル化の概念図">
-送信側（アプリ → 下位層へ）                           受信側（上位層へ）
-──────────────────▶ ネットワーク ──────────────────▶
-[アプリデータ]
-   ↓ ヘッダ付与（アプリ層/TLS等）
-[App H][データ]
-   ↓ セグメント化（トランスポート層: TCP/UDP）
-[TCP/UDP H][App H][データ]
-   ↓ ルーティング情報付与（インターネット層: IP）
-[IP H][TCP/UDP H][App H][データ]
-   ↓ フレーム化（ネットワークIF層: Ethernet/Wi-Fi）
-[MAC H][IP H][TCP/UDP H][App H][データ][FCS]
-      </pre>
+      <div class="encapsulation-diagram" aria-label="カプセル化の概念図">
+        <div class="encap-header">
+          <div>送信側（アプリ → 下位層へ）</div>
+          <div class="network-line">▶ ネットワーク ▶</div>
+          <div>受信側（上位層へ）</div>
+        </div>
+
+        <div class="encap-flow">
+          <div class="layer app">[アプリデータ]</div>
+          <div class="arrow">↓ <span>ヘッダ付与（アプリ層 / TLSなど）</span></div>
+          <div class="layer trans">[App H][データ]</div>
+          <div class="arrow">↓ <span>セグメント化（トランスポート層: TCP/UDP）</span></div>
+          <div class="layer net">[TCP/UDP H][App H][データ]</div>
+          <div class="arrow">↓ <span>ルーティング情報付与（インターネット層: IP）</span></div>
+          <div class="layer link">[IP H][TCP/UDP H][App H][データ]</div>
+          <div class="arrow">↓ <span>フレーム化（ネットワークIF層: Ethernet / Wi-Fi）</span></div>
+          <div class="layer phys">[MAC H][IP H][TCP/UDP H][App H][データ][FCS]</div>
+        </div>
+      </div>
       <p class="note">受信側ではこの順で<strong>ヘッダをはがす</strong>（逆カプセル化）ことで元のデータに戻します。</p>
     </section>
 
+    <section id="history" class="card">
+      <h2>6. 背景と成り立ち</h2>
+      <ul>
+        <li>OSIモデルは <strong>ISO（国際標準化機構）</strong> により提案された理論モデル（1980年代）。</li>
+        <li>一方、<strong>TCP/IP</strong> はアメリカのARPANETをもとに実用化され、インターネットの標準へ。</li>
+        <li>現在は「概念理解にOSI」「実際の通信ではTCP/IP」という使い分けが一般的です。</li>
+      </ul>
+      <p class="note">OSIは学習・教育用の枠組み、TCP/IPは現実の通信の基盤。</p>
+    </section>
+
+    <section id="keywords" class="card">
+      <h2>7. 各層のキーワード早見表</h2>
+      <table>
+        <thead>
+          <tr><th>層</th><th>代表的な機能・用語</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>アプリケーション層</td><td>HTTP, DNS, メール, TLS, SSH</td></tr>
+          <tr><td>トランスポート層</td><td>TCP, UDP, ポート番号, コネクション確立</td></tr>
+          <tr><td>インターネット層</td><td>IP, ICMP, ARP, ルーティング</td></tr>
+          <tr><td>ネットワークIF層</td><td>MACアドレス, Ethernet, Wi-Fi, フレーム, FCS</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pdu" class="card">
+      <h2>8. 層ごとのデータ単位（PDU）</h2>
+      <table>
+        <thead>
+          <tr><th>層</th><th>データ単位</th><th>例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>アプリケーション層</td><td>データ（Data）</td><td>HTTPリクエスト</td></tr>
+          <tr><td>トランスポート層</td><td>セグメント（Segment）／データグラム</td><td>TCPヘッダ＋データ</td></tr>
+          <tr><td>インターネット層</td><td>パケット（Packet）</td><td>IPヘッダ＋TCPセグメント</td></tr>
+          <tr><td>ネットワークIF層</td><td>フレーム（Frame）</td><td>MACヘッダ＋IPパケット＋FCS</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="summary" class="card">
-      <h2>6. まとめ（試験・実務の要点）</h2>
+      <h2>9. まとめ（試験・実務の要点）</h2>
       <ul>
         <li><strong>OSIは学習用の7層、TCP/IPは実運用の4層</strong>（対応関係を覚える）</li>
-        <li>障害対応は<strong>層で切り分け</strong>：配線（1–2層）、IP設定/経路（3層）、TCP/UDP（4層）、アプリ設定（上位層）</li>
+        <li>障害対応は<strong>層で切り分け</strong>：配線（1–2層）、IP設定（3層）、TCP/UDP（4層）、アプリ設定（上位層）</li>
         <li>代表プロトコルの所在：<span class="ok">HTTPはアプリ層 / TCPはトランスポート / IPはインターネット / EthernetはネットワークIF</span></li>
       </ul>
+      <p class="note">
+        💡 理解チェックは <a href="quiz.html">こちら（quiz.html）</a> で実施できます。
+      </p>
       <p class="footer print-only">印刷用：A4縦に最適化。背景はプリンタ設定で無効化推奨。</p>
     </section>
+
   </main>
 </body>
+
 </html>

@@ -1,0 +1,50 @@
+@import url("top.css");
+
+/* =========================================
+   study.css
+   教科書ページ向け（読みやすさ・構成重視）
+========================================= */
+
+:root {
+  --accent: #2b8a3e;
+  --accent-light: #51cf66;
+}
+
+body {
+  background: #f8fbf9;
+  color: var(--fg);
+}
+
+/* 見出しに緑トーン強化 */
+h2 {
+  border-left: 6px solid var(--accent);
+  color: var(--accent);
+}
+
+/* 教材本文カード */
+.card {
+  border-left: 6px solid var(--accent-light);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 章区切り */
+.section {
+  margin: 2rem 0;
+  padding-top: 1rem;
+  border-top: 2px dotted var(--border);
+}
+
+/* 図表キャプション */
+figcaption {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* 印刷補助 */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

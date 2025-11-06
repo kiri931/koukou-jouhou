@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ネットワーク基礎クイズ（一問一答）</title>
+  <link rel="stylesheet" href="../../assets/css/ichimon.css" />
+  <script defer src="../../js/ichimon.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <h1>ネットワーク基礎クイズ — 一問一答</h1>
+      <p class="lead">各層やプロトコルの理解を確認しよう。クリックで答えが表示されます。</p>
+      <p><a href="index.html">← 戻る（OSI/TCP/IP解説ページ）</a></p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="quiz" class="card">
+      <h2>問題一覧</h2>
+
+      <div class="qa">
+        <p class="question"><strong>Q1.</strong> OSI参照モデルは全部で何層ありますか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">7層です。（アプリケーション層〜物理層）</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q2.</strong> TCP/IPモデルの「インターネット層」は、OSIモデルのどの層に相当しますか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">OSIの第3層（ネットワーク層）に相当します。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q3.</strong> HTTPやDNSはどの層に分類されますか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">アプリケーション層に分類されます。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q4.</strong> データの信頼性を確保するプロトコルは？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">TCP（トランスポート層）です。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q5.</strong> Pingコマンドが利用するプロトコルは？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">ICMP（インターネット層）を利用します。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q6.</strong> データリンク層で使用されるアドレスは何ですか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">MACアドレスです。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q7.</strong> カプセル化の順序で最も外側（送信時の最後）に付くものは？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">フレーム（ネットワークインターフェース層）です。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q8.</strong> プレゼンテーション層（OSI第6層）の主な役割は何ですか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">データの表現：暗号化・復号、圧縮・伸長、文字コード変換など。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q9.</strong> トランスポート層で使われる2つの主要プロトコルは？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">TCP と UDP です。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q10.</strong> HTTPとHTTPSの既定ポート番号は？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">HTTPは80番、HTTPSは443番です。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q11.</strong> UDPが向いている代表的な用途を1つ挙げてください。</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">リアルタイム通話・ライブ配信・オンラインゲームなど（遅延に強い用途）。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q12.</strong> TCPの「3ウェイハンドシェイク」は何層の動作ですか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">トランスポート層（TCP）の動作です。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q13.</strong> IP（インターネット層）の主な役割は何ですか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">パケットを宛先まで届けるためのアドレッシングとルーティング。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q14.</strong> 「セグメント」「パケット」「フレーム」はそれぞれ何層のデータ単位（PDU）ですか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">セグメント＝トランスポート層、パケット＝インターネット層、フレーム＝ネットワークIF層。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q15.</strong> スイッチとルータの主な違いは？（層と役割で答えて）</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">スイッチはL2でMACに基づく転送、ルータはL3でIPに基づく経路制御。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q16.</strong> DNSの役割は何ですか？（一言で）</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">名前解決（ドメイン名 ⇔ IPアドレスの対応付け）。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q17.</strong> サブネットマスクの目的は何ですか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">同一ネットワークの範囲を決める（ネットワーク部とホスト部の境界を示す）。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q18.</strong> MTUを超える大きさのIPパケットはどう扱われますか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">IPでフラグメント化される場合があります（DF設定時はICMPで通知、PMTUDで調整）。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q19.</strong> TLSはどの層に位置付けられますか？（実装上と機能上の両面で）</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">実装上はアプリケーション層で扱われることが多く、機能的にはプレゼンテーション層の役割（暗号化）。</p>
+      </div>
+
+      <div class="qa">
+        <p class="question"><strong>Q20.</strong> トランスポート層の「多重化」とは何を使って実現しますか？</p>
+        <button class="toggle">答えを表示</button>
+        <p class="answer">ポート番号を使って、複数のアプリケーション通信を同時に扱います。</p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer">© 2025 ネットワーク基礎教材 — 奈良県立二階堂高校 情報研究部</p>
+  </footer>
+</body>
+</html>

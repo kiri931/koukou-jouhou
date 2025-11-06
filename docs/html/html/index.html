@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Webについて</title>
+    <!-- 指定の学習用スタイルを読み込み -->
+    <link rel="stylesheet" href="../../assets/css/study.css" />
+    <meta name="description" content="Web基礎: HTML/CSS/JavaScript、タグと属性、ボックスモデル、URL、Flexbox、参考リンクの要点まとめ" />
+</head>
+
+<body>
+    <header class="wrap">
+        <h1>Webについて</h1>
+        <p class="lead">HTML / CSS / JavaScript、タグと属性、ボックス、URL などの要点まとめ</p>
+    </header>
+
+    <main class="wrap">
+        <section>
+            <h2>Webページは何でできている？</h2>
+            <ul>
+                <li>HTML（内容と意味）</li>
+                <li>CSS（見た目・装飾）</li>
+                <li>JavaScript（動き・処理）</li>
+            </ul>
+            <p>各ファイルの拡張子（保存形式）: <code>.html</code> / <code>.css</code> / <code>.js</code></p>
+        </section>
+
+        <section>
+            <h2>公開の仕組みとアドレス</h2>
+            <p>外部に公開された Web サーバ（サーバ）に Web ページ情報を保存すると公開できる。ただし <strong>IP アドレス</strong> と <strong>URL（ドメイン名）</strong>
+                が必要。</p>
+            <h3>IP（Internet Protocol）</h3>
+            <p>例: <code>192.168.0.1</code><br>世界中のインターネットにつながる端末に一つずつ割り振られている番号（大体）。</p>
+            <h3>データベース</h3>
+            <p>様々な情報を管理する Web ページでは、データベースが必要。</p>
+        </section>
+
+        <section>
+            <h2>HTML（HyperText Markup Language）</h2>
+            <p>文章に <strong>意味や役割</strong> を持たせるための言語。</p>
+            <dl>
+                <dt>HyperText</dt>
+                <dd>他の文章やページにジャンプできる仕組みを持つ。</dd>
+                <dt>Markup</dt>
+                <dd>タグと呼ばれる印を付けて、文章の役割を指定する。</dd>
+            </dl>
+
+            <h3>基本のタグ例</h3>
+            <pre><code>&lt;h1&gt;見出し１&lt;/h1&gt;  <!-- heading 1 -->
+&lt;p&gt;段落の文章&lt;/p&gt;    <!-- paragraph -->
+      </code></pre>
+            <p>タグに囲まれた部分を <strong>要素</strong>（<em>element</em>）という。複数のタグで順番に記述していく → <strong>入れ子構造</strong>。</p>
+
+            <h3>HTML 文書の基本構造</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ja&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;ページのタイトル&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    ページの内容
+  &lt;/body&gt;
+&lt;/html&gt;
+      </code></pre>
+            <p><code>&lt;!DOCTYPE html&gt;</code> があると <strong>標準準拠モード</strong>、ないと <strong>互換モード</strong> で解釈される。</p>
+            <ul>
+                <li>標準準拠モード：最新の仕様に沿って表示</li>
+                <li>互換モード：古いページとの互換を優先して表示</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>head と body の役割</h2>
+            <dl>
+                <dt><code>html</code></dt>
+                <dd>HTML 文書全体を表す。</dd>
+                <dt><code>head</code></dt>
+                <dd>ページ自体の情報（メタデータの集合）。</dd>
+                <dt><code>body</code></dt>
+                <dd>ページの内容（ユーザーに見える部分）。</dd>
+                <dt><code>title</code></dt>
+                <dd>ページのタイトル（タブに表示）。</dd>
+                <dt><code>meta</code></dt>
+                <dd>ページに関する各種情報（例：文字コード）。</dd>
+            </dl>
+            <p>インデント（字下げ）を意識して、入れ子を見やすくしよう。</p>
+        </section>
+        <section>
+            <h2>エレメント（要素）とは</h2>
+            <p>HTMLでは、タグで囲まれた部分を <strong>要素（エレメント）</strong> といいます。内容（コンテンツ）とタグで構成されています。</p>
+            <pre><code>&lt;タグ名&gt;内容&lt;/タグ名&gt;</code></pre>
+            <p>代表的なエレメントの例：</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>タグ</th>
+                        <th>意味</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>a</td>
+                        <td>リンク</td>
+                    </tr>
+                    <tr>
+                        <td>abbr</td>
+                        <td>略語</td>
+                    </tr>
+                    <tr>
+                        <td>br</td>
+                        <td>改行</td>
+                    </tr>
+                    <tr>
+                        <td>button</td>
+                        <td>ボタン</td>
+                    </tr>
+                    <tr>
+                        <td>div</td>
+                        <td>意味を持たないブロック</td>
+                    </tr>
+                    <tr>
+                        <td>em</td>
+                        <td>強調（斜体）</td>
+                    </tr>
+                    <tr>
+                        <td>h1</td>
+                        <td>見出し1</td>
+                    </tr>
+                    <tr>
+                        <td>iframe</td>
+                        <td>ほかのサイトの一部を表示</td>
+                    </tr>
+                    <tr>
+                        <td>img</td>
+                        <td>画像</td>
+                    </tr>
+                    <tr>
+                        <td>input</td>
+                        <td>入力欄</td>
+                    </tr>
+                    <tr>
+                        <td>script</td>
+                        <td>JavaScriptを記述</td>
+                    </tr>
+                    <tr>
+                        <td>span</td>
+                        <td>意味を持たないインライン要素</td>
+                    </tr>
+                    <tr>
+                        <td>strong</td>
+                        <td>強調（太字）</td>
+                    </tr>
+                    <tr>
+                        <td>u</td>
+                        <td>アンダーライン</td>
+                    </tr>
+                    <tr>
+                        <td>ul</td>
+                        <td>順序なしリスト</td>
+                    </tr>
+                    <tr>
+                        <td>ol</td>
+                        <td>順序ありリスト</td>
+                    </tr>
+                    <tr>
+                        <td>li</td>
+                        <td>リスト項目</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>div と span の違い</h3>
+            <ul>
+                <li><code>div</code>：ブロック要素（前後に改行が入る）</li>
+                <li><code>span</code>：インライン要素（前後に改行が入らない）</li>
+            </ul>
+            <a href="lesson.html" target="_blank">体験用ページ</a>
+        </section>
+
+
+
+        <section>
+            <h2>属性（attributes）</h2>
+            <p>要素に設定や付加情報を追加できる。</p>
+            <pre><code>&lt;html lang=&quot;ja&quot;&gt;  <!-- 言語設定を日本語にする -->
+&lt;!-- 複数属性はスペース区切り --&gt;
+&lt;要素 属性名1=&quot;値1&quot; 属性名2=&quot;値2&quot;&gt;...&lt;/要素&gt;
+      </code></pre>
+            <h3>グローバル属性（どの要素にも付けられる）</h3>
+            <ul>
+                <li><code>class</code>：分類名（CSS の対象にできる）</li>
+                <li><code>id</code>：固有名</li>
+                <li><code>lang</code>：言語（例：<code>ja</code>、<code>en</code>）</li>
+                <li><code>style</code>：個別の CSS を直接指定</li>
+                <li><code>title</code>：補足情報（ツールチップなど）</li>
+            </ul>
+            <pre><code>&lt;div class=&quot;kyocho&quot;&gt;赤くなるよ&lt;/div&gt;
+/**** CSS 例 ****/
+.kyocho { color: red; }
+      </code></pre>
+
+            <h3>メタ要素</h3>
+            <p>ページの様々な情報を設定する。</p>
+            <pre><code>&lt;meta charset=&quot;UTF-8&quot; /&gt;  <!-- 文字コードの指定 -->
+      </code></pre>
+            <ul>
+                <li>UTF-8（Unicode）…世界中の文字</li>
+                <li>Shift_JIS（Windows 用）</li>
+                <li>EUC-JP（UNIX 用）</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>要素の配置ルールとカテゴリ</h2>
+            <p>代表例（抜粋）：</p>
+            <ul>
+                <li><strong>Metadata content</strong>：<code>meta</code> / <code>script</code> / <code>style</code> /
+                    <code>title</code>
+                </li>
+                <li><strong>Flow content</strong>：<code>body</code> 内で使う多くの要素（<code>a</code> / <code>abbr</code> /
+                    <code>br</code> / <code>button</code> / <code>div</code> / <code>em</code> / <code>h1</code> /
+                    <code>iframe</code> / <code>img</code> / <code>input</code> / <code>script</code> /
+                    <code>span</code> / <code>strong</code> / <code>u</code> / <code>ul</code> / <code>ol</code> /
+                    <code>li</code> など）
+                </li>
+                <li><strong>Heading content</strong>：見出し（<code>h1</code>〜<code>h6</code>）</li>
+                <li><strong>Phrasing content</strong>：テキストに意味（<code>a</code> / <code>abbr</code> / <code>br</code> /
+                    <code>em</code> など）
+                </li>
+                <li><strong>Embedded content</strong>：埋め込み（<code>iframe</code> / <code>img</code>）</li>
+                <li><strong>Interactive content</strong>：操作できる要素（<code>a</code> / <code>button</code> /
+                    <code>iframe</code> / <code>img</code> / <code>input</code>）
+                </li>
+                <li><strong>Sectioning content</strong>：章・節・項など話題の範囲</li>
+            </ul>
+
+            <h3><code>div</code> と <code>span</code> の違い</h3>
+            <ul>
+                <li><code>div</code>：ブロック要素（前後に改行）</li>
+                <li><code>span</code>：インライン要素（前後に改行しない）</li>
+            </ul>
+
+
+        </section>
+        
+        <section>
+            <h2>特殊な記述（エスケープ）</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>記号</th>
+                        <th>エスケープ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&lt;</td>
+                        <td><code>&amp;lt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>&gt;</td>
+                        <td><code>&amp;gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>&amp;</td>
+                        <td><code>&amp;amp;</code></td>
+                    </tr>
+                    <tr>
+                        <td>&quot;</td>
+                        <td><code>&amp;quot;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>例</h3>
+            <pre><code>&lt;!-- 誤 --&gt;
+&lt;p&gt;こんにちは&lt;私は足立&gt;です。&lt;/p&gt;
+
+&lt;!-- 正 --&gt;
+&lt;p&gt;こんにちは&amp;lt;私は足立&amp;gt;です。&lt;/p&gt;
+      </code></pre>
+        </section>
+
+        <section>
+            <h2>Web ブラウザと開発者ツール</h2>
+            <p>代表例：IE / Chrome / Firefox / Safari / Edge</p>
+            <p><kbd>F12</kbd> で開発者ツールを起動できる。</p>
+            <ul>
+                <li><strong>Elements</strong>：HTML・CSS の確認と編集</li>
+                <li><strong>Console</strong>：エラーメッセージ表示・JS 実行</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>ボックスモデル</h2>
+            <p>ブラウザは HTML 要素を長方形の「ボックス」として配置する。</p>
+            <ul>
+                <li>コンテンツ（内容）</li>
+                <li>パディング（内側の余白）</li>
+                <li>ボーダー（枠線）</li>
+                <li>マージン（外側の余白）</li>
+            </ul>
+            <h3>CSS での主な指定</h3>
+            <ul>
+                <li><code>width</code> / <code>height</code></li>
+                <li><code>padding</code> / <code>border</code> / <code>margin</code></li>
+            </ul>
+            <p>ブロック要素とインライン要素の性質の違いにも注意。</p>
+        </section>
+
+        <section>
+            <h2>ハイパーリンク（リンク）</h2>
+            <p>クリックで別の Web ページを表示。</p>
+            <p>URL 例：<code>http://example.com/sample/index.html</code></p>
+            <ul>
+                <li><code>http</code>：プロトコル（約束事）</li>
+                <li><code>example.com</code>：ドメイン名</li>
+                <li><code>sample</code>：ディレクトリ名</li>
+                <li><code>.html</code>：拡張子</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Flexbox（Flexible Box Layout Module）</h2>
+            <pre><code>/* 親要素に指定 */
+.container { display: flex; }
+      </code></pre>
+        </section>
+
+        <section>
+            <h2>CSS で覚えておきたいプロパティ</h2>
+            <ul>
+                <li><code>font-size</code>（文字の大きさ） / <code>font-weight</code>（太さ） /
+                    <code>text-align</code>（left/center/right）
+                </li>
+                <li><code>color</code>（文字色） / <code>background-color</code>（背景色） / <code>background-image</code>（背景画像）
+                </li>
+                <li><code>width</code>（横幅） / <code>height</code>（縦幅）</li>
+                <li><code>border</code>（外枠）</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>参考リンク</h2>
+            <ul>
+                <li><a href="https://html5exam.jp/" target="_blank" rel="noopener">HTML5プロフェッショナル認定試験</a></li>
+                <li><a href="https://html5exam.jp/images/news/event_20210711_01.pdf" target="_blank"
+                        rel="noopener">イベント資料（2021/07/11）</a></li>
+                <li><a href="https://html5exam.jp/images/news/event_20200712_01.pdf" target="_blank"
+                        rel="noopener">イベント資料（2020/07/12）</a></li>
+                <li><a href="https://developer.mozilla.org/ja/" target="_blank" rel="noopener">MDN Web Docs</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>参考資料</h2>
+            <ul>
+                <li><em>武器になるHTML</em>（柴田 宏仙） — 技術評論社：<a href="https://gihyo.jp/book/2022/978-4-297-13132-6"
+                        target="_blank" rel="noopener">書籍情報</a></li>
+                <li><em>1冊ですべて身につく HTML &amp; CSS と Webデザイン入門講座</em>（Mana）</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="wrap" style="margin-top:3rem">
+        <p>Web基礎</p>
+    </footer>
+</body>
+
+</html>

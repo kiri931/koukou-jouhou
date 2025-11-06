@@ -1,172 +1,200 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================================
+   top.css
+   サイト全体の基本デザイン・配色・ナビゲーション
+========================================= */
+
+:root {
+  --bg: #f7f9f5;
+  --card: #ffffff;
+  --fg: #1f2937;
+  --muted: #4b5563;
+  --accent: #38a169;
+  --accent-light: #68d391;
+  --border: #d1e7dd;
+}
+
+/* -----------------------------------------
+   ベース
+----------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo UI', system-ui, sans-serif;
-    line-height: 1.7;
-    color: #2f3e2f;
-    background: linear-gradient(135deg, #b2f0c0 0%, #e6ffe6 100%);
-    min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  margin: 0;
 }
 
-/* コンテナ */
+/* -----------------------------------------
+   コンテナ・テキスト
+----------------------------------------- */
+.wrap,
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-/* ヘッダー */
+h1, h2, h3, p {
+  margin: 0 0 0.8rem;
+}
+
+/* -----------------------------------------
+   ヘッダー
+----------------------------------------- */
 header {
-    text-align: center;
-    margin-bottom: 3rem;
-    color: #1a3d1a;
+  background: var(--accent-light);
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+  border-bottom: 3px solid var(--accent);
+  position: relative;
+  z-index: 10;
 }
 
 header h1 {
-    font-size: 2.8rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    text-shadow: 1px 1px 3px rgba(0, 64, 0, 0.2);
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 
 header p {
-    font-size: 1.1rem;
-    opacity: 0.85;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
 }
 
-/* グリッド */
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+/* -----------------------------------------
+   見出し・本文
+----------------------------------------- */
+h2 {
+  color: var(--accent);
+  font-size: 1.4rem;
+  border-left: 5px solid var(--accent);
+  padding-left: 0.6rem;
 }
 
-/* カード */
-.category-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 2rem;
-    border: 1px solid #d9ead3;
-    box-shadow: 0 4px 10px rgba(0, 64, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+h3 {
+  color: var(--muted);
+  font-size: 1.15rem;
 }
 
-.category-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 64, 0, 0.1);
+/* -----------------------------------------
+   カード・表・コード
+----------------------------------------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin: 1.4rem 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
-/* 見出し */
-.category-card h2 {
-    color: #22543d;
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 3px solid #68d391;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
 }
 
-/* 説明文 */
-.category-card p {
-    color: #4a4a4a;
-    margin-bottom: 1.2rem;
-    font-size: 0.95rem;
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.7rem;
 }
 
-/* リンクリスト */
-.link-list {
-    list-style: none;
+th {
+  background: #ecfdf5;
+  color: var(--accent);
+  font-weight: 600;
 }
 
-.link-list li {
-    margin-bottom: 0.8rem;
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Roboto Mono", monospace;
 }
 
-.link-list a {
-    display: flex;
-    align-items: center;
-    padding: 0.8rem 1rem;
-    background: #f0fff4;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #2f855a;
-    font-weight: 500;
-    border-left: 4px solid transparent;
-    transition: all 0.3s ease;
+pre {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
 }
 
-.link-list a:hover {
-    background: #c6f6d5;
-    border-left-color: #38a169;
-    transform: translateX(5px);
+/* -----------------------------------------
+   注意書き
+----------------------------------------- */
+.note {
+  background: #f0fdf4;
+  border-left: 5px solid var(--accent-light);
+  padding: 0.9rem 1rem;
+  color: #2f4f2f;
+  border-radius: 6px;
+  margin: 1rem 0;
 }
 
-.link-list a::before {
-    content: "📘";
-    margin-right: 0.8rem;
-    font-size: 1.1rem;
-}
-
-/* アイコン差別化 */
-.class-links a::before { content: "🏫"; }
-.tools-links a::before { content: "🧰"; }
-.docs-links a::before { content: "📖"; }
-.game-links a::before { content: "🎮"; }
-.experimental-links a::before { content: "🔬"; }
-
-/* フッター */
+/* -----------------------------------------
+   フッター
+----------------------------------------- */
 .footer {
-    text-align: center;
-    color: #2f3e2f;
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }
 
-/* バッジ */
-.badge {
-    display: inline-block;
-    background: #48bb78;
-    color: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-left: 0.5rem;
+/* -----------------------------------------
+   印刷
+----------------------------------------- */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+  header {
+    background: none;
+    color: #000;
+    border: none;
+  }
+  .card { box-shadow: none; }
 }
 
-.badge.new {
-    background: #68d391;
+/* -----------------------------------------
+   ナビゲーション
+----------------------------------------- */
+#menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #334;
+  color: #fff;
+  width: 220px;
+  height: 100%;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
-.badge.interactive {
-    background: #38a169;
+#menu.show { transform: translateX(0); }
+
+#menu button {
+  width: 100%;
+  padding: 10px;
+  background: #223;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
-.badge:not(.new):not(.interactive) {
-    background: #276749;
+#menu li {
+  padding: 10px;
+  border-bottom: 1px solid #445;
 }
-
-/* レスポンシブ */
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem;
-    }
-
-    header h1 {
-        font-size: 2rem;
-    }
-
-    .content-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .category-card {
-        padding: 1.5rem;
-    }
-}
+#menu li:hover { background: #445; }

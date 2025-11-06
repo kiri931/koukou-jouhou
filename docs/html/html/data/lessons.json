@@ -1,0 +1,212 @@
+[
+  {
+    "tag": "a",
+    "name": "リンク",
+    "desc": "他のページやサイトへ移動するリンクを作成します。",
+    "html": "<a href='https://koukou-jouhou.org'>情報研究部サイトへ</a>",
+    "css": "a { color: blue; text-decoration: underline; }",
+    "css_desc": "リンクの色や装飾を変更します。",
+    "css_patterns": [
+      { "code": "a:hover { color: red; }", "explain": ":hover はマウスを乗せたときの状態を指定します。" },
+      { "code": "a:visited { color: purple; }", "explain": ":visited はクリック済みのリンクに色を付けます。" },
+      { "code": "a { text-decoration: none; }", "explain": "下線を消します。ボタン風リンクに使われます。" },
+      { "code": "a { transition: 0.3s; }", "explain": "ホバー時の色変化を滑らかにします。" }
+    ]
+  },
+  {
+    "tag": "abbr",
+    "name": "略語",
+    "desc": "略語や頭字語を表します。",
+    "html": "<p>このサイトは <abbr title='HyperText Markup Language'>HTML</abbr> を学びます。</p>",
+    "css": "abbr { border-bottom: 1px dotted gray; cursor: help; }",
+    "css_desc": "略語に点線を引いたりツールチップを追加できます。",
+    "css_patterns": [
+      { "code": "abbr[title] { border-bottom: 1px dashed #666; }", "explain": "title属性を持つ略語に下線を付けます。" },
+      { "code": "abbr:hover { color: blue; }", "explain": "略語にカーソルを合わせた際に色を変えます。" }
+    ]
+  },
+  {
+    "tag": "br",
+    "name": "改行",
+    "desc": "文章の途中に改行を入れます。",
+    "html": "<p>1行目<br>2行目<br>3行目</p>",
+    "css": "p { line-height: 1.6; }",
+    "css_desc": "br自体には装飾を付けません。文字間隔を調整します。",
+    "css_patterns": [
+      { "code": "p { margin-bottom: 1em; }", "explain": "段落間の余白を広げます。" },
+      { "code": "p { line-height: 1.8; }", "explain": "行間を広げて読みやすくします。" }
+    ]
+  },
+  {
+    "tag": "button",
+    "name": "ボタン",
+    "desc": "クリックで動作を行うボタンを作成します。",
+    "html": "<button>クリック！</button>",
+    "css": "button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; }",
+    "css_desc": "ボタンの色や丸みを調整します。",
+    "css_patterns": [
+      { "code": "button:hover { background: #45a049; }", "explain": "カーソルを乗せたときの背景色を変更します。" },
+      { "code": "button:active { transform: scale(0.95); }", "explain": "クリック時に少し縮むアニメーションを追加します。" },
+      { "code": "button { box-shadow: 0 3px 6px rgba(0,0,0,0.2); }", "explain": "立体感を出すために影を付けます。" },
+      { "code": "button:disabled { opacity: 0.5; }", "explain": "無効状態のボタンを薄く表示します。" }
+    ]
+  },
+  {
+    "tag": "div",
+    "name": "汎用コンテナ",
+    "desc": "意味を持たないブロック要素。レイアウト構造に使用します。",
+    "html": "<div class='box'>内容</div>",
+    "css": ".box { background: #eee; padding: 20px; border: 1px solid #ccc; }",
+    "css_desc": "要素をまとめたりレイアウトを整えるために使います。",
+    "css_patterns": [
+      { "code": "div { margin: 10px 0; }", "explain": "上下に余白を付けて要素を区切ります。" },
+      { "code": "div { border-radius: 8px; }", "explain": "角を丸めます。" },
+      { "code": "div.container { max-width: 800px; margin: auto; }", "explain": "中央寄せと最大幅を設定します。" }
+    ]
+  },
+  {
+    "tag": "em",
+    "name": "強調（斜体）",
+    "desc": "重要な語句を強調し、通常は斜体で表示します。",
+    "html": "<p>これは <em>重要</em> です。</p>",
+    "css": "em { color: #c00; font-style: italic; }",
+    "css_desc": "斜体や色で強調を表現します。",
+    "css_patterns": [
+      { "code": "em { background: yellow; }", "explain": "背景を黄色にして強調を目立たせます。" },
+      { "code": "em { font-weight: bold; }", "explain": "斜体に加えて太字にします。" }
+    ]
+  },
+  {
+    "tag": "h1",
+    "name": "見出し1",
+    "desc": "ページや章のタイトルを表します。",
+    "html": "<h1>はじめてのHTML</h1>",
+    "css": "h1 { color: #336; text-align: center; }",
+    "css_desc": "タイトルのフォントサイズや位置を整えます。",
+    "css_patterns": [
+      { "code": "h1 { font-size: 2.5em; }", "explain": "見出しの大きさを変更します。" },
+      { "code": "h1 { border-bottom: 3px solid #ccc; }", "explain": "下線で見出しを区切ります。" },
+      { "code": "h1 { text-shadow: 2px 2px 4px gray; }", "explain": "立体感のある影を追加します。" }
+    ]
+  },
+  {
+    "tag": "iframe",
+    "name": "埋め込みフレーム",
+    "desc": "他のページをページ内に埋め込みます。",
+    "html": "<iframe src='https://koukou-jouhou.org' width='300' height='200'></iframe>",
+    "css": "iframe { border: 2px solid #888; border-radius: 5px; }",
+    "css_desc": "枠線や角丸を調整します。",
+    "css_patterns": [
+      { "code": "iframe { width: 100%; height: 400px; }", "explain": "ページ全体に合わせたサイズにします。" },
+      { "code": "iframe:hover { transform: scale(1.02); }", "explain": "ホバー時に少し拡大します。" }
+    ]
+  },
+  {
+    "tag": "img",
+    "name": "画像",
+    "desc": "画像を表示します。",
+    "html": "<img src='https://placehold.co/200x120' alt='サンプル画像'>",
+    "css": "img { width: 200px; border-radius: 8px; }",
+    "css_desc": "画像のサイズや角丸を整えます。",
+    "css_patterns": [
+      { "code": "img { max-width: 100%; height: auto; }", "explain": "レスポンシブ対応で幅を自動調整します。" },
+      { "code": "img:hover { opacity: 0.8; }", "explain": "ホバー時に透明度を下げます。" },
+      { "code": "img.round { border-radius: 50%; }", "explain": "円形の画像を作ります。" }
+    ]
+  },
+  {
+    "tag": "input",
+    "name": "入力欄",
+    "desc": "ユーザーが文字を入力できるフォーム要素です。",
+    "html": "<input type='text' placeholder='名前を入力'>",
+    "css": "input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }",
+    "css_desc": "入力欄の見た目を整えます。",
+    "css_patterns": [
+      { "code": "input:focus { border-color: blue; outline: none; }", "explain": "クリック時の枠線色を変更します。" },
+      { "code": "input::placeholder { color: #999; }", "explain": "プレースホルダーの文字色を変更します。" }
+    ]
+  },
+  {
+    "tag": "script",
+    "name": "スクリプト",
+    "desc": "JavaScriptを記述または読み込みます。",
+    "html": "<script>alert('こんにちは！');</script>",
+    "css": "",
+    "css_desc": "通常CSSは不要ですが、コード表示時に整形することがあります。",
+    "css_patterns": [
+      { "code": "pre code { background: #f4f4f4; }", "explain": "コードブロックを灰色背景で表示します。" }
+    ]
+  },
+  {
+    "tag": "span",
+    "name": "インラインコンテナ",
+    "desc": "文章の一部を装飾するために使用します。",
+    "html": "<p>この<span class='highlight'>部分だけ</span>色を変えます。</p>",
+    "css": ".highlight { color: red; font-weight: bold; }",
+    "css_desc": "一部分を強調するのに使います。",
+    "css_patterns": [
+      { "code": "span.highlight { background: yellow; }", "explain": "強調部分に背景色を付けます。" },
+      { "code": "span.note { font-style: italic; color: gray; }", "explain": "補足を斜体で表示します。" }
+    ]
+  },
+  {
+    "tag": "strong",
+    "name": "強調（太字）",
+    "desc": "重要な語句を太字で表します。",
+    "html": "<p><strong>注意：</strong>保存前に確認してください。</p>",
+    "css": "strong { color: red; font-weight: bold; }",
+    "css_desc": "注意や強調に使用します。",
+    "css_patterns": [
+      { "code": "strong { background: yellow; }", "explain": "目立たせるため背景を黄色にします。" },
+      { "code": "strong { text-transform: uppercase; }", "explain": "すべて大文字で表示します。" }
+    ]
+  },
+  {
+    "tag": "u",
+    "name": "下線",
+    "desc": "テキストに下線を引きます。",
+    "html": "<p><u>ここが重要</u>です。</p>",
+    "css": "u { text-decoration: underline; color: #006; }",
+    "css_desc": "下線の種類や色を調整します。",
+    "css_patterns": [
+      { "code": "u { text-decoration-thickness: 2px; }", "explain": "線の太さを変えます。" },
+      { "code": "u:hover { text-decoration-style: wavy; }", "explain": "波線スタイルに変更します。" }
+    ]
+  },
+  {
+    "tag": "ul",
+    "name": "順序なしリスト",
+    "desc": "箇条書きを点（・）で表示します。",
+    "html": "<ul><li>りんご</li><li>みかん</li><li>バナナ</li></ul>",
+    "css": "ul { list-style-type: disc; padding-left: 1.5em; }",
+    "css_desc": "リストマーカーや余白を調整します。",
+    "css_patterns": [
+      { "code": "ul { list-style-type: circle; }", "explain": "丸を空心にします。" },
+      { "code": "ul li { margin: 0.3em 0; }", "explain": "項目間の余白を調整します。" }
+    ]
+  },
+  {
+    "tag": "ol",
+    "name": "順序付きリスト",
+    "desc": "番号付きのリストを作成します。",
+    "html": "<ol><li>HTML</li><li>CSS</li><li>JavaScript</li></ol>",
+    "css": "ol { list-style-type: decimal; padding-left: 1.5em; }",
+    "css_desc": "リスト番号のスタイルを変更します。",
+    "css_patterns": [
+      { "code": "ol { list-style-type: upper-roman; }", "explain": "番号をローマ数字に変更します。" },
+      { "code": "ol li::marker { color: #06c; font-weight: bold; }", "explain": "番号の色と太さを変更します。" }
+    ]
+  },
+  {
+    "tag": "li",
+    "name": "リスト項目",
+    "desc": "ulまたはol内の1つの項目です。",
+    "html": "<ul><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>",
+    "css": "li { margin-bottom: 0.4em; }",
+    "css_desc": "リスト項目の余白を調整します。",
+    "css_patterns": [
+      { "code": "li::before { content: '★ '; color: gold; }", "explain": "項目の前に星マークを付けます。" },
+      { "code": "li:hover { background: #f8f8f8; }", "explain": "カーソルを乗せた項目をハイライトします。" }
+    ]
+  }
+]

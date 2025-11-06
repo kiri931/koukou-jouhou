@@ -1,0 +1,39 @@
+@import url("study.css");
+
+/* =========================================
+   html-css.css
+   HTML/CSS実験ページ用（双方向演習）
+========================================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  padding: 1em;
+}
+
+textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 0.95rem;
+  padding: 0.5em;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  resize: vertical;
+  background: #fff;
+}
+
+iframe {
+  width: 100%;
+  height: 420px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+/* 小画面対応 */
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
