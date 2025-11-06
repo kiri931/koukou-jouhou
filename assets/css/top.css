@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo UI', system-ui, sans-serif;
+    line-height: 1.7;
+    color: #2f3e2f;
+    background: linear-gradient(135deg, #b2f0c0 0%, #e6ffe6 100%);
+    min-height: 100vh;
+}
+
+/* コンテナ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* ヘッダー */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #1a3d1a;
+}
+
+header h1 {
+    font-size: 2.8rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 64, 0, 0.2);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+}
+
+/* グリッド */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* カード */
+.category-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #d9ead3;
+    box-shadow: 0 4px 10px rgba(0, 64, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 64, 0, 0.1);
+}
+
+/* 見出し */
+.category-card h2 {
+    color: #22543d;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #68d391;
+}
+
+/* 説明文 */
+.category-card p {
+    color: #4a4a4a;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+}
+
+/* リンクリスト */
+.link-list {
+    list-style: none;
+}
+
+.link-list li {
+    margin-bottom: 0.8rem;
+}
+
+.link-list a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: #f0fff4;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2f855a;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.link-list a:hover {
+    background: #c6f6d5;
+    border-left-color: #38a169;
+    transform: translateX(5px);
+}
+
+.link-list a::before {
+    content: "📘";
+    margin-right: 0.8rem;
+    font-size: 1.1rem;
+}
+
+/* アイコン差別化 */
+.class-links a::before { content: "🏫"; }
+.tools-links a::before { content: "🧰"; }
+.docs-links a::before { content: "📖"; }
+.game-links a::before { content: "🎮"; }
+.experimental-links a::before { content: "🔬"; }
+
+/* フッター */
+.footer {
+    text-align: center;
+    color: #2f3e2f;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 3rem;
+}
+
+/* バッジ */
+.badge {
+    display: inline-block;
+    background: #48bb78;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.badge.new {
+    background: #68d391;
+}
+
+.badge.interactive {
+    background: #38a169;
+}
+
+.badge:not(.new):not(.interactive) {
+    background: #276749;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .category-card {
+        padding: 1.5rem;
+    }
+}
