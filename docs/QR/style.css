@@ -55,7 +55,6 @@ input, textarea {
   padding: 8px;
   border-radius: 3px;
   font-size: 1rem;
-  width: 100%;
   box-sizing: border-box;
 }
 
@@ -161,4 +160,9 @@ blockquote {
   }
 }
 
-
+input[type=checkbox] {
+  -ms-transform: scale(1.5, 1.5);
+  -webkit-transform: scale(1.5, 1.5);
+  transform: scale(1.5, 1.5);
+    accent-color: #41794b;
+}
