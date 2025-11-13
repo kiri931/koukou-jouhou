@@ -35,8 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (currentIndex > unlockedIndex) {
 
         alert(
-            "まだこのページには進めません。\n" +
-            "そのQRコードを読み取ってください。"
+            "まだこのページには進めません。\n" 
         );
 
         let index = unlockedIndex - 1;
