@@ -8,24 +8,19 @@ window.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(s);
 
     window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-9HNJKSSQ12');
 
     // --- ▼ ページ進行管理 ---------------------------------------
 
-    // ページIDを body の data-page 属性から取得する
     const page = document.body.dataset.page;
-
     if (!page) {
         console.error("data-page が設定されていません");
         return;
     }
 
-    // ページ順のリスト（順番を変える場合はここだけ変更）
-    const order = ["start", "gate", "gym", "club", "pool","finish"];
-
-    // 現在のページが何番目か
+    const order = ["start", "gate", "gym", "club", "pool", "finish"];
     const currentIndex = order.indexOf(page);
 
     if (currentIndex === -1) {
@@ -33,22 +28,30 @@ window.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // localStorage に保存されている開放済みページ番号（初回は 0）
+    // 保存されている進行状況 → 到達した最大ページ index
     const unlockedIndex = Number(localStorage.getItem("unlockedIndex") || 0);
 
-    // --- 順番を飛ばした場合 -------------------------------------
+    // --- 順番を飛ばして来た場合 -----------------------------------
     if (currentIndex > unlockedIndex) {
+
         alert(
             "まだこのページには進めません。\n" +
-            "前のQRコード（" + order[unlockedIndex] + "）を読み取ってください。"
+            "そのQRコードを読み取ってください。"
         );
 
-        // 前のページへ戻す
-        window.location.href = "/QR/story/" + order[unlockedIndex] + ".html";
+        let index = unlockedIndex - 1;
+
+        // 0 未満にならないよう安全処理
+        if (index < 0) index = 0;
+
+        const backPage = order[index];
+
+
+        window.location.href = backPage + ".html";
         return;
     }
 
-    // --- 正しい順番なら進行度を更新 ------------------------------
+    // --- 正しい順序で進んだ場合 → 進捗を更新 ----------------------
     if (currentIndex === unlockedIndex) {
         localStorage.setItem("unlockedIndex", currentIndex + 1);
     }
