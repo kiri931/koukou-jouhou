@@ -172,3 +172,7 @@ img,video {
     width: auto;
     height: auto;
 }
+
+strong{
+  color: red;
+}
