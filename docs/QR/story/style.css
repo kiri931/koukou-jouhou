@@ -1,17 +1,20 @@
-/* 体験型推理ミステリー向けダークテーマCSS */
+
 
 /* ===== Base (Desktop-first) ===== */
 body {
-  background-color: #121212; /* 超暗めの背景 */
-  color: #c0c0c0;           /* 薄いグレー文字 */
-  font-family: 'Georgia', serif;
+  background-color:#005a18; /* 背景色指定 */
+  color: #c0c0c0;           /* 文字の色を指定 */
+  font-family: 'Georgia', serif;/*フォント*/
   line-height: 1.6;
   margin: 0;
   padding: 20px;
 }
 
-a { color: black; text-decoration: underline; 
-  
+a {
+  color: #6699cc;           /* 青系リンク */
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
 }
 
 a:hover {
@@ -19,14 +22,14 @@ a:hover {
   color: #cc6666;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4 { /*タイトルのCSS指定*/
   color: #e0e0e0;
   text-shadow: 0 0 5px #222; /* ぼんやりとした影で奥行き */
 }
 
-button, .btn {
-  background-color: #333;
-  border: 1px solid #555;
+button, .btn {  /*ボタンのCSS指定*/
+  background-color: #8b6060;
+  border: 1px solid #0ed35a;
   color: #ccc;
   padding: 10px 15px;
   cursor: pointer;
@@ -35,17 +38,17 @@ button, .btn {
   border-radius: 4px;
 }
 
-button:hover, .btn:hover {
-  background-color: #cc6666;
+button:hover, .btn:hover {  /*ボタン(ホバー）のCSS指定*/
+  background-color: #ddd;
   color: #121212;
 }
 
-button:disabled, .btn:disabled {
+button:disabled, .btn:disabled {  /*ボタン(無効）のCSS指定*/
   background-color: #222;
   color: #121212;
 }
 
-input, textarea {
+input, textarea { /*インプット、テキストエリアの指定*/
   background-color: #222;
   border: 1px solid #444;
   color: #ddd;
@@ -55,7 +58,7 @@ input, textarea {
   box-sizing: border-box;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus {   /*インプット、テキストエリアのフォーカス指定*/
   outline: none;
   border-color: #6699cc;
   box-shadow: 0 0 5px #6699cc;
@@ -125,7 +128,7 @@ blockquote {
   body {
     font-size: 16px;
     line-height: 1.8;
-    padding: 10px;
+    /*padding: 100px;*/
   }
 
   .container {
@@ -164,3 +167,9 @@ input[type=checkbox] {
     accent-color: #41794b;
 }
 
+header {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
