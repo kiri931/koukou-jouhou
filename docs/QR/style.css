@@ -166,3 +166,9 @@ input[type=checkbox] {
   transform: scale(1.5, 1.5);
     accent-color: #41794b;
 }
+
+img,video {
+    max-width: 1000px;
+    width: auto;
+    height: auto;
+}
