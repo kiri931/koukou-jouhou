@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>e-net専用ログイン</title>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+  const CLIENT_ID = "ここにOAuthのclient_id";
+
+  function handleLogin(response) {
+    const data = JSON.parse(atob(response.credential.split('.')[1]));
+    const email = data.email;
+    const domain = email.split("@")[1];
+
+    if (domain === "e-net.nara.jp") {
+      sessionStorage.setItem("e-net-auth", email);
+      window.location.href = "home.html";
+    } else {
+      alert("このサイトは e-net.nara.jp のアカウント専用です。");
+    }
+  }
+</script>
+
+</head>
+
+<body>
+
+<h2>e-net アカウントでログイン</h2>
+
+<div id="g_id_onload"
+  data-client_id="ここにOAuthのclient_id"
+  data-callback="handleLogin">
+</div>
+
+<div class="g_id_signin"
+  data-type="standard"
+  data-theme="outline"
+  data-size="large">
+</div>
+
+</body>
+</html>

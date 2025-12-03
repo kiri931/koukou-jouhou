@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>アクセス拒否</title></head>
+<body>
+
+<h2>アクセスできません</h2>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  if (params.get("error") === "domain") {
+    document.write("<p>このページは <strong>@e-net.nara.jp</strong> のアカウントのみ利用できます。</p>");
+  } else {
+    document.write("<p>ログインエラーが発生しました。</p>");
+  }
+</script>
+
+<p><a href="index.html">ログイン画面に戻る</a></p>
+
+</body>
+</html>

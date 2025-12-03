@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>e-net専用ページ</title></head>
+
+<body>
+
+<script src="/e-net/auth.js"></script>
+
+<h1>e-net専用ページ</h1>
+<p>ログイン中: <span id="user"></span></p>
+
+<script>
+  document.getElementById("user").textContent = sessionStorage.getItem("e-net-auth");
+</script>
+
+
+<p>ここに学生専用の内容を入れてください。</p>
+
+</body>
+</html>
