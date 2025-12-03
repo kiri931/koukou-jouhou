@@ -9,8 +9,23 @@
 
     <script>
         function handleLogin(response) {
-            const data = JSON.parse(atob(response.credential.split('.')[1]));
+            let data = null;
+
+            try {
+                // JWT デコード
+                data = JSON.parse(atob(response.credential.split('.')[1]));
+            } catch (e) {
+                // デコード失敗 → gmail など email が取れないケース
+                alert("このアカウントではログインできません。（メール情報なし）");
+                return;
+            }
+
             const email = data.email;
+            if (!email) {
+                alert("このアカウントではログインできません。（メールが取得できません）");
+                return;
+            }
+
             const domain = email.split("@")[1];
 
             if (domain === "e-net.nara.jp") {
@@ -20,6 +35,7 @@
                 alert("このサイトは e-net.nara.jp のアカウント専用です。");
             }
         }
+
     </script>
 
 </head>
