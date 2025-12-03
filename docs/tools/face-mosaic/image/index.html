@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>画像の顔モザイク</title>
+    <link href="../../../assets/css/html-css.css" rel="stylesheet">
+    <script src="main.js" onload="console.log('main.js loaded');"></script>
+
+    <!-- 🔥 opencv.js は main.js の後に読み込む -->
+    <script src="opencv.js" onload="console.log('opencv.js loaded'); onOpenCvReady();"
+        onerror="console.error('opencv.js failed to load');"></script>
+
+    <style>
+        #canvas {
+            max-width: 500px;
+            max-height: 500px;
+            border: 1px solid #ccc;
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>画像の顔モザイク処理（OpenCV.js）</h1>
+
+    <input type="file" id="fileInput" accept="image/*"><br>
+    
+    <div style="margin: 10px 0;">
+        <label>検出感度 (minNeighbors): <span id="minNeighborsValue">2</span></label><br>
+        <input type="range" id="minNeighbors" min="1" max="5" value="2" step="1" style="width: 200px;">
+        <small style="display: block; color: #666;">小さいほど多く検出（誤検出も増える）</small>
+    </div>
+
+    <div style="margin: 10px 0;">
+        <label>検出精度 (scaleFactor): <span id="scaleFactorValue">1.1</span></label><br>
+        <input type="range" id="scaleFactor" min="1.05" max="1.3" value="1.1" step="0.05" style="width: 200px;">
+        <small style="display: block; color: #666;">小さいほど精度高い（処理は遅くなる）</small>
+    </div>
+
+    <div id="effects">
+        <label><input type="checkbox" id="fx_mosaic"> モザイク</label>
+        <label><input type="checkbox" id="fx_blur"> ぼかし</label>
+        <label><input type="checkbox" id="fx_black"> 黒塗り</label>
+        <label><input type="checkbox" id="fx_rect"> 枠線</label>
+    </div>
+
+    <div id="status">OpenCV.js 読み込み中...</div>
+    <div id="error"></div>
+
+    <canvas id="canvas"></canvas><br>
+    <button id="download" disabled>画像を保存</button>
+
+
+</body>
+
+</html>
