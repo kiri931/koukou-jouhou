@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini-C Interpreter in JS</title>
+  <style>
+    body { font-family: monospace; padding: 20px; }
+    textarea { width: 100%; height: 220px; font-family: monospace; }
+    #out { white-space: pre-wrap; background: #eee; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>Mini-C (subset) Interpreter</h1>
+
+  <textarea id="code">
+// ここに C 風コードを書いてください
+int a;
+a = 3;
+if (a < 5) {
+    a = a + 10;
+}
+print(a);  // -> 13
+  </textarea>
+
+  <br>
+  <button id="run">実行</button>
+
+  <h2>出力</h2>
+  <div id="out"></div>
+
+  <script src="c_interpreter.js"></script>
+  <script>
+    document.getElementById("run").onclick = () => {
+      const src = document.getElementById("code").value;
+      const outDiv = document.getElementById("out");
+      outDiv.textContent = "";
+      try {
+        const result = Interpreter.run(src);
+        if (result !== undefined) {
+          outDiv.textContent += result + "\n";
+        }
+      } catch (e) {
+        outDiv.textContent = "エラー: " + e;
+        console.error(e);
+      }
+    };
+  </script>
+
+</body>
+</html>
