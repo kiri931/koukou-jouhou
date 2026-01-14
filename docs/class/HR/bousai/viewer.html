@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>防災備蓄品カードゲーム 提出データビューア</title>
+  <style>
+    :root {
+      --dg-color-bg: #ffffff;
+      --dg-color-surface: #f6f8fb;
+      --dg-color-surface-2: #eef2f7;
+      --dg-color-border: #d7dee8;
+      --dg-color-text: #0b1220;
+      --dg-color-muted: #4b5565;
+      --dg-color-primary: #0b5ed7;
+      --dg-color-primary-hover: #0a53be;
+      --dg-color-success: #067647;
+      --dg-color-danger: #b42318;
+      --dg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+      --dg-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.10);
+      --dg-radius-sm: 8px;
+      --dg-radius-md: 12px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--dg-color-bg);
+      color: var(--dg-color-text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", Arial;
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(180deg, #ffffff 0%, #ffffff 55%, #fbfdff 100%);
+      border-bottom: 1px solid var(--dg-color-border);
+      padding: 24px 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin-top: 8px;
+      color: var(--dg-color-muted);
+      font-size: 14px;
+    }
+    main {
+      padding: 32px 0 60px;
+    }
+    .card {
+      background: var(--dg-color-bg);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      box-shadow: var(--dg-shadow-sm);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .upload-area {
+      border: 2px dashed var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      padding: 40px 20px;
+      text-align: center;
+      background: var(--dg-color-surface);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .upload-area:hover, .upload-area.dragover {
+      border-color: var(--dg-color-primary);
+      background: var(--dg-color-surface-2);
+    }
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    button {
+      appearance: none;
+      border: 1px solid transparent;
+      background: var(--dg-color-primary);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease;
+    }
+    button:hover { background: var(--dg-color-primary-hover); }
+    button.subtle {
+      background: var(--dg-color-surface);
+      color: var(--dg-color-text);
+      border-color: var(--dg-color-border);
+    }
+    button.subtle:hover { background: var(--dg-color-surface-2); }
+    button.danger {
+      background: var(--dg-color-danger);
+      color: #ffffff;
+    }
+    button.danger:hover { background: #9e1f15; }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .stats {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .stat-item {
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+      padding: 16px 20px;
+      flex: 1;
+      min-width: 180px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--dg-color-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 4px;
+      color: var(--dg-color-primary);
+    }
+    .submissions-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    .submission-card {
+      background: var(--dg-color-bg);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      padding: 16px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .submission-card:hover {
+      box-shadow: var(--dg-shadow-md);
+      transform: translateY(-2px);
+    }
+    .submission-card.selected {
+      border-color: var(--dg-color-primary);
+      box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.15);
+    }
+    .submission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .submission-id {
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .submission-time {
+      font-size: 11px;
+      color: var(--dg-color-muted);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .badge.complete {
+      background: rgba(6, 118, 71, 0.1);
+      color: var(--dg-color-success);
+      border-color: rgba(6, 118, 71, 0.3);
+    }
+    .badge.partial {
+      background: rgba(161, 92, 7, 0.1);
+      color: #a15c07;
+      border-color: rgba(161, 92, 7, 0.3);
+    }
+    .submission-summary {
+      font-size: 13px;
+      color: var(--dg-color-muted);
+      line-height: 1.5;
+    }
+    .detail-view {
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .detail-section {
+      margin-bottom: 24px;
+    }
+    .detail-section:last-child {
+      margin-bottom: 0;
+    }
+    .detail-section h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dg-color-primary);
+    }
+    .detail-content {
+      background: var(--dg-color-bg);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+    .picked-items {
+      display: grid;
+      gap: 10px;
+    }
+    .picked-item {
+      background: var(--dg-color-bg);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+      padding: 12px;
+    }
+    .picked-item-name {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .picked-item-reason {
+      font-size: 13px;
+      color: var(--dg-color-muted);
+      line-height: 1.6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 16px;
+    }
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--dg-color-border);
+    }
+    th {
+      background: var(--dg-color-surface);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dg-color-muted);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--dg-color-muted);
+    }
+    .empty-state-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+    .hidden { display: none !important; }
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--dg-color-border);
+    }
+    .tab {
+      padding: 10px 16px;
+      background: none;
+      border: none;
+      border-radius: var(--dg-radius-sm) var(--dg-radius-sm) 0 0;
+      font-weight: 600;
+      color: var(--dg-color-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: auto;
+    }
+    .tab:hover {
+      background: var(--dg-color-surface);
+    }
+    .tab.active {
+      color: var(--dg-color-primary);
+      background: var(--dg-color-surface);
+      border-bottom: 2px solid var(--dg-color-primary);
+      margin-bottom: -2px;
+    }
+    @media print {
+      header, .actions, button { display: none !important; }
+      .card { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>防災備蓄品カードゲーム 提出データビューア</h1>
+    <div class="subtitle">生徒が提出したJSONファイルを一覧表示・分析するツール</div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="card">
+      <h2>ファイルをアップロード</h2>
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📁</div>
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px">
+          JSONファイルをドラッグ&ドロップ または クリックして選択
+        </div>
+        <div style="font-size:14px;color:var(--dg-color-muted)">
+          複数ファイルを一度に読み込めます
+        </div>
+        <input type="file" id="fileInput" accept=".json" multiple style="display:none">
+      </div>
+      <div class="actions">
+        <button id="btnSelectFiles">ファイルを選択</button>
+        <button class="danger" id="btnClear">すべてクリア</button>
+      </div>
+    </div>
+
+    <div id="dataSection" class="hidden">
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-label">読み込み済</div>
+          <div class="stat-value" id="statTotal">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">完了</div>
+          <div class="stat-value" id="statComplete" style="color:var(--dg-color-success)">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">平均選択数</div>
+          <div class="stat-value" id="statAvgPicked">0</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tabs">
+          <button class="tab active" data-tab="list">一覧表示</button>
+          <button class="tab" data-tab="detail">詳細表示</button>
+          <button class="tab" data-tab="analysis">集計分析</button>
+        </div>
+
+        <div id="tabList">
+          <div class="actions">
+            <button id="btnExportCSV">CSV出力</button>
+            <button id="btnExportText" class="subtle">テキスト出力</button>
+          </div>
+          <div class="submissions-grid" id="submissionsList"></div>
+        </div>
+
+        <div id="tabDetail" class="hidden">
+          <div id="detailEmpty" class="empty-state">
+            <div class="empty-state-icon">📄</div>
+            <div>カードを選択してください</div>
+          </div>
+          <div id="detailView" class="hidden"></div>
+        </div>
+
+        <div id="tabAnalysis" class="hidden">
+          <h3 style="margin:0 0 16px">防災グッズ選択集計</h3>
+          <div id="analysisChart"></div>
+          
+          <h3 style="margin:24px 0 16px">家族構成別集計</h3>
+          <div id="familyChart"></div>
+
+          <h3 style="margin:24px 0 16px">よく選ばれる組み合わせ</h3>
+          <div id="combinationChart"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="emptyState" class="empty-state">
+      <div class="empty-state-icon">📂</div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:8px">データがありません</div>
+      <div>JSONファイルをアップロードしてください</div>
+    </div>
+  </div>
+</main>
+
+<script>
+  let submissions = [];
+  let selectedSubmission = null;
+
+  const uploadArea = document.getElementById('uploadArea');
+  const fileInput = document.getElementById('fileInput');
+  const dataSection = document.getElementById('dataSection');
+  const emptyState = document.getElementById('emptyState');
+  const submissionsList = document.getElementById('submissionsList');
+  const detailView = document.getElementById('detailView');
+  const detailEmpty = document.getElementById('detailEmpty');
+
+  // File upload handlers
+  uploadArea.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', handleFiles);
+  document.getElementById('btnSelectFiles').addEventListener('click', () => fileInput.click());
+  document.getElementById('btnClear').addEventListener('click', clearAll);
+
+  uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+  });
+
+  uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+  });
+
+  uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    handleFiles({ target: { files: e.dataTransfer.files } });
+  });
+
+  async function handleFiles(e) {
+    const files = Array.from(e.target.files);
+    for (const file of files) {
+      if (file.type === 'application/json' || file.name.endsWith('.json')) {
+        try {
+          const text = await file.text();
+          const data = JSON.parse(text);
+          submissions.push({
+            filename: file.name,
+            data: data,
+            timestamp: data.exportedAt || new Date().toISOString()
+          });
+        } catch (err) {
+          console.error('Error reading file:', file.name, err);
+          alert(`ファイル "${file.name}" の読み込みに失敗しました`);
+        }
+      }
+    }
+    fileInput.value = '';
+    render();
+  }
+
+  function clearAll() {
+    if (!confirm('すべてのデータをクリアしますか？')) return;
+    submissions = [];
+    selectedSubmission = null;
+    render();
+  }
+
+  function render() {
+    if (submissions.length === 0) {
+      dataSection.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      return;
+    }
+
+    dataSection.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+
+    updateStats();
+    renderSubmissionsList();
+    if (selectedSubmission !== null) {
+      renderDetail(selectedSubmission);
+    }
+  }
+
+  function updateStats() {
+    const total = submissions.length;
+    const complete = submissions.filter(s => {
+      const d = s.data;
+      return d.picked && d.picked.length === 5 && d.worksheet5;
+    }).length;
+    const avgPicked = submissions.reduce((sum, s) => sum + (s.data.picked?.length || 0), 0) / total;
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statComplete').textContent = complete;
+    document.getElementById('statAvgPicked').textContent = avgPicked.toFixed(1);
+  }
+
+  function renderSubmissionsList() {
+    submissionsList.innerHTML = '';
+    submissions.forEach((sub, idx) => {
+      const d = sub.data;
+      const isComplete = d.picked && d.picked.length === 5 && d.worksheet5;
+      
+      const card = document.createElement('div');
+      card.className = 'submission-card' + (selectedSubmission === idx ? ' selected' : '');
+      card.onclick = () => selectSubmission(idx);
+      
+      card.innerHTML = `
+        <div class="submission-header">
+          <div>
+            <div class="submission-id">${sub.filename}</div>
+            <div class="submission-time">${new Date(sub.timestamp).toLocaleString('ja-JP')}</div>
+          </div>
+          <span class="badge ${isComplete ? 'complete' : 'partial'}">${isComplete ? '完了' : '未完了'}</span>
+        </div>
+        <div class="submission-summary">
+          STEP1: ${d.brainstorm?.length || 0}個<br>
+          STEP2: ${d.picked?.length || 0}/5枚 選択<br>
+          家族: ${getFamilyText(d.family, d.customFamily)}<br>
+          振り返り: ${d.worksheet5 ? '記入済' : '未記入'}
+        </div>
+      `;
+      
+      submissionsList.appendChild(card);
+    });
+  }
+
+  function getFamilyText(family, customFamily) {
+    if (!family) return '未選択';
+    if (family === 'custom') return customFamily || '自由設定';
+    const families = {
+      family1: '2人家族（親・子）',
+      family2: '3人家族（アレルギー）',
+      family3: '4人家族（タワマン）',
+      family4: '5人家族（田舎）',
+      family5: '5人家族（妊婦）'
+    };
+    return families[family] || family;
+  }
+
+  function selectSubmission(idx) {
+    selectedSubmission = idx;
+    renderSubmissionsList();
+    switchTab('detail');
+    renderDetail(idx);
+  }
+
+  function renderDetail(idx) {
+    const sub = submissions[idx];
+    const d = sub.data;
+    
+    detailEmpty.classList.add('hidden');
+    detailView.classList.remove('hidden');
+    
+    let html = `<h3 style="margin:0 0 20px">${sub.filename}</h3>`;
+    
+    // STEP1
+    html += `<div class="detail-section">
+      <h3>STEP1: 防災グッズ案（${d.brainstorm?.length || 0}個）</h3>
+      <div class="detail-content">`;
+    if (d.brainstorm && d.brainstorm.length > 0) {
+      d.brainstorm.forEach((item, i) => {
+        html += `${i+1}. ${item.name || '（名称なし）'}：${item.use || '（用途なし）'}\n`;
+      });
+    } else {
+      html += '（未入力）';
+    }
+    html += `</div></div>`;
+    
+    // Family
+    html += `<div class="detail-section">
+      <h3>家族構成設定</h3>
+      <div class="detail-content">${getFamilyText(d.family, d.customFamily)}</div>
+    </div>`;
+    
+    // STEP2
+    html += `<div class="detail-section">
+      <h3>STEP2: 選んだ防災グッズ（${d.picked?.length || 0}/5枚）</h3>
+      <div class="picked-items">`;
+    if (d.picked && d.picked.length > 0) {
+      d.picked.forEach((id, i) => {
+        const name = getCardName(d, id);
+        const reason = d.reasons?.[id] || '（理由未記入）';
+        html += `<div class="picked-item">
+          <div class="picked-item-name">${i+1}. ${name}</div>
+          <div class="picked-item-reason">${reason}</div>
+        </div>`;
+      });
+    } else {
+      html += '<div class="detail-content">（未選択）</div>';
+    }
+    html += `</div></div>`;
+    
+    // STEP3
+    if (d.custom && d.custom.length > 0) {
+      html += `<div class="detail-section">
+        <h3>STEP3: 自作カード（${d.custom.length}個）</h3>
+        <div class="detail-content">`;
+      d.custom.forEach((c, i) => {
+        html += `${i+1}. ${c.title}：${c.desc || ''}\n`;
+      });
+      html += `</div></div>`;
+    }
+    
+    // Worksheets
+    const worksheets = [
+      { key: 'worksheet1', label: '①グループの設定内容' },
+      { key: 'worksheet2', label: '②選んだ防災備品とその理由' },
+      { key: 'worksheet3', label: '③他のグループでよかった物' },
+      { key: 'worksheet4', label: '④こんなものがあれば便利' },
+      { key: 'worksheet5', label: '⑤今回のHRを受けて思ったこと' }
+    ];
+    
+    worksheets.forEach(w => {
+      html += `<div class="detail-section">
+        <h3>${w.label}</h3>
+        <div class="detail-content">${d[w.key] || '（未記入）'}</div>
+      </div>`;
+    });
+    
+    detailView.innerHTML = html;
+  }
+
+  function getCardName(data, id) {
+    // Check custom cards
+    if (data.custom) {
+      const custom = data.custom.find(c => c.id === id);
+      if (custom) return custom.title;
+    }
+    // Default cards
+    const cards = {
+      c01: 'アルミブランケット', c02: '毛布', c03: '簡易トイレ',
+      c04: 'レインコート', c05: '軍手', c06: 'ラジオ',
+      c07: '笛（サイコール）', c08: '懐中電灯', c09: 'アルミ製ホイッスル',
+      c10: '非常食（米A）', c11: '非常食（米B）', c12: '非常食（パン）',
+      c13: '水'
+    };
+    return cards[id] || id;
+  }
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      switchTab(target);
+    });
+  });
+
+  function switchTab(target) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`[data-tab="${target}"]`).classList.add('active');
+    
+    document.getElementById('tabList').classList.toggle('hidden', target !== 'list');
+    document.getElementById('tabDetail').classList.toggle('hidden', target !== 'detail');
+    document.getElementById('tabAnalysis').classList.toggle('hidden', target !== 'analysis');
+    
+    if (target === 'analysis') {
+      renderAnalysis();
+    }
+  }
+
+  function renderAnalysis() {
+    // Count card selections
+    const cardCounts = {};
+    submissions.forEach(sub => {
+      if (sub.data.picked) {
+        sub.data.picked.forEach(id => {
+          const name = getCardName(sub.data, id);
+          cardCounts[name] = (cardCounts[name] || 0) + 1;
+        });
+      }
+    });
+    
+    const sorted = Object.entries(cardCounts).sort((a, b) => b[1] - a[1]);
+    
+    let html = '<table><thead><tr><th>防災グッズ</th><th>選択回数</th><th>選択率</th></tr></thead><tbody>';
+    sorted.forEach(([name, count]) => {
+      const rate = (count / submissions.length * 100).toFixed(1);
+      html += `<tr><td>${name}</td><td>${count}</td><td>${rate}%</td></tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById('analysisChart').innerHTML = html;
+    
+    // Family distribution
+    const familyCounts = {};
+    submissions.forEach(sub => {
+      const fam = getFamilyText(sub.data.family, sub.data.customFamily);
+      familyCounts[fam] = (familyCounts[fam] || 0) + 1;
+    });
+    
+    html = '<table><thead><tr><th>家族構成</th><th>人数</th></tr></thead><tbody>';
+    Object.entries(familyCounts).sort((a, b) => b[1] - a[1]).forEach(([fam, count]) => {
+      html += `<tr><td>${fam}</td><td>${count}</td></tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById('familyChart').innerHTML = html;
+    
+    // Combinations
+    const combinations = {};
+    submissions.forEach(sub => {
+      if (sub.data.picked && sub.data.picked.length >= 2) {
+        const names = sub.data.picked.map(id => getCardName(sub.data, id)).sort();
+        for (let i = 0; i < names.length; i++) {
+          for (let j = i + 1; j < names.length; j++) {
+            const key = `${names[i]} + ${names[j]}`;
+            combinations[key] = (combinations[key] || 0) + 1;
+          }
+        }
+      }
+    });
+    
+    const topCombos = Object.entries(combinations).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    html = '<table><thead><tr><th>組み合わせ</th><th>回数</th></tr></thead><tbody>';
+    topCombos.forEach(([combo, count]) => {
+      html += `<tr><td>${combo}</td><td>${count}</td></tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById('combinationChart').innerHTML = html;
+  }
+
+  // Export functions
+  document.getElementById('btnExportCSV').addEventListener('click', exportCSV);
+  document.getElementById('btnExportText').addEventListener('click', exportText);
+
+  function exportCSV() {
+    let csv = 'ファイル名,提出日時,家族構成,STEP1個数,選択数,完了状況\n';
+    submissions.forEach(sub => {
+      const d = sub.data;
+      const isComplete = d.picked && d.picked.length === 5 && d.worksheet5;
+      csv += `"${sub.filename}","${sub.timestamp}","${getFamilyText(d.family, d.customFamily)}",${d.brainstorm?.length || 0},${d.picked?.length || 0},"${isComplete ? '完了' : '未完了'}"\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bousai_submissions_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function exportText() {
+    let text = '防災備蓄品カードゲーム 提出データまとめ\n';
+    text += '=' .repeat(60) + '\n\n';
+    
+    submissions.forEach((sub, idx) => {
+      const d = sub.data;
+      text += `【${idx + 1}】${sub.filename}\n`;
+      text += `提出日時: ${new Date(sub.timestamp).toLocaleString('ja-JP')}\n`;
+      text += `家族構成: ${getFamilyText(d.family, d.customFamily)}\n\n`;
+      
+      text += `STEP1（${d.brainstorm?.length || 0}個）:\n`;
+      if (d.brainstorm && d.brainstorm.length > 0) {
+        d.brainstorm.forEach((item, i) => {
+          text += `  ${i+1}. ${item.name}: ${item.use}\n`;
+        });
+      }
+      text += '\n';
+      
+      text += `STEP2（${d.picked?.length || 0}/5枚）:\n`;
+      if (d.picked && d.picked.length > 0) {
+        d.picked.forEach((id, i) => {
+          text += `  ${i+1}. ${getCardName(d, id)}\n`;
+          text += `     理由: ${d.reasons?.[id] || '（未記入）'}\n`;
+        });
+      }
+      text += '\n';
+      
+      if (d.worksheet5) {
+        text += `振り返り:\n${d.worksheet5}\n`;
+      }
+      
+      text += '\n' + '-'.repeat(60) + '\n\n';
+    });
+    
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bousai_submissions_${new Date().toISOString().slice(0, 10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Initialize
+  render();
+</script>
+</body>
+</html>
