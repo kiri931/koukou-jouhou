@@ -5,7 +5,7 @@
 */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
   --dg-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
@@ -15,30 +15,30 @@
   --dg-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
-  /* Colors */
-  --dg-color-bg: #ffffff;
-  --dg-color-surface: #f6f8fb;
-  --dg-color-surface-2: #eef2f7;
-  --dg-color-border: #d7dee8;
-  --dg-color-text: #0b1220;
-  --dg-color-muted: #4b5565;
-  --dg-color-link: #0b5ed7;
-  --dg-color-link-visited: #6f42c1;
-  --dg-color-primary: #0b5ed7;
-  --dg-color-primary-hover: #0a53be;
-  --dg-color-primary-active: #084298;
-  --dg-color-on-primary: #ffffff;
-  --dg-color-danger: #b42318;
-  --dg-color-warning: #a15c07;
-  --dg-color-success: #067647;
+  /* Colors - Dark Theme */
+  --dg-color-bg: #0b1220;
+  --dg-color-surface: #111a2e;
+  --dg-color-surface-2: #0f172a;
+  --dg-color-border: rgba(255, 255, 255, 0.12);
+  --dg-color-text: #e7eefc;
+  --dg-color-muted: #a8b3cf;
+  --dg-color-link: #66e3ff;
+  --dg-color-link-visited: #a78bfa;
+  --dg-color-primary: #66e3ff;
+  --dg-color-primary-hover: rgba(102, 227, 255, 0.85);
+  --dg-color-primary-active: rgba(102, 227, 255, 0.65);
+  --dg-color-on-primary: #0b1220;
+  --dg-color-danger: #ff6b6b;
+  --dg-color-warning: #ffd166;
+  --dg-color-success: #58f3a1;
 
   /* Focus ring */
-  --dg-focus-ring: 0 0 0 3px rgba(11, 94, 215, 0.35);
-  --dg-focus-outline: 2px solid rgba(11, 94, 215, 0.85);
+  --dg-focus-ring: 0 0 0 3px rgba(102, 227, 255, 0.35);
+  --dg-focus-outline: 2px solid rgba(102, 227, 255, 0.65);
 
   /* Radius */
-  --dg-radius-sm: 8px;
-  --dg-radius-md: 12px;
+  --dg-radius-sm: 12px;
+  --dg-radius-md: 16px;
 
   /* Spacing */
   --dg-space-1: 4px;
@@ -61,8 +61,8 @@
 
   /* Layout */
   --dg-container: 980px;
-  --dg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --dg-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.10);
+  --dg-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --dg-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -80,7 +80,7 @@ body {
   font-size: var(--dg-text-md);
   line-height: var(--dg-line-md);
   color: var(--dg-color-text);
-  background: var(--dg-color-bg);
+  background: linear-gradient(160deg, #071023, #0b1220 35%, #061525);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -94,7 +94,7 @@ svg {
 
 a {
   color: var(--dg-color-link);
-  text-decoration: underline;
+  text-decoration: none;
   text-underline-offset: 2px;
 }
 
@@ -103,6 +103,7 @@ a:visited {
 }
 
 a:hover {
+  text-decoration: underline;
   text-decoration-thickness: 2px;
 }
 
@@ -136,8 +137,13 @@ a:hover {
 }
 
 .dg-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   border-bottom: 1px solid var(--dg-color-border);
-  background: linear-gradient(180deg, #ffffff 0%, #ffffff 55%, #fbfdff 100%);
+  background: rgba(11, 18, 32, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .dg-header__inner {
@@ -204,10 +210,10 @@ a:hover {
 }
 
 .dg-card {
-  background: var(--dg-color-bg);
+  background: rgba(17, 26, 46, 0.85);
   border: 1px solid var(--dg-color-border);
   border-radius: var(--dg-radius-md);
-  box-shadow: var(--dg-shadow-sm);
+  box-shadow: var(--dg-shadow-md);
 }
 
 .dg-card__body {
@@ -252,7 +258,7 @@ a:hover {
 .dg-prose code {
   font-family: var(--dg-font-mono);
   font-size: 0.95em;
-  background: var(--dg-color-surface);
+  background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--dg-color-border);
   padding: 0.1em 0.35em;
   border-radius: 8px;
@@ -278,16 +284,18 @@ a:hover {
 }
 
 .dg-prose th {
-  background: var(--dg-color-surface);
+  background: rgba(255, 255, 255, 0.05);
   text-align: left;
+  color: var(--dg-color-muted);
+  font-weight: 700;
 }
 
 .dg-btn {
   appearance: none;
-  border: 1px solid transparent;
-  background: var(--dg-color-primary);
-  color: var(--dg-color-on-primary);
-  border-radius: 10px;
+  border: 1px solid var(--dg-color-border);
+  background: rgba(102, 227, 255, 0.16);
+  color: var(--dg-color-text);
+  border-radius: 12px;
   padding: 10px 14px;
   font-weight: 700;
   text-decoration: none;
@@ -297,29 +305,49 @@ a:hover {
   gap: 8px;
   cursor: pointer;
   min-height: 40px;
+  transition: all 0.15s ease;
 }
 
 .dg-btn:hover {
-  background: var(--dg-color-primary-hover);
+  background: rgba(102, 227, 255, 0.25);
+  border-color: rgba(102, 227, 255, 0.45);
 }
 
 .dg-btn:active {
-  background: var(--dg-color-primary-active);
+  background: rgba(102, 227, 255, 0.35);
 }
 
 .dg-btn--subtle {
-  background: var(--dg-color-surface);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--dg-color-text);
   border-color: var(--dg-color-border);
 }
 
 .dg-btn--subtle:hover {
-  background: var(--dg-color-surface-2);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.dg-btn--ok {
+  background: rgba(88, 243, 161, 0.14);
+  border-color: rgba(88, 243, 161, 0.45);
+}
+
+.dg-btn--ok:hover {
+  background: rgba(88, 243, 161, 0.22);
+}
+
+.dg-btn--danger {
+  background: rgba(255, 107, 107, 0.14);
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+.dg-btn--danger:hover {
+  background: rgba(255, 107, 107, 0.22);
 }
 
 .dg-footer {
   border-top: 1px solid var(--dg-color-border);
-  background: var(--dg-color-surface);
+  background: rgba(17, 26, 46, 0.5);
   padding: var(--dg-space-6) 0;
 }
 
@@ -340,27 +368,30 @@ a:hover {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
+  padding: 8px 10px;
   border-radius: 999px;
-  background: var(--dg-color-surface);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--dg-color-border);
   color: var(--dg-color-muted);
-  font-size: var(--dg-text-sm);
+  font-size: var(--dg-text-xs);
 }
 
 .dg-note {
   border-left: 4px solid var(--dg-color-border);
-  background: var(--dg-color-surface);
+  background: rgba(255, 255, 255, 0.03);
   padding: var(--dg-space-4);
   border-radius: 10px;
+  border: 1px solid var(--dg-color-border);
 }
 
 .dg-note--warning {
-  border-left-color: rgba(161, 92, 7, 0.65);
+  border-left-color: var(--dg-color-warning);
+  background: rgba(255, 209, 102, 0.08);
 }
 
 .dg-note--danger {
-  border-left-color: rgba(180, 35, 24, 0.65);
+  border-left-color: var(--dg-color-danger);
+  background: rgba(255, 107, 107, 0.08);
 }
 
 @media (max-width: 640px) {
