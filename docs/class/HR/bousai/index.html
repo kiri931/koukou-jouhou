@@ -97,6 +97,14 @@
     button:not(.primary):not(.ok):not(.danger):hover{
       background:var(--dg-color-surface-2);
     }
+    button.subtle {
+      background:var(--dg-color-surface);
+      color:var(--dg-color-text);
+      border-color:var(--dg-color-border);
+    }
+    button.subtle:hover {
+      background:var(--dg-color-surface-2);
+    }
     textarea, input, select{
       width:100%;
       background:var(--dg-color-bg);
@@ -216,6 +224,9 @@
       </div>
       <div class="row no-print">
         <span class="pill">保存：このPCのブラウザ（localStorage）</span>
+        <a href="viewer.html" style="text-decoration:none;color:inherit">
+          <button class="subtle">📊 提出データ確認</button>
+        </a>
         <button id="btnPrint">印刷</button>
         <button id="btnReset" class="danger">リセット</button>
       </div>
@@ -225,6 +236,7 @@
       <span class="dot" id="dot2"></span><span class="tiny">STEP2</span>
       <span class="dot" id="dot3"></span><span class="tiny">STEP3</span>
       <span class="dot" id="dot4"></span><span class="tiny">振り返り</span>
+      <span class="dot" id="dot5"></span><span class="tiny">提出</span>
     </div>
   </div>
 </header>
@@ -250,20 +262,9 @@
         <button class="primary" id="goto2">STEP2へ</button>
         <button class="primary" id="goto3">STEP3へ</button>
         <button class="primary" id="goto4">振り返りへ</button>
+        <button class="primary" id="goto5">提出へ</button>
       </div>
     </section>
-
-    <aside class="card">
-      <h2>提出用（コピペ用）</h2>
-      <div class="hint">下のボタンで、まとめテキストを生成します。GoogleフォームやClassroom提出に貼れます。</div>
-      <div class="actions no-print">
-        <button class="ok" id="btnExportText">まとめを生成</button>
-        <button id="btnCopy" disabled>コピー</button>
-        <button id="btnDownloadJson">JSONダウンロード</button>
-      </div>
-      <textarea id="exportArea" placeholder="ここに出力されます（編集OK）"></textarea>
-      <div class="tiny">※このページはオフラインでも動きます（画像は同じフォルダの bousai_cards/ を参照）。</div>
-    </aside>
 
     <section class="card" id="step1">
       <h2>STEP1：防災で思いつくグッズを書き出す（用途つき）</h2>
@@ -408,7 +409,20 @@
 
       <div class="actions no-print">
         <button id="save4" class="ok">保存</button>
+        <button class="primary" id="toStep5">次へ（提出）</button>
       </div>
+    </section>
+
+    <section class="card hidden" id="step5">
+      <h2>提出用（コピペ用）</h2>
+      <div class="hint">下のボタンで、まとめテキストを生成します。GoogleフォームやClassroom提出に貼れます。</div>
+      <div class="actions no-print">
+        <button class="ok" id="btnExportText">まとめを生成</button>
+        <button id="btnCopy" disabled>コピー</button>
+        <button id="btnDownloadJson">JSONダウンロード</button>
+      </div>
+      <textarea id="exportArea" placeholder="ここに出力されます（編集OK）"></textarea>
+      <div class="tiny">※このページはオフラインでも動きます（画像は同じフォルダの bousai_cards/ を参照）。</div>
     </section>
   </div>
 </main>
@@ -549,10 +563,12 @@
   const step2 = document.querySelector("#step2");
   const step3 = document.querySelector("#step3");
   const step4 = document.querySelector("#step4");
+  const step5 = document.querySelector("#step5");
   const dot1 = document.querySelector("#dot1");
   const dot2 = document.querySelector("#dot2");
   const dot3 = document.querySelector("#dot3");
   const dot4 = document.querySelector("#dot4");
+  const dot5 = document.querySelector("#dot5");
 
   const pickedCountEl = document.querySelector("#pickedCount");
   const cardsEl = document.querySelector("#cards");
@@ -570,19 +586,23 @@
     step2.classList.toggle("hidden", n!==2);
     step3.classList.toggle("hidden", n!==3);
     step4.classList.toggle("hidden", n!==4);
+    step5.classList.toggle("hidden", n!==5);
     dot1.classList.toggle("on", n===1);
     dot2.classList.toggle("on", n===2);
     dot3.classList.toggle("on", n===3);
     dot4.classList.toggle("on", n===4);
+    dot5.classList.toggle("on", n===5);
     window.scrollTo({top:0, behavior:"smooth"});
   }
   document.querySelector("#goto1").onclick = ()=>showStep(1);
   document.querySelector("#goto2").onclick = ()=>showStep(2);
   document.querySelector("#goto3").onclick = ()=>showStep(3);
   document.querySelector("#goto4").onclick = ()=>showStep(4);
+  document.querySelector("#goto5").onclick = ()=>showStep(5);
   document.querySelector("#toStep2").onclick = ()=>{ saveBrainstormFromUI(); showStep(2); };
   document.querySelector("#toStep3").onclick = ()=>{ savePickedFromUI(); showStep(3); };
   document.querySelector("#toStep4").onclick = ()=>{ showStep(4); };
+  document.querySelector("#toStep5").onclick = ()=>{ showStep(5); };
 
   function rowTemplate(item={name:"", use:""}){
     const tr=document.createElement("tr");
