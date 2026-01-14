@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ホームルーム：福島（原発）と防災グッズ</title>
+  <style>
+    :root {
+      --bg:#0b1220;
+      --panel:#111a2e;
+      --panel2:#0f172a;
+      --txt:#e7eefc;
+      --muted:#a8b3cf;
+      --line:rgba(255,255,255,.12);
+      --accent:#66e3ff;
+      --ok:#58f3a1;
+      --warn:#ffd166;
+      --bad:#ff6b6b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --r:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:linear-gradient(160deg,#071023,#0b1220 35%, #061525);
+      color:var(--txt); font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", Arial;
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background:rgba(11,18,32,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 16px}
+    h1{margin:0;font-size:20px;letter-spacing:.02em}
+    .sub{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.4}
+    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px; border:1px solid var(--line); border-radius:999px;
+      background:rgba(255,255,255,.04); color:var(--muted); font-size:12px;
+    }
+    main .wrap{padding-top:14px; padding-bottom:60px}
+    .grid{display:grid; gap:12px}
+    @media(min-width:900px){ .grid{grid-template-columns: 1.1fr .9fr} }
+    .card{
+      background:rgba(17,26,46,.85);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      padding:14px;
+    }
+    .card h2{margin:0 0 10px;font-size:16px}
+    .hint{color:var(--muted); font-size:13px; line-height:1.55}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px}
+    button{
+      cursor:pointer; border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--txt);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:700;
+    }
+    button.primary{border-color:rgba(102,227,255,.45); background:rgba(102,227,255,.16)}
+    button.ok{border-color:rgba(88,243,161,.45); background:rgba(88,243,161,.14)}
+    button.danger{border-color:rgba(255,107,107,.5); background:rgba(255,107,107,.14)}
+    button:disabled{opacity:.45; cursor:not-allowed}
+    textarea, input, select{
+      width:100%;
+      background:rgba(0,0,0,.18);
+      color:var(--txt);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px;
+      outline:none;
+    }
+    textarea{min-height:88px; resize:vertical}
+    table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px}
+    th,td{border-bottom:1px solid var(--line); padding:10px; vertical-align:top}
+    th{text-align:left; color:var(--muted); font-size:12px; font-weight:700}
+    .tiny{font-size:12px; color:var(--muted)}
+    .tag{display:inline-block; padding:4px 8px; border-radius:999px; border:1px solid var(--line); font-size:12px; color:var(--muted)}
+    .stepbar{display:flex; gap:8px; align-items:center; margin-top:10px}
+    .dot{width:10px;height:10px;border-radius:50%; background:rgba(255,255,255,.18); border:1px solid var(--line)}
+    .dot.on{background:rgba(102,227,255,.65)}
+    .hidden{display:none !important}
+    .split{display:flex; gap:10px; flex-wrap:wrap}
+    .split > *{flex:1 1 260px}
+    .cards{display:grid; gap:12px; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); margin-top:12px}
+    .item{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(0,0,0,.16);
+      transition: transform .08s ease, border-color .08s ease;
+    }
+    .item:hover{transform: translateY(-2px)}
+    .item.selected{border-color: rgba(88,243,161,.75)}
+    .thumb{height:140px; background:#0a1020; display:flex; align-items:center; justify-content:center}
+    .thumb img{width:100%; height:100%; object-fit:cover}
+    .item .body{padding:10px}
+    .item .title{font-weight:900}
+    .item .desc{margin-top:6px; color:var(--muted); font-size:12px; line-height:1.45}
+    .count{font-weight:900}
+    .reason{margin-top:10px}
+    .two{display:grid; gap:10px}
+    @media(min-width:900px){ .two{grid-template-columns: 1fr 1fr} }
+    .modal-back{
+      position:fixed; inset:0; background:rgba(0,0,0,.55);
+      display:none; align-items:center; justify-content:center; padding:16px; z-index:99;
+    }
+    .modal{
+      width:min(720px, 100%);
+      background:rgba(17,26,46,.96);
+      border:1px solid var(--line);
+      border-radius:18px; padding:14px; box-shadow:var(--shadow);
+    }
+    .modal h3{margin:0 0 10px}
+    .modal-back.show{display:flex}
+    .kpi{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      padding:10px; border:1px dashed var(--line); border-radius:14px;
+      background:rgba(255,255,255,.03);
+    }
+
+    @media print {
+      header, .no-print {display:none !important}
+      body{background:#fff;color:#000}
+      .card{box-shadow:none; border:1px solid #ddd; background:#fff}
+      .item{border:1px solid #ddd; background:#fff}
+      .thumb{height:120px}
+      textarea, input{border:1px solid #bbb; background:#fff; color:#000}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between">
+      <div>
+        <h1>ホームルーム：福島（原発）と防災</h1>
+        <div class="sub">①自分の防災グッズ案を出す → ②配布カードから <b>5枚</b> 選び、理由を言語化 → ③（任意）カードを自作</div>
+      </div>
+      <div class="row no-print">
+        <span class="pill">保存：このPCのブラウザ（localStorage）</span>
+        <button id="btnPrint">印刷</button>
+        <button id="btnReset" class="danger">リセット</button>
+      </div>
+    </div>
+    <div class="stepbar" aria-label="ステップ">
+      <span class="dot on" id="dot1"></span><span class="tiny">STEP1</span>
+      <span class="dot" id="dot2"></span><span class="tiny">STEP2</span>
+      <span class="dot" id="dot3"></span><span class="tiny">STEP3</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap grid">
+    <section class="card">
+      <h2>導入（先生用メモ）</h2>
+      <div class="hint">
+        <ul>
+          <li>今日のテーマ：<b>福島の原発事故</b>を入口に、「情報」「備え」「生活の継続」を考える。</li>
+          <li>強調したい観点：<b>避難・停電・断水・通信断</b>など、原発に限らず災害時に起きる“生活の困りごと”。</li>
+          <li>注意：不安を煽らない。<b>事実／推測</b>を分け、SNS情報の扱い（一次情報・公的情報）にも触れる。</li>
+        </ul>
+      </div>
+      <div class="kpi">
+        <span class="tag">目標：言語化</span>
+        <span class="tag">制限：5枚</span>
+        <span class="tag">観点：用途＋理由</span>
+      </div>
+      <div class="actions no-print">
+        <button class="primary" id="goto1">STEP1へ</button>
+        <button class="primary" id="goto2">STEP2へ</button>
+        <button class="primary" id="goto3">STEP3へ</button>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h2>提出用（コピペ用）</h2>
+      <div class="hint">下のボタンで、まとめテキストを生成します。GoogleフォームやClassroom提出に貼れます。</div>
+      <div class="actions no-print">
+        <button class="ok" id="btnExportText">まとめを生成</button>
+        <button id="btnCopy" disabled>コピー</button>
+        <button id="btnDownloadJson">JSONダウンロード</button>
+      </div>
+      <textarea id="exportArea" placeholder="ここに出力されます（編集OK）"></textarea>
+      <div class="tiny">※このページはオフラインでも動きます（画像は同じフォルダの bousai_cards/ を参照）。</div>
+    </aside>
+
+    <section class="card" id="step1">
+      <h2>STEP1：防災で思いつくグッズを書き出す（用途つき）</h2>
+      <div class="hint">
+        <div class="split">
+          <div>
+            <b>ルール</b>
+            <ul>
+              <li>最低 <b>6個</b>（できれば10個）</li>
+              <li>「それがないと何が困る？」まで書く</li>
+              <li>家にある／ない、でもOK</li>
+            </ul>
+          </div>
+          <div>
+            <b>ヒント（視点）</b>
+            <ul>
+              <li>食べる・飲む</li>
+              <li>トイレ</li>
+              <li>体温・雨風</li>
+              <li>明かり・情報</li>
+              <li>ケガ・連絡先</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions no-print">
+        <button id="addRow">＋行を追加</button>
+        <button id="save1" class="ok">保存</button>
+        <button id="toStep2" class="primary">次へ（STEP2）</button>
+      </div>
+
+      <table id="brainTable">
+        <thead>
+          <tr>
+            <th style="width:32%">グッズ名</th>
+            <th>用途（何に使う？）</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="tiny">※入力した内容は自動保存されます（数秒おき）</div>
+    </section>
+
+    <section class="card hidden" id="step2">
+      <h2>STEP2：配布カード（PDF）から5枚選ぶ</h2>
+      <div class="hint">
+        配布カードの例：ラジオは「スマホが使えなくても緊急地震速報などの情報を受信できる」等が書かれています。<span class="tiny">（配布PDFの内容に基づく）</span>
+      </div>
+
+      <div class="actions no-print">
+        <span class="pill">選択：<span class="count" id="pickedCount">0</span>/5</span>
+        <button id="clearPick">選択解除</button>
+        <button id="toStep3" class="primary">次へ（STEP3）</button>
+      </div>
+
+      <div class="cards" id="cards"></div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:14px 0"/>
+
+      <h3 style="margin:0 0 10px">選んだ5枚：理由を書く</h3>
+      <div class="two" id="reasons"></div>
+      <div class="actions no-print">
+        <button id="save2" class="ok">保存</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="step3">
+      <h2>STEP3（任意）：カードを自作する</h2>
+      <div class="hint">
+        「自分ならこれを入れる」をカード化。画像はなくてもOK（絵文字でもOK）。<br/>
+        作成したカードは、STEP2の一覧にも追加できます。
+      </div>
+      <div class="actions no-print">
+        <button class="primary" id="openModal">＋カードを作成</button>
+      </div>
+      <div class="cards" id="customCards"></div>
+    </section>
+  </div>
+</main>
+
+<div class="modal-back" id="modalBack" role="dialog" aria-modal="true" aria-label="カード作成">
+  <div class="modal">
+    <div class="row" style="justify-content:space-between">
+      <h3>カードを作成</h3>
+      <button id="closeModal">閉じる</button>
+    </div>
+    <div class="two">
+      <div>
+        <label class="tiny">カード名</label>
+        <input id="newTitle" placeholder="例：モバイルバッテリー"/>
+        <div style="height:10px"></div>
+        <label class="tiny">説明（用途・ポイント）</label>
+        <textarea id="newDesc" placeholder="例：停電時にスマホを充電して連絡や情報収集を継続できる"></textarea>
+      </div>
+      <div>
+        <label class="tiny">画像（任意）</label>
+        <input type="file" id="newImg" accept="image/*"/>
+        <div class="hint tiny" style="margin-top:8px">画像を入れるとカードの上部に表示されます（このPC内に保存されます）。</div>
+        <div style="height:10px"></div>
+        <label class="tiny">カテゴリ（任意）</label>
+        <select id="newCat">
+          <option value="">未設定</option>
+          <option>食料・水</option>
+          <option>衛生・トイレ</option>
+          <option>防寒・雨風</option>
+          <option>明かり</option>
+          <option>情報・連絡</option>
+          <option>応急手当</option>
+          <option>その他</option>
+        </select>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="ok" id="createCard">作成</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const BASE_CARDS = [
+  {
+    "id": "c01",
+    "name": "アルミブランケット",
+    "img": "bousai_cards/card_01.png"
+  },
+  {
+    "id": "c02",
+    "name": "毛布",
+    "img": "bousai_cards/card_02.png"
+  },
+  {
+    "id": "c03",
+    "name": "簡易トイレ",
+    "img": "bousai_cards/card_03.png"
+  },
+  {
+    "id": "c04",
+    "name": "レインコート",
+    "img": "bousai_cards/card_04.png"
+  },
+  {
+    "id": "c05",
+    "name": "軍手",
+    "img": "bousai_cards/card_05.png"
+  },
+  {
+    "id": "c06",
+    "name": "ラジオ",
+    "img": "bousai_cards/card_06.png"
+  },
+  {
+    "id": "c07",
+    "name": "笛（サイコール）",
+    "img": "bousai_cards/card_07.png"
+  },
+  {
+    "id": "c08",
+    "name": "懐中電灯",
+    "img": "bousai_cards/card_08.png"
+  },
+  {
+    "id": "c09",
+    "name": "アルミ製ホイッスル",
+    "img": "bousai_cards/card_09.png"
+  },
+  {
+    "id": "c10",
+    "name": "非常食（米A）",
+    "img": "bousai_cards/card_10.png"
+  },
+  {
+    "id": "c11",
+    "name": "非常食（米B）",
+    "img": "bousai_cards/card_11.png"
+  },
+  {
+    "id": "c12",
+    "name": "非常食（パン）",
+    "img": "bousai_cards/card_12.png"
+  },
+  {
+    "id": "c13",
+    "name": "水",
+    "img": "bousai_cards/card_13.png"
+  }
+];
+
+  const LS_KEY = "homeroom_bousai_v1";
+  const state = loadState();
+
+  function loadState(){
+    try {
+      return Object.assign({
+        brainstorm: [],
+        picked: [],
+        reasons: {},
+        custom: []
+      }, JSON.parse(localStorage.getItem(LS_KEY) || "{}"));
+    } catch(e) {
+      return { brainstorm:[], picked:[], reasons:{}, custom:[] };
+    }
+  }
+  function saveState(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+  const tbody = document.querySelector("#brainTable tbody");
+  const step1 = document.querySelector("#step1");
+  const step2 = document.querySelector("#step2");
+  const step3 = document.querySelector("#step3");
+  const dot1 = document.querySelector("#dot1");
+  const dot2 = document.querySelector("#dot2");
+  const dot3 = document.querySelector("#dot3");
+
+  const pickedCountEl = document.querySelector("#pickedCount");
+  const cardsEl = document.querySelector("#cards");
+  const reasonsEl = document.querySelector("#reasons");
+  const customCardsEl = document.querySelector("#customCards");
+
+  function showStep(n){
+    step1.classList.toggle("hidden", n!==1);
+    step2.classList.toggle("hidden", n!==2);
+    step3.classList.toggle("hidden", n!==3);
+    dot1.classList.toggle("on", n===1);
+    dot2.classList.toggle("on", n===2);
+    dot3.classList.toggle("on", n===3);
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  document.querySelector("#goto1").onclick = ()=>showStep(1);
+  document.querySelector("#goto2").onclick = ()=>showStep(2);
+  document.querySelector("#goto3").onclick = ()=>showStep(3);
+  document.querySelector("#toStep2").onclick = ()=>{ saveBrainstormFromUI(); showStep(2); };
+  document.querySelector("#toStep3").onclick = ()=>{ savePickedFromUI(); showStep(3); };
+
+  function rowTemplate(item={name:"", use:""}){
+    const tr=document.createElement("tr");
+    tr.innerHTML = `
+      <td><input class="b-name" placeholder="例：懐中電灯" value="${escapeHtml(item.name||"")}"></td>
+      <td><input class="b-use" placeholder="例：停電時の移動・作業に必要" value="${escapeHtml(item.use||"")}"></td>
+    `;
+    return tr;
+  }
+  function escapeHtml(s){
+    return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+  }
+  function renderBrainstorm(){
+    tbody.innerHTML="";
+    const arr = (state.brainstorm && state.brainstorm.length) ? state.brainstorm : Array.from({length:6}, ()=>({name:"",use:""}));
+    arr.forEach(it => tbody.appendChild(rowTemplate(it)));
+  }
+  function addRow(){ tbody.appendChild(rowTemplate()); }
+  function saveBrainstormFromUI(){
+    const rows=[...tbody.querySelectorAll("tr")];
+    state.brainstorm = rows.map(r=>({
+      name: r.querySelector(".b-name").value.trim(),
+      use: r.querySelector(".b-use").value.trim()
+    })).filter(x=>x.name || x.use);
+    saveState();
+  }
+  document.querySelector("#addRow").onclick = ()=>{ addRow(); };
+  document.querySelector("#save1").onclick = ()=>{ saveBrainstormFromUI(); toast("保存しました"); };
+
+  let t=null;
+  tbody.addEventListener("input", ()=>{
+    clearTimeout(t);
+    t=setTimeout(()=>{ saveBrainstormFromUI(); }, 800);
+  });
+
+  function allCards(){
+    return [...BASE_CARDS, ...state.custom.map(c=>({
+      id:c.id, name:c.title, img:c.imgDataUrl || "", desc:c.desc || "", cat:c.cat || "自作"
+    }))];
+  }
+
+  function getCardDescByName(name){
+    const map = {
+      "アルミブランケット":"軽くて防寒。非常時の体温保持に役立つ。",
+      "毛布":"防寒・簡易寝具。体温低下を防ぐ。",
+      "簡易トイレ":"衛生とストレス軽減。断水時に重要。",
+      "レインコート":"雨・風を防ぎ、体温低下や濡れを防ぐ。",
+      "軍手":"手の保護。片付けや救助でケガを防ぐ。",
+      "ラジオ":"スマホが使えなくても緊急地震速報など情報を受信できる。",
+      "笛（サイコール）":"居場所を知らせる。弱い息でも音が出る。",
+      "懐中電灯":"暗い場所での移動・作業。居場所を知らせることにも。",
+      "アルミ製ホイッスル":"居場所を知らせる。IDカードを入れられるタイプも。",
+      "非常食（米A）":"水で戻すタイプのごはん。保存がきく。",
+      "非常食（米B）":"レトルトタイプのごはん。開けてすぐ食べられる。",
+      "非常食（パン）":"レトルトパン等。保存がきく。",
+      "水":"飲料水。目安は1人1日1〜2L。"
+    };
+    return map[name] || "";
+  }
+
+  function renderCards(){
+    const list = allCards();
+    cardsEl.innerHTML="";
+    list.forEach(c=>{
+      const div=document.createElement("div");
+      div.className="item" + (state.picked.includes(c.id) ? " selected" : "");
+      const desc = c.desc || getCardDescByName(c.name);
+      div.innerHTML = `
+        <div class="thumb">${c.img ? `<img alt="" src="${c.img}">` : `<div class="tiny">（画像なし）</div>`}</div>
+        <div class="body">
+          <div class="title">${escapeHtml(c.name)}</div>
+          <div class="desc">${escapeHtml(desc)}</div>
+          <div class="tiny" style="margin-top:8px">クリックで選択/解除</div>
+        </div>
+      `;
+      div.onclick = ()=>togglePick(c.id);
+      cardsEl.appendChild(div);
+    });
+    updatePickedUI();
+    renderReasons();
+  }
+
+  function togglePick(id){
+    const idx = state.picked.indexOf(id);
+    if(idx>=0){
+      state.picked.splice(idx,1);
+      delete state.reasons[id];
+      saveState();
+      renderCards();
+      return;
+    }
+    if(state.picked.length>=5){
+      toast("5枚までです");
+      return;
+    }
+    state.picked.push(id);
+    saveState();
+    renderCards();
+  }
+
+  function updatePickedUI(){ pickedCountEl.textContent = String(state.picked.length); }
+
+  function renderReasons(){
+    reasonsEl.innerHTML="";
+    const list = allCards();
+    const byId = Object.fromEntries(list.map(c=>[c.id,c]));
+    state.picked.forEach(id=>{
+      const c=byId[id];
+      const wrap=document.createElement("div");
+      wrap.className="card";
+      wrap.style.background="rgba(15,23,42,.65)";
+      wrap.style.boxShadow="none";
+      wrap.innerHTML = `
+        <div class="row" style="justify-content:space-between; align-items:flex-start">
+          <div>
+            <div style="font-weight:900">${escapeHtml(c?.name || id)}</div>
+            <div class="tiny">${escapeHtml((c?.desc || getCardDescByName(c?.name||"")) || "")}</div>
+          </div>
+          <span class="tag">選択</span>
+        </div>
+        <div class="reason">
+          <label class="tiny">理由（なぜ必要？どんな場面？）</label>
+          <textarea data-reason="${id}" placeholder="例：停電でスマホが使えないとき、情報が取れず不安。ラジオなら…">${escapeHtml(state.reasons[id]||"")}</textarea>
+        </div>
+      `;
+      reasonsEl.appendChild(wrap);
+    });
+
+    reasonsEl.querySelectorAll("textarea[data-reason]").forEach(t=>{
+      t.addEventListener("input", ()=>{
+        state.reasons[t.dataset.reason]=t.value;
+        saveState();
+      });
+    });
+  }
+
+  function savePickedFromUI(){ saveState(); }
+
+  document.querySelector("#clearPick").onclick = ()=>{
+    if(!confirm("選択をすべて解除しますか？")) return;
+    state.picked=[];
+    state.reasons={};
+    saveState();
+    renderCards();
+  };
+  document.querySelector("#save2").onclick = ()=>{ savePickedFromUI(); toast("保存しました"); };
+
+  // STEP3
+  function renderCustomCards(){
+    customCardsEl.innerHTML="";
+    if(state.custom.length===0){
+      const d=document.createElement("div");
+      d.className="hint";
+      d.textContent="まだ自作カードはありません。";
+      customCardsEl.appendChild(d);
+      return;
+    }
+    state.custom.forEach(c=>{
+      const div=document.createElement("div");
+      div.className="item";
+      div.innerHTML=`
+        <div class="thumb">${c.imgDataUrl ? `<img alt="" src="${c.imgDataUrl}">` : `<div class="tiny">（画像なし）</div>`}</div>
+        <div class="body">
+          <div class="title">${escapeHtml(c.title)}</div>
+          <div class="desc">${escapeHtml(c.desc||"")}</div>
+          <div class="row no-print" style="justify-content:space-between; margin-top:10px">
+            <span class="tag">${escapeHtml(c.cat||"自作")}</span>
+            <button class="danger" data-del="${c.id}">削除</button>
+          </div>
+        </div>
+      `;
+      customCardsEl.appendChild(div);
+    });
+    customCardsEl.querySelectorAll("button[data-del]").forEach(b=>{
+      b.onclick = ()=>{
+        const id=b.dataset.del;
+        if(!confirm("このカードを削除しますか？")) return;
+        state.custom = state.custom.filter(x=>x.id!==id);
+        state.picked = state.picked.filter(x=>x!==id);
+        delete state.reasons[id];
+        saveState();
+        renderCustomCards();
+        renderCards();
+      };
+    });
+  }
+
+  const modalBack = document.querySelector("#modalBack");
+  document.querySelector("#openModal").onclick = ()=> modalBack.classList.add("show");
+  document.querySelector("#closeModal").onclick = ()=> modalBack.classList.remove("show");
+  modalBack.addEventListener("click", (e)=>{ if(e.target===modalBack) modalBack.classList.remove("show"); });
+
+  function readFileAsDataURL(file){
+    return new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=()=>res(r.result);
+      r.onerror=()=>rej(r.error);
+      r.readAsDataURL(file);
+    });
+  }
+
+  document.querySelector("#createCard").onclick = async ()=>{
+    const title = document.querySelector("#newTitle").value.trim();
+    const desc = document.querySelector("#newDesc").value.trim();
+    const cat = document.querySelector("#newCat").value;
+    const file = document.querySelector("#newImg").files?.[0];
+    if(!title){ toast("カード名は必須です"); return; }
+    let imgDataUrl="";
+    if(file){ imgDataUrl = await readFileAsDataURL(file); }
+    const id = "u" + Date.now().toString(36);
+    state.custom.unshift({id, title, desc, imgDataUrl, cat});
+    saveState();
+    document.querySelector("#newTitle").value="";
+    document.querySelector("#newDesc").value="";
+    document.querySelector("#newImg").value="";
+    document.querySelector("#newCat").value="";
+    modalBack.classList.remove("show");
+    renderCustomCards();
+    renderCards();
+    toast("カードを追加しました（STEP2にも反映）");
+  };
+
+  // export
+  const exportArea = document.querySelector("#exportArea");
+  const btnCopy = document.querySelector("#btnCopy");
+
+  function buildExportText(){
+    const list = allCards();
+    const byId = Object.fromEntries(list.map(c=>[c.id,c]));
+    const lines=[];
+    lines.push("【STEP1 防災グッズ案】");
+    if(state.brainstorm.length===0){
+      lines.push("（未入力）");
+    } else {
+      state.brainstorm.forEach((x,i)=>{
+        lines.push(`${i+1}. ${x.name||"（名称なし）"}：${x.use||"（用途なし）"}`);
+      });
+    }
+    lines.push("");
+    lines.push("【STEP2 配布カード 5枚】");
+    if(state.picked.length===0){
+      lines.push("（未選択）");
+    } else {
+      state.picked.forEach((id,i)=>{
+        const c=byId[id];
+        const name=c?.name||id;
+        const reason=(state.reasons[id]||"").trim() || "（理由未入力）";
+        lines.push(`${i+1}. ${name}`);
+        lines.push(`   理由：${reason.replaceAll("\n"," / ")}`);
+      });
+    }
+    lines.push("");
+    lines.push("【STEP3 自作カード】");
+    if(state.custom.length===0){
+      lines.push("（なし）");
+    } else {
+      state.custom.forEach((c,i)=>{
+        lines.push(`${i+1}. ${c.title}：${(c.desc||"").replaceAll("\n"," / ")}`);
+      });
+    }
+    return lines.join("\n");
+  }
+
+  document.querySelector("#btnExportText").onclick = ()=>{
+    exportArea.value = buildExportText();
+    btnCopy.disabled = !exportArea.value.trim();
+    toast("まとめを生成しました");
+  };
+  btnCopy.onclick = async ()=>{
+    await navigator.clipboard.writeText(exportArea.value);
+    toast("コピーしました");
+  };
+
+  document.querySelector("#btnDownloadJson").onclick = ()=>{
+    const blob = new Blob([JSON.stringify({...state, exportedAt: new Date().toISOString()}, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download="homeroom_bousai_result.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  document.querySelector("#btnPrint").onclick = ()=>window.print();
+  document.querySelector("#btnReset").onclick = ()=>{
+    if(!confirm("このページの保存内容をすべて消しますか？")) return;
+    localStorage.removeItem(LS_KEY);
+    location.reload();
+  };
+
+  function toast(msg){
+    const d=document.createElement("div");
+    d.textContent=msg;
+    d.style.position="fixed";
+    d.style.left="50%";
+    d.style.bottom="18px";
+    d.style.transform="translateX(-50%)";
+    d.style.padding="10px 12px";
+    d.style.border="1px solid rgba(255,255,255,.18)";
+    d.style.background="rgba(11,18,32,.92)";
+    d.style.borderRadius="999px";
+    d.style.zIndex="999";
+    d.style.boxShadow="0 10px 30px rgba(0,0,0,.4)";
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), 1600);
+  }
+
+  renderBrainstorm();
+  renderCards();
+  renderCustomCards();
+  showStep(1);
+</script>
+</body>
+</html>
