@@ -224,6 +224,7 @@
       <span class="dot on" id="dot1"></span><span class="tiny">STEP1</span>
       <span class="dot" id="dot2"></span><span class="tiny">STEP2</span>
       <span class="dot" id="dot3"></span><span class="tiny">STEP3</span>
+      <span class="dot" id="dot4"></span><span class="tiny">振り返り</span>
     </div>
   </div>
 </header>
@@ -248,6 +249,7 @@
         <button class="primary" id="goto1">STEP1へ</button>
         <button class="primary" id="goto2">STEP2へ</button>
         <button class="primary" id="goto3">STEP3へ</button>
+        <button class="primary" id="goto4">振り返りへ</button>
       </div>
     </section>
 
@@ -307,7 +309,38 @@
     </section>
 
     <section class="card hidden" id="step2">
-      <h2>STEP2：配布カード（PDF）から5枚選ぶ</h2>
+      <h2>STEP2：家族構成を選択 → カード5枚を選ぶ</h2>
+      
+      <div class="hint">
+        まず、あなた（またはグループ）の家族設定を選んでください。家族構成や環境の事を考えながら備蓄する物を選びましょう。
+      </div>
+
+      <div style="margin-top:16px">
+        <label class="tiny" style="font-weight:700">家族構成を選択</label>
+        <select id="familySelect" style="margin-top:6px">
+          <option value="">-- 選択してください --</option>
+          <option value="family1">2人家族（親・小学生の子ども）- 都会在住、近所付き合い少ない、近所に商店多い</option>
+          <option value="family2">3人家族（父・母・中学生の息子）- 小麦アレルギー持ち、貯蓄スペース少ない</option>
+          <option value="family3">4人家族（父・母・小学生の子ども・乳児）- 都会のタワーマンション在住</option>
+          <option value="family4">5人家族（祖父母・父・母・高校生・中学生）- 田舎在住、ライフライン止まりやすい、消防団所属</option>
+          <option value="family5">5人家族（祖父・祖母・父・母・幼児）- ローリングストック実施、母は妊娠中</option>
+          <option value="custom">その他（自由に設定）</option>
+        </select>
+      </div>
+
+      <div id="customFamilyWrap" class="hidden" style="margin-top:12px">
+        <label class="tiny" style="font-weight:700">家族構成の詳細</label>
+        <textarea id="customFamily" placeholder="例：3人家族（父・母・高校生の娘）、ペットあり、マンション住まい"></textarea>
+      </div>
+
+      <div id="selectedFamilyDisplay" class="hidden" style="margin-top:12px; padding:12px; background:var(--dg-color-surface); border-radius:var(--dg-radius-sm); border:1px solid var(--dg-color-border)">
+        <div class="tiny" style="font-weight:700;margin-bottom:6px">選択した家族設定</div>
+        <div id="selectedFamilyText" style="font-size:14px"></div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--dg-color-border);margin:20px 0"/>
+
+      <h3 style="margin:0 0 8px;font-size:16px;font-weight:700">配布カードから5枚選ぶ</h3>
       <div class="hint">
         配布カードの例：ラジオは「スマホが使えなくても緊急地震速報などの情報を受信できる」等が書かれています。<span class="tiny">（配布PDFの内容に基づく）</span>
       </div>
@@ -320,7 +353,7 @@
 
       <div class="cards" id="cards"></div>
 
-      <hr style="border:none;border-top:1px solid var(--line);margin:14px 0"/>
+      <hr style="border:none;border-top:1px solid var(--dg-color-border);margin:14px 0"/>
 
       <h3 style="margin:0 0 10px">選んだ5枚：理由を書く</h3>
       <div class="two" id="reasons"></div>
@@ -337,8 +370,45 @@
       </div>
       <div class="actions no-print">
         <button class="primary" id="openModal">＋カードを作成</button>
+        <button class="primary" id="toStep4">次へ（振り返り）</button>
       </div>
       <div class="cards" id="customCards"></div>
+    </section>
+
+    <section class="card hidden" id="step4">
+      <h2>振り返りシート</h2>
+      <div class="hint">
+        防災備蓄品カードゲームを通して考えたこと、学んだことを記入しましょう。
+      </div>
+
+      <div style="margin-top:16px">
+        <label class="tiny" style="font-weight:700">①あなたのグループの設定内容</label>
+        <textarea id="worksheet1" placeholder="家族構成や特徴など" style="margin-top:6px;min-height:70px"></textarea>
+      </div>
+
+      <div style="margin-top:16px">
+        <label class="tiny" style="font-weight:700">②あなたのグループが選んだ防災備品とその理由</label>
+        <textarea id="worksheet2" placeholder="STEP2で選んだものとその理由をまとめて書いてください" style="margin-top:6px;min-height:100px"></textarea>
+      </div>
+
+      <div style="margin-top:16px">
+        <label class="tiny" style="font-weight:700">③他のグループが選んだ備品とその理由でよかった物</label>
+        <textarea id="worksheet3" placeholder="他のグループの発表を聞いて、参考になったものを書いてください" style="margin-top:6px;min-height:90px"></textarea>
+      </div>
+
+      <div style="margin-top:16px">
+        <label class="tiny" style="font-weight:700">④選んだもの以外に「こんなものがあれば便利だ」と考えたもの</label>
+        <textarea id="worksheet4" placeholder="提示された防災グッズ以外で考えよう" style="margin-top:6px;min-height:90px"></textarea>
+      </div>
+
+      <div style="margin-top:16px">
+        <label class="tiny" style="font-weight:700">⑤今回のホームルームを受けて思ったこと</label>
+        <textarea id="worksheet5" placeholder="感想や気づき、今後に活かしたいことなど" style="margin-top:6px;min-height:100px"></textarea>
+      </div>
+
+      <div class="actions no-print">
+        <button id="save4" class="ok">保存</button>
+      </div>
     </section>
   </div>
 </main>
@@ -459,10 +529,17 @@
         brainstorm: [],
         picked: [],
         reasons: {},
-        custom: []
+        custom: [],
+        family: "",
+        customFamily: "",
+        worksheet1: "",
+        worksheet2: "",
+        worksheet3: "",
+        worksheet4: "",
+        worksheet5: ""
       }, JSON.parse(localStorage.getItem(LS_KEY) || "{}"));
     } catch(e) {
-      return { brainstorm:[], picked:[], reasons:{}, custom:[] };
+      return { brainstorm:[], picked:[], reasons:{}, custom:[], family:"", customFamily:"", worksheet1:"", worksheet2:"", worksheet3:"", worksheet4:"", worksheet5:"" };
     }
   }
   function saveState(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
@@ -471,29 +548,41 @@
   const step1 = document.querySelector("#step1");
   const step2 = document.querySelector("#step2");
   const step3 = document.querySelector("#step3");
+  const step4 = document.querySelector("#step4");
   const dot1 = document.querySelector("#dot1");
   const dot2 = document.querySelector("#dot2");
   const dot3 = document.querySelector("#dot3");
+  const dot4 = document.querySelector("#dot4");
 
   const pickedCountEl = document.querySelector("#pickedCount");
   const cardsEl = document.querySelector("#cards");
   const reasonsEl = document.querySelector("#reasons");
   const customCardsEl = document.querySelector("#customCards");
 
+  const familySelect = document.querySelector("#familySelect");
+  const customFamilyWrap = document.querySelector("#customFamilyWrap");
+  const customFamilyInput = document.querySelector("#customFamily");
+  const selectedFamilyDisplay = document.querySelector("#selectedFamilyDisplay");
+  const selectedFamilyText = document.querySelector("#selectedFamilyText");
+
   function showStep(n){
     step1.classList.toggle("hidden", n!==1);
     step2.classList.toggle("hidden", n!==2);
     step3.classList.toggle("hidden", n!==3);
+    step4.classList.toggle("hidden", n!==4);
     dot1.classList.toggle("on", n===1);
     dot2.classList.toggle("on", n===2);
     dot3.classList.toggle("on", n===3);
+    dot4.classList.toggle("on", n===4);
     window.scrollTo({top:0, behavior:"smooth"});
   }
   document.querySelector("#goto1").onclick = ()=>showStep(1);
   document.querySelector("#goto2").onclick = ()=>showStep(2);
   document.querySelector("#goto3").onclick = ()=>showStep(3);
+  document.querySelector("#goto4").onclick = ()=>showStep(4);
   document.querySelector("#toStep2").onclick = ()=>{ saveBrainstormFromUI(); showStep(2); };
   document.querySelector("#toStep3").onclick = ()=>{ savePickedFromUI(); showStep(3); };
+  document.querySelector("#toStep4").onclick = ()=>{ showStep(4); };
 
   function rowTemplate(item={name:"", use:""}){
     const tr=document.createElement("tr");
@@ -641,6 +730,40 @@
   };
   document.querySelector("#save2").onclick = ()=>{ savePickedFromUI(); toast("保存しました"); };
 
+  // Family selection
+  familySelect.value = state.family || "";
+  customFamilyInput.value = state.customFamily || "";
+  
+  familySelect.addEventListener("change", ()=>{
+    state.family = familySelect.value;
+    if(familySelect.value === "custom"){
+      customFamilyWrap.classList.remove("hidden");
+      selectedFamilyDisplay.classList.add("hidden");
+    } else if(familySelect.value){
+      customFamilyWrap.classList.add("hidden");
+      selectedFamilyDisplay.classList.remove("hidden");
+      selectedFamilyText.textContent = familySelect.options[familySelect.selectedIndex].text;
+    } else {
+      customFamilyWrap.classList.add("hidden");
+      selectedFamilyDisplay.classList.add("hidden");
+    }
+    saveState();
+  });
+
+  customFamilyInput.addEventListener("input", ()=>{
+    state.customFamily = customFamilyInput.value;
+    saveState();
+  });
+
+  // Initialize family display
+  if(state.family === "custom" && state.customFamily){
+    customFamilyWrap.classList.remove("hidden");
+  } else if(state.family){
+    selectedFamilyDisplay.classList.remove("hidden");
+    const opt = Array.from(familySelect.options).find(o=>o.value===state.family);
+    if(opt) selectedFamilyText.textContent = opt.text;
+  }
+
   // STEP3
   function renderCustomCards(){
     customCardsEl.innerHTML="";
@@ -716,6 +839,28 @@
     toast("カードを追加しました（STEP2にも反映）");
   };
 
+  // STEP4 - Worksheet
+  const worksheet1 = document.querySelector("#worksheet1");
+  const worksheet2 = document.querySelector("#worksheet2");
+  const worksheet3 = document.querySelector("#worksheet3");
+  const worksheet4 = document.querySelector("#worksheet4");
+  const worksheet5 = document.querySelector("#worksheet5");
+
+  worksheet1.value = state.worksheet1 || "";
+  worksheet2.value = state.worksheet2 || "";
+  worksheet3.value = state.worksheet3 || "";
+  worksheet4.value = state.worksheet4 || "";
+  worksheet5.value = state.worksheet5 || "";
+
+  [worksheet1, worksheet2, worksheet3, worksheet4, worksheet5].forEach((el, idx)=>{
+    el.addEventListener("input", ()=>{
+      state[`worksheet${idx+1}`] = el.value;
+      saveState();
+    });
+  });
+
+  document.querySelector("#save4").onclick = ()=>{ saveState(); toast("保存しました"); };
+
   // export
   const exportArea = document.querySelector("#exportArea");
   const btnCopy = document.querySelector("#btnCopy");
@@ -724,6 +869,10 @@
     const list = allCards();
     const byId = Object.fromEntries(list.map(c=>[c.id,c]));
     const lines=[];
+    
+    lines.push("【防災備蓄品カードゲーム 振り返りシート】");
+    lines.push("");
+    
     lines.push("【STEP1 防災グッズ案】");
     if(state.brainstorm.length===0){
       lines.push("（未入力）");
@@ -733,6 +882,20 @@
       });
     }
     lines.push("");
+    
+    lines.push("【STEP2 家族構成設定】");
+    if(state.family){
+      if(state.family === "custom"){
+        lines.push(state.customFamily || "（未入力）");
+      } else {
+        const opt = Array.from(familySelect.options).find(o=>o.value===state.family);
+        lines.push(opt ? opt.text : state.family);
+      }
+    } else {
+      lines.push("（未選択）");
+    }
+    lines.push("");
+    
     lines.push("【STEP2 配布カード 5枚】");
     if(state.picked.length===0){
       lines.push("（未選択）");
@@ -746,6 +909,7 @@
       });
     }
     lines.push("");
+    
     lines.push("【STEP3 自作カード】");
     if(state.custom.length===0){
       lines.push("（なし）");
@@ -754,6 +918,25 @@
         lines.push(`${i+1}. ${c.title}：${(c.desc||"").replaceAll("\n"," / ")}`);
       });
     }
+    lines.push("");
+    
+    lines.push("【振り返りシート】");
+    lines.push("");
+    lines.push("①あなたのグループの設定内容");
+    lines.push(state.worksheet1 || "（未入力）");
+    lines.push("");
+    lines.push("②あなたのグループが選んだ防災備品とその理由");
+    lines.push(state.worksheet2 || "（未入力）");
+    lines.push("");
+    lines.push("③他のグループが選んだ備品とその理由でよかった物");
+    lines.push(state.worksheet3 || "（未入力）");
+    lines.push("");
+    lines.push("④選んだもの以外に「こんなものがあれば便利だ」と考えたもの");
+    lines.push(state.worksheet4 || "（未入力）");
+    lines.push("");
+    lines.push("⑤今回のホームルームを受けて思ったこと");
+    lines.push(state.worksheet5 || "（未入力）");
+    
     return lines.join("\n");
   }
 
