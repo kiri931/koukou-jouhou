@@ -1,6 +1,5 @@
-import { loadAllQuestions, groupBySection } from "../assets/js/question-bank.js";
-import { renderQuestion, gradeQuestion, renderExplanation } from "../assets/js/quiz-engine.js";
-import { renderLoginStatus } from "../assets/js/app-shell.js";
+import { loadAllPracticeQuestions, groupBySection, shuffle } from "./practice-loader.js";
+import { renderQuestion, gradeQuestion, renderExplanation } from "./practice-engine.js";
 
 const el = {
   section: document.getElementById("section"),
@@ -33,15 +32,6 @@ function setBadge(text, variant) {
   if (variant === "ng") el.resultBadge.classList.add("dg-badge--ng");
 }
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function render() {
   const q = state.list[state.index];
   if (!q) {
@@ -64,13 +54,21 @@ function goto(i) {
 async function init() {
   el.status.textContent = "読込中...";
 
-  state.all = await loadAllQuestions();
-  state.bySection = groupBySection(state.all);
+  try {
+    state.all = await loadAllPracticeQuestions();
+    state.bySection = groupBySection(state.all);
 
-  const sections = Array.from(state.bySection.keys()).sort();
-  el.section.innerHTML = sections.map((s) => `<option value="${s}">${s}</option>`).join("");
+    const sections = Array.from(state.bySection.keys()).sort();
+    el.section.innerHTML = sections.map((s) => `<option value="${s}">${s}</option>`).join("");
 
-  el.status.textContent = `問題 ${state.all.length} 件`;
+    el.status.textContent = `問題 ${state.all.length} 件`;
+    el.status.classList.remove("dg-badge--danger");
+    el.status.classList.add("dg-badge--ok");
+  } catch (error) {
+    el.status.textContent = `エラー: ${error.message}`;
+    el.status.classList.add("dg-badge--danger");
+    console.error(error);
+  }
 }
 
 el.start.addEventListener("click", () => {
@@ -88,7 +86,12 @@ el.grade.addEventListener("click", () => {
   const q = state.list[state.index];
   const ua = state.answers?.[q.id];
   const g = gradeQuestion(q, ua);
-  setBadge(g.ok ? "正解" : "不正解", g.ok ? "ok" : "ng");
+  
+  if (g.ok === null) {
+    setBadge(g.message, "");
+  } else {
+    setBadge(g.ok ? "正解" : "不正解", g.ok ? "ok" : "ng");
+  }
 });
 
 el.showExplanation.addEventListener("click", () => {
