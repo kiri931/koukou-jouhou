@@ -5,6 +5,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/64joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -14,6 +16,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/65joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -23,6 +27,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/66joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -32,6 +38,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/67joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -41,6 +49,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/68joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -50,6 +60,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/69joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -59,6 +71,8 @@
     "path": "https://zenkoukyo.or.jp/web/content/uploads/70joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -68,6 +82,8 @@
     "path": "http://zenkoukyo.or.jp/web/content/uploads/71joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -77,6 +93,8 @@
     "path": "http://zenkoukyo.or.jp/web/content/uploads/72joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -86,6 +104,8 @@
     "path": "http://zenkoukyo.or.jp/web/content/uploads/73joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   },
@@ -95,6 +115,8 @@
     "path": "http://zenkoukyo.or.jp/web/content/uploads/74joho_kekka.pdf",
     "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
     "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
       {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
     ]
   }
