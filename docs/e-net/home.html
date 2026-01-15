@@ -4,7 +4,23 @@
 
 <body>
 
-<script src="/e-net/auth.js"></script>
+<script>
+  (function () {
+    const firstSeg = (location.pathname.split("/")[1] || "").trim();
+    const candidates = ["/e-net/auth.js"];
+    if (firstSeg) candidates.push("/" + firstSeg + "/e-net/auth.js");
+
+    function load(i) {
+      if (i >= candidates.length) return;
+      const s = document.createElement("script");
+      s.src = candidates[i];
+      s.onerror = () => load(i + 1);
+      document.head.appendChild(s);
+    }
+
+    load(0);
+  })();
+</script>
 
 <h1>e-net専用ページ</h1>
 <p>ログイン中: <span id="user"></span></p>

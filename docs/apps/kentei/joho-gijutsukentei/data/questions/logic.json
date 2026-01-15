@@ -1,0 +1,150 @@
+[
+  {
+    "id": "it3-logic-0001",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "2進数 $1010_2$ を10進数で表したものはどれか。",
+    "choices": ["8", "9", "10", "12"],
+    "answer": 2,
+    "explanation": "$1010_2 = 8 + 2 = 10$。",
+    "tags": ["2進数"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0002",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "10進数の 13 を2進数で表したものはどれか。",
+    "choices": ["1101", "1011", "1110", "1001"],
+    "answer": 0,
+    "explanation": "$13 = 8+4+1$ より $1101_2$。",
+    "tags": ["2進数"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0003",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "16進数 $1A_{16}$ を10進数で表したものはどれか。",
+    "choices": ["24", "25", "26", "27"],
+    "answer": 2,
+    "explanation": "$1A_{16} = 1\times16 + 10 = 26$。",
+    "tags": ["16進数"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0004",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "論理積（AND）の性質として正しいものはどれか。",
+    "choices": [
+      "両方が1のときだけ1になる",
+      "どちらかが1なら1になる",
+      "必ず0になる",
+      "必ず1になる"
+    ],
+    "answer": 0,
+    "explanation": "ANDは両方が真のときのみ真。",
+    "tags": ["論理演算"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0005",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "論理和（OR）の性質として正しいものはどれか。",
+    "choices": [
+      "両方が1のときだけ1になる",
+      "どちらかが1なら1になる",
+      "両方が0のときだけ1になる",
+      "必ず0になる"
+    ],
+    "answer": 1,
+    "explanation": "ORは少なくとも一方が真なら真。",
+    "tags": ["論理演算"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0006",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "否定（NOT）の性質として正しいものはどれか。",
+    "choices": [
+      "0を1に、1を0に反転する",
+      "0を0に、1を1にする",
+      "必ず1になる",
+      "必ず0になる"
+    ],
+    "answer": 0,
+    "explanation": "NOTは真偽を反転する。",
+    "tags": ["論理演算"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0007",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "2進数 $1111_2$ を16進数で表したものはどれか。",
+    "choices": ["E", "F", "10", "1F"],
+    "answer": 1,
+    "explanation": "$1111_2$ は 16進で $F$。",
+    "tags": ["変換"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0008",
+    "grade": 3,
+    "section": "logic",
+    "format": "number",
+    "stem": "10進数の 255 を16進数で表すとき、2桁で表すと（先頭0なし）何になるか。",
+    "answer_text": "FF",
+    "explanation": "255は16進でFF。",
+    "tags": ["16進数"],
+    "difficulty": 2,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0009",
+    "grade": 3,
+    "section": "logic",
+    "format": "choice",
+    "stem": "排他的論理和（XOR）の性質として正しいものはどれか。",
+    "choices": [
+      "両方が同じなら1になる",
+      "両方が同じなら0になり、違えば1になる",
+      "両方が1なら0になる",
+      "必ず1になる"
+    ],
+    "answer": 1,
+    "explanation": "XORは異なるときのみ1。",
+    "tags": ["XOR"],
+    "difficulty": 2,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-logic-0010",
+    "grade": 3,
+    "section": "logic",
+    "format": "text",
+    "stem": "2進数 $100000_2$ を10進数で答えよ。",
+    "answer_text": "32",
+    "explanation": "$100000_2 = 2^5 = 32$。",
+    "tags": ["2進数"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  }
+]

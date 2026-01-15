@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <script>
+    (function () {
+      const firstSeg = (location.pathname.split("/")[1] || "").trim();
+      const candidates = ["/js/analytics.js"];
+      if (firstSeg) candidates.push("/" + firstSeg + "/js/analytics.js");
+
+      function load(i) {
+        if (i >= candidates.length) return;
+        const s = document.createElement("script");
+        s.src = candidates[i];
+        s.onerror = () => load(i + 1);
+        document.head.appendChild(s);
+      }
+
+      load(0);
+    })();
+  </script>
+    
+    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タイピング練習</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="home">
+    <h1>記号タイピング練習</h1>
+    <label>時間（秒）: <input type="number" id="duration" value="60"></label>
+    <!-- <label>難易度:
+      <select id="difficulty">
+        <option value="easy">簡単</option>
+        <option value="normal" selected>普通</option>
+        <option value="hard">難しい</option>
+        <option value="pro">プログラミング用</option>
+      </select> -->
+    <label>難易度:
+      <input type="file" id="loadProblemFile" accept=".json">
+    </label>
+    <button id="startButton">スタート</button>
+    <input type="file" id="loadFile" accept=".json">
+    <label>名前: <input type="text" id="userName" placeholder="あなたの名前"></label>
+  </div>
+
+  <div id="game" style="display:none;">
+    <div id="problem"></div>
+    <div id="inputArea"></div>
+    <div id="timer"></div>
+  </div>
+
+  <div id="result" style="display:none;">
+    <h2>結果</h2>
+    <div id="stats"></div>
+    <button id="download">記録を保存</button>
+    <button onclick="location.reload()">ホームに戻る</button>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <script src="../../../../js/analytics.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>admin | 情技検3級</title>
+  <link rel="stylesheet" href="../../../../assets/css/digital.css" />
+  <script type="module" src="../../../../assets/js/admin-auth-guard.js"></script>
+</head>
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="../">
+        <span class="dg-brand__title">情技検 3級</span>
+        <span class="dg-brand__badge">admin</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="../">トップ</a>
+        <a href="../practice/">分野別演習</a>
+        <a href="../exam/">模擬試験</a>
+        <a href="../pdf/">PDF参照</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <h1 class="dg-page-title">admin</h1>
+      <p class="dg-lead">この配下は認証必須です（静的サイトの運用ゲート）。</p>
+
+      <div class="dg-stack">
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <div class="dg-row" style="justify-content:space-between">
+              <div class="dg-row">
+                <span id="user" class="dg-badge">-</span>
+                <span id="provider" class="dg-badge">-</span>
+              </div>
+              <div class="dg-row">
+                <button id="logout" class="dg-btn dg-btn--danger" type="button">ログアウト</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dg-card">
+          <div class="dg-card__body dg-prose">
+            <h2 style="margin-top:0">運用</h2>
+            <ul>
+              <li>試験設定: <a href="../data/exam_config.json" target="_blank" rel="noopener">exam_config.json</a></li>
+              <li>PDF一覧: <a href="../data/pdf_list.json" target="_blank" rel="noopener">pdf_list.json</a></li>
+              <li>問題JSON: <a href="../data/questions/" target="_blank" rel="noopener">data/questions/</a></li>
+            </ul>
+
+            <div class="dg-row" style="margin-top:16px">
+              <a class="dg-btn" href="./question-editor.html">作問（スタブ）</a>
+              <a class="dg-btn dg-btn--subtle" href="../../../../auth/login.html?returnTo=/apps/kentei/joho-gijutsukentei/admin/">ログイン画面</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="dg-card">
+          <div class="dg-card__body dg-prose">
+            <h2 style="margin-top:0">将来拡張ポイント</h2>
+            <ul>
+              <li><code>language</code> を <code>"BASIC"</code> にした問題JSONを追加</li>
+              <li>回答ログJSON（ローカル保存 → クラウド連携）の追加</li>
+              <li>より強固な保護が必要なら外部層（Cloudflare Access等）に切替</li>
+            </ul>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="dg-footer">
+    <div class="dg-container dg-footer__inner">
+      <div class="dg-footer__meta">admin（情技検3級）</div>
+      <div class="dg-footer__meta">最終更新: 2026-01-15</div>
+    </div>
+  </footer>
+
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+[
+  {
+    "id": "ref-001",
+    "title": "参照PDFサンプル（外部）",
+    "path": "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf",
+    "note": "動作確認用。運用では pdf/ 配下にPDFを置いて path を ./pdf/xxx.pdf に差し替えてください。"
+  }
+]

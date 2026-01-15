@@ -1,0 +1,95 @@
+:root {
+  color-scheme: light;
+  --bg: #0b1220;
+  --bar: #111a2d;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: rgba(255,255,255,0.15);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; margin: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.bar {
+  padding: 10px 12px;
+  background: var(--bar);
+  border-bottom: 1px solid var(--border);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+button:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+input {
+  width: 90px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.35);
+  color: var(--text);
+}
+
+a {
+  color: #93c5fd;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+a:hover { background: rgba(255,255,255,0.08); }
+
+.meta {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.main {
+  height: calc(100% - 74px);
+  overflow: auto;
+}
+
+.canvasWrap {
+  display: grid;
+  place-items: start center;
+  padding: 12px;
+}
+
+canvas {
+  background: #fff;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+}
+
+.error {
+  margin: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fecaca;
+}

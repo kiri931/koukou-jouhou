@@ -1,0 +1,2 @@
+このフォルダに参照用PDFを置けます（例: sample.pdf）。
+pdf_list.json の path を ./pdf/xxx.pdf に差し替えて運用します。

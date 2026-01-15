@@ -1,0 +1,12 @@
+{
+  "grade": 3,
+  "time_limit_minutes": 50,
+  "pass_score": 70,
+  "sections": [
+    {"id":"society","name":"コンピュータと社会","count":10},
+    {"id":"logic","name":"数の表現と論理","count":10},
+    {"id":"hardware","name":"コンピュータの構成と利用","count":10},
+    {"id":"algo","name":"アルゴリズム","count":10},
+    {"id":"program","name":"プログラム作成能力(C)","count":10,"language":"C"}
+  ]
+}

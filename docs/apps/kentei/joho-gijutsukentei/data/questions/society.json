@@ -1,0 +1,182 @@
+[
+  {
+    "id": "it3-society-0001",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "個人情報に該当するものとして最も適切なのはどれか。",
+    "choices": [
+      "学校の住所",
+      "氏名と学籍番号の組",
+      "天気予報",
+      "教科書のISBN"
+    ],
+    "answer": 1,
+    "explanation": "個人を識別できる情報（氏名・番号などの組合せ）は個人情報に該当する。",
+    "tags": ["個人情報"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0002",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "著作権に関する説明として適切なのはどれか。",
+    "choices": [
+      "著作権は登録しないと発生しない",
+      "引用は必ず許可が必要である",
+      "著作物を無断で複製・配布すると侵害になり得る",
+      "学校で使う場合は無制限にコピーしてよい"
+    ],
+    "answer": 2,
+    "explanation": "著作権は創作と同時に発生し、無断複製・配布は侵害になり得る。引用は要件を満たせば許可不要。",
+    "tags": ["著作権"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0003",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "フィッシング詐欺の説明として最も適切なのはどれか。",
+    "choices": [
+      "PCの冷却ファンを交換する",
+      "偽サイトへ誘導してID/パスワード等を入力させる",
+      "無線LANの電波を強くする",
+      "OSを最新版へ更新する"
+    ],
+    "answer": 1,
+    "explanation": "正規サイトに見せかけて情報を盗む手口がフィッシング。",
+    "tags": ["セキュリティ", "フィッシング"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0004",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "不正アクセス行為に該当する可能性が高いものはどれか。",
+    "choices": [
+      "自分のアカウントでログインする",
+      "許可なく他人のID/パスワードでログインする",
+      "パスワードを長くする",
+      "二要素認証を設定する"
+    ],
+    "answer": 1,
+    "explanation": "他人になりすまして許可なくログインする行為は不正アクセスに該当し得る。",
+    "tags": ["不正アクセス"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0005",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "情報セキュリティの三要素（CIA）に含まれないものはどれか。",
+    "choices": [
+      "機密性（Confidentiality）",
+      "完全性（Integrity）",
+      "可用性（Availability）",
+      "利便性（Convenience）"
+    ],
+    "answer": 3,
+    "explanation": "CIAは機密性・完全性・可用性。",
+    "tags": ["CIA"],
+    "difficulty": 2,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0006",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "パスワード運用として適切なのはどれか。",
+    "choices": [
+      "紙に書いて机に貼る",
+      "短い文字列を使い回す",
+      "推測されにくい長いものを使い、使い回しを避ける",
+      "全員で同じパスワードを共有する"
+    ],
+    "answer": 2,
+    "explanation": "長く推測されにくいパスワードを使い回さないのが基本。",
+    "tags": ["パスワード"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0007",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "マルウェアの説明として適切なのはどれか。",
+    "choices": [
+      "有害な動作をする悪意あるソフトウェア",
+      "文書の体裁を整えるソフトウェア",
+      "プログラムの誤りを自動修正する機能",
+      "ネットワークの速度を上げる装置"
+    ],
+    "answer": 0,
+    "explanation": "マルウェアは悪意あるソフトウェアの総称。",
+    "tags": ["マルウェア"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0008",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "オープンソースソフトウェア（OSS）の特徴として適切なのはどれか。",
+    "choices": [
+      "ソースコードの閲覧・改変・再配布がライセンスにより許可される",
+      "必ず無料である",
+      "商用利用は禁止される",
+      "ネット接続が必須である"
+    ],
+    "answer": 0,
+    "explanation": "OSSはライセンスに従えば閲覧/改変/再配布が可能。無料とは限らない。",
+    "tags": ["OSS"],
+    "difficulty": 2,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0009",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "バックアップの目的として最も適切なのはどれか。",
+    "choices": [
+      "CPUを速くする",
+      "データの消失や破損に備えて復元できるようにする",
+      "画面を明るくする",
+      "電池を長持ちさせる"
+    ],
+    "answer": 1,
+    "explanation": "障害や誤操作で失われたデータを復元するためにバックアップを取る。",
+    "tags": ["バックアップ"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  },
+  {
+    "id": "it3-society-0010",
+    "grade": 3,
+    "section": "society",
+    "format": "choice",
+    "stem": "SNS利用での情報モラルとして適切なのはどれか。",
+    "choices": [
+      "相手の同意なく写真を公開する",
+      "炎上しそうな内容は拡散する",
+      "誤情報かもしれないので一次情報を確認する",
+      "匿名なら何を書いてもよい"
+    ],
+    "answer": 2,
+    "explanation": "一次情報の確認や相手の権利配慮が重要。",
+    "tags": ["情報モラル"],
+    "difficulty": 1,
+    "source": {"type": "original"}
+  }
+]

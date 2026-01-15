@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <script src="../../../../js/analytics.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDF参照モード | 情技検3級</title>
+  <link rel="stylesheet" href="../../../../assets/css/digital.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="../">
+        <span class="dg-brand__title">情技検 3級</span>
+        <span class="dg-brand__badge">pdf</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="../">トップ</a>
+        <a href="../practice/">分野別演習</a>
+        <a href="../exam/">模擬試験</a>
+        <a href="../admin/">admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <h1 class="dg-page-title">PDF参照モード</h1>
+      <p class="dg-lead">PDFを表示しながら、回答UIで解きます（問題文の転載はしません）。</p>
+
+      <div class="dg-stack">
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <h2 class="dg-page-title" style="font-size:var(--dg-text-xl); margin-top:0">PDF一覧</h2>
+            <div id="pdfList"></div>
+          </div>
+        </section>
+
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <div class="dg-grid">
+              <div>
+                <h2 class="dg-page-title" style="font-size:var(--dg-text-xl); margin-top:0">PDF表示</h2>
+                <div class="dg-row" style="margin-bottom:12px">
+                  <span id="currentPdf" class="dg-badge">未選択</span>
+                  <input id="page" class="dg-input" style="max-width:120px" type="number" min="1" value="1" />
+                  <button id="jump" class="dg-btn dg-btn--subtle" type="button">ページへ</button>
+                </div>
+                <iframe id="viewer" title="PDF viewer" style="width:100%; height:70vh; border:1px solid var(--dg-color-border); border-radius:12px"></iframe>
+                <div class="dg-help" style="margin-top:8px">iframe内のURLは <code>viewer.html?file=...&page=...</code> 形式です。</div>
+              </div>
+
+              <div>
+                <h2 class="dg-page-title" style="font-size:var(--dg-text-xl); margin-top:0">回答</h2>
+                <div class="dg-row" style="margin-bottom:12px">
+                  <button id="export" class="dg-btn" type="button" disabled>回答CSVを出力</button>
+                  <span id="exportStatus" class="dg-badge">-</span>
+                </div>
+                <div id="pdfQuestions"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="dg-footer">
+    <div class="dg-container dg-footer__inner">
+      <div class="dg-footer__meta">PDF参照モード（情技検3級）</div>
+      <div class="dg-footer__meta">最終更新: 2026-01-15</div>
+    </div>
+  </footer>
+
+  <script type="module" src="./pdf.js"></script>
+</body>
+</html>

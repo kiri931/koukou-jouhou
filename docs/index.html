@@ -2,7 +2,23 @@
 <html lang="ja">
 
 <head>
-    <script src="/js/analytics.js"></script>
+    <script>
+        (function () {
+            const firstSeg = (location.pathname.split("/")[1] || "").trim();
+            const candidates = ["/js/analytics.js"];
+            if (firstSeg) candidates.push("/" + firstSeg + "/js/analytics.js");
+
+            function load(i) {
+                if (i >= candidates.length) return;
+                const s = document.createElement("script");
+                s.src = candidates[i];
+                s.onerror = () => load(i + 1);
+                document.head.appendChild(s);
+            }
+
+            load(0);
+        })();
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +54,7 @@
                 <p>授業で使用する資料やクラス活動に関する情報です。</p>
                 <ul class="link-list class-links">
                     <li>
-                        <a href="class/fieldtrip/2025/">
+                        <a href="lessons/class/fieldtrip/2025/">
                             校外学習用テンプレート
                         </a>
                     </li>
@@ -51,13 +67,13 @@
                 <p>インタラクティブな学習ツールや練習用Webアプリケーションです。</p>
                 <ul class="link-list tools-links">
                     <li>
-                        <a href="html/equation-transformation/">
+                        <a href="lessons/html/equation-transformation/">
                             等式の変形テスト
                             <span class="badge interactive">Interactive</span>
                         </a>
                     </li>
                     <li>
-                        <a href="typing-japanese/">
+                        <a href="apps/kentei/typing-japanese/">
                             記号タイピング練習
                             <span class="badge interactive">Interactive</span>
                         </a>
@@ -71,7 +87,7 @@
                 <p>情報技術検定や資格試験対策に関する教材です。</p>
                 <ul class="link-list docs-links">
                     <li>
-                        <a href="joho-gijutsukentei/">
+                        <a href="apps/kentei/joho-gijutsukentei/">
                             コンピュータの発達
                             <span class="badge">検定対策</span>
                         </a>
@@ -85,9 +101,8 @@
                 <p>プログラミング学習用のゲームや娯楽コンテンツです。</p>
                 <ul class="link-list game-links">
                     <li>
-                        <a href="shooting-game/">
-                            NEO STAR BATTLE
-                            <span class="badge interactive">Game</span>
+                        <a href="#">
+                            現在準備中
                         </a>
                     </li>
                 </ul>
@@ -117,7 +132,7 @@
                 <p>QRコードを使った謎解きなど、実験的なコンテンツです。</p>
                 <ul class="link-list experimental-links">
                     <li>
-                        <a href="QR/">
+                        <a href="apps/QR/">
                             文化祭で使用したもの    
                         </a>
                     </li>
