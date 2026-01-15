@@ -1,0 +1,518 @@
+[
+  {
+    "id": 1,
+    "category": "基本計算",
+    "title": "絶対値の算出",
+    "description": "数値Sを入力し、その絶対値Aを求めて出力する。Sが0以上ならそのまま、0未満なら-1を掛けてAに代入する[1]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "Sを入力", "shape": "parallelogram" },
+      { "label": "①", "shape": "diamond", "blank_id": 1 },
+      { "label": "A ← S", "shape": "rectangle" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. S ≧ 0", "イ. A ← S × (-1)", "ウ. Aを出力", "エ. S < 0", "オ. Aを入力", "カ. A ← S + 1"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 2,
+    "category": "統計処理",
+    "title": "赤点科目の集計",
+    "description": "全教科数Sを入力し、各教科の点数Tを入力する。30点未満を赤点とし、その数Cをカウントして出力する[1]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "Sを入力", "shape": "parallelogram" },
+      { "label": "K = 1, S, 1", "shape": "trapezoid" },
+      { "label": "Tを入力", "shape": "parallelogram" },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "Cを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. C ← 0", "イ. T < 30", "ウ. C ← C + 1", "エ. T ≧ 30", "オ. S ← 0", "カ. C ← T"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 3,
+    "category": "物理計算",
+    "title": "速さの算出",
+    "description": "走行距離X[km]とかかった時間T[h]を入力し、速さV[km/h]を計算して出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "Tを入力", "shape": "parallelogram" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. Xを入力", "イ. V ← X ÷ T", "ウ. Vを出力", "エ. V ← X × T", "オ. Xを出力", "カ. T ← V"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 4,
+    "category": "反復処理",
+    "title": "文字の5回出力",
+    "description": "カウンタNを使い、文字列'A'を5回繰り返し出力する処理である[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "N ← 5", "shape": "rectangle" },
+      { "label": "①", "shape": "diamond", "blank_id": 1 },
+      { "label": "②", "shape": "parallelogram", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "上に戻る", "shape": "terminal" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. N > 0", "イ. 'A'を出力", "ウ. N ← N - 1", "エ. N = 0", "オ. N ← N + 1", "カ. 5を出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 5,
+    "category": "統計処理",
+    "title": "10個のデータの合計と平均",
+    "description": "データDを10回入力し、合計SUMと平均AVGを求めて出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "K = 1, 10, 1", "shape": "trapezoid" },
+      { "label": "Dを入力", "shape": "parallelogram" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "AVG ← SUM ÷ 10", "shape": "rectangle" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. SUM ← 0", "イ. SUM ← SUM + D", "ウ. SUM, AVGを出力", "エ. D ← SUM + 10", "オ. K ← SUM", "カ. AVGを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 6,
+    "category": "比率計算",
+    "title": "部活動所属率の計算",
+    "description": "全校生徒数Xと部活動所属者数Yを入力し、所属率Z[%]を求めて出力する[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "Yを入力", "shape": "parallelogram" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. Xを入力", "イ. Z ← Y ÷ X × 100", "ウ. Zを出力", "エ. Z ← X ÷ Y × 100", "オ. Yを出力", "カ. Zを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 7,
+    "category": "数学的集計",
+    "title": "奇数の数列の和",
+    "description": "1+4+7...+100のように、1から始まり3ずつ増える数値を100まで合計し、出力する[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "CNT ← 1", "shape": "rectangle" },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "CNT ← CNT + 3", "shape": "rectangle" },
+      { "label": "上に戻る", "shape": "terminal" },
+      { "label": "SUMを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. SUM ← 0", "イ. CNT ≦ 100", "ウ. SUM ← SUM + CNT", "エ. CNT > 100", "オ. SUM ← CNT", "カ. CNT ← 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 8,
+    "category": "立体計算",
+    "title": "立方体の体積と表面積",
+    "description": "立方体の1辺の長さNを入力し、体積Vと表面積Sを求めて出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "V, Sを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. Nを入力", "イ. V ← N × N × N", "ウ. S ← N × N × 6", "エ. V ← N × N", "オ. S ← N × 6", "カ. Nを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 9,
+    "category": "条件判定",
+    "title": "2つの数値の比較",
+    "description": "数値A, Bを入力し、大きい方の次に小さい方を出力する。等しい場合は「等しい」と出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "A, Bを入力", "shape": "parallelogram" },
+      { "label": "①", "shape": "diamond", "blank_id": 1 },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "「等しい」を出力", "shape": "parallelogram" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. A > B", "イ. A = B", "ウ. A, Bを出力", "エ. A < B", "オ. B, Aを出力", "カ. Aを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 10,
+    "category": "ビジネス計算",
+    "title": "ポイント付与計算",
+    "description": "購入個数Nと各金額KINを入力し、合計GOUを出す。GOUが10000円以上なら10%、未満なら5%を付与ポイントPOIとする[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "GOU ← 0", "shape": "rectangle" },
+      { "label": "Nを入力", "shape": "parallelogram" },
+      { "label": "K = 1, N, 1", "shape": "trapezoid" },
+      { "label": "KINを入力", "shape": "parallelogram" },
+      { "label": "GOU ← GOU + KIN", "shape": "rectangle" },
+      { "label": "①", "shape": "diamond", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "GOU, POIを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. GOU ≧ 10000", "イ. POI ← GOU × 0.1", "ウ. POI ← GOU × 0.05", "エ. GOU < 10000", "オ. POI ← 0", "カ. POIを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 11,
+    "category": "配列処理",
+    "title": "棒グラフの表示",
+    "description": "配列Xにある5個のデータ分だけ'■'を横に並べて出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "N = 1, 5, 1", "shape": "trapezoid" },
+      { "label": "①", "shape": "trapezoid", "blank_id": 1 },
+      { "label": "'■'を出力", "shape": "parallelogram" },
+      { "label": "繰り返し2終了", "shape": "trapezoid" },
+      { "label": "②", "shape": "parallelogram", "blank_id": 2 },
+      { "label": "③", "shape": "trapezoid", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. M = 1, X(N), 1", "イ. 改行を出力", "ウ. 繰り返し1終了", "エ. N = 1, 5, 1", "オ. '■'を入力", "カ. X(N)を出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 12,
+    "category": "配列処理",
+    "title": "配列要素の差の計算",
+    "description": "配列AとBから値を読み込み、大きい方から小さい方を引いた結果を配列Cに格納して出力する処理を5回繰り返す[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "N = 1, ①, 1", "shape": "trapezoid", "blank_id": 1 },
+      { "label": "A(N), B(N)を入力", "shape": "parallelogram" },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "C(N) ← A(N) - B(N)", "shape": "rectangle" },
+      { "label": "C(N) ← B(N) - A(N)", "shape": "rectangle" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. 5", "イ. A(N) > B(N)", "ウ. C(N)を出力", "エ. A(N) = B(N)", "オ. 10", "カ. A(N)を出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 13,
+    "category": "数学計算",
+    "title": "円の面積と周の長さ",
+    "description": "半径Rを入力し、面積Sと周の長さLを出力する。PI=3.14とする[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "L ← 2 × 3.14 × R", "shape": "rectangle" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. Rを入力", "イ. S ← 3.14 × R × R", "ウ. S, Lを出力", "エ. L ← R × R", "オ. Rを出力", "カ. Sを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 14,
+    "category": "条件判定",
+    "title": "偶数・奇数の判定",
+    "description": "整数Xを入力し、2で割った余りが0なら「偶数」、そうでなければ「奇数」と出力する[1]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "「偶数」を出力", "shape": "parallelogram" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. Xを入力", "イ. Xを2で割った余り = 0", "ウ. 「奇数」を出力", "エ. X = 0", "オ. 「偶数」を入力", "カ. Xを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 15,
+    "category": "統計処理",
+    "title": "最大値の探索",
+    "description": "3つの数A, B, Cを入力し、その中の最大値MAXを出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "A, B, Cを入力", "shape": "parallelogram" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "MAX ← B", "shape": "rectangle" },
+      { "label": "③", "shape": "diamond", "blank_id": 3 },
+      { "label": "MAX ← C", "shape": "rectangle" },
+      { "label": "MAXを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. MAX ← A", "イ. B > MAX", "ウ. C > MAX", "エ. MAX ← B", "オ. A > B", "カ. MAX ← 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 16,
+    "category": "単位換算",
+    "title": "時間の秒換算",
+    "description": "時H、分M、秒Sを入力し、総秒数TOTALを出力する。1時間=3600秒、1分=60秒とする[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. H, M, Sを入力", "イ. TOTAL ← H × 3600 + M × 60 + S", "ウ. TOTALを出力", "エ. TOTAL ← H + M + S", "オ. Sを入力", "カ. H, M, Sを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 17,
+    "category": "数学計算",
+    "title": "台形の面積",
+    "description": "上底A、下底B、高さHを入力し、面積Sを出力する。S = (A + B) × H ÷ 2 で求める[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. A, B, Hを入力", "イ. S ← (A + B) × H / 2", "ウ. Sを出力", "エ. S ← A + B × H", "オ. Hを出力", "カ. Sを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 18,
+    "category": "反復処理",
+    "title": "1からNまでの和",
+    "description": "整数Nを入力し、1からNまでの合計GOKEIを計算して出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "Nを入力", "shape": "parallelogram" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "I = 1, ②, 1", "shape": "trapezoid", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "GOKEIを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. GOKEI ← 0", "イ. N", "ウ. GOKEI ← GOKEI + I", "エ. I", "オ. GOKEI ← I", "カ. N ← 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 19,
+    "category": "条件判定",
+    "title": "入場料金の判定",
+    "description": "年齢Aを入力し、18歳以上なら「大人」、未満なら「子供」と出力する[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "「大人」を出力", "shape": "parallelogram" },
+      { "label": "「子供」を出力", "shape": "parallelogram" },
+      { "label": "③", "shape": "terminal", "blank_id": 3 }
+    ],
+    "choices": ["ア. Aを入力", "イ. A ≧ 18", "ウ. 終了", "エ. A < 18", "オ. 「大人」を入力", "カ. Aを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 20,
+    "category": "数学計算",
+    "title": "2つの数の平均",
+    "description": "A, Bを入力し、その平均Mを求めて出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. A, Bを入力", "イ. M ← (A + B) / 2", "ウ. Mを出力", "エ. M ← A + B", "オ. A, Bを出力", "カ. Mを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 21,
+    "category": "集計処理",
+    "title": "正の数の個数カウント",
+    "description": "5個の数Dを入力し、そのうち0より大きい（正の数）の個数Cをカウントして出力する[1]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "K = 1, 5, 1", "shape": "trapezoid" },
+      { "label": "Dを入力", "shape": "parallelogram" },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "③", "shape": "rectangle", "blank_id": 3 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "Cを出力", "shape": "parallelogram" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. C ← 0", "イ. D > 0", "ウ. C ← C + 1", "エ. D ≧ 0", "オ. C ← 1", "カ. Dを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 22,
+    "category": "物理計算",
+    "title": "密度と質量の計算",
+    "description": "体積Vと密度Dを入力し、質量M = V × D を求めて出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. V, Dを入力", "イ. M ← V × D", "ウ. Mを出力", "エ. M ← V + D", "オ. V, Dを出力", "カ. Mを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 23,
+    "category": "条件分岐",
+    "title": "3段階の割引判定",
+    "description": "金額Xを入力。5000円以上なら2割引、2000円以上なら1割引、それ以外は割引なし(X)を出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "Xを入力", "shape": "parallelogram" },
+      { "label": "①", "shape": "diamond", "blank_id": 1 },
+      { "label": "Y ← X × 0.8", "shape": "rectangle" },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "Y ← X × 0.9", "shape": "rectangle" },
+      { "label": "Y ← X", "shape": "rectangle" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. X ≧ 5000", "イ. X ≧ 2000", "ウ. Yを出力", "エ. X < 2000", "オ. Y ← 0", "カ. Xを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 24,
+    "category": "反復処理",
+    "title": "10の階乗の計算",
+    "description": "1×2×3×...×10の結果Kを求めて出力する[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "N = 1, 10, 1", "shape": "trapezoid" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. K ← 1", "イ. K ← K × N", "ウ. Kを出力", "エ. K ← 0", "オ. K ← K + N", "カ. Nを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 25,
+    "category": "配列処理",
+    "title": "配列要素の合計",
+    "description": "10個のデータが入った配列Dの合計SUMを出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "I = 1, 10, 1", "shape": "trapezoid" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. SUM ← 0", "イ. SUM ← SUM + D(I)", "ウ. SUMを出力", "エ. SUM ← D(I)", "オ. I ← 1", "カ. SUMを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 26,
+    "category": "数学計算",
+    "title": "三角形の面積",
+    "description": "底辺Bと高さHを入力し、面積Sを計算して出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. B, Hを入力", "イ. S ← B × H / 2", "ウ. Sを出力", "エ. S ← B + H", "オ. B, Hを出力", "カ. Sを入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 27,
+    "category": "統計処理",
+    "title": "最小値の抽出",
+    "description": "5個の正の整数を入力し、その中の最小値MINを出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "MIN ← 999", "shape": "rectangle" },
+      { "label": "K = 1, 5, 1", "shape": "trapezoid" },
+      { "label": "Dを入力", "shape": "parallelogram" },
+      { "label": "①", "shape": "diamond", "blank_id": 1 },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. D < MIN", "イ. MIN ← D", "ウ. MINを出力", "エ. D > MIN", "オ. MIN ← 0", "カ. Dを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 28,
+    "category": "条件判定",
+    "title": "合否判定",
+    "description": "点数Tを入力し、60点以上なら「合格」、未満なら「不合格」と出力する[3]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "②", "shape": "diamond", "blank_id": 2 },
+      { "label": "「合格」を出力", "shape": "parallelogram" },
+      { "label": "「不合格」を出力", "shape": "parallelogram" },
+      { "label": "③", "shape": "terminal", "blank_id": 3 }
+    ],
+    "choices": ["ア. Tを入力", "イ. T ≧ 60", "ウ. 終了", "エ. T < 60", "オ. Tを出力", "カ. 「合格」を入力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 29,
+    "category": "反復処理",
+    "title": "指定回数のループ",
+    "description": "整数Nを入力し、N回だけ「OK」と出力する[2]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "①", "shape": "parallelogram", "blank_id": 1 },
+      { "label": "K = 1, ②, 1", "shape": "trapezoid", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. Nを入力", "イ. N", "ウ. 「OK」を出力", "エ. K", "オ. 「OK」を入力", "カ. Nを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 30,
+    "category": "配列処理",
+    "title": "配列要素の平均",
+    "description": "5個のデータが入った配列Aの平均AVGを出力する[4]。",
+    "flow_steps": [
+      { "label": "開始", "shape": "terminal" },
+      { "label": "S ← 0", "shape": "rectangle" },
+      { "label": "I = 1, 5, 1", "shape": "trapezoid" },
+      { "label": "①", "shape": "rectangle", "blank_id": 1 },
+      { "label": "繰り返し終了", "shape": "trapezoid" },
+      { "label": "②", "shape": "rectangle", "blank_id": 2 },
+      { "label": "③", "shape": "parallelogram", "blank_id": 3 },
+      { "label": "終了", "shape": "terminal" }
+    ],
+    "choices": ["ア. S ← S + A(I)", "イ. AVG ← S / 5", "ウ. AVGを出力", "エ. S ← S / 5", "オ. AVG ← S", "カ. Sを出力"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  }
+]

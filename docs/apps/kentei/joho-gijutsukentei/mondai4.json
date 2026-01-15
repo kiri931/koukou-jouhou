@@ -1,0 +1,598 @@
+[
+  {
+    "id": 1,
+    "title": "消費税計算",
+    "description": "単価100円の商品の購入個数KOSUUを入力し、持ち帰り(T=0)なら税率8%、店内飲食(T=1)なら10%で計算する [1]。",
+    "program_c": [
+      "if (t == 0) {",
+      "  kin = 100 * kosuu * ① ;",
+      "}",
+      "else {",
+      "  kin = 100 * kosuu * ② ;",
+      "}",
+      "printf(\"購入金額は %d円です\\n\", ③ );"
+    ],
+    "program_basic": [
+      "130 IF T = 0 THEN",
+      "140   LET KIN = 100 * KOSUU * ①",
+      "150 ELSE",
+      "160   LET KIN = 100 * KOSUU * ②",
+      "170 END IF",
+      "180 PRINT \"購入金額は \"; ③ ; \"円です\""
+    ],
+    "choices": ["ア. 1.08", "イ. 1.10", "ウ. kin / KIN", "エ. 0.08", "オ. 0.10", "カ. t / T"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 2,
+    "title": "平均タイムの算出",
+    "description": "40人分の走定タイムを入力し、その合計SUMから平均AVGを算出して出力する [1]。",
+    "program_c": [
+      "for (i = 1; i <= 40; i++) {",
+      "  scanf(\"%f\", &t);",
+      "  ① = sum + t;",
+      "}",
+      "② = sum / 40.0;",
+      "printf(\"平均は %f秒です\\n\", ③ );"
+    ],
+    "program_basic": [
+      "120 FOR I = 1 TO 40 STEP 1",
+      "130   INPUT T",
+      "140   LET ① = SUM + T",
+      "150 NEXT I",
+      "160 LET ② = SUM / 40.0",
+      "170 PRINT \"平均は \"; ③ ; \"秒です\""
+    ],
+    "choices": ["ア. sum / SUM", "イ. avg / AVG", "ウ. sum / SUM", "エ. i / I", "オ. t / T", "カ. 40"],
+    "answers": { "1": "ア", "2": "イ", "3": "イ" }
+  },
+  {
+    "id": 3,
+    "title": "階乗の計算",
+    "description": "入力した正の整数Nの階乗(N!)を計算する。負の数が入力されたらエラーを表示する [1]。",
+    "program_c": [
+      "fact = ① ;",
+      "if (n < 0) { printf(\"エラー\\n\"); }",
+      "else {",
+      "  for (i = 1; i <= ② ; i++) {",
+      "    fact = fact * i;",
+      "  }",
+      "  printf(\"%d! = %d\\n\", n, ③ );",
+      "}"
+    ],
+    "program_basic": [
+      "100 LET FACT = ①",
+      "120 IF N < 0 THEN PRINT \"エラー\"",
+      "140 ELSE",
+      "150   FOR I = 1 TO ② STEP 1",
+      "160     LET FACT = FACT * I",
+      "170   NEXT I",
+      "180   PRINT N; \"! = \"; ③",
+      "190 END IF"
+    ],
+    "choices": ["ア. 1", "イ. n / N", "ウ. fact / FACT", "エ. 0", "オ. i / I", "カ. n - 1"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 4,
+    "title": "球の体積と表面積",
+    "description": "半径Rを入力し、球の体積Vと表面積Sを求める。円周率は3.14とする [2]。",
+    "program_c": [
+      "float r, v, s, pai = 3.14;",
+      "v = 4 * pai * r * r * r / ① ;",
+      "s = 4 * pai * ② ;",
+      "printf(\"体積=%f 表面積=%f\\n\", ③ );"
+    ],
+    "program_basic": [
+      "100 LET PAI = 3.14",
+      "130 LET V = 4 * PAI * R * R * R / ①",
+      "140 LET S = 4 * PAI * ②",
+      "150 PRINT \"体積=\"; V; \"表面積=\"; ③"
+    ],
+    "choices": ["ア. 3", "イ. r * r / R * R", "ウ. v, s / V, S", "エ. 4", "オ. r / R", "カ. s / S"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 5,
+    "title": "最大値の検索",
+    "description": "3つの異なる数値X, Y, Zを入力し、その中の最大値MAXを出力する [2]。",
+    "program_c": [
+      "max = ① ;",
+      "if (y > max) { max = y; }",
+      "if ( ② ) { max = z; }",
+      "printf(\"最大値は %dです\\n\", ③ );"
+    ],
+    "program_basic": [
+      "130 LET MAX = ①",
+      "140 IF Y > MAX THEN LET MAX = Y",
+      "170 IF ② THEN LET MAX = Z",
+      "200 PRINT \"最大値は \"; ③"
+    ],
+    "choices": ["ア. x / X", "イ. z > max / Z > MAX", "ウ. max / MAX", "エ. y / Y", "オ. x > y", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 6,
+    "title": "倍数の合計",
+    "description": "6から96までの範囲で、6の倍数の合計TOTALを算出する [2]。",
+    "program_c": [
+      "total = 0;",
+      "for (i = 6; i <= ① ; i = i + 6) {",
+      "  total = ② ;",
+      "}",
+      "printf(\"合計は %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "100 LET TOTAL = 0",
+      "120 FOR I = 6 TO ① STEP 6",
+      "130   LET TOTAL = ②",
+      "140 NEXT I",
+      "160 PRINT \"合計は \"; ③"
+    ],
+    "choices": ["ア. 96", "イ. total + i / TOTAL + I", "ウ. total / TOTAL", "エ. 100", "オ. i / I", "カ. 6"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 7,
+    "title": "時間の換算",
+    "description": "時H、分Mを入力し、すべてを秒に直した合計TOTALを表示する [2]。",
+    "program_c": [
+      "scanf(\"%d\", &h);",
+      "scanf(\"%d\", &m);",
+      "total = h * ① + m * ② + s;",
+      "printf(\"総秒数は %d秒です\\n\", ③ );"
+    ],
+    "program_basic": [
+      "110 INPUT M",
+      "130 LET TOTAL = H * ① + M * ② + S",
+      "140 PRINT \"総秒数は \"; ③ ; \"秒です\""
+    ],
+    "choices": ["ア. 3600", "イ. 60", "ウ. total / TOTAL", "エ. 60", "オ. 12", "カ. h + m"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 8,
+    "title": "コラッツ予想の確認",
+    "description": "変数Cが1になるまで、偶数なら2で割り、奇数なら3倍して1を足す処理を繰り返す [2]。",
+    "program_c": [
+      "while (c != 1) {",
+      "  if (c % 2 == 0) { c = ① ; }",
+      "  else { c = ② ; }",
+      "  printf(\"%d \", ③ );",
+      "}"
+    ],
+    "program_basic": [
+      "140 DO WHILE C <> 1",
+      "150   IF MOD(C, 2) = 0 THEN",
+      "160     LET C = ①",
+      "180   ELSE",
+      "190     LET C = ②",
+      "210   END IF",
+      "220 LOOP",
+      "230 PRINT ③"
+    ],
+    "choices": ["ア. c / 2 / C / 2", "イ. 3 * c + 1 / 3 * C + 1", "ウ. c / C", "エ. c + 1", "オ. 2 * c", "カ. 1"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 9,
+    "title": "配列内データの件数カウント",
+    "description": "配列TBLの中から、入力されたKEYと同じ値がいくつあるか(C)を数える [2]。",
+    "program_c": [
+      "for (m = 0; m < 10; m++) {",
+      "  if ( ① == tbl[m]) {",
+      "    c = ② ;",
+      "  }",
+      "}",
+      "printf(\"同じ値の数: %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "160 FOR M = 1 TO 10 STEP 1",
+      "170   IF ① = TBL(M) THEN",
+      "180     LET C = ②",
+      "200 NEXT M",
+      "220 PRINT \"同じ値の数: \"; ③"
+    ],
+    "choices": ["ア. key / KEY", "イ. c + 1 / C + 1", "ウ. c / C", "エ. m / M", "オ. tbl[m]", "カ. 10"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 10,
+    "title": "合否判定システム",
+    "description": "10名分の点数Nを入力し、60点以上なら「合格」、未満なら「不合格」の人数をカウントする [2]。",
+    "program_c": [
+      "if (n >= 60) {",
+      "  gou = ① ;",
+      "}",
+      "else {",
+      "  fugo = ② ;",
+      "}",
+      "printf(\"合格者数: %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "140 IF N >= 60 THEN",
+      "150   LET GOU = ①",
+      "160 ELSE",
+      "170   LET FUGO = ②",
+      "190 END IF",
+      "200 PRINT \"合格者数: \"; ③"
+    ],
+    "choices": ["ア. gou + 1 / GOU + 1", "イ. fugo + 1 / FUGO + 1", "ウ. gou / GOU", "エ. 60", "オ. n / N", "カ. 10"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 11,
+    "title": "長方形の面積と周",
+    "description": "縦H、横Wを入力し、面積Sと周囲の長さLを求める。",
+    "program_c": [
+      "s = h * w;",
+      "l = (h + w) * ① ;",
+      "printf(\"面積=%d 周囲=%d\\n\", ② , ③ );"
+    ],
+    "program_basic": [
+      "100 LET S = H * W",
+      "110 LET L = (H + W) * ①",
+      "120 PRINT \"面積=\"; ②; \"周囲=\"; ③"
+    ],
+    "choices": ["ア. 2", "イ. s / S", "ウ. l / L", "エ. 4", "オ. h / H", "カ. w / W"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 12,
+    "title": "3の倍数のカウント",
+    "description": "1から100までの数値の中で、3で割り切れる数がいくつあるか求める [2]。",
+    "program_c": [
+      "for (n = 1; n <= 100; n++) {",
+      "  if (n % ① == 0) {",
+      "    cnt = ② ;",
+      "  }",
+      "}",
+      "printf(\"3の倍数は %d個\\n\", ③ );"
+    ],
+    "program_basic": [
+      "120 IF MOD(N, ①) = 0 THEN",
+      "130   LET CNT = ②",
+      "150 NEXT N",
+      "160 PRINT \"3の倍数は \"; ③"
+    ],
+    "choices": ["ア. 3", "イ. cnt + 1 / CNT + 1", "ウ. cnt / CNT", "エ. 100", "オ. n / N", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 13,
+    "title": "正負の判定",
+    "description": "入力された数Xが正、負、または0であるか判定する。",
+    "program_c": [
+      "if (x > 0) { printf(\"正\"); }",
+      "else if (x < 0) { printf(\"負\"); }",
+      "else { printf(\" ① \"); }",
+      "printf(\" ② = %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "130 IF X > 0 THEN PRINT \"正\"",
+      "140 ELSEIF X < 0 THEN PRINT \"負\"",
+      "150 ELSE PRINT \" ① \"",
+      "160 END IF",
+      "170 PRINT \" ② = \"; ③"
+    ],
+    "choices": ["ア. 0", "イ. x / X", "ウ. x / X", "エ. 1", "オ. 正", "カ. 負"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 14,
+    "title": "1からNまでの合計",
+    "description": "入力した整数Nまでの合計SUMを求める。",
+    "program_c": [
+      "sum = 0;",
+      "for (i = 1; i <= ① ; i++) {",
+      "  sum = ② ;",
+      "}",
+      "printf(\"合計は %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "110 FOR I = 1 TO ① STEP 1",
+      "120   LET SUM = ②",
+      "130 NEXT I",
+      "140 PRINT \"合計は \"; ③"
+    ],
+    "choices": ["ア. n / N", "イ. sum + i / SUM + I", "ウ. sum / SUM", "エ. 1", "オ. i / I", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 15,
+    "title": "円の面積（関数利用）",
+    "description": "関数を用いて円の面積を計算する。半径Rを入力する [2]。",
+    "program_c": [
+      "float area(float r) { return 3.14 * r * r; }",
+      "scanf(\"%f\", &radius);",
+      "ans = ① (radius);",
+      "printf(\"面積は %f\\n\", ② );"
+    ],
+    "program_basic": [
+      "100 DEF FN_AREA(R) = 3.14 * R * R",
+      "120 LET ANS = ①(RADIUS)",
+      "130 PRINT \"面積は \"; ②"
+    ],
+    "choices": ["ア. area / FN_AREA", "イ. ans / ANS", "ウ. 3.14", "エ. radius / RADIUS", "オ. r / R", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 16,
+    "title": "偶数のみの合計",
+    "description": "1から50までの数値のうち、偶数だけを合計する。",
+    "program_c": [
+      "for (i = 2; i <= 50; i = ① ) {",
+      "  sum = ② ;",
+      "}",
+      "printf(\"合計=%d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "110 FOR I = 2 TO 50 STEP ①",
+      "120   LET SUM = ②",
+      "130 NEXT I",
+      "140 PRINT \"合計=\"; ③"
+    ],
+    "choices": ["ア. 2", "イ. sum + i / SUM + I", "ウ. sum / SUM", "エ. i + 1", "オ. 50", "カ. 1"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 17,
+    "title": "身長のフィート換算",
+    "description": "センチメートルCMを入力し、フィートFTに変換する（1フィート=30.48cm）。",
+    "program_c": [
+      "ft = cm / ① ;",
+      "printf(\"結果は %f フィートです\\n\", ② );"
+    ],
+    "program_basic": [
+      "120 LET FT = CM / ①",
+      "130 PRINT \"結果は \"; ②; \" フィートです\""
+    ],
+    "choices": ["ア. 30.48", "イ. ft / FT", "ウ. cm / CM", "エ. 12", "オ. 100", "カ. 0.3"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 18,
+    "title": "最小値の検索",
+    "description": "入力された10個のデータから最小値MINを見つける。",
+    "program_c": [
+      "min = data;",
+      "for (i = 1; i < 10; i++) {",
+      "  if (data[i] < ① ) {",
+      "    min = ② ;",
+      "  }",
+      "}",
+      "printf(\"最小は %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "130 IF DATA(I) < ① THEN",
+      "140   LET MIN = ②",
+      "150 END IF",
+      "170 PRINT \"最小は \"; ③"
+    ],
+    "choices": ["ア. min / MIN", "イ. data(i) / DATA(I)", "ウ. min / MIN", "エ. data(0)", "オ. 10", "カ. i"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 19,
+    "title": "三角形の面積算出",
+    "description": "底辺B、高さHを入力し、面積Sを求める [2]。",
+    "program_c": [
+      "s = b * h / ① ;",
+      "printf(\"面積は %f です\\n\", ② );"
+    ],
+    "program_basic": [
+      "130 LET S = B * H / ①",
+      "140 PRINT \"面積は \"; ②; \" です\""
+    ],
+    "choices": ["ア. 2.0 / 2", "イ. s / S", "ウ. b / B", "エ. h / H", "オ. 0.5", "カ. 3"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 20,
+    "title": "配列要素の2倍処理",
+    "description": "配列Aの各要素を2倍にして配列Bに格納する。",
+    "program_c": [
+      "for (i = 0; i < 5; i++) {",
+      "  b[i] = ① * 2;",
+      "}",
+      "printf(\"B=%d\\n\", ② );"
+    ],
+    "program_basic": [
+      "110 FOR I = 1 TO 5 STEP 1",
+      "120   LET B(I) = ① * 2",
+      "130 NEXT I",
+      "140 PRINT \"B(1)=\"; ②"
+    ],
+    "choices": ["ア. a[i] / A(I)", "イ. b / B(1)", "ウ. i / I", "エ. b[i] / B(I)", "オ. 2", "カ. 5"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 21,
+    "title": "値の入れ替え(Swap)",
+    "description": "変数AとBの中身を、作業用変数Tを使って入れ替える。",
+    "program_c": [
+      "t = a;",
+      "a = ① ;",
+      "b = ② ;",
+      "printf(\"A=%d B=%d\\n\", a, b);"
+    ],
+    "program_basic": [
+      "100 LET T = A",
+      "110 LET A = ①",
+      "120 LET B = ②",
+      "130 PRINT \"A=\"; A; \" B=\"; B"
+    ],
+    "choices": ["ア. b / B", "イ. t / T", "ウ. a / A", "エ. 0", "オ. 10", "カ. swap"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 22,
+    "title": "BMIの計算",
+    "description": "体重W[kg]と身長T[m]から、BMIを算出する(BMI = W / T / T)。",
+    "program_c": [
+      "bmi = w / ( ① * ② );",
+      "printf(\"BMI=%f\\n\", ③ );"
+    ],
+    "program_basic": [
+      "120 LET BMI = W / ( ① * ② )",
+      "130 PRINT \"BMI=\"; ③"
+    ],
+    "choices": ["ア. t / T", "イ. t / T", "ウ. bmi / BMI", "エ. w / W", "オ. 2", "カ. 100"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 23,
+    "title": "逆三角形の出力(多重ループ)",
+    "description": "10行の'*'を、行が下がるごとに減らして表示する [1]。",
+    "program_c": [
+      "for (i = 10; i >= 1; i--) {",
+      "  for (j = 1; j <= ① ; j++) {",
+      "    printf(\"*\");",
+      "  }",
+      "  printf(\"\\n\");",
+      "}"
+    ],
+    "program_basic": [
+      "110 FOR I = 10 TO 1 STEP -1",
+      "120   FOR J = 1 TO ① STEP 1",
+      "130     PRINT \"*\";",
+      "140   NEXT J",
+      "150   PRINT",
+      "160 NEXT I"
+    ],
+    "choices": ["ア. i / I", "イ. 10", "ウ. 1", "エ. j / J", "オ. 0", "カ. 9"],
+    "answers": { "1": "ア", "2": "null", "3": "null" }
+  },
+  {
+    "id": 24,
+    "title": "うるう年判定",
+    "description": "西暦YEARが4で割り切れるが100で割り切れない、または400で割り切れる場合に判定する [2]。",
+    "program_c": [
+      "if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {",
+      "  printf(\"うるう年\\n\");",
+      "}",
+      "else { printf(\"平年\\n\"); }"
+    ],
+    "program_basic": [
+      "120 IF (MOD(YEAR, 4) = 0 AND MOD(YEAR, 100) <> 0) OR MOD(YEAR, 400) = 0 THEN",
+      "130   PRINT \"うるう年\"",
+      "140 ELSE",
+      "150   PRINT \"平年\"",
+      "160 END IF"
+    ],
+    "choices": ["ア. MOD / %", "イ. AND / &&", "ウ. OR / ||", "エ. YEAR", "オ. 4", "カ. 100"],
+    "answers": { "1": "null", "2": "null", "3": "null" }
+  },
+  {
+    "id": 25,
+    "title": "配列合計（要素数指定）",
+    "description": "N個のデータを持つ配列Aの全合計を求める。",
+    "program_c": [
+      "for (i = 0; i < n; i++) {",
+      "  sum += ① ;",
+      "}",
+      "printf(\"合計は %d\\n\", ② );"
+    ],
+    "program_basic": [
+      "110 FOR I = 1 TO N STEP 1",
+      "120   LET SUM = SUM + ①",
+      "130 NEXT I",
+      "140 PRINT \"合計は \"; ②"
+    ],
+    "choices": ["ア. a[i] / A(I)", "イ. sum / SUM", "ウ. i / I", "エ. n / N", "オ. a / A", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 26,
+    "title": "偶数判定と表示",
+    "description": "入力された数Aが偶数なら2で割った値を、奇数ならそのまま出力する。",
+    "program_c": [
+      "if (a % 2 == 0) {",
+      "  ans = ① ;",
+      "}",
+      "else { ans = ② ; }",
+      "printf(\"結果: %d\\n\", ③ );"
+    ],
+    "program_basic": [
+      "110 IF MOD(A, 2) = 0 THEN",
+      "120   LET ANS = ①",
+      "130 ELSE",
+      "140   LET ANS = ②",
+      "150 END IF",
+      "160 PRINT \"結果: \"; ③"
+    ],
+    "choices": ["ア. a / 2 / A / 2", "イ. a / A", "ウ. ans / ANS", "エ. 2", "オ. 1", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 27,
+    "title": "長方形の対角線の長さ",
+    "description": "縦A、横Bの長方形の対角線Cを求める。三平方の定理を利用する [1]。",
+    "program_c": [
+      "c = sqrt(a * a + b * b);",
+      "printf(\"対角線は %f\\n\", ① );"
+    ],
+    "program_basic": [
+      "130 LET C = SQR(A * A + B * B)",
+      "140 PRINT \"対角線は \"; ①"
+    ],
+    "choices": ["ア. c / C", "イ. a / A", "ウ. b / B", "エ. sqrt / SQR", "オ. s / S", "カ. 2"],
+    "answers": { "1": "ア", "2": "null", "3": "null" }
+  },
+  {
+    "id": 28,
+    "title": "入力値の二乗",
+    "description": "5回、数値Nを入力し、それぞれの二乗を出力する。",
+    "program_c": [
+      "for (i = 1; i <= 5; i++) {",
+      "  scanf(\"%d\", &n);",
+      "  res = ① * ② ;",
+      "  printf(\"二乗は %d\\n\", ③ );",
+      "}"
+    ],
+    "program_basic": [
+      "110 FOR I = 1 TO 5 STEP 1",
+      "120   INPUT N",
+      "130   LET RES = ① * ②",
+      "140   PRINT \"二乗は \"; ③",
+      "150 NEXT I"
+    ],
+    "choices": ["ア. n / N", "イ. n / N", "ウ. res / RES", "エ. i / I", "オ. 2", "カ. 5"],
+    "answers": { "1": "ア", "2": "イ", "3": "ウ" }
+  },
+  {
+    "id": 29,
+    "title": "平均点以上を判定",
+    "description": "点数Sが平均AVG以上（S ≧ AVG）なら「PASS」と表示する。",
+    "program_c": [
+      "if ( ① ) {",
+      "  printf(\" ② \");",
+      "}"
+    ],
+    "program_basic": [
+      "110 IF ① THEN",
+      "120   PRINT \" ② \"",
+      "130 END IF"
+    ],
+    "choices": ["ア. s >= avg / S >= AVG", "イ. PASS", "ウ. s < avg", "エ. AVG", "オ. goukaku", "カ. score"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  },
+  {
+    "id": 30,
+    "title": "カウントダウン",
+    "description": "10から1まで1ずつ減らしながら表示する。",
+    "program_c": [
+      "for (i = 10; i >= 1; ① ) {",
+      "  printf(\"%d \", ② );",
+      "}",
+      "printf(\"\\n\");"
+    ],
+    "program_basic": [
+      "110 FOR I = 10 TO 1 STEP ①",
+      "120   PRINT ②",
+      "130 NEXT I"
+    ],
+    "choices": ["ア. i-- / -1", "イ. i / I", "ウ. 10", "エ. i++ / 1", "オ. 1", "カ. 0"],
+    "answers": { "1": "ア", "2": "イ", "3": "null" }
+  }
+]
