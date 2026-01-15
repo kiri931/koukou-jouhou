@@ -35,6 +35,7 @@ export function renderPdfList(mountEl, pdfList) {
     <thead>
       <tr>
         <th>PDF</th>
+        <th>範囲</th>
         <th>メモ</th>
         <th>操作</th>
       </tr>
@@ -45,9 +46,22 @@ export function renderPdfList(mountEl, pdfList) {
   const tbody = table.querySelector("tbody");
 
   for (const p of pdfList) {
+    const scopes = Array.isArray(p.scopes) ? p.scopes : [];
+    const scopeText = scopes.length
+      ? scopes
+          .map((s) => {
+            const from = s.pageFrom ? `p.${s.pageFrom}` : "";
+            const to = s.pageTo ? `p.${s.pageTo}` : "";
+            const range = from || to ? `${from}${to ? `〜${to}` : ""}` : "（未設定）";
+            return `${s.label}: ${range}`;
+          })
+          .join("<br>")
+      : "-";
+
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td><strong>${p.title}</strong><div class="dg-help">id: ${p.id}</div></td>
+      <td><div class="dg-help">${scopeText}</div></td>
       <td>${richTextToHtml(p.note ?? "")}</td>
       <td><button class="dg-btn dg-btn--subtle" type="button" data-open="${p.id}">開く</button></td>
     `;

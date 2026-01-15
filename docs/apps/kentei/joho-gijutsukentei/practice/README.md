@@ -8,26 +8,21 @@
 
 | ファイル | 問題数 | 内容 |
 |---------|--------|------|
-| `mondai.json` | 130問 | 基本用語（コンパイラ、プロトコル、著作権など） |
-| `mondai2.json` | 100問 | 進数変換、論理回路、2進数演算、補数表現 |
-| `mondai3.json` | 30問 | フローチャート問題（穴埋め形式） |
-| `mondai4.json` | 30問 | プログラミング問題（C言語・BASIC） |
+| `data/practice/mondai1.json` | 130問 | 基本用語（コンパイラ、プロトコル、著作権など） |
+| `data/practice/mondai2.json` | 100問 | 計算・論理回路 |
+| `data/practice/mondai3.json` | 30問 | フローチャート問題（穴埋め形式） |
+| `data/practice/mondai4.json` | 30問 | プログラミング問題（C言語・BASIC） |
 
 ## 機能
 
-### 1. カテゴリ別学習
+### 1. 分野別学習（4分野）
 - 基本用語
-- 進数変換
-- 論理回路
-- 2進数演算
-- 補数表現
-- 情報の単位
-- フローチャート（各種カテゴリ）
+- 計算・論理回路
+- フローチャート
 - プログラミング
 
-### 2. 出題順の選択
-- **ランダム**: シャッフルして出題
-- **順番**: ID順に出題
+### 2. 出題
+- 分野を選んで開始すると、その分野から約10問をランダムに出題
 
 ### 3. 問題形式
 - **選択式（choice）**: 4択問題、自動採点対応
@@ -47,7 +42,7 @@ practice/
 
 ## 各JSONファイルの構造
 
-### mondai.json（基本用語）
+### data/practice/mondai1.json（基本用語）
 ```json
 {
   "id": 1,
@@ -57,7 +52,7 @@ practice/
 }
 ```
 
-### mondai2.json（進数変換・論理回路）
+### data/practice/mondai2.json（計算・論理回路）
 ```json
 {
   "id": 1,
@@ -67,7 +62,7 @@ practice/
 }
 ```
 
-### mondai3.json（フローチャート）
+### data/practice/mondai3.json（フローチャート）
 ```json
 {
   "id": 1,
@@ -83,7 +78,7 @@ practice/
 }
 ```
 
-### mondai4.json（プログラミング）
+### data/practice/mondai4.json（プログラミング）
 ```json
 {
   "id": 1,
@@ -119,17 +114,9 @@ practice/
 2. IDは連番で管理（重複チェック済み）
 3. `practice-loader.js` が自動的に読み込みます
 
-### カテゴリの追加
 
-`practice-loader.js` の分類ロジックを変更することで、
-新しいカテゴリを追加できます。
-
-```javascript
-// mondai2.json のカテゴリ分類例
-if (qText.includes("論理回路")) {
-  section = "論理回路";
-}
-```
+注: 分野（4分野）は固定です。追加・変更したい場合は
+`practice-loader.js` の section 名と読み込み対象を合わせて修正してください。
 
 ---
 

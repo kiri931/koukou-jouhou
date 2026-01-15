@@ -39,22 +39,22 @@ def main():
     
     checks = [
         {
-            "file": base / "mondai.json",
+            "file": base / "data" / "practice" / "mondai1.json",
             "keys": ["id", "question", "options", "answer"],
             "name": "基本用語"
         },
         {
-            "file": base / "mondai2.json",
+            "file": base / "data" / "practice" / "mondai2.json",
             "keys": ["id", "question", "options", "answer"],
-            "name": "進数変換・論理回路"
+            "name": "計算・論理回路"
         },
         {
-            "file": base / "mondai3.json",
+            "file": base / "data" / "practice" / "mondai3.json",
             "keys": ["id", "category", "title", "description", "flow_steps", "choices", "answers"],
             "name": "フローチャート"
         },
         {
-            "file": base / "mondai4.json",
+            "file": base / "data" / "practice" / "mondai4.json",
             "keys": ["id", "title", "description", "program_c", "program_basic", "choices", "answers"],
             "name": "プログラミング"
         }

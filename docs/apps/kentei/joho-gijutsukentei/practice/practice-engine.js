@@ -6,6 +6,33 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function dispatch(container, type, detail) {
+  container.dispatchEvent(new CustomEvent(type, { bubbles: true, detail }));
+}
+
+function extractChoiceLabel(choiceText) {
+  // "ア. ..." / "イ. ..." の先頭ラベルを取り出す
+  const m = String(choiceText).match(/^\s*([^\.\s]+)\s*\./);
+  return m ? m[1] : String(choiceText).trim();
+}
+
+function sortedBlankKeysFromAnswers(answersObj) {
+  if (!answersObj || typeof answersObj !== "object") return [];
+  return Object.keys(answersObj)
+    .filter((k) => answersObj[k] !== "null")
+    .sort((a, b) => Number(a) - Number(b));
+}
+
+function sortedBlankKeysFromFlowSteps(flowSteps) {
+  const keys = new Set();
+  (flowSteps || []).forEach((s) => {
+    if (s?.blank_id !== undefined && s?.blank_id !== null && s?.blank_id !== "") {
+      keys.add(String(s.blank_id));
+    }
+  });
+  return Array.from(keys).sort((a, b) => Number(a) - Number(b));
+}
+
 // 基本用語問題（choice形式）
 function renderChoiceQuestion(container, question, state) {
   const stem = document.createElement("div");
@@ -41,25 +68,14 @@ function renderChoiceQuestion(container, question, state) {
     form.appendChild(label);
   });
 
-  const footer = document.createElement("div");
-  footer.className = "dg-row";
-  footer.style.marginTop = "16px";
-
-  const btnSave = document.createElement("button");
-  btnSave.type = "submit";
-  btnSave.className = "dg-btn";
-  btnSave.textContent = "回答を保存";
-
-  footer.appendChild(btnSave);
-  form.appendChild(footer);
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  // choiceは、選んだ瞬間に回答保存＆自動採点
+  form.addEventListener("change", () => {
     const formData = new FormData(form);
     const value = formData.get(name);
-    if (value !== null) {
-      state.answers[question.id] = Number(value);
-    }
+    if (value === null) return;
+    state.answers[question.id] = Number(value);
+    const g = gradeQuestion(question, state.answers[question.id]);
+    dispatch(container, "practice:graded", g);
   });
 
   container.appendChild(stem);
@@ -100,35 +116,93 @@ function renderFlowchartQuestion(container, question, state) {
 
   flowDiv.appendChild(flowContent);
 
+  const blankKeys = sortedBlankKeysFromFlowSteps(question.flowSteps);
+  const blankCount = blankKeys.length;
+
+  const answerCard = document.createElement("div");
+  answerCard.className = "dg-card";
+  answerCard.style.marginTop = "16px";
+  const answerBody = document.createElement("div");
+  answerBody.className = "dg-card__body";
+  const answerTitle = document.createElement("div");
+  answerTitle.className = "dg-prose";
+  answerTitle.innerHTML = "<h4 style=\"margin:0\">解答欄（押した順）</h4>";
+  const answerSlots = document.createElement("div");
+  answerSlots.className = "dg-row";
+  answerSlots.style.flexWrap = "wrap";
+  answerSlots.style.gap = "8px";
+  answerSlots.style.marginTop = "12px";
+
+  function getSeq() {
+    const v = state.answers?.[question.id];
+    return Array.isArray(v) ? v : [];
+  }
+
+  function renderSlots() {
+    const seq = getSeq();
+    answerSlots.innerHTML = "";
+    for (let i = 0; i < blankCount; i++) {
+      const k = blankKeys[i];
+      const v = seq[i] ?? "-";
+      const b = document.createElement("span");
+      b.className = "dg-badge";
+      b.textContent = `[${k}] ${v}`;
+      answerSlots.appendChild(b);
+    }
+    if (!blankCount) {
+      const b = document.createElement("span");
+      b.className = "dg-badge";
+      b.textContent = "（空欄なし）";
+      answerSlots.appendChild(b);
+    }
+  }
+
+  answerBody.appendChild(answerTitle);
+  answerBody.appendChild(answerSlots);
+  answerCard.appendChild(answerBody);
+
   const choicesDiv = document.createElement("div");
   choicesDiv.className = "dg-prose";
   choicesDiv.style.marginTop = "16px";
-  choicesDiv.innerHTML = "<h4>選択肢</h4>";
+  choicesDiv.innerHTML = "<h4>選択肢（押した順に記録）</h4>";
 
   const choiceList = document.createElement("div");
   choiceList.className = "dg-stack";
 
   question.choices.forEach((choice) => {
-    const item = document.createElement("div");
-    item.style.padding = "8px";
-    item.style.backgroundColor = "#fff";
-    item.style.border = "1px solid #e0e0e0";
-    item.style.borderRadius = "4px";
-    item.textContent = choice;
-    choiceList.appendChild(item);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "dg-btn dg-btn--subtle";
+    btn.style.justifyContent = "flex-start";
+    btn.textContent = choice;
+
+    btn.addEventListener("click", () => {
+      if (!blankCount) return;
+      const seq = getSeq();
+      if (seq.length >= blankCount) return;
+      const label = extractChoiceLabel(choice);
+      const next = [...seq, label];
+      state.answers[question.id] = next;
+      renderSlots();
+
+      if (next.length === blankCount) {
+        const g = gradeQuestion(question, next);
+        dispatch(container, "practice:graded", g);
+      }
+    });
+
+    const wrap = document.createElement("div");
+    wrap.appendChild(btn);
+    choiceList.appendChild(wrap);
   });
 
   choicesDiv.appendChild(choiceList);
 
-  const note = document.createElement("div");
-  note.className = "dg-note";
-  note.style.marginTop = "16px";
-  note.textContent = "※ フローチャート問題は自動採点非対応です。選択肢から適切なものを選んで確認してください。";
-
   container.appendChild(header);
   container.appendChild(flowDiv);
+  container.appendChild(answerCard);
   container.appendChild(choicesDiv);
-  container.appendChild(note);
+  renderSlots();
 }
 
 // プログラミング問題
@@ -188,39 +262,97 @@ function renderProgrammingQuestion(container, question, state) {
 
   codeDiv.appendChild(codeContent);
 
+  const blankKeys = sortedBlankKeysFromAnswers(question.answers);
+  const blankCount = blankKeys.length;
+
+  const answerCard = document.createElement("div");
+  answerCard.className = "dg-card";
+  answerCard.style.marginTop = "16px";
+  const answerBody = document.createElement("div");
+  answerBody.className = "dg-card__body";
+  const answerTitle = document.createElement("div");
+  answerTitle.className = "dg-prose";
+  answerTitle.innerHTML = "<h4 style=\"margin:0\">解答欄（押した順）</h4>";
+  const answerSlots = document.createElement("div");
+  answerSlots.className = "dg-row";
+  answerSlots.style.flexWrap = "wrap";
+  answerSlots.style.gap = "8px";
+  answerSlots.style.marginTop = "12px";
+
+  function getSeq() {
+    const v = state.answers?.[question.id];
+    return Array.isArray(v) ? v : [];
+  }
+
+  function renderSlots() {
+    const seq = getSeq();
+    answerSlots.innerHTML = "";
+    for (let i = 0; i < blankCount; i++) {
+      const k = blankKeys[i];
+      const v = seq[i] ?? "-";
+      const b = document.createElement("span");
+      b.className = "dg-badge";
+      b.textContent = `[${k}] ${v}`;
+      answerSlots.appendChild(b);
+    }
+    if (!blankCount) {
+      const b = document.createElement("span");
+      b.className = "dg-badge";
+      b.textContent = "（空欄なし）";
+      answerSlots.appendChild(b);
+    }
+  }
+
+  answerBody.appendChild(answerTitle);
+  answerBody.appendChild(answerSlots);
+  answerCard.appendChild(answerBody);
+
   const choicesDiv = document.createElement("div");
   choicesDiv.className = "dg-prose";
   choicesDiv.style.marginTop = "16px";
-  choicesDiv.innerHTML = "<h4>選択肢</h4>";
+  choicesDiv.innerHTML = "<h4>選択肢（押した順に記録）</h4>";
 
   const choiceList = document.createElement("div");
   choiceList.className = "dg-stack";
 
   question.choices.forEach((choice) => {
-    const item = document.createElement("div");
-    item.style.padding = "8px";
-    item.style.backgroundColor = "#fff";
-    item.style.border = "1px solid #e0e0e0";
-    item.style.borderRadius = "4px";
-    item.textContent = choice;
-    choiceList.appendChild(item);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "dg-btn dg-btn--subtle";
+    btn.style.justifyContent = "flex-start";
+    btn.textContent = choice;
+
+    btn.addEventListener("click", () => {
+      if (!blankCount) return;
+      const seq = getSeq();
+      if (seq.length >= blankCount) return;
+      const label = extractChoiceLabel(choice);
+      const next = [...seq, label];
+      state.answers[question.id] = next;
+      renderSlots();
+
+      if (next.length === blankCount) {
+        const g = gradeQuestion(question, next);
+        dispatch(container, "practice:graded", g);
+      }
+    });
+
+    const wrap = document.createElement("div");
+    wrap.appendChild(btn);
+    choiceList.appendChild(wrap);
   });
 
   choicesDiv.appendChild(choiceList);
 
-  const note = document.createElement("div");
-  note.className = "dg-note";
-  note.style.marginTop = "16px";
-  note.textContent = "※ プログラミング問題は自動採点非対応です。選択肢から適切なものを選んで確認してください。";
-
   container.appendChild(header);
   container.appendChild(tabs);
   container.appendChild(codeDiv);
+  container.appendChild(answerCard);
   container.appendChild(choicesDiv);
-  container.appendChild(note);
 
   // 初期表示
   showCode("c");
+  renderSlots();
 }
 
 // メインレンダリング関数
@@ -272,8 +404,48 @@ export function gradeQuestion(question, userAnswer) {
       userAnswer: userAnswer !== undefined ? question.choices[userAnswer] : null,
     };
   }
-  
-  return { ok: null, message: "この問題形式は自動採点に対応していません" };
+
+  if (question.format === "flowchart") {
+    const blankKeys = sortedBlankKeysFromFlowSteps(question.flowSteps);
+    const seq = Array.isArray(userAnswer) ? userAnswer : [];
+    if (!blankKeys.length) return { ok: null, message: "空欄がないため採点できません" };
+    if (seq.length < blankKeys.length) return { ok: null, message: "解答が未完成です" };
+
+    let ok = true;
+    for (let i = 0; i < blankKeys.length; i++) {
+      const k = blankKeys[i];
+      const expected = question.answers?.[k];
+      const actual = seq[i];
+      if (expected !== actual) {
+        ok = false;
+        break;
+      }
+    }
+
+    return { ok };
+  }
+
+  if (question.format === "programming") {
+    const blankKeys = sortedBlankKeysFromAnswers(question.answers);
+    const seq = Array.isArray(userAnswer) ? userAnswer : [];
+    if (!blankKeys.length) return { ok: null, message: "空欄がないため採点できません" };
+    if (seq.length < blankKeys.length) return { ok: null, message: "解答が未完成です" };
+
+    let ok = true;
+    for (let i = 0; i < blankKeys.length; i++) {
+      const k = blankKeys[i];
+      const expected = question.answers?.[k];
+      const actual = seq[i];
+      if (expected !== actual) {
+        ok = false;
+        break;
+      }
+    }
+
+    return { ok };
+  }
+
+  return { ok: null, message: "未対応の問題形式です" };
 }
 
 // 解説表示

@@ -1,4 +1,4 @@
-import { ENET_SESSION_KEY } from "../../../../assets/js/auth/admin-auth.js";
+import { ENET_SESSION_KEY } from "../../../../../assets/js/auth/admin-auth.js";
 
 export function renderLoginStatus(el) {
   const email = sessionStorage.getItem(ENET_SESSION_KEY);

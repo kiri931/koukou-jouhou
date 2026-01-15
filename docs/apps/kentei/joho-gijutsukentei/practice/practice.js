@@ -1,16 +1,16 @@
 import { loadAllPracticeQuestions, groupBySection, shuffle } from "./practice-loader.js";
 import { renderQuestion, gradeQuestion, renderExplanation } from "./practice-engine.js";
+import { renderLoginStatus } from "../assets/js/app-shell.js";
 
 const el = {
   section: document.getElementById("section"),
-  order: document.getElementById("order"),
   start: document.getElementById("start"),
   status: document.getElementById("status"),
   progress: document.getElementById("progress"),
   resultBadge: document.getElementById("resultBadge"),
   prev: document.getElementById("prev"),
   next: document.getElementById("next"),
-  grade: document.getElementById("grade"),
+  resetAnswer: document.getElementById("resetAnswer"),
   showExplanation: document.getElementById("showExplanation"),
   question: document.getElementById("question"),
   explanation: document.getElementById("explanation"),
@@ -24,12 +24,36 @@ const state = {
   answers: {},
 };
 
+const QUESTION_COUNT = 10;
+const SECTION_ORDER = ["基本用語", "計算・論理回路", "フローチャート", "プログラミング"];
+
 function setBadge(text, variant) {
   el.resultBadge.style.display = "inline-flex";
   el.resultBadge.textContent = text;
   el.resultBadge.classList.remove("dg-badge--ok", "dg-badge--ng");
   if (variant === "ok") el.resultBadge.classList.add("dg-badge--ok");
   if (variant === "ng") el.resultBadge.classList.add("dg-badge--ng");
+}
+
+function setExplanationPressed(pressed) {
+  el.showExplanation.setAttribute("aria-pressed", pressed ? "true" : "false");
+  el.showExplanation.classList.toggle("dg-btn--primary", pressed);
+  el.showExplanation.classList.toggle("dg-btn--subtle", !pressed);
+}
+
+function showExplanation(q) {
+  el.explanation.innerHTML = "";
+  renderExplanation(el.explanation, q);
+  setExplanationPressed(true);
+}
+
+function applyGradeResult(g) {
+  if (!g) return;
+  if (g.ok === null) {
+    setBadge(g.message ?? "未採点", "");
+    return;
+  }
+  setBadge(g.ok ? "正解" : "不正解", g.ok ? "ok" : "ng");
 }
 
 function render() {
@@ -41,6 +65,7 @@ function render() {
 
   el.explanation.innerHTML = "";
   el.resultBadge.style.display = "none";
+  setExplanationPressed(false);
 
   el.progress.textContent = `${state.index + 1} / ${state.list.length}`;
   renderQuestion(el.question, q, state);
@@ -58,8 +83,12 @@ async function init() {
     state.all = await loadAllPracticeQuestions();
     state.bySection = groupBySection(state.all);
 
-    const sections = Array.from(state.bySection.keys()).sort();
-    el.section.innerHTML = sections.map((s) => `<option value="${s}">${s}</option>`).join("");
+    el.section.innerHTML = SECTION_ORDER
+      .map((s) => {
+        const count = (state.bySection.get(s) || []).length;
+        return `<option value="${s}">${s} (${count}問)</option>`;
+      })
+      .join("");
 
     el.status.textContent = `問題 ${state.all.length} 件`;
     el.status.classList.remove("dg-badge--danger");
@@ -74,30 +103,40 @@ async function init() {
 el.start.addEventListener("click", () => {
   const sec = el.section.value;
   const base = state.bySection.get(sec) || [];
-  state.list = el.order.value === "random" ? shuffle(base) : [...base];
+  state.list = shuffle(base).slice(0, Math.min(QUESTION_COUNT, base.length));
   state.index = 0;
+  state.answers = {};
   render();
 });
 
 el.prev.addEventListener("click", () => goto(state.index - 1));
 el.next.addEventListener("click", () => goto(state.index + 1));
 
-el.grade.addEventListener("click", () => {
+el.resetAnswer.addEventListener("click", () => {
   const q = state.list[state.index];
-  const ua = state.answers?.[q.id];
-  const g = gradeQuestion(q, ua);
-  
-  if (g.ok === null) {
-    setBadge(g.message, "");
-  } else {
-    setBadge(g.ok ? "正解" : "不正解", g.ok ? "ok" : "ng");
-  }
+  if (!q) return;
+  delete state.answers[q.id];
+  el.explanation.innerHTML = "";
+  el.resultBadge.style.display = "none";
+  setExplanationPressed(false);
+  render();
 });
 
 el.showExplanation.addEventListener("click", () => {
   const q = state.list[state.index];
-  el.explanation.innerHTML = "";
-  renderExplanation(el.explanation, q);
+  showExplanation(q);
+});
+
+// choiceは「選択した瞬間に自動採点」するため、レンダラからの通知を受け取る
+el.question.addEventListener("practice:graded", (e) => {
+  const q = state.list[state.index];
+  const g = e.detail;
+  applyGradeResult(g);
+
+  // 正解した時点で、解説ボタンを押した扱いにして解説を表示
+  if (g?.ok === true && q) {
+    showExplanation(q);
+  }
 });
 
 init();

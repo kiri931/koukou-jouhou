@@ -1,5 +1,5 @@
 // practice専用のデータローダー
-// mondai.json, mondai2.json, mondai3.json, mondai4.json を読み込んで統合
+// data/practice/mondai1.json, mondai2.json, mondai3.json, mondai4.json を読み込んで統合
 
 async function fetchJson(url) {
   const res = await fetch(url);
@@ -7,10 +7,10 @@ async function fetchJson(url) {
   return await res.json();
 }
 
-// mondai.json: 基本用語問題
+// mondai1.json: 基本用語問題
 async function loadMondai1() {
   try {
-    const data = await fetchJson("../mondai.json");
+    const data = await fetchJson("../data/practice/mondai1.json");
     return data.map((q) => ({
       id: `m1-${q.id}`,
       section: "基本用語",
@@ -21,42 +21,24 @@ async function loadMondai1() {
       source: { type: "mondai1", originalId: q.id },
     }));
   } catch (error) {
-    console.warn("mondai.json の読み込みに失敗しました:", error);
+    console.warn("mondai1.json の読み込みに失敗しました:", error);
     return [];
   }
 }
 
-// mondai2.json: 進数変換・論理回路
+// mondai2.json: 計算・論理回路
 async function loadMondai2() {
   try {
-    const data = await fetchJson("../mondai2.json");
-    return data.map((q) => {
-      // 問題文から分類を推定
-      let section = "進数変換・論理回路";
-      const qText = q.question.toLowerCase();
-      
-      if (qText.includes("論理") || qText.includes("回路") || qText.includes("真理値")) {
-        section = "論理回路";
-      } else if (qText.includes("2進数") || qText.includes("10進数") || qText.includes("16進数")) {
-        section = "進数変換";
-      } else if (qText.includes("ビット") || qText.includes("バイト")) {
-        section = "情報の単位";
-      } else if (qText.includes("加算") || qText.includes("減算") || qText.includes("乗算") || qText.includes("除算")) {
-        section = "2進数演算";
-      } else if (qText.includes("補数")) {
-        section = "補数表現";
-      }
-
-      return {
-        id: `m2-${q.id}`,
-        section,
-        format: "choice",
-        stem: q.question,
-        choices: q.options,
-        answer: q.answer,
-        source: { type: "mondai2", originalId: q.id },
-      };
-    });
+    const data = await fetchJson("../data/practice/mondai2.json");
+    return data.map((q) => ({
+      id: `m2-${q.id}`,
+      section: "計算・論理回路",
+      format: "choice",
+      stem: q.question,
+      choices: q.options,
+      answer: q.answer,
+      source: { type: "mondai2", originalId: q.id },
+    }));
   } catch (error) {
     console.warn("mondai2.json の読み込みに失敗しました:", error);
     return [];
@@ -66,10 +48,10 @@ async function loadMondai2() {
 // mondai3.json: フローチャート問題
 async function loadMondai3() {
   try {
-    const data = await fetchJson("../mondai3.json");
+    const data = await fetchJson("../data/practice/mondai3.json");
     return data.map((q) => ({
       id: `m3-${q.id}`,
-      section: `フローチャート (${q.category})`,
+      section: "フローチャート",
       format: "flowchart",
       title: q.title,
       stem: q.description,
@@ -88,7 +70,7 @@ async function loadMondai3() {
 // mondai4.json: プログラミング問題
 async function loadMondai4() {
   try {
-    const data = await fetchJson("../mondai4.json");
+    const data = await fetchJson("../data/practice/mondai4.json");
     return data.map((q) => ({
       id: `m4-${q.id}`,
       section: "プログラミング",

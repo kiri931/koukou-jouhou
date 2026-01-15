@@ -4,7 +4,7 @@
   <script src="../../../../js/analytics.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>分野別演習 | 情技検3級</title>
+  <title>分野別演習 | 情報技術検定3級</title>
   <link rel="stylesheet" href="../../../../assets/css/digital.css" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
@@ -15,7 +15,7 @@
   <header class="dg-header">
     <div class="dg-container dg-header__inner">
       <a class="dg-brand" href="../">
-        <span class="dg-brand__title">情技検 3級</span>
+        <span class="dg-brand__title">情報技術検定 3級</span>
         <span class="dg-brand__badge">practice</span>
       </a>
       <nav class="dg-nav">
@@ -30,22 +30,15 @@
   <main class="dg-main">
     <div class="dg-container">
       <h1 class="dg-page-title">分野別演習</h1>
-      <p class="dg-lead">カテゴリを選んで1問ずつ解きます（認証不要）。基本用語、進数変換、論理回路、フローチャート、プログラミングなど全4種類のデータに対応。</p>
+      <p class="dg-lead">分野を選んで開始すると、その分野から <strong>約10問</strong> をランダムにピックアップして出題します（認証不要）。</p>
 
       <div class="dg-stack">
         <section class="dg-card">
           <div class="dg-card__body">
             <div class="dg-grid">
               <div class="dg-field">
-                <label class="dg-label" for="section">カテゴリ</label>
+                <label class="dg-label" for="section">分野</label>
                 <select class="dg-select" id="section"></select>
-              </div>
-              <div class="dg-field">
-                <label class="dg-label" for="order">出題順</label>
-                <select class="dg-select" id="order">
-                  <option value="random">ランダム</option>
-                  <option value="sequential">順番</option>
-                </select>
               </div>
             </div>
             <div class="dg-row" style="margin-top:16px">
@@ -60,7 +53,6 @@
             <div class="dg-row" style="justify-content:space-between">
               <div class="dg-row">
                 <span id="progress" class="dg-badge">-</span>
-                <span id="resultBadge" class="dg-badge" style="display:none"></span>
               </div>
               <div class="dg-row">
                 <button id="prev" class="dg-btn dg-btn--subtle" type="button">前へ</button>
@@ -70,8 +62,9 @@
             <div id="question" class="dg-stack" style="margin-top:16px"></div>
 
             <div class="dg-row" style="margin-top:16px">
-              <button id="grade" class="dg-btn" type="button">採点</button>
-              <button id="showExplanation" class="dg-btn dg-btn--subtle" type="button">解説を見る</button>
+              <button id="resetAnswer" class="dg-btn dg-btn--subtle" type="button">回答欄をリセット</button>
+              <button id="showExplanation" class="dg-btn dg-btn--subtle" type="button" aria-pressed="false">解説を見る</button>
+              <span id="resultBadge" class="dg-badge" style="display:none"></span>
             </div>
             <div id="explanation" style="margin-top:16px"></div>
           </div>
@@ -82,7 +75,7 @@
 
   <footer class="dg-footer">
     <div class="dg-container dg-footer__inner">
-      <div class="dg-footer__meta">分野別演習（情技検3級）- 全430問以上</div>
+      <div class="dg-footer__meta">分野別演習（情報技術検定3級）</div>
       <div class="dg-footer__meta">最終更新: 2026-01-15</div>
     </div>
   </footer>
