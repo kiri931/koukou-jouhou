@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>シューティング制作：事前学習ガイド</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../../assets/css/digital.css">
+</head>
+
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="../">
+        <span class="dg-brand__title">シューティング制作</span>
+        <span class="dg-brand__badge">print</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="../">トップ</a>
+        <a href="../learning/">learning</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <h1 class="dg-page-title">事前学習ガイド</h1>
+      <p class="dg-lead">作り始める前に、実行方法と基本ルールを確認します。</p>
+
+      <div class="dg-card">
+        <div class="dg-card__body dg-prose">
+          <div class="dg-row">
+            <a class="dg-btn" href="../learning/">learning を開く</a>
+            <a class="dg-btn dg-btn--subtle" href="../learning/playground.html?step=step1">Step1 を開く</a>
+          </div>
+
+          <div class="dg-note" style="margin-top: var(--dg-space-5);">
+            実際のゲーム制作は <code>learning/</code> を使って進めます。ここは「作り始める前の最低限の準備」をまとめたページです。
+          </div>
+
+          <h2>このページの使い方</h2>
+          <ol>
+            <li>まずは「JavaScriptの実行」を読み、Consoleに出力できる状態にする</li>
+            <li>例をそのまま打って動くことを確認する（コピペでもOK）</li>
+            <li>慣れてきたら、数値や文字を自分で変えて結果がどう変わるか確かめる</li>
+            <li>最後に「モジュール（export/import）」を読み、ファイル分割の考え方を覚える</li>
+          </ol>
+
+          <h2>準備するもの</h2>
+          <ul>
+            <li>ブラウザ（Chrome / Edge 推奨）</li>
+            <li>テキストエディタ（VS Code 推奨）</li>
+          </ul>
+
+          <h2>よく使う操作（ブラウザ）</h2>
+          <ul>
+            <li>開発者ツールを開く：<code>F12</code>（ノートPCだと <code>Fn + F12</code> の場合あり）</li>
+            <li>Consoleを表示：開発者ツール内の「Console」タブ</li>
+            <li>画面を更新：<code>F5</code> / <code>Ctrl + R</code></li>
+          </ul>
+
+          <h2>つまずきやすいポイント</h2>
+          <ul>
+            <li>エラーが出たら、赤い表示の先頭行（例：<code>Uncaught ...</code>）を読む</li>
+            <li>全角記号（” “ や ＝ など）が混ざると動かないことがある（半角にする）</li>
+            <li>ファイルを分ける場合、HTML側の <code>&lt;script type=&quot;module&quot;&gt;</code> が必要</li>
+          </ul>
+
+          <h2>JavaScriptの実行</h2>
+          <p>
+            JavaScriptを実行するためには、ブラウザを立ち上げて、
+            「F12」キーで開発者画面を表示した後、「Console」画面を表示する。
+          </p>
+
+          <h2>JavaScriptにおけるC言語と同じルール</h2>
+          <h3>文字列と変数</h3>
+          <p>文字列は <code>&quot;</code>（ダブルクォーテーション）で挟む。変数は、変数名をそのまま書く</p>
+          <pre><code>文字列の例
+console.log("Hello World!");
+
+変数名の例（""で囲まない）
+hensu = 10;
+</code></pre>
+
+          <h2>JavaScript独自のルール</h2>
+          <h3>変数の宣言方法</h3>
+          <ul>
+            <li><code>let</code>（レット）：変数を宣言する際につける</li>
+            <li><code>const</code>（コンスト）：定数を宣言する際につける</li>
+            <li><code>var</code>（バー）：現在はあまり使われないが宣言に使える</li>
+          </ul>
+          <pre><code>let a = 5;
+const b = 10;
+</code></pre>
+
+          <h2>ゲームを作る前に</h2>
+          <p>
+            HTMLは文字や枠を表示する。
+            CSSは見た目を変える。
+            JavaScriptは動きをつける。
+          </p>
+
+          <h2>プログラムを分割しよう</h2>
+          <p>大きなプログラムは、見づらくなる。そこで「モジュール」を使って分けます。</p>
+
+          <h3>モジュールとは</h3>
+          <p>
+            モジュールは、JavaScriptのファイルごとのまとまりです。
+            機能ごとに分けると、見やすく、直しやすくなります。
+          </p>
+
+          <h3>export（外に出す）</h3>
+          <p>プログラムを自分以外のファイルから読み取れるようにする</p>
+
+          <h3>import（取り込む）</h3>
+          <p>他のファイルからプログラムを読み取る</p>
+
+          <h2>次にやること</h2>
+          <ul>
+            <li>変数・条件分岐（if）・繰り返し（for）を使って簡単な処理を書いてみる</li>
+            <li>ゲーム制作では「表示」「入力」「当たり判定」「更新（ループ）」を分けて考える</li>
+            <li>次は <code>learning/</code> に進んで Step1 から作り始める</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
