@@ -657,7 +657,11 @@ function setupCodeMirrorEditors({ htmlText, cssText, jsText }) {
       jsText.addEventListener("input", handler);
     };
     const refresh = () => {};
-    return { kind: "textarea", getValues, getValue, setValues, setValue, onChange, refresh };
+    const clearGutter = () => {};
+    const setGutterMarker = () => {};
+    const addLineClass = () => {};
+    const removeLineClass = () => {};
+    return { kind: "textarea", getValues, getValue, setValues, setValue, onChange, refresh, clearGutter, setGutterMarker, addLineClass, removeLineClass };
   }
 
   const initialPref = readCodeMirrorThemePref();
@@ -670,6 +674,7 @@ function setupCodeMirrorEditors({ htmlText, cssText, jsText }) {
     indentWithTabs: false,
     lineWrapping: true,
     viewportMargin: Infinity,
+    gutters: ["CodeMirror-linenumbers", "error-gutter"],
   };
 
   const htmlCm = window.CodeMirror.fromTextArea(htmlText, {
@@ -733,9 +738,50 @@ function setupCodeMirrorEditors({ htmlText, cssText, jsText }) {
     }
   };
 
+  const clearGutter = (which, gutterName = "error-gutter") => {
+    const cm = which === "html" ? htmlCm : which === "css" ? cssCm : which === "js" ? jsCm : null;
+    if (!cm) return;
+    cm.clearGutter(gutterName);
+  };
+
+  const setGutterMarker = (which, line, gutterName, element) => {
+    const cm = which === "html" ? htmlCm : which === "css" ? cssCm : which === "js" ? jsCm : null;
+    if (!cm) return;
+    cm.setGutterMarker(line, gutterName, element);
+  };
+
+  const addLineClass = (which, line, where, className) => {
+    const cm = which === "html" ? htmlCm : which === "css" ? cssCm : which === "js" ? jsCm : null;
+    if (!cm) return;
+    cm.addLineClass(line, where, className);
+  };
+
+  const removeLineClass = (which, line, where, className) => {
+    const cm = which === "html" ? htmlCm : which === "css" ? cssCm : which === "js" ? jsCm : null;
+    if (!cm) return;
+    try {
+      cm.removeLineClass(line, where, className);
+    } catch {
+      // ignore if line doesn't exist
+    }
+  };
+
   // initial refresh
   refresh();
-  return { kind: "codemirror", getValues, getValue, setValues, setValue, onChange, refresh, setThemeName };
+  return { 
+    kind: "codemirror", 
+    getValues, 
+    getValue, 
+    setValues, 
+    setValue, 
+    onChange, 
+    refresh, 
+    setThemeName,
+    clearGutter,
+    setGutterMarker,
+    addLineClass,
+    removeLineClass,
+  };
 }
 
 function setupSampleViewers({ sampleHtmlEl, sampleCssEl, sampleJsEl, themeName }) {
@@ -904,6 +950,377 @@ function enableAutoGrowTextarea(textarea) {
   window.addEventListener("resize", resize);
   resize();
   return resize;
+}
+
+// ===== エラーチェック機能 =====
+
+function checkJavaScriptSyntax(code, fileName = "main.js") {
+  const errors = [];
+  const warnings = [];
+
+  if (!code || code.trim() === "") {
+    return { errors, warnings };
+  }
+
+  try {
+    // new Function()で構文チェック（より寛容）
+    new Function(code);
+  } catch (e) {
+    const message = String(e.message || e);
+    let line = null;
+    
+    // 行番号の抽出を試みる
+    const lineMatch = message.match(/line (\d+)/i);
+    if (lineMatch) {
+      line = parseInt(lineMatch[1]) - 1; // 0-indexed
+    }
+
+    // エラーメッセージを日本語化
+    let jpMessage = message;
+    if (message.includes("Unexpected token")) {
+      jpMessage = "予期しないトークンがあります。括弧やカンマ、セミコロンの位置を確認してください。";
+    } else if (message.includes("Unexpected identifier")) {
+      jpMessage = "予期しない識別子があります。変数名や関数名の前後に不要な文字がないか確認してください。";
+    } else if (message.includes("Unexpected end of input")) {
+      jpMessage = "コードが途中で終わっています。閉じ括弧 } や閉じカッコ ) が不足している可能性があります。";
+    } else if (message.includes("Missing )") || message.includes("missing )")) {
+      jpMessage = "閉じカッコ ) が不足しています。";
+    } else if (message.includes("Unexpected string")) {
+      jpMessage = "予期しない文字列があります。引用符の閉じ忘れや、文字列の前に不要な文字がないか確認してください。";
+    } else if (message.includes("Invalid or unexpected token")) {
+      jpMessage = "無効または予期しないトークンがあります。全角スペースや特殊文字が混入していないか確認してください。";
+    } else if (message.includes("Illegal return statement")) {
+      jpMessage = "return文が関数の外で使用されています。return文は関数の中でのみ使用できます。";
+    } else if (message.includes("Duplicate parameter")) {
+      jpMessage = "パラメータ名が重複しています。同じ名前の引数を複数回使用することはできません。";
+    } else if (message.includes("Unexpected number")) {
+      jpMessage = "予期しない数値があります。変数名が数字で始まっていないか確認してください。";
+    } else if (message.includes("redeclaration")) {
+      jpMessage = "変数が再宣言されています。同じ変数名を let や const で複数回宣言することはできません。";
+    }
+
+    errors.push({
+      type: "error",
+      file: fileName,
+      line,
+      message: jpMessage,
+      original: message,
+    });
+  }
+
+  // よくある警告をチェック
+  const lines = code.split("\n");
+  lines.forEach((line, idx) => {
+    // 全角スペースの警告
+    if (/　/.test(line)) {
+      warnings.push({
+        type: "warning",
+        file: fileName,
+        line: idx,
+        message: "全角スペースが含まれています。半角スペースに置き換えてください。",
+      });
+    }
+  });
+
+  return { errors, warnings };
+}
+
+function checkHTMLSyntax(code) {
+  const errors = [];
+  const warnings = [];
+
+  if (!code || code.trim() === "") {
+    return { errors, warnings };
+  }
+
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(code, "text/html");
+    
+    // パースエラーのチェック
+    const parserError = doc.querySelector("parsererror");
+    if (parserError) {
+      const errorText = parserError.textContent || "";
+      errors.push({
+        type: "error",
+        file: "index.html",
+        line: null,
+        message: "HTML構文エラー: " + errorText,
+        original: errorText,
+      });
+    }
+  } catch (e) {
+    errors.push({
+      type: "error",
+      file: "index.html",
+      line: null,
+      message: "HTMLのパースに失敗しました: " + String(e.message || e),
+      original: String(e),
+    });
+  }
+
+  // 簡易チェック: タグの対応
+  const openTags = code.match(/<([a-z][a-z0-9]*)\b[^>]*>/gi) || [];
+  const closeTags = code.match(/<\/([a-z][a-z0-9]*)\s*>/gi) || [];
+  
+  const openTagNames = openTags
+    .filter(tag => !/\/>$/.test(tag)) // 自己閉じタグを除外
+    .filter(tag => !/<(br|hr|img|input|meta|link|area|base|col|embed|source|track|wbr)\b/i.test(tag)) // void要素を除外
+    .map(tag => {
+      const m = tag.match(/<([a-z][a-z0-9]*)/i);
+      return m ? m[1].toLowerCase() : null;
+    })
+    .filter(Boolean);
+
+  const closeTagNames = closeTags.map(tag => {
+    const m = tag.match(/<\/([a-z][a-z0-9]*)/i);
+    return m ? m[1].toLowerCase() : null;
+  }).filter(Boolean);
+
+  const openCount = {};
+  const closeCount = {};
+  
+  openTagNames.forEach(tag => {
+    openCount[tag] = (openCount[tag] || 0) + 1;
+  });
+  
+  closeTagNames.forEach(tag => {
+    closeCount[tag] = (closeCount[tag] || 0) + 1;
+  });
+
+  // タグの不一致をチェック
+  const allTags = new Set([...Object.keys(openCount), ...Object.keys(closeCount)]);
+  allTags.forEach(tag => {
+    const open = openCount[tag] || 0;
+    const close = closeCount[tag] || 0;
+    if (open > close) {
+      warnings.push({
+        type: "warning",
+        file: "index.html",
+        line: null,
+        message: `<${tag}> タグの閉じタグが ${open - close} 個不足している可能性があります。`,
+      });
+    } else if (close > open) {
+      warnings.push({
+        type: "warning",
+        file: "index.html",
+        line: null,
+        message: `<${tag}> タグの閉じタグが ${close - open} 個多い可能性があります。`,
+      });
+    }
+  });
+
+  return { errors, warnings };
+}
+
+function checkCSSSyntax(code) {
+  const errors = [];
+  const warnings = [];
+
+  if (!code || code.trim() === "") {
+    return { errors, warnings };
+  }
+
+  const lines = code.split("\n");
+
+  // 簡易的な括弧の対応チェック
+  let braceCount = 0;
+  lines.forEach((line, idx) => {
+    const openBraces = (line.match(/\{/g) || []).length;
+    const closeBraces = (line.match(/\}/g) || []).length;
+    braceCount += openBraces - closeBraces;
+
+    if (braceCount < 0) {
+      errors.push({
+        type: "error",
+        file: "style.css",
+        line: idx,
+        message: "閉じ括弧 } が多すぎます。対応する開き括弧 { がありません。",
+      });
+      braceCount = 0; // リセット
+    }
+  });
+
+  if (braceCount > 0) {
+    errors.push({
+      type: "error",
+      file: "style.css",
+      line: lines.length - 1,
+      message: `閉じ括弧 } が ${braceCount} 個不足しています。`,
+    });
+  }
+
+  // セミコロンの欠落チェック（簡易的）
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+    // プロパティっぽい行でセミコロンがない場合
+    if (trimmed && 
+        /^[a-z\-]+\s*:\s*.+[^;}]$/i.test(trimmed) && 
+        !trimmed.endsWith('{') && 
+        !trimmed.endsWith('}')) {
+      warnings.push({
+        type: "warning",
+        file: "style.css",
+        line: idx,
+        message: "セミコロン ; が不足している可能性があります。",
+      });
+    }
+  });
+
+  return { errors, warnings };
+}
+
+function setupErrorPanel({ editors }) {
+  const errorPanel = document.getElementById("errorPanel");
+  const errorList = document.getElementById("errorList");
+  const errorCloseBtn = document.getElementById("errorCloseBtn");
+
+  if (!errorPanel || !errorList || !errorCloseBtn) return { checkAll: () => {} };
+
+  let currentErrors = [];
+
+  const clearAllMarkers = () => {
+    if (!editors) return;
+    ["html", "css", "js"].forEach(which => {
+      if (typeof editors.clearGutter === "function") {
+        editors.clearGutter(which);
+      }
+      // 行背景もクリア
+      const values = editors.getValues();
+      const code = values[which] || "";
+      const lineCount = code.split("\n").length;
+      for (let i = 0; i < lineCount; i++) {
+        if (typeof editors.removeLineClass === "function") {
+          editors.removeLineClass(which, i, "background", "error-line");
+        }
+      }
+    });
+  };
+
+  const showErrors = (allErrors) => {
+    clearAllMarkers();
+    currentErrors = allErrors;
+
+    if (allErrors.length === 0) {
+      errorPanel.hidden = true;
+      return;
+    }
+
+    errorPanel.hidden = false;
+    errorList.innerHTML = "";
+
+    allErrors.forEach((err) => {
+      const item = document.createElement("div");
+      item.className = "errorItem";
+
+      const icon = document.createElement("div");
+      icon.className = `errorIcon ${err.type}`;
+      icon.textContent = err.type === "error" ? "✕" : "⚠";
+
+      const content = document.createElement("div");
+      content.className = "errorContent";
+
+      const location = document.createElement("div");
+      location.className = "errorLocation";
+      const lineText = err.line !== null ? ` (${err.line + 1}行目)` : "";
+      location.textContent = `${err.file}${lineText}`;
+
+      const message = document.createElement("div");
+      message.className = "errorMessage";
+      message.textContent = err.message;
+
+      content.appendChild(location);
+      content.appendChild(message);
+      item.appendChild(icon);
+      item.appendChild(content);
+
+      // クリックでその行にジャンプ（CodeMirrorの場合のみ）
+      if (err.line !== null && editors && editors.kind === "codemirror") {
+        item.style.cursor = "pointer";
+        item.addEventListener("click", () => {
+          const which = err.file.includes(".html") ? "html" : 
+                        err.file.includes(".css") ? "css" : "js";
+          // タブを切り替える
+          const myTabBtns = document.querySelectorAll(".myTabs .tab[data-my-tab]");
+          myTabBtns.forEach(btn => {
+            if (btn.dataset.myTab === which) {
+              btn.click();
+            }
+          });
+        });
+      }
+
+      errorList.appendChild(item);
+
+      // エラー行にマーカーを表示
+      if (err.line !== null && editors) {
+        const which = err.file.includes(".html") ? "html" : 
+                      err.file.includes(".css") ? "css" : "js";
+        
+        if (typeof editors.setGutterMarker === "function") {
+          const marker = document.createElement("div");
+          marker.className = "error-marker";
+          marker.textContent = "●";
+          marker.title = err.message;
+          editors.setGutterMarker(which, err.line, "error-gutter", marker);
+        }
+
+        // 行の背景色を変える
+        if (typeof editors.addLineClass === "function") {
+          editors.addLineClass(which, err.line, "background", "error-line");
+        }
+      }
+    });
+  };
+
+  errorCloseBtn.addEventListener("click", () => {
+    errorPanel.hidden = true;
+    clearAllMarkers();
+  });
+
+  const checkAll = () => {
+    if (!editors) return;
+
+    const values = editors.getValues();
+    const allErrors = [];
+
+    // JavaScript チェック
+    if (values.js) {
+      const jsResult = checkJavaScriptSyntax(values.js, "main.js");
+      allErrors.push(...jsResult.errors.map(e => ({ ...e, which: "js" })));
+      allErrors.push(...jsResult.warnings.map(w => ({ ...w, which: "js" })));
+    }
+
+    // HTML チェック
+    if (values.html) {
+      const htmlResult = checkHTMLSyntax(values.html);
+      allErrors.push(...htmlResult.errors.map(e => ({ ...e, which: "html" })));
+      allErrors.push(...htmlResult.warnings.map(w => ({ ...w, which: "html" })));
+    }
+
+    // CSS チェック
+    if (values.css) {
+      const cssResult = checkCSSSyntax(values.css);
+      allErrors.push(...cssResult.errors.map(e => ({ ...e, which: "css" })));
+      allErrors.push(...cssResult.warnings.map(w => ({ ...w, which: "css" })));
+    }
+
+    showErrors(allErrors);
+    return allErrors;
+  };
+
+  // エディタの変更時に自動チェック（デバウンス付き）
+  let checkTimer = null;
+  if (editors && typeof editors.onChange === "function") {
+    editors.onChange(() => {
+      clearTimeout(checkTimer);
+      checkTimer = setTimeout(() => {
+        checkAll();
+      }, 1000); // 1秒後にチェック
+    });
+  }
+
+  return { checkAll, showErrors, clearAllMarkers };
 }
 
 async function setupGuide(step) {
@@ -1848,6 +2265,28 @@ async function main() {
       getUserJsCombined: () => (jsManifestList && jsManifestList.length > 0 ? getCombinedJsFromFiles() : wrappedEditors.getValue("js")),
       sample: stepSample,
     });
+
+    // エラーチェック機能を初期化
+    const errorChecker = setupErrorPanel({ editors });
+    
+    // 実行ボタンでもエラーチェック
+    const runBtn = document.getElementById("runBtn");
+    const originalRunHandler = runBtn ? () => {
+      syncToTextareas();
+    } : null;
+
+    if (runBtn && originalRunHandler) {
+      // 既存のリスナーをクリアして、エラーチェック付きで再登録
+      const newRunBtn = runBtn.cloneNode(true);
+      runBtn.parentNode.replaceChild(newRunBtn, runBtn);
+      
+      newRunBtn.addEventListener("click", () => {
+        // まずエラーチェック
+        const errors = errorChecker.checkAll();
+        // エラーがあっても実行は可能（警告として表示）
+        syncToTextareas();
+      });
+    }
   } catch (e) {
     setStatus(
       "読み込みに失敗しました。Live Server等で開いているか確認してください。\n" +
@@ -1866,13 +2305,6 @@ async function main() {
     cssText.value = v.css;
     jsText.value = v.js;
   };
-
-  const runBtn = document.getElementById("runBtn");
-  if (runBtn) {
-    runBtn.addEventListener("click", () => {
-      syncToTextareas();
-    });
-  }
 
   // 初回実行も同期してから
   syncToTextareas();

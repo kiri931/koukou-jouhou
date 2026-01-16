@@ -151,6 +151,15 @@
           <div id="jsFiles" class="tabs jsFiles" role="tablist" aria-label="JavaScriptファイル" hidden></div>
           <textarea id="jsText" spellcheck="false"></textarea>
         </div>
+
+        <!-- エラーパネル -->
+        <div id="errorPanel" class="errorPanel" hidden>
+          <div class="errorHeader">
+            <span class="errorTitle">⚠️ エラー・警告</span>
+            <button id="errorCloseBtn" class="errorCloseBtn" type="button" aria-label="閉じる">×</button>
+          </div>
+          <div id="errorList" class="errorList"></div>
+        </div>
       </div>
     </section>
   </main>
