@@ -117,6 +117,13 @@
             <button id="runBtn" class="btn btnRun" type="button">実行</button>
 
             <div class="controlGroup">
+              <label class="themeLabel" for="editorHeight">高さ</label>
+              <input id="editorHeight" class="textInput editorHeightInput" type="number" min="200" max="2000" step="50" value="220" aria-label="エディタの高さ" />
+            </div>
+
+            <button id="formatBtn" class="btn" type="button" title="Ctrl+F">整形</button>
+
+            <div class="controlGroup">
               <label class="themeLabel" for="themeSelect">表示</label>
               <select id="themeSelect" class="select" aria-label="テーマ">
                 <option value="auto">自動</option>
@@ -150,6 +157,15 @@
         <div class="myPane" data-my-pane="js" hidden>
           <div id="jsFiles" class="tabs jsFiles" role="tablist" aria-label="JavaScriptファイル" hidden></div>
           <textarea id="jsText" spellcheck="false"></textarea>
+        </div>
+
+        <!-- エラーパネル -->
+        <div id="errorPanel" class="errorPanel" hidden>
+          <div class="errorHeader">
+            <span class="errorTitle">⚠️ エラー・警告</span>
+            <button id="errorCloseBtn" class="errorCloseBtn" type="button" aria-label="閉じる">×</button>
+          </div>
+          <div id="errorList" class="errorList"></div>
         </div>
       </div>
     </section>
