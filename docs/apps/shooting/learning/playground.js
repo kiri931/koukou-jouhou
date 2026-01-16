@@ -766,6 +766,20 @@ function setupCodeMirrorEditors({ htmlText, cssText, jsText }) {
     }
   };
 
+  const setHeight = (height) => {
+    const h = `${height}px`;
+    htmlCm.setSize(null, h);
+    cssCm.setSize(null, h);
+    jsCm.setSize(null, h);
+  };
+
+  const getActiveEditor = () => {
+    const activePane = document.querySelector(".myPane:not([hidden])");
+    if (!activePane) return null;
+    const which = activePane.dataset.myPane;
+    return which === "html" ? htmlCm : which === "css" ? cssCm : which === "js" ? jsCm : null;
+  };
+
   // initial refresh
   refresh();
   return { 
@@ -781,6 +795,11 @@ function setupCodeMirrorEditors({ htmlText, cssText, jsText }) {
     setGutterMarker,
     addLineClass,
     removeLineClass,
+    setHeight,
+    getActiveEditor,
+    htmlCm,
+    cssCm,
+    jsCm,
   };
 }
 
@@ -950,6 +969,218 @@ function enableAutoGrowTextarea(textarea) {
   window.addEventListener("resize", resize);
   resize();
   return resize;
+}
+
+// ===== フォーマット機能 =====
+
+function formatJavaScript(code) {
+  // 簡易的なJavaScriptフォーマッター
+  const lines = code.split('\n');
+  let formatted = [];
+  let indentLevel = 0;
+  const indent = '  '; // 2スペース
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    
+    // 閉じ括弧で始まる行は、インデントを減らしてから追加
+    if (trimmed.startsWith('}') || trimmed.startsWith(']') || trimmed.startsWith(')')) {
+      indentLevel = Math.max(0, indentLevel - 1);
+    }
+
+    // 行を追加
+    if (trimmed) {
+      formatted.push(indent.repeat(indentLevel) + trimmed);
+    } else {
+      formatted.push('');
+    }
+
+    // 開き括弧で終わる行は、次の行のインデントを増やす
+    if (trimmed.endsWith('{') || trimmed.endsWith('[') || trimmed.endsWith('(')) {
+      indentLevel++;
+    }
+
+    // 閉じ括弧で終わる（かつ始まらない）行は、インデントを減らす
+    if ((trimmed.endsWith('}') || trimmed.endsWith(']') || trimmed.endsWith(')')) && 
+        !(trimmed.startsWith('}') || trimmed.startsWith(']') || trimmed.startsWith(')'))) {
+      indentLevel = Math.max(0, indentLevel - 1);
+    }
+  }
+
+  return formatted.join('\n');
+}
+
+function formatHTML(code) {
+  // 簡易的なHTMLフォーマッター
+  const lines = code.split('\n');
+  let formatted = [];
+  let indentLevel = 0;
+  const indent = '  '; // 2スペース
+  const voidElements = ['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr'];
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    
+    // 閉じタグで始まる行は、インデントを減らしてから追加
+    if (/^<\//.test(trimmed)) {
+      indentLevel = Math.max(0, indentLevel - 1);
+    }
+
+    // 行を追加
+    if (trimmed) {
+      formatted.push(indent.repeat(indentLevel) + trimmed);
+    } else {
+      formatted.push('');
+    }
+
+    // 開きタグで始まり、同じ行に閉じタグがない場合、インデントを増やす
+    const openTagMatch = trimmed.match(/^<([a-z][a-z0-9]*)\b[^>]*>/i);
+    if (openTagMatch && !trimmed.includes('</' + openTagMatch[1])) {
+      const tagName = openTagMatch[1].toLowerCase();
+      // 自己閉じタグまたはvoid要素でない場合のみインデントを増やす
+      if (!/\/>$/.test(trimmed) && !voidElements.includes(tagName)) {
+        indentLevel++;
+      }
+    }
+
+    // 閉じタグで終わる行は、次の行のインデントを減らす
+    if (/<\/[a-z][a-z0-9]*>\s*$/i.test(trimmed) && !/^<\//.test(trimmed)) {
+      indentLevel = Math.max(0, indentLevel - 1);
+    }
+  }
+
+  return formatted.join('\n');
+}
+
+function formatCSS(code) {
+  // 簡易的なCSSフォーマッター
+  const lines = code.split('\n');
+  let formatted = [];
+  let indentLevel = 0;
+  const indent = '  '; // 2スペース
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    
+    // 閉じ括弧で始まる行は、インデントを減らしてから追加
+    if (trimmed.startsWith('}')) {
+      indentLevel = Math.max(0, indentLevel - 1);
+    }
+
+    // 行を追加
+    if (trimmed) {
+      formatted.push(indent.repeat(indentLevel) + trimmed);
+    } else {
+      formatted.push('');
+    }
+
+    // 開き括弧で終わる行は、次の行のインデントを増やす
+    if (trimmed.endsWith('{')) {
+      indentLevel++;
+    }
+  }
+
+  return formatted.join('\n');
+}
+
+function setupEditorFormatter({ editors }) {
+  if (!editors) return;
+
+  const formatBtn = document.getElementById('formatBtn');
+
+  const doFormat = () => {
+    // 現在アクティブなタブを取得
+    const activePane = document.querySelector('.myPane:not([hidden])');
+    if (!activePane) return;
+
+    const which = activePane.dataset.myPane;
+    const code = editors.getValue(which);
+    
+    let formatted;
+    if (which === 'js') {
+      formatted = formatJavaScript(code);
+    } else if (which === 'html') {
+      formatted = formatHTML(code);
+    } else if (which === 'css') {
+      formatted = formatCSS(code);
+    } else {
+      return;
+    }
+
+    editors.setValue(which, formatted);
+  };
+
+  // ボタンクリックでフォーマット
+  if (formatBtn) {
+    formatBtn.addEventListener('click', doFormat);
+  }
+
+  // Ctrl+F でフォーマット（グローバルキーボードショートカット）
+  document.addEventListener('keydown', (e) => {
+    // Ctrl+F (Windows/Linux) または Cmd+F (Mac)
+    if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+      e.preventDefault(); // ブラウザのデフォルト検索を無効化
+      doFormat();
+    }
+  });
+
+  return { doFormat };
+}
+
+function setupEditorHeight({ editors }) {
+  if (!editors || editors.kind !== 'codemirror') return;
+
+  const heightInput = document.getElementById('editorHeight');
+  if (!heightInput) return;
+
+  const STORAGE_KEY = 'shooting:learning:playground:editorHeight:v1';
+
+  // 保存された高さを読み込み
+  const loadHeight = () => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? parseInt(saved) : 220;
+    } catch {
+      return 220;
+    }
+  };
+
+  // 高さを保存
+  const saveHeight = (height) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, String(height));
+    } catch {
+      // ignore
+    }
+  };
+
+  // 高さを適用
+  const applyHeight = (height) => {
+    const h = Math.max(200, Math.min(2000, height)); // 200-2000の範囲に制限
+    if (typeof editors.setHeight === 'function') {
+      editors.setHeight(h);
+    }
+    heightInput.value = h;
+    saveHeight(h);
+  };
+
+  // 初期値を設定
+  const initialHeight = loadHeight();
+  applyHeight(initialHeight);
+
+  // 入力イベント
+  heightInput.addEventListener('change', () => {
+    const h = parseInt(heightInput.value) || 220;
+    applyHeight(h);
+  });
+
+  // Enterキーでも適用
+  heightInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const h = parseInt(heightInput.value) || 220;
+      applyHeight(h);
+    }
+  });
 }
 
 // ===== エラーチェック機能 =====
@@ -2268,6 +2499,12 @@ async function main() {
 
     // エラーチェック機能を初期化
     const errorChecker = setupErrorPanel({ editors });
+    
+    // エディタの高さ調整機能を初期化
+    setupEditorHeight({ editors });
+    
+    // フォーマット機能を初期化
+    setupEditorFormatter({ editors });
     
     // 実行ボタンでもエラーチェック
     const runBtn = document.getElementById("runBtn");

@@ -663,6 +663,11 @@ textarea {
   border-radius: 12px;
 }
 
+.editorHeightInput {
+  width: 70px;
+  text-align: center;
+}
+
 .myPane textarea.autoGrow {
   resize: none;
   overflow: hidden;
