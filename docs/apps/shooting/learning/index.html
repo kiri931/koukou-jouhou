@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning: シューティングを小さく作る</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-row">
+      <div>
+        <h1>シューティングゲームを作ろう</h1>
+        <p class="sub">
+          左にサンプル、右に自分のコードを置いて学習できます。
+        </p>
+      </div>
+      <div class="header-actions">
+        <label class="themeLabel" for="themeSelect">表示</label>
+        <select id="themeSelect" class="select" aria-label="テーマ">
+          <option value="auto">自動</option>
+          <option value="light">ライト</option>
+          <option value="dark">ダーク</option>
+        </select>
+      </div>
+    </div>
+    <p>
+      <a class="btnLink" href="viewer.html">提出ビューワー</a>
+    </p>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>ステップ一覧</h2>
+      <ol class="steps">
+        <li><a href="playground.html?step=step1">Step1: Canvasを表示する</a></li>
+        <li><a href="playground.html?step=step2">Step2: 自機（四角）を表示する</a></li>
+        <li><a href="playground.html?step=step3">Step3: 自機を左右に動かす</a></li>
+        <li><a href="playground.html?step=step4">Step4: 画像で自機を表示する</a></li>
+        <li><a href="playground.html?step=step5">Step5: ゲームループ（更新→描画）</a></li>
+        <li><a href="playground.html?step=step6">Step6: 弾を1発撃つ（配列なし）</a></li>
+        <li><a href="playground.html?step=step7">Step7: 弾を複数（配列）</a></li>
+        <li><a href="playground.html?step=step8">Step8: 敵（直進）</a></li>
+        <li><a href="playground.html?step=step9">Step9: ファイルを分けよう（モジュール化）</a></li>
+        <li><a href="playground.html?step=step10">Step10: 当たり判定（弾×敵）</a></li>
+        <li><a href="playground.html?step=step11">Step11: スコア表示</a></li>
+        <li><a href="playground.html?step=step12">Step12: ライフ＋ゲームオーバー</a></li>
+        <li><a href="playground.html?step=step13">Step13: 仕上げ（完成版）</a></li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>使い方</h2>
+      <ul class="howto">
+        <li>各Stepを開くと、左に「サンプル実行」、右に「自分の実行」が出ます。</li>
+        <li>右側のHTML/CSS/JSを編集して <b>実行</b> を押すと反映されます。</li>
+        <li>画像は <code>learning/image/</code> を参照します（例: <code>../image/player.png</code>）。</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="theme.js"></script>
+</body>
+
+</html>

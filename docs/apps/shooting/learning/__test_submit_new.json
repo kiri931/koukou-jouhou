@@ -1,0 +1,9 @@
+{
+  "step": 3,
+  "item": {
+    "html": "<!doctype html>\n<html>\n<head><meta charset=\"utf-8\"><title>new</title></head>\n<body><h1>new</h1>\n<p>added</p></body>\n</html>",
+    "css": "body { color: blue; }\n",
+    "js": "console.log('new');\n",
+    "updatedAt": "2026-01-16T09:05:00.000Z"
+  }
+}

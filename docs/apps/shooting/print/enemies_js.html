@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>情プロ enemies.js</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="print2">
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>情プロ enemies.js</h1>
+
+    <pre><code class="code-sample">
+export const enemies = [];
+const SIZE = 50;
+const enemyImage = new Image();
+enemyImage.src = "enemy.png";
+
+function pushEnemies(canvas) {
+  const w = SIZE;
+  const h = SIZE;
+  const x = Math.random() * (canvas.width - w);
+  const y = 0;
+  const vy = 5
+
+  enemies.push({ x, y, width: w, height: h, vy });
+}
+
+export function spawnEnemy(canvas) {
+ if (enemies.length < 10) {
+    pushEnemies(canvas);
+ }
+}
+
+export function updateEnemies(canvas) {
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    const e = enemies[i];
+    e.y += e.vy;
+    if (e.y > canvas.height) {
+      enemies.splice(i, 1);
+    }
+  }
+}
+
+export function drawEnemies(ctx) {
+  for (const e of enemies) {
+     ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
+  }
+}
+    </code></pre>
+    <!-- ▼▼▼ 説明セクションここから ▼▼▼ -->
+    <details>
+      <summary>enemyオブジェクトについて</summary><a href="https://codepen.io/tomohiro-adachi/pen/KwzRZgK">こちらをクリックしてください。</a>
+    </details>
+
+    <h2>1. enemies.js の役割</h2>
+
+    <p>
+      <code>enemies.js</code> は、ゲーム内に登場する <strong>敵キャラを管理する専用モジュール</strong> です。
+      このファイルの役目は次の3つです：
+    </p>
+
+    <ul>
+      <li>① 敵キャラを保存するための配列 <code>enemies</code> を提供する</li>
+      <li>② 敵の生成（spawn）、移動（update）、描画（draw）を行う</li>
+      <li>③ 他ファイル（main.js / collision.js など）から利用してもらう</li>
+    </ul>
+
+    <p>
+      つまり、敵に関する「作る・動かす・描く」を全部担当してくれる部品です。
+    </p>
+
+    <h2>2. 敵データの用意</h2>
+
+    <pre><code>export const enemies = [];</code></pre>
+
+    <p>
+      敵キャラは、位置・大きさ・スピードなどの情報を持つオブジェクトで管理します。
+      それを配列にまとめたものが <code>enemies</code> です。
+    </p>
+
+    <p>
+      <strong>export</strong> されているので、<code>main.js</code> や <code>collision.js</code> が
+      <code>import { enemies }</code> として読み込めます。
+    </p>
+
+    <h2>3. 敵画像の読み込み</h2>
+
+    <pre><code>const enemyImage = new Image();
+enemyImage.src = "enemy.png";</code></pre>
+
+    <ul>
+      <li>敵の見た目（画像）を読み込む</li>
+      <li>JavaScript の <code>new Image()</code> は画像オブジェクトを作る特別な書き方</li>
+      <li><code>enemy.png</code> がゲームで使われる見た目になる</li>
+    </ul>
+
+    <h2>4. 敵を1体作る pushEnemies()</h2>
+
+    <pre><code>function pushEnemies(canvas) {
+  const w = SIZE;
+  const h = SIZE;
+  const x = Math.random() * (canvas.width - w);
+  const y = 0;
+  const vy = 5;
+
+  enemies.push({ x, y, width: w, height: h, vy });
+}</code></pre>
+
+    <h3>この関数は何をしている？</h3>
+
+    <ul>
+      <li>敵キャラの初期位置・サイズを決める</li>
+      <li>敵が画面上の横方向のどこかランダムな位置に出現する</li>
+      <li>速度 <code>vy = 5</code> で落ちてくる</li>
+      <li>最後に <code>enemies.push(...)</code> で配列に追加</li>
+    </ul>
+
+    <p>※ <strong>pushEnemies()</strong> は <strong>export されていない</strong> ので、他のファイルから使えません。
+      敵生成の内部処理としてのみ使われます。</p>
+
+    <h2>5. 敵を増やす spawnEnemy()</h2>
+
+    <pre><code>export function spawnEnemy(canvas) {
+  if (enemies.length < 10) {
+    pushEnemies(canvas);
+  }
+}</code></pre>
+
+    <p>
+      この関数は主に <strong>main.js のゲームループで毎フレーム呼ばれる</strong> ことを想定しています。
+    </p>
+
+    <ul>
+      <li>敵が 10 体未満なら、新しい敵を追加する</li>
+      <li>多すぎるとゲームが難しくなるためキャップをかけている</li>
+    </ul>
+
+    <h2>6. 敵を動かす updateEnemies()</h2>
+
+    <pre><code>for (let i = enemies.length - 1; i >= 0; i--) {
+  const e = enemies[i];
+  e.y += e.vy;
+  if (e.y > canvas.height) {
+    enemies.splice(i, 1);
+  }
+}</code></pre>
+
+    <h3>何をしている？</h3>
+
+    <ul>
+      <li><code>e.y += e.vy;</code> で敵を下に動かす</li>
+      <li>画面外へ出たら <code>splice</code> で削除する</li>
+      <li>後ろからループしているのは、削除してもインデックスがずれないようにするため</li>
+    </ul>
+
+    <h3>なぜ「後ろから前へ」なのか？</h3>
+
+    <p>配列の途中で削除すると要素が詰まってインデックスが変わります。
+      そのため、後ろから消していくと安全にループできるのです。</p>
+
+    <details>
+      <summary>削除の様子をアニメーションで見る</summary>
+      <a href="https://codepen.io/tomohiro-adachi/pen/yyOzMvQ">こちらをクリック</a>
+    </details>
+
+    <h2>7. 敵を描画する drawEnemies()</h2>
+
+    <pre><code>for (const e of enemies) {
+  ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
+}</code></pre>
+
+    <p>
+      やっていることはシンプルです：
+    </p>
+
+    <ul>
+      <li>enemies 配列にある全ての敵を</li>
+      <li><code>ctx.drawImage()</code> を使って</li>
+      <li>キャンバスに描画する</li>
+    </ul>
+
+    <p>
+      この関数は「表示だけ」を担当し、ゲームの見た目を作る部分です。
+    </p>
+
+    <!-- ▼▼▼ 基礎問題 ▼▼▼ -->
+
+    <h2>基礎の穴埋め問題</h2>
+    <ol>
+
+      <li>
+        <span class="code-sample">export const enemies = [];</span> は、
+        <span class="fill-blank" data-answer="敵キャラを保存する配列"></span>
+        を他ファイルに公開しています。
+      </li>
+
+      <li>
+        <span class="code-sample">SIZE = 50</span> は敵の
+        <span class="fill-blank" data-answer="大きさ"></span> を表します。
+      </li>
+
+      <li>
+        敵画像は <span class="code-sample">enemy.png</span> で、
+        読み込みには <span class="fill-blank" data-answer="new Image()"></span> を使います。
+      </li>
+
+      <li>
+        <span class="code-sample">pushEnemies()</span> は敵を
+        <span class="fill-blank" data-answer="1体作って配列に追加する"></span>
+        非公開関数です。
+      </li>
+
+      <li>
+        <span class="code-sample">Math.random() * (canvas.width - w)</span> は、
+        敵を画面の
+        <span class="fill-blank" data-answer="ランダムな位置"></span> に作ります。
+      </li>
+
+      <li>
+        <span class="code-sample">spawnEnemy()</span> は敵を
+        <span class="fill-blank" data-answer="最大10体まで"></span> 出します。
+      </li>
+
+      <li>
+        <span class="code-sample">updateEnemies()</span> は敵を
+        <span class="fill-blank" data-answer="下方向に動かす"></span> 処理です。
+      </li>
+
+      <li>
+        敵が画面外に出たら <span class="code-sample">splice</span> で
+        <span class="fill-blank" data-answer="配列から削除"></span> します。
+      </li>
+
+      <li>
+        <span class="code-sample">drawEnemies()</span> は全ての敵を
+        <span class="fill-blank" data-answer="canvas に描画"></span> します。
+      </li>
+
+    </ol>
+
+    <h2>応用問題</h2>
+    <ol>
+      <li>
+        敵のスピードを 5 から 10 にしたい場合、どの変数を変更する？
+        <span class="fill-blank" data-answer="vy"></span>
+      </li>
+
+      <li>
+        敵の数をもっと増やしたい場合、どこの値を変更すれば良いか？
+        <span class="fill-blank" data-answer="spawnEnemy 内の enemies.length < 10"></span>
+      </li>
+
+      <li>
+        敵を大きくしたいならどこを直す？
+        <span class="fill-blank" data-answer="SIZE"></span>
+      </li>
+
+      <li>
+        同じ画像ではなく、複数種類の敵を作りたい場合、どの関数を改造すると良いか？
+        <span class="fill-blank" data-answer="pushEnemies()"></span>
+      </li>
+    </ol>
+
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+
+</html>

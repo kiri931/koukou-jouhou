@@ -1,0 +1,12 @@
+{
+  "js": [
+    "assets.js",
+    "input.js",
+    "player.js",
+    "bullets.js",
+    "enemies.js",
+    "collision.js",
+    "hud.js",
+    "main.js"
+  ]
+}

@@ -1,0 +1,331 @@
+/* =========================================================
+   カラーテーマ（CSS変数）
+   - 既定: プレビュー/印刷向けの白黒
+   - body.mode-edit で VSCode風（ダーク）に切替
+   ========================================================= */
+@import url("../../shared/design-system.css");
+
+:root {
+  /* print/ はページ内で独自トークンを使っているので、共通トークンから派生させる */
+  --bg: var(--color-bg);
+  --fg: var(--color-text);
+  --border: var(--color-border);
+  --code-bg: var(--color-surface-2);
+  --code-fg: var(--color-text);
+  --panel-bg: var(--color-surface);
+  --btn-bg: var(--color-surface-2);
+  --btn-fg: var(--color-text);
+  --btn-hover: var(--color-neutral-solid-gray-100);
+}
+
+/* VSCode風（編集モード） */
+body.mode-edit {
+  --bg: #1a1a1a;
+  --fg: #e6e6e6;
+  --border: #4d4d4d;
+  --code-bg: #1e1e1e;
+  --code-fg: #e6e6e6;
+  --panel-bg: #252526;
+  --btn-bg: #2d2d2d;
+  --btn-fg: #e6e6e6;
+  --btn-hover: #333333;
+}
+
+/* =========================================================
+   ベース
+   ========================================================= */
+body {
+  font-family: var(--font-family-sans);
+  margin: calc(40 / 16 * 1rem);
+  line-height: 1.7;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.3em;
+}
+
+/* リスト */
+ol {
+  margin-top: 1em;
+  padding-left: 1.2em;
+}
+
+ol li {
+  margin: 0.8em 0;
+}
+
+/* =========================================================
+   コード表示
+   - インライン: span.code-sample … 文中で改行しない
+   - ブロック:   pre > code.code-sample … 大きな枠
+   - pre は共通の見た目
+   ========================================================= */
+code {
+  font-family: "Consolas", "Courier New", monospace;
+}
+
+/* インラインコード（文章の途中） */
+span.code-sample {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.3em;
+  display: inline;
+  white-space: nowrap;
+  /* 折り返さず1つの塊として表示 */
+}
+
+/* コードブロック */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-8);
+  padding: var(--space-12) var(--space-16);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* 大きなコードブロック（強調） */
+pre code.code-sample {
+  display: block;
+  padding: 1em;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow-x: auto;
+  /* 長い行は横スクロール */
+  line-height: 1.4;
+}
+
+/* =========================================================
+   穴埋め（答えトグル）
+   ========================================================= */
+.fill-blank {
+  display: inline-block;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: transparent;
+  /* 答えは非表示 */
+  padding: 0 0.3em;
+  box-sizing: content-box;
+}
+
+.fill-blank.show {
+  color: var(--fg);
+  /* 答えを表示 */
+}
+
+
+/* =========================================================
+   用語まとめ（details）
+   ========================================================= */
+details {
+  margin-top: 2em;
+  border: 1px solid var(--border);
+  padding: 0.8em 1em;
+  border-radius: 4px;
+  background: var(--panel-bg);
+}
+
+details summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+details ul {
+  margin: 0.5em 0 0 1.2em;
+}
+
+/* =========================================================
+   ヘッダー（固定ツールバー）
+   ========================================================= */
+header.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6em 0;
+  margin-bottom: 1em;
+}
+
+header .toolbar {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+/* =========================================================
+   ボタン（答え表示 / プレビュー切替）
+   ========================================================= */
+#show-answers,
+#toggle-preview {
+  display: inline-block;
+  margin: 1em 0.5em 2em 0;
+  padding: calc(8 / 16 * 1rem) calc(12 / 16 * 1rem);
+  font-size: 1em;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: calc(9999 / 16 * 1rem);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  cursor: pointer;
+}
+
+#show-answers:hover,
+#toggle-preview:hover {
+  background: var(--btn-hover);
+}
+
+/* =========================================================
+   印刷
+   - ヘッダーとボタンを非表示
+   - 強制白背景・黒文字
+   ========================================================= */
+@media print {
+  .page-break {
+    break-before: page;
+  }
+
+  header.site-header {
+    display: none !important;
+  }
+
+  body {
+    color: #000 !important;
+    background: #fff !important;
+    font-size: 14pt;
+    line-height: 1.8;
+  }
+
+  #show-answers,
+  #toggle-preview {
+    display: none !important;
+  }
+}
+
+/* code-sample と fill-blank が隣接しても自然に表示されるように */
+.code-sample+.fill-blank,
+.fill-blank+.code-sample {
+  margin-left: 0.2em;
+  /* ちょっと隙間をあける */
+}
+
+/* =========================================================
+   print2統合（テスト/解説ページ向け）
+   - body.print2 を付けたページだけに適用
+   ========================================================= */
+body.print2 h1 {
+  margin-bottom: 0;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+body.print2 p,
+body.print2 li {
+  line-height: 1.4;
+}
+
+/* 配点表示の行 */
+body.print2 .title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+body.print2 .your-point {
+  display: flex;
+  align-items: center;
+  gap: 2.5em;
+  font-size: 1em;
+  color: var(--fg);
+}
+
+body.print2 .your-point .label {
+  font-weight: bold;
+}
+
+body.print2 .your-point .total {
+  opacity: 0.8;
+}
+
+/* テーブル（答案欄など） */
+body.print2 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+body.print2 td {
+  border: 1px solid var(--border);
+  height: 50px;
+  text-align: left;
+  vertical-align: middle;
+  padding-left: 8px;
+  font-size: 16px;
+}
+
+body.print2 .large-table td {
+  height: 100px;
+}
+
+/* 親OL（第1階層）: 1 / 2 / 3... を自前で付ける */
+body.print2 ol.level1 {
+  counter-reset: section;
+  padding-left: 0;
+}
+
+body.print2 ol.level1 > li {
+  counter-increment: section;
+  list-style: none;
+  position: relative;
+  padding-left: 2em;
+}
+
+body.print2 ol.level1 > li::before {
+  content: counter(section) " ";
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+}
+
+/* 子OL（第2階層）: 1.1 / 1.2... */
+body.print2 ol.level2 {
+  counter-reset: subsection;
+  list-style-type: none;
+  padding-left: 30px;
+}
+
+body.print2 ol.level2 > li {
+  counter-increment: subsection;
+  margin: 4px 0;
+}
+
+body.print2 ol.level2 > li::before {
+  content: counter(section) "." counter(subsection) " ";
+}
+
+@media print {
+  body.print2 td {
+    border-color: #000;
+  }
+}

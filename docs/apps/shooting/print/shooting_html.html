@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Step1: Canvasを表示する（HTMLプリント）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- いつでも操作できるヘッダー -->
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>Step1: Canvasを表示する（HTML）</h1>
+
+    <!-- コード例 -->
+    <pre><code class="code-sample">
+&lt;!doctype html&gt;
+&lt;html lang="ja"&gt;
+
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Step1: Canvasを表示する&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;main class="container"&gt;
+    &lt;h1&gt;Step1: Canvasを表示する&lt;/h1&gt;
+    &lt;p class="note"&gt;黒い枠（ゲーム画面）が表示されればOKです。&lt;/p&gt;
+
+    &lt;canvas id="gameCanvas" width="480" height="640"&gt;&lt;/canvas&gt;
+  &lt;/main&gt;
+
+  &lt;script src="main.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+    </code></pre>
+
+    <ol>
+      <li>
+        <span class="code-sample">&lt;!DOCTYPE html&gt;</span> は、このファイルが
+        <span class="fill-blank" data-answer="HTML文書"></span>
+        であることを示す宣言です。
+      </li>
+      <li>
+        <span class="code-sample">&lt;html lang="ja"&gt;</span> は、この文書が
+        <span class="fill-blank" data-answer="日本"></span>
+        語で書かれていることを示します。
+      </li>
+      <li>
+        <span class="code-sample">&lt;head&gt;</span> タグの中には、ページの見た目には直接表示されない
+        <span class="fill-blank" data-answer="設定（メタ）"></span>
+        情報が書かれます。
+      </li>
+      <li>
+        <span class="code-sample">&lt;meta charset=&quot;UTF-8&quot; /&gt;</span> は、文字コードを
+        <span class="fill-blank" data-answer="UTF-8"></span>
+        に指定することで、日本語が文字化けしないようにします。
+      </li>
+      <li>
+        <span class="code-sample">&lt;meta name=&quot;viewport&quot; ... /&gt;</span> は、スマホ等でも見やすいように画面の拡大率（表示領域）を調整する
+        <span class="fill-blank" data-answer="設定"></span>
+        です。
+      </li>
+      <li>
+        <span class="code-sample">&lt;title&gt;...&lt;/title&gt;</span> は、ブラウザの
+        <span class="fill-blank" data-answer="タブ（タイトルバー）"></span>
+        に表示されるタイトルを設定します。
+      </li>
+      <li>
+        <span class="code-sample">&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot; /&gt;</span> は、外部の
+        <span class="fill-blank" data-answer="CSS（スタイルシート）"></span>
+        ファイルを読み込み、デザインを適用します。
+      </li>
+      <li>
+        <span class="code-sample">&lt;body&gt;</span> タグには、実際に画面に表示される
+        <span class="fill-blank" data-answer="本文（コンテンツ）"></span>
+        が書かれます。
+      </li>
+      <li>
+        <span class="code-sample">&lt;main class=&quot;container&quot;&gt;</span> は、ページの主要な内容をまとめる
+        <span class="fill-blank" data-answer="main"></span>
+        要素です。
+      </li>
+      <li>
+        <span class="code-sample">&lt;canvas id=&quot;gameCanvas&quot; width=&quot;480&quot; height=&quot;640&quot;&gt;&lt;/canvas&gt;</span> は、ゲーム画面を描くための
+        <span class="fill-blank" data-answer="キャンバス"></span>
+        領域を作ります。ここでは幅が
+        <span class="fill-blank" data-answer="480"></span>
+        ピクセル、高さが
+        <span class="fill-blank" data-answer="640"></span>
+        ピクセルに設定されています。
+      </li>
+      <li>
+        <span class="code-sample">&lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;</span> は、外部の
+        <span class="fill-blank" data-answer="JavaScript"></span>
+        ファイルを読み込み、ゲームの動きをプログラムします。
+      </li>
+    </ol>
+    <div class="page-break"></div>
+
+    <!-- ===== 応用・思考力問題 ===== -->
+    <section>
+      <h2>応用・思考力問題</h2>
+      <ol>
+        <li>
+          このゲームの座標系では、画面の原点（0,0）はキャンバスの
+          <span class="fill-blank" data-answer="左上"></span>
+          にあります。JSで <span class="code-sample">ctx.fillRect(0, 0, canvas.width, canvas.height)</span> と書くと、キャンバス全体を塗れるのはなぜか。空欄を埋めよ：
+          <span class="fill-blank" data-answer="(0,0)が左上で、幅と高さがcanvas全体だから"></span>
+
+        </li>
+
+      </ol>
+    </section>
+
+    <details open>
+      <summary>用語解説</summary>
+      ここで出てきた用語の説明です。
+      <ul>
+        <li>HTML … <span class="fill-blank" data-answer="ウェブページを作るための言語"></span></li>
+        <li>head … <span class="fill-blank" data-answer="ページの設定を書く部分"></span></li>
+        <li>body … <span class="fill-blank" data-answer="実際に表示される部分"></span></li>
+        <li>canvas … <span class="fill-blank" data-answer="描画（グラフィック）用の領域"></span></li>
+        <li>viewport … <span class="fill-blank" data-answer="画面の表示領域（スマホ対応の設定）"></span></li>
+        <li>CSS … <span class="fill-blank" data-answer="デザインを指定するための言語"></span></li>
+        <li>JavaScript … <span class="fill-blank" data-answer="ページに動きを付けるための言語"></span></li>
+      </ul>
+    </details>
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>情報プログレス 衝突判定</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="print2">
+  <!-- 常に操作できるヘッダー（ボタンはここに） -->
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>情プロ 衝突判定</h1>
+
+    <!-- コード全文 -->
+    <pre><code class="code-sample">
+import { player } from "./player.js";
+import { enemies } from "./enemies.js";
+import { bullets } from "./main.js";
+
+export function handleCollisions() {
+  // 弾 × 敵
+  for (let ei = enemies.length - 1; ei >= 0; ei--) {
+    const e = enemies[ei];
+    let hit = false;
+
+    for (let bi = bullets.length - 1; bi >= 0; bi--) {
+      const b = bullets[bi];
+      if (rectsIntersect(
+        { x: b.x, y: b.y, width: b.width, height: b.height },
+        { x: e.x, y: e.y, width: e.width, height: e.height }
+      )) {
+        // 命中：弾と敵を削除、スコア加算
+        bullets.splice(bi, 1);
+        enemies.splice(ei, 1);
+        player.score += 1;
+        console.log("Score:", player.score);
+        hit = true;
+        break; // この敵は消えたので次の敵へ
+      }
+    }
+
+    if (hit) continue;
+  }
+
+  // 自機 × 敵（ゲームオーバー）
+  for (let ei = enemies.length - 1; ei >= 0; ei--) {
+    const e = enemies[ei];
+    if (rectsIntersect(
+      { x: player.x, y: player.y, width: player.width, height: player.height },
+      { x: e.x, y: e.y, width: e.width, height: e.height }
+    )) {
+      player.life -= 1;
+      if (player.life &lt;= 0) {
+        document.location.reload();
+      }
+      enemies.splice(ei, 1);
+      console.log("Player Life:", player.life);
+      break;
+    }
+  }
+}
+
+function rectsIntersect(a, b) {
+  return (
+    a.x &lt; b.x + b.width &amp;&amp;
+    a.x + a.width &gt; b.x &amp;&amp;
+    a.y &lt; b.y + b.height &amp;&amp;
+    a.y + a.height &gt; b.y
+  );
+}
+    </code></pre>
+    <details>
+      <summary>今回の内容をまとめたcodepen</summary>
+      <a href="https://codepen.io/tomohiro-adachi/pen/JoXvMGN">こちらをクリック</a>
+    </details>
+
+    <h2>1. 他ファイルからの読み込み</h2>
+
+    <pre><code>import { player } from "./player.js";
+import { enemies } from "./enemies.js";
+import { bullets } from "./main.js";</code></pre>
+
+    <ul>
+      <li><code>player.js</code> にある <code>player</code> オブジェクト（自機の位置・サイズ・スコア・ライフなど）を読み込む。</li>
+      <li><code>enemies.js</code> にある <code>enemies</code> 配列（画面上の敵キャラ一覧）を読み込む。</li>
+      <li><code>main.js</code> にある <code>bullets</code> 配列（画面上の弾の一覧）を読み込む。</li>
+    </ul>
+
+    <p>
+      ⇒ このファイルは、それぞれの現在の状態（自機・敵・弾）を使って、<strong>当たり判定だけを担当するモジュール</strong>になっています。
+    </p>
+
+    <h2>2. handleCollisions 関数の役割</h2>
+
+    <pre><code>export function handleCollisions() {
+  // 弾 × 敵
+  ...
+  // 自機 × 敵（ゲームオーバー）
+  ...
+}</code></pre>
+
+    <ul>
+      <li><code>handleCollisions()</code> は「このフレームでの当たり判定を全部やる」関数。</li>
+      <li>ゲームループ（<code>requestAnimationFrame</code> など）から毎フレーム呼び出されることを想定している。</li>
+      <li>中で、<strong>①弾と敵の衝突</strong> と <strong>②自機と敵の衝突</strong> をまとめて判定する。</li>
+    </ul>
+
+    <h2>3. 弾 × 敵 の当たり判定</h2>
+
+    <pre><code>// 弾 × 敵
+for (let ei = enemies.length - 1; ei &gt;= 0; ei--) {
+  const e = enemies[ei];
+  let hit = false;
+
+  for (let bi = bullets.length - 1; bi &gt;= 0; bi--) {
+    const b = bullets[bi];
+    if (rectsIntersect(
+      { x: b.x, y: b.y, width: b.width, height: b.height },
+      { x: e.x, y: e.y, width: e.width, height: e.height }
+    )) {
+      // 命中：弾と敵を削除、スコア加算
+      bullets.splice(bi, 1);
+      enemies.splice(ei, 1);
+      player.score += 1;
+      console.log("Score:", player.score);
+      hit = true;
+      break; // この敵は消えたので次の敵へ
+    }
+  }
+
+  if (hit) continue;
+}</code></pre>
+
+    <h3>3-1. 外側のループ（敵ごとにチェック）</h3>
+
+    <pre><code>for (let ei = enemies.length - 1; ei &gt;= 0; ei--) {
+  const e = enemies[ei];
+  let hit = false;</code></pre>
+
+    <ul>
+      <li><code>ei</code> は enemies 配列のインデックス（enemy index）。</li>
+      <li><code>enemies.length - 1</code> から 0
+        方向に向かってループしているのは、<strong>途中で配列から要素を削除しても、まだ見ていない要素の順番がズレにくいようにするため</strong>。</li>
+      <li><code>const e = enemies[ei];</code> で今チェック中の敵1体を <code>e</code> に取り出す。</li>
+      <li><code>hit</code> は「この敵がどれかの弾に当たったかどうか」を記録するフラグ。</li>
+    </ul>
+
+    <h3>3-2. 内側のループ（弾ごとにチェック）</h3>
+
+    <pre><code>for (let bi = bullets.length - 1; bi &gt;= 0; bi--) {
+  const b = bullets[bi];
+  if (rectsIntersect(
+    { x: b.x, y: b.y, width: b.width, height: b.height },
+    { x: e.x, y: e.y, width: e.width, height: e.height }
+  )) {
+    ...
+  }
+}</code></pre>
+
+    <ul>
+      <li><code>bi</code> は bullets 配列のインデックス（bullet index）。</li>
+      <li>こちらも後ろから前へ、同じ理由でループ。</li>
+      <li><code>rectsIntersect(...)</code> に「弾 b の四角」と「敵 e の四角」を渡し、重なっているか（当たっているか）を判定している。</li>
+    </ul>
+
+    <h3>3-3. 当たったときの処理</h3>
+
+    <pre><code>// 命中：弾と敵を削除、スコア加算
+bullets.splice(bi, 1);
+enemies.splice(ei, 1);
+player.score += 1;
+console.log("Score:", player.score);
+hit = true;
+break; // この敵は消えたので次の敵へ</code></pre>
+
+    <ul>
+      <li><code>bullets.splice(bi, 1);</code> … 当たった弾を bullets 配列から削除。</li>
+      <li><code>enemies.splice(ei, 1);</code> … 当たった敵を enemies 配列から削除（敵が倒れたイメージ）。</li>
+      <li><code>player.score += 1;</code> … スコアを1点加算。</li>
+      <li><code>console.log("Score:", player.score);</code> … デバッグ用にスコアをコンソールに表示。</li>
+      <li><code>hit = true;</code> … この敵はもう弾に当たった、という印。</li>
+      <li><code>break;</code> … 「この敵に対する弾チェック」はここで終了。敵を削除したので、これ以上同じ敵に他の弾が当たることはない。</li>
+    </ul>
+
+    <h3>3-4. 外側ループでの hit チェック</h3>
+
+    <pre><code>if (hit) continue;</code></pre>
+
+    <ul>
+      <li><code>hit</code> が <code>true</code> なら「この敵はもう消えた」ので、その敵に対する残りの処理（もし書いていれば）をスキップする。</li>
+      <li>ここでは後ろに特別な処理はないので、「倒された敵について余計な処理をしないためのお守り」のような書き方になっている。</li>
+    </ul>
+
+    <h2>4. 自機 × 敵 の当たり判定（ライフ減少・ゲームオーバー）</h2>
+
+    <pre><code>// 自機 × 敵（ゲームオーバー）
+for (let ei = enemies.length - 1; ei &gt;= 0; ei--) {
+  const e = enemies[ei];
+  if (rectsIntersect(
+    { x: player.x, y: player.y, width: player.width, height: player.height },
+    { x: e.x, y: e.y, width: e.width, height: e.height }
+  )) {
+    player.life -= 1;
+    if (player.life &lt;= 0) {
+      document.location.reload();
+    }
+    enemies.splice(ei, 1);
+    console.log("Player Life:", player.life);
+    // isGameOver = true;
+    break;
+  }
+}</code></pre>
+
+    <h3>4-1. 敵ごとに自機との衝突をチェック</h3>
+
+    <ul>
+      <li>こちらも <code>enemies</code> を後ろから前へループ。</li>
+      <li><code>rectsIntersect</code> に「自機 player の四角」と「敵 e の四角」を渡して、ぶつかっているかどうかを判定する。</li>
+    </ul>
+
+    <h3>4-2. 当たったときの処理</h3>
+
+    <pre><code>player.life -= 1;
+if (player.life &lt;= 0) {
+  document.location.reload();
+}
+enemies.splice(ei, 1);
+console.log("Player Life:", player.life);
+break;</code></pre>
+
+    <ul>
+      <li><code>player.life -= 1;</code> … プレイヤーのライフを1減らす。</li>
+      <li><code>if (player.life &lt;= 0) { document.location.reload(); }</code><br>
+        ライフが0以下になったら、<strong>ページをリロードしてゲームを最初からやり直し</strong>にする（簡易的なゲームオーバー処理）。
+      </li>
+      <li><code>enemies.splice(ei, 1);</code> … 自機にぶつかった敵を enemies 配列から削除。</li>
+      <li><code>console.log("Player Life:", player.life);</code> … 現在のライフをコンソールに表示（デバッグ用）。</li>
+      <li><code>break;</code> … 1フレーム内で自機が複数の敵と同時に当たってライフが一気に減らないよう、<strong>最初に当たった1体分だけ処理してループを抜ける</strong>。</li>
+    </ul>
+
+    <h2>5. rectsIntersect 関数（四角どうしの重なり判定）</h2>
+
+    <pre><code>function rectsIntersect(a, b) {
+  return (
+    a.x &lt; b.x + b.width &amp;&amp;
+    a.x + a.width &gt; b.x &amp;&amp;
+    a.y &lt; b.y + b.height &amp;&amp;
+    a.y + a.height &gt; b.y
+  );
+}</code></pre>
+
+    <p><code>a</code> と <code>b</code> は、それぞれ <code>{ x, y, width, height }</code>
+      を持つ「四角形」を表します。4つの条件をすべて満たすとき、二つの四角形が一部でも重なっていると判断します。</p>
+
+    <ul>
+      <li><code>a.x &lt; b.x + b.width</code> … Aの左端はBの右端より左側にある</li>
+      <li><code>a.x + a.width &gt; b.x</code> … Aの右端はBの左端より右側にある</li>
+      <li><code>a.y &lt; b.y + b.height</code> … Aの上端はBの下端より上側にある</li>
+      <li><code>a.y + a.height &gt; b.y</code> … Aの下端はBの上端より下側にある</li>
+    </ul>
+
+    <p>
+      ⇒ これらが全部 <code>true</code> のとき、「AとBの四角形が重なっている」として <code>true</code> を返します。<br>
+      一つでも <code>false</code> なら重なっていないので <code>false</code> になります。
+    </p>
+
+    <h2>6. 全体のまとめ</h2>
+
+    <ul>
+      <li><code>handleCollisions()</code> は、1フレームごとに
+        <ol>
+          <li>すべての敵について、すべての弾との当たり判定を行い、当たっていれば弾と敵を消してスコアを加算。</li>
+          <li>次に、すべての敵について自機との当たり判定を行い、当たっていればライフを減らし、0以下ならゲームをリセット。</li>
+        </ol>
+      </li>
+      <li>当たり判定そのものは <code>rectsIntersect()</code> が担当し、四角形同士が重なっているかどうかを数式で判断している。</li>
+    </ul>
+
+    <h2>確認問題</h2>
+
+    <ol>
+      <li>
+        <span class="code-sample">import { player } from "./player.js";</span> の
+        <span class="fill-blank" data-answer="import"></span> は、別ファイルから変数や関数を
+        <span class="fill-blank" data-answer="読み込む"></span> ときに使うキーワードです。
+      </li>
+
+      <li>
+        <span class="code-sample">{ player } や { enemies }</span> の
+        <span class="fill-blank" data-answer="波かっこ"></span> は、モジュールの中から
+        <span class="fill-blank" data-answer="名前のついた関数・オブジェクトだけ取り出す"></span> 書き方です。
+      </li>
+
+      <li>
+        <span class="code-sample">export function handleCollisions() { ... }</span> の
+        <span class="fill-blank" data-answer="export"></span> は、この関数を他のファイルから
+        <span class="fill-blank" data-answer="使えるように公開する"></span> ためのキーワードです。
+      </li>
+
+      <li>
+        <span class="code-sample">handleCollisions()</span> 関数の役割は、
+        <span class="fill-blank" data-answer="弾と敵、自機と敵の当たり判定を行う"></span> ことです。
+      </li>
+
+      <li>
+        <span class="code-sample">for (let ei = enemies.length - 1; ei &gt;= 0; ei--)</span> のループでは、
+        <span class="fill-blank" data-answer="敵配列"></span> を
+        <span class="fill-blank" data-answer="後ろから前へ"></span> たどっています。
+        これは途中で <span class="code-sample">splice</span> しても
+        <span class="fill-blank" data-answer="インデックスがずれない"></span> ためです。
+      </li>
+
+      <li>
+        内側のループ <span class="code-sample">for (let bi = bullets.length - 1; bi &gt;= 0; bi--)</span> も同様に
+        <span class="fill-blank" data-answer="弾の配列"></span> を
+        <span class="fill-blank" data-answer="後ろから前へ順番に確認して、削除してもインデックスがずれない"></span> ようにしています。
+      </li>
+      <details>
+        <summary>削除の様子の表示(5,6の意味が分からない人向けアニメーション)</summary>
+        <a href="https://codepen.io/tomohiro-adachi/pen/yyOzMvQ">こちらをクリックしてください。</a>
+      </details>
+
+      <li>
+        <span class="code-sample">let hit = false;</span> は、その敵に
+        <span class="fill-blank" data-answer="すでに弾が当たったかどうか"></span> を記録するための
+        <span class="fill-blank" data-answer="フラグ（旗）"></span> です。
+      </li>
+
+      <li>
+        弾が敵に当たったとき、<span class="code-sample">bullets.splice(bi, 1);</span> は弾の配列から
+        <span class="fill-blank" data-answer="1個だけ削除"></span> し、
+        <span class="code-sample">enemies.splice(ei, 1);</span> は敵の配列から
+        <span class="fill-blank" data-answer="その敵を削除"></span> します。
+      </li>
+
+      <li>
+        命中時に <span class="code-sample">player.score += 1;</span> としているのは、
+        <span class="fill-blank" data-answer="スコア"></span> を
+        <span class="fill-blank" data-answer="1点増やす"></span> ためです。
+      </li>
+
+      <li>
+        自機と敵の衝突判定では、当たったときに
+        <span class="code-sample">player.life -= 1;</span> で
+        <span class="fill-blank" data-answer="ライフ"></span> を
+        <span class="fill-blank" data-answer="1減らす"></span> ようにしています。
+      </li>
+
+      <li>
+        <span class="code-sample">if (player.life &lt;= 0) { document.location.reload(); }</span> は、
+        ライフが 0 以下になったときに
+        <span class="fill-blank" data-answer="ページを再読み込みしてゲームを最初からにする"></span>
+        処理です。
+      </li>
+
+      <li>
+        <span class="code-sample">rectsIntersect(a, b)</span> 関数は、
+        <span class="fill-blank" data-answer="2つの四角形が重なっているかどうか"></span> を調べ、
+        当たっていれば <span class="fill-blank" data-answer="true"></span>、
+        当たっていなければ <span class="fill-blank" data-answer="false"></span> を返します。
+      </li>
+
+      <li>
+        <span class="code-sample">a.x &lt; b.x + b.width &amp;&amp; ...</span> という条件は、
+        専門用語で <span class="fill-blank" data-answer="AABB（軸平行境界ボックス）"></span> と呼ばれる
+        <span class="fill-blank" data-answer="長方形同士の当たり判定アルゴリズム"></span> の一種です。
+      </li>
+    </ol>
+    <details>
+      <summary>軸平行境界ボックス</summary>
+      <a href="https://codepen.io/tomohiro-adachi/pen/xbVXqBw">こちらをクリックしてください。</a>
+    </details>
+
+    <!-- 応用・思考力問題 -->
+    <section>
+      <h2>応用・思考力問題</h2>
+      <ol>
+        <li>
+          弾と敵の当たり判定の二重ループでは、なぜ「前から i++」ではなく
+          <span class="code-sample">length - 1</span> から
+          <span class="code-sample">--</span> しているか、理由を一言で：<br>
+          <span class="fill-blank" data-answer="削除で要素が詰まっても、まだ見ていない要素を飛ばさないため"></span>
+        </li>
+        <details>
+          <summary>削除の様子の表示(要素が詰まるの意味が分からない人向けアニメーション)</summary>
+          <a href="https://codepen.io/tomohiro-adachi/pen/yyOzMvQ">こちらをクリックしてください。</a>
+        </details>
+
+
+        <li>
+          <span class="code-sample">hit</span> フラグが true になった後、
+          <span class="code-sample">if (hit) continue;</span> としているのはなぜか。<br>
+          <span class="fill-blank" data-answer="すでに消えた敵について、さらに弾との判定を行わないようにするため"></span>
+        </li>
+
+        <li>
+          スコアを 1 点ではなく、敵によって 10 点や 100 点など変えたい場合、
+          コードのどの部分をどのように変えればよいか。<br>
+          <span class="fill-blank" data-answer="player.score += 1 を、敵ごとに異なる加点値に書き換える"></span>
+        </li>
+
+        <li>
+          <span class="code-sample">rectsIntersect</span> 関数で 4 つの条件のうち 1 つでも成り立たないとき、
+          四角形はどういう関係になっているか。<br>
+          <span class="fill-blank" data-answer="左右または上下のどこかで完全に離れている"></span>
+        </li>
+
+        <li>
+          「自機と敵が当たったら即ゲームオーバー」にしたい場合、どこを変更することが簡単か日本語で説明せよ。<br>
+          <span class="fill-blank" data-answer="当たったらすぐ reload するだけにする"></span>
+        </li>
+
+        <li>
+          最後の <span class="code-sample">break;</span> がなかった場合、どのような不具合が起こり得るか。<br>
+          <span class="fill-blank" data-answer="1回当たった後も不要な判定や処理が続き、想定外に敵やライフが減る可能性がある"></span>
+        </li>
+
+        <li>
+          この衝突判定を毎フレーム呼び出すのは、主にどのファイルのどの処理が担当していると考えられるか。<br>
+          <span class="fill-blank" data-answer="main.js などのゲームループ（update 内）"></span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 用語解説 -->
+    <details open>
+      <summary>用語解説</summary>
+      <ul>
+        <li>モジュール … <span class="fill-blank" data-answer="ファイルごとに分けた JavaScript の部品"></span></li>
+        <li>import … <span class="fill-blank" data-answer="他のモジュールから機能を読み込む文"></span></li>
+        <li>export … <span class="fill-blank" data-answer="他のモジュールから使ってもらうための公開"></span></li>
+        <li>当たり判定 … <span class="fill-blank" data-answer="オブジェクト同士がぶつかったかどうか調べる処理"></span></li>
+        <li>AABB … <span class="fill-blank" data-answer="軸に平行な四角形で行う簡単な当たり判定方法"></span></li>
+        <li>フラグ変数 … <span class="fill-blank" data-answer="true/false で状態を記録するための変数"></span></li>
+        <li>スコア … <span class="fill-blank" data-answer="プレイヤーの得点を表す数値"></span></li>
+        <li>ライフ … <span class="fill-blank" data-answer="残りの体力や残機を表す数値"></span></li>
+      </ul>
+    </details>
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+
+</html>

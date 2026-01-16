@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>情プロ player.js</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="print2">
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>情プロ player.js</h1>
+
+    <pre><code class="code-sample">
+const playerImage = new Image();
+playerImage.src = "player.png";
+
+export const player = {
+    x: 0,
+    y: 0,
+    width: 30,
+    height: 30,
+    color: "yellow",
+    life: 3,
+    score: 0,
+};
+
+export function initPlayer(canvas) {
+    player.x = canvas.width / 2 - player.width / 2;
+    player.y = canvas.height - 60;
+    console.log("Player:", player);
+}
+
+export function drawPlayer(ctx) {
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+}
+    </code></pre>
+    <details>
+      <summary>playerオブジェクトについて</summary><a href="https://codepen.io/tomohiro-adachi/pen/qEZPjqy">こちらをクリックしてください。</a>
+    </details>
+    
+      <!-- ▼ 説明セクション追加 ▼ -->
+
+    <h2>1. player.js の役割</h2>
+
+    <p>
+      <code>player.js</code> は、ゲームで動かす「自機（プレイヤー）」を管理するモジュールです。  
+      このファイルの役目は次の3つです：
+    </p>
+
+    <ul>
+      <li>① プレイヤーの状態（位置・大きさ・ライフ・スコア）をまとめて管理する</li>
+      <li>② プレイヤーの初期位置を設定する</li>
+      <li>③ プレイヤーを canvas に描画する</li>
+    </ul>
+
+    <p>
+      敵や弾と違い、プレイヤーは基本的に 1 体だけなので、配列ではなくオブジェクトで管理しています。
+    </p>
+
+    <h2>2. 画像の読み込み</h2>
+
+    <pre><code>const playerImage = new Image();
+playerImage.src = "player.png";</code></pre>
+
+    <ul>
+      <li><code>new Image()</code> は「画像を扱うための特別なオブジェクト」を作る</li>
+      <li><code>src</code> にファイル名を入れると、画像が読み込まれる</li>
+      <li>ゲームではこの画像がプレイヤーの見た目として使われる</li>
+    </ul>
+
+    <h2>3. プレイヤーの情報をまとめた player オブジェクト</h2>
+
+    <pre><code>export const player = {
+    x: 0,
+    y: 0,
+    width: 30,
+    height: 30,
+    color: "yellow",
+    life: 3,
+    score: 0,
+};</code></pre>
+
+    <h3>このオブジェクトに含まれる情報</h3>
+
+    <ul>
+      <li><code>x, y</code> … プレイヤーの画面上の位置</li>
+      <li><code>width, height</code> … プレイヤーの大きさ</li>
+      <li><code>color</code> … 画像読み込み前の予備色（現在は未使用）</li>
+      <li><code>life: 3</code> … ライフ（体力）</li>
+      <li><code>score: 0</code> … 得点</li>
+    </ul>
+
+    <p>
+      <strong>export</strong> しているため、<br>
+      <code>main.js</code> や <code>collision.js</code> から <code>import { player }</code> として読み込めます。
+    </p>
+
+    <h2>4. 初期位置を決める initPlayer()</h2>
+
+    <pre><code>export function initPlayer(canvas) {
+    player.x = canvas.width / 2 - player.width / 2;
+    player.y = canvas.height - 60;
+    console.log("Player:", player);
+}</code></pre>
+
+    <p>この関数は、ゲームの最初に一度だけ呼ばれます。</p>
+
+    <h3>やっていること</h3>
+
+    <ul>
+      <li><code>player.x</code> → 画面の横中央に置く</li>
+      <li><code>player.y</code> → 画面の一番下から少し上に置く</li>
+      <li>位置を決めたらログに出力（デバッグ用）</li>
+    </ul>
+
+    <details>
+      <summary>横方向の中央に配置する計算式の意味</summary>
+      <p>
+        <code>canvas.width / 2</code> は中央の位置。  
+        プレイヤーの幅の半分を引くことで、真ん中にぴったり配置できる。
+      </p>
+    </details>
+
+    <h2>5. プレイヤーを描画する drawPlayer()</h2>
+
+    <pre><code>ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);</code></pre>
+
+    <ul>
+      <li>読み込んだ画像 <code>playerImage</code> を</li>
+      <li>player の位置 <code>(x, y)</code> に</li>
+      <li>指定された大きさ <code>(width, height)</code> で描画する</li>
+    </ul>
+
+    <p>
+      この関数はゲームループの中で毎フレーム呼ばれ、  
+      常に最新のプレイヤー位置が表示される仕組みです。
+    </p>
+
+    <!-- ▼ 基礎問題 ▼ -->
+    <h2>基礎の穴埋め問題</h2>
+
+    <ol>
+      <li>
+        <span class="code-sample">new Image()</span> は画像を
+        <span class="fill-blank" data-answer="読み込むためのオブジェクト"></span> を作っています。
+      </li>
+
+      <li>
+        <span class="code-sample">playerImage.src = "player.png";</span> は画像ファイルを
+        <span class="fill-blank" data-answer="指定して読み込む"></span> 処理です。
+      </li>
+
+      <li>
+        <span class="code-sample">export const player = { ... }</span> の部分は、プレイヤーの
+        <span class="fill-blank" data-answer="状態（位置・大きさ・スコアなど）"></span>
+        をまとめた <span class="fill-blank" data-answer="オブジェクト"></span> です。
+      </li>
+
+      <li>
+        player.width = 30 などの設定値は、プレイヤーの
+        <span class="fill-blank" data-answer="見た目のサイズ"></span> を決めています。
+      </li>
+
+      <li>
+        <span class="code-sample">life: 3</span> はプレイヤーの
+        <span class="fill-blank" data-answer="ライフ（体力）"></span> を意味します。
+      </li>
+
+      <li>
+        <span class="code-sample">score: 0</span> はゲーム中の
+        <span class="fill-blank" data-answer="得点"></span> を表します。
+      </li>
+
+      <li>
+        <span class="code-sample">initPlayer(canvas)</span> はプレイヤーの
+        <span class="fill-blank" data-answer="初期位置"></span>
+        をセットする関数です。
+      </li>
+
+      <li>
+        <span class="code-sample">canvas.width / 2 - player.width / 2</span> は
+        プレイヤーを横方向の
+        <span class="fill-blank" data-answer="中央"></span> に配置します。
+      </li>
+
+      <li>
+        <span class="code-sample">drawPlayer(ctx)</span> は
+        プレイヤー画像を
+        <span class="fill-blank" data-answer="canvas に描画する関数"></span> です。
+      </li>
+
+    </ol>
+
+    <h2>応用問題</h2>
+    <ol>
+      <li>
+        プレイヤーをもっと大きくしたい場合、どの値を変更すれば良いか？
+        <span class="fill-blank" data-answer="player.width と player.height"></span>
+      </li>
+
+      <li>
+        プレイヤー画像が表示されないとき、確認すべき2つのポイントを書きなさい。
+        <span class="fill-blank" data-answer="ファイル名と画像の場所"></span>
+      </li>
+
+      <li>
+        プレイヤーの初期位置をもっと上にしたい場合、何の値を変更する？
+        <span class="fill-blank" data-answer="player.y の計算式"></span>
+      </li>
+
+      <li>
+        スコアを増やす処理は他ファイルにある。player.js でスコアを変更せずに、
+        どこからでもスコアが参照できる理由は？
+        <span class="fill-blank" data-answer="player が export されているため"></span>
+      </li>
+    </ol>
+
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+
+</html>

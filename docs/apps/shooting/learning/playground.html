@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playground</title>
+  <link rel="stylesheet" href="style.css?v=20260113" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css" />
+  <link id="cmThemeLink" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/eclipse.min.css" />
+</head>
+
+<body>
+  <header class="header header-row">
+    <div>
+      <a class="back" href="index.html">← 一覧へ</a>
+      <h1 id="pageTitle">Playground</h1>
+      <p class="sub" id="pageSub">左: ガイド / 中: サンプル / 右: 自分のコード</p>
+    </div>
+    <div class="header-actions">
+      <span id="saveInfo" class="saveInfo">自動保存: -</span>
+
+      <div class="controlGroup">
+        <label class="themeLabel" for="exportName">ファイル名</label>
+        <input id="exportName" class="textInput" type="text" placeholder="例: classA_taro" />
+      </div>
+
+      <button id="exportBtn" class="btn" type="button">エクスポート</button>
+      <button id="submitBtn" class="btn" type="button">提出（このStep）</button>
+      <label class="btn" for="importFile">インポート</label>
+      <input id="importFile" class="fileInput" type="file" accept="application/json,.json" />
+      <button id="resetStepBtn" class="btn" type="button">このStepをリセット</button>
+
+      <a class="btnLink" href="viewer.html">提出ビューワー</a>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section id="guide" class="col guide">
+      <div class="guide-head">
+        <h2 class="h2" id="guideTitle">ガイド</h2>
+        <div class="tabs guideTabs" role="tablist" aria-label="ガイドの表示">
+          <button class="tab" type="button" role="tab" aria-selected="true" data-guide-tab="step">このStepのガイド</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-guide-tab="howto">Playgroundの使い方</button>
+        </div>
+      </div>
+      <div id="guideBody" class="guide-body">
+        <div id="guideStepWrap" data-guide-pane="step">
+          <div id="guideStepBody"></div>
+
+          <details id="guideDiffDetails" class="guideDiffDetails">
+            <summary>差分（VS Code風）</summary>
+            <div class="diffControls">
+              <div class="controlGroup">
+                <label class="themeLabel" for="diffKind">差分</label>
+                <select id="diffKind" class="select" aria-label="差分の種類">
+                  <option value="js">JavaScript</option>
+                  <option value="html">HTML</option>
+                  <option value="css">CSS</option>
+                </select>
+              </div>
+
+              <div class="controlGroup" id="diffJsFileWrap" hidden>
+                <label class="themeLabel" for="diffJsFile">JSファイル</label>
+                <select id="diffJsFile" class="select" aria-label="JavaScriptファイル"></select>
+              </div>
+
+              <button id="diffRefreshBtn" class="btn" type="button">更新</button>
+            </div>
+            <div id="diffView" class="diffView" aria-label="差分ビュー"></div>
+            <p class="diffHint">サンプル（左の内容）と自分のコードの差分を、行単位で表示します。</p>
+          </details>
+        </div>
+
+        <div id="guideHowtoBody" data-guide-pane="howto" hidden></div>
+      </div>
+    </section>
+
+    <section class="col">
+      <h2 class="h2">サンプル</h2>
+      <div class="iframeWrap">
+        <iframe id="sampleFrame" title="sample"></iframe>
+      </div>
+
+      <div class="sampleCode">
+        <div class="tabs" role="tablist" aria-label="サンプルのソース">
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="html">HTML</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="css">CSS</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="js">JavaScript</button>
+        </div>
+
+        <div id="sampleCodeBody" class="codeBody" hidden>
+          <div id="sampleJsFiles" class="tabs jsFiles" role="tablist" aria-label="サンプルJavaScriptファイル" hidden></div>
+          <pre class="codePane" data-pane="html"><code id="sampleHtml" class="language-html"></code></pre>
+          <pre class="codePane" data-pane="css" hidden><code id="sampleCss" class="language-css"></code></pre>
+          <pre class="codePane" data-pane="js" hidden><code id="sampleJs" class="language-javascript"></code></pre>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="col">
+      <h2 class="h2">自分の実行</h2>
+      <div class="iframeWrap">
+        <iframe id="outFrame" title="output"></iframe>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div class="myEditors">
+        <div class="tabs myTabs" role="tablist" aria-label="自分のコード">
+          <button class="tab" type="button" role="tab" aria-selected="false" data-my-tab="html">HTML</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-my-tab="css">CSS</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-my-tab="js">JavaScript</button>
+
+          <div class="sideControls" aria-label="実行と表示・エディタ設定">
+            <button id="runBtn" class="btn btnRun" type="button">実行</button>
+
+            <div class="controlGroup">
+              <label class="themeLabel" for="themeSelect">表示</label>
+              <select id="themeSelect" class="select" aria-label="テーマ">
+                <option value="auto">自動</option>
+                <option value="light">ライト</option>
+                <option value="dark">ダーク</option>
+              </select>
+            </div>
+
+            <div class="controlGroup">
+              <label class="themeLabel" for="cmThemeSelect">エディタ</label>
+              <select id="cmThemeSelect" class="select" aria-label="エディタテーマ">
+                <option value="auto">自動</option>
+                <option value="eclipse">Eclipse（明）</option>
+                <option value="idea">IDEA（明）</option>
+                <option value="neo">Neo（明）</option>
+                <option value="material-darker">Material Darker（暗）</option>
+                <option value="darcula">Darcula（暗）</option>
+                <option value="dracula">Dracula（暗）</option>
+                <option value="monokai">Monokai（暗）</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="myPane" data-my-pane="html" hidden>
+          <textarea id="htmlText" spellcheck="false"></textarea>
+        </div>
+        <div class="myPane" data-my-pane="css" hidden>
+          <textarea id="cssText" spellcheck="false"></textarea>
+        </div>
+        <div class="myPane" data-my-pane="js" hidden>
+          <div id="jsFiles" class="tabs jsFiles" role="tablist" aria-label="JavaScriptファイル" hidden></div>
+          <textarea id="jsText" spellcheck="false"></textarea>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="theme.js?v=20260113"></script>
+  <script src="playground.js?v=20260113"></script>
+</body>
+
+</html>

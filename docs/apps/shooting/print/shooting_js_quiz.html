@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript構造クイズ - Step7（弾を複数：配列）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>JavaScript構造クイズ（Step7: 弾を複数／配列）</h1>
+
+    <ol>
+      <li>
+        <p><strong>Q1.</strong> <code>canvas</code> と <code>ctx</code> はどのような役割を持ちますか？</p>
+        <ul>
+          <li>① canvasは画像ファイルを読み込むタグ、ctxはそのファイル名</li>
+          <li>② canvasは図を描くための要素、ctxはその筆（2D描画用オブジェクト）</li>
+          <li>③ canvasは音声を再生するタグ、ctxは再生速度</li>
+          <li>④ canvasは文字入力欄、ctxはフォント設定</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q2.</strong> 「オブジェクト」とはどのようなものですか？</p>
+        <ul>
+          <li>① データを順番に並べる入れ物</li>
+          <li>② 値をあとで変えられる変数</li>
+          <li>③ 複数の情報をまとめて1つにした入れ物</li>
+          <li>④ 一度しか実行されない命令</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q3.</strong> このプログラムでオブジェクトになっているものはどれですか？</p>
+        <ul>
+          <li>① player</li>
+          <li>② bullets</li>
+          <li>③ BULLET_SPEED</li>
+          <li>④ ctx</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q4.</strong> 今後追加したほうが良いオブジェクトとして、最も適切なものはどれですか？</p>
+        <ul>
+          <li>① 敵キャラクターを管理するオブジェクト</li>
+          <li>② 文字入力フォーム</li>
+          <li>③ 音声ファイル再生用タグ</li>
+          <li>④ 時刻を表示する関数</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q5.</strong> 画像がまだ読み込めていないとき、自機を黄色の四角で描く処理はどれですか？</p>
+        <ul>
+          <li>① <code>ctx.drawImage(playerImage, ...)</code></li>
+          <li>② <code>ctx.fillStyle = "yellow"; ctx.fillRect(...)</code></li>
+          <li>③ <code>playerImage.src = "yellow"</code></li>
+          <li>④ <code>ctx.arc(...)</code></li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q6.</strong> 自機の初期位置を中央にするための式はどれですか？</p>
+        <ul>
+          <li>① <code>x: 0</code></li>
+          <li>② <code>x: canvas.width / 2 - 30 / 2</code></li>
+          <li>③ <code>x: canvas.width</code></li>
+          <li>④ <code>x: -30</code></li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q7.</strong> プレイヤーの大きさを小さくしたい。どこを変更しますか？</p>
+        <ul>
+          <li>① <code>player.width</code> と <code>player.height</code> の数値を小さくする</li>
+          <li>② <code>BULLET_SPEED</code> を小さくする</li>
+          <li>③ <code>ctx.fillStyle</code> を変える</li>
+          <li>④ <code>player.x</code> の値を増やす</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q8.</strong> オブジェクトを使用するメリットとして最も適切なのはどれですか？</p>
+        <ul>
+          <li>① データをバラバラに書かなくてよくなる</li>
+          <li>② 処理速度が必ず速くなる</li>
+          <li>③ すべての値を自動計算できる</li>
+          <li>④ 1つの値しか持てなくなる</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q9.</strong> 配列（<code>bullets</code>）で管理しているのはどれですか？</p>
+        <ul>
+          <li>① 弾の情報</li>
+          <li>② プレイヤーの座標</li>
+          <li>③ 敵のスコア</li>
+          <li>④ カーソルの位置</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q10.</strong> <code>BULLET_SPEED</code> のようにすべて大文字で書かれている変数は何を意味しますか？</p>
+        <ul>
+          <li>① エラー変数</li>
+          <li>② 定数（値を変えない変数）</li>
+          <li>③ グローバル変数</li>
+          <li>④ 関数名</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q11.</strong> 押しっぱなしで移動させるために、<code>keydown</code> だけでなく <code>keyup</code> も使う主な理由は？</p>
+        <ul>
+          <li>① キーを離した瞬間に入力状態をfalseへ戻すため</li>
+          <li>② requestAnimationFrameを止めるため</li>
+          <li>③ 画像を読み込むため</li>
+          <li>④ canvasのサイズを変えるため</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q12.</strong> 自機が画面外に出ないようにする処理として最も適切なのは？</p>
+        <ul>
+          <li>① <code>player.x</code> を 0〜<code>canvas.width - player.width</code> に収める</li>
+          <li>② <code>BULLET_SPEED</code> を0にする</li>
+          <li>③ <code>draw()</code> を削除する</li>
+          <li>④ 何もしない</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q13.</strong> <code>update()</code> 関数の主な役割は何ですか？</p>
+        <ul>
+          <li>① 弾やプレイヤーなどの位置を計算して更新する</li>
+          <li>② 背景やプレイヤーを描く</li>
+          <li>③ 画面サイズを設定する</li>
+          <li>④ タイトルを表示する</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q14.</strong> <code>draw()</code> 関数の主な役割は何ですか？</p>
+        <ul>
+          <li>① オブジェクトの状態を描画する</li>
+          <li>② 弾を削除する</li>
+          <li>③ ゲームを終了する</li>
+          <li>④ 定数を定義する</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q15.</strong> <code>ctx.fillStyle = "black"</code> の行では何をしていますか？</p>
+        <ul>
+          <li>① 背景を黒く塗りつぶしている</li>
+          <li>② プレイヤーの体力をリセットしている</li>
+          <li>③ 弾を黒くしている</li>
+          <li>④ 文字を表示している</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q16.</strong> <code>ctx.fillStyle = "white"</code> の行では何をしていますか？</p>
+        <ul>
+          <li>① 弾を白で描いている</li>
+          <li>② 背景を白にしている</li>
+          <li>③ プレイヤーを消している</li>
+          <li>④ フォントの色を変えている</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q17.</strong> <code>update()</code> 関数内で <code>bullets.splice(i,1)</code> によって弾を削除しています。どのようなときに削除しているか？</p>
+        <ul>
+          <li>① 弾の下端が画面の上端（y=0）より上に出たとき（<code>b.y + b.size &lt; 0</code>）</li>
+          <li>② 弾が敵に当たったとき</li>
+          <li>③ 弾が右端に到達したとき</li>
+          <li>④ 弾がplayerと重なったとき</li>
+        </ul>
+      </li>
+    </ol>
+
+    <details open>
+      <summary>答え（確認用）</summary>
+      <ul>
+        <li>Q1 → ②</li>
+        <li>Q2 → ③</li>
+        <li>Q3 → ①</li>
+        <li>Q4 → ①</li>
+        <li>Q5 → ②</li>
+        <li>Q6 → ②</li>
+        <li>Q7 → ①</li>
+        <li>Q8 → ①</li>
+        <li>Q9 → ①</li>
+        <li>Q10 → ②</li>
+        <li>Q11 → ①</li>
+        <li>Q12 → ①</li>
+        <li>Q13 → ①</li>
+        <li>Q14 → ①</li>
+        <li>Q15 → ①</li>
+        <li>Q16 → ①</li>
+        <li>Q17 → ①</li>
+      </ul>
+    </details>
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+</html>

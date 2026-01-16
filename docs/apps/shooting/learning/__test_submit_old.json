@@ -1,0 +1,9 @@
+{
+  "step": 3,
+  "item": {
+    "html": "<!doctype html>\n<html>\n<head><meta charset=\"utf-8\"><title>old</title></head>\n<body><h1>old</h1></body>\n</html>",
+    "css": "body { color: red; }\n",
+    "js": "console.log('old');\n",
+    "updatedAt": "2026-01-16T09:00:00.000Z"
+  }
+}

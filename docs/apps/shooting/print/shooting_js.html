@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Step7: 弾を複数（配列） - JavaScriptプリント</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <!-- 常に操作できるヘッダー（ボタンはここに） -->
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+
+  </header>
+
+  <main>
+    <h1>Step7: 弾を複数（配列） - JavaScript</h1>
+    <!-- コード全文（変更なし） -->
+    <pre><code class="code-sample">
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// 自機
+const player = {
+  width: 30,
+  height: 30,
+  x: canvas.width / 2 - 30 / 2,
+  y: canvas.height - 60,
+  speed: 5,
+};
+
+// 入力（押しっぱなし対応）
+const input = {
+  left: false,
+  right: false,
+};
+
+// 弾（複数を配列で管理する）
+const bullets = [];
+
+const BULLET_SIZE = 10;
+const BULLET_SPEED = -8;
+
+const mapImage = new Image();
+mapImage.src = "../image/map.png";
+
+const playerImage = new Image();
+playerImage.src = "../image/player.png";
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") input.left = true;
+  if (e.key === "ArrowRight") input.right = true;
+
+  // Space を押したら弾を配列に追加する（何発でもOK）
+  if (e.code === "Space") {
+    bullets.push({
+      size: BULLET_SIZE,
+      x: player.x + player.width / 2 - BULLET_SIZE / 2,
+      y: player.y,
+      vy: BULLET_SPEED,
+    });
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft") input.left = false;
+  if (e.key === "ArrowRight") input.right = false;
+});
+
+function update() {
+  // 自機の移動
+  if (input.left) player.x -= player.speed;
+  if (input.right) player.x += player.speed;
+
+  if (player.x < 0) player.x = 0;
+  if (player.x > canvas.width - player.width) {
+    player.x = canvas.width - player.width;
+  }
+
+  // 弾の移動（配列を後ろから回すと削除しやすい）
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    const b = bullets[i];
+    b.y += b.vy;
+
+    // 画面の外に出た弾は消す
+    if (b.y + b.size < 0) {
+      bullets.splice(i, 1);
+    }
+  }
+}
+
+function draw() {
+  // 背景
+  if (mapImage.complete) {
+    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+  } else {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // 自機
+  if (playerImage.complete) {
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+  } else {
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+  }
+
+  // 弾（白い丸を複数描く）
+  ctx.fillStyle = "white";
+  for (let i = 0; i < bullets.length; i++) {
+    const b = bullets[i];
+    const r = b.size / 2;
+    const cx = b.x + r;
+    const cy = b.y + r;
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+    </code></pre>
+
+    <!-- 基礎の穴埋め（既存） -->
+    <ol>
+      <li>
+        <span class="code-sample">const canvas = document.getElementById("gameCanvas");</span> は、HTMLの
+        <span class="fill-blank" data-answer="canvas"></span> 要素（id属性が
+        <span class="fill-blank" data-answer="gameCanvas"></span>）を取得しています。
+      </li>
+
+      <li>
+        <span class="code-sample">const ctx = canvas.getContext("2d");</span> は、
+        <span class="fill-blank" data-answer="2D"></span> 描画用のコンテキスト（筆）を取り出し、変数
+        <span class="fill-blank" data-answer="ctx"></span> に入れています。
+      </li>
+
+      <li>
+        <span class="code-sample">const player = { ... };</span> は、位置や大きさなどの情報をひとまとめにした
+        <span class="fill-blank" data-answer="オブジェクト"></span> を作っています。初期位置のxは
+        <span class="fill-blank" data-answer="canvas.width / 2 - 30 / 2"></span>
+        で、画面の
+        <span class="fill-blank" data-answer="中央"></span>
+        に来るよう計算しています。
+      </li>
+
+      <li>
+        <span class="code-sample">const bullets = [];</span> は弾を入れていく
+        <span class="fill-blank" data-answer="配列"></span> を用意しています。
+        <span class="code-sample">bullets.push({...})</span> で新しい弾を
+        <span class="fill-blank" data-answer="追加"></span> します。
+      </li>
+
+      <li>
+        <span class="code-sample">const BULLET_SPEED = -8;</span> の
+        <span class="fill-blank" data-answer="BULLET_SPEED"></span> は定数です。負の値なので、弾は
+        <span class="fill-blank" data-answer="上"></span> 方向に進みます。
+      </li>
+
+      <li>
+        <span class="code-sample">bullets.push({...})</span> は新しい弾を配列に
+        <span class="fill-blank" data-answer="追加"></span>
+        します。弾のxは
+        <span class="fill-blank" data-answer="player.x + player.width / 2 - BULLET_SIZE / 2"></span>
+        で、プレイヤーの中央から出るようにしています。
+      </li>
+
+      <li>
+        <span class="code-sample">keydown</span> / <span class="code-sample">keyup</span> はキーボード入力を受け取る
+        <span class="fill-blank" data-answer="イベントリスナー"></span> です。押している間だけ動けるように、入力状態を
+        <span class="fill-blank" data-answer="input"></span>
+        に保存します。
+      </li>
+
+      <li>
+        画面端からはみ出さないように、<span class="code-sample">player.x &lt; 0</span> なら
+        <span class="fill-blank" data-answer="0"></span>
+        に戻し、右端は
+        <span class="fill-blank" data-answer="canvas.width - player.width"></span>
+        を超えないようにしています。
+      </li>
+
+      <li>
+        <span class="code-sample">e.code === "Space"</span> のとき
+        <span class="code-sample">bullets.push({...})</span> で弾を配列に追加して発射します。ここで使われているキー判定のプロパティ名は
+        <span class="fill-blank" data-answer="code"></span> です。
+      </li>
+
+      <li>
+        <span class="code-sample">update()</span> はゲームの状態を更新します。弾の
+        <span class="fill-blank" data-answer="y"></span> 座標に速度
+        <span class="fill-blank" data-answer="vy"></span> を足して進め、画面の外（
+        <span class="fill-blank" data-answer="0"></span> より上）に出た弾は
+        <span class="fill-blank" data-answer="配列"></span>
+        から削除します。判定は <span class="code-sample">b.y + b.size &lt; 0</span>（弾の下端が上に抜けた）です。
+      </li>
+
+      <li>
+        <span class="code-sample">draw()</span> は描画します。画像が読み込めていれば
+        <span class="fill-blank" data-answer="drawImage"></span>
+        で描き、読み込み中は背景を黒、自機を黄色の四角で代わりに描きます。弾は白い
+        <span class="fill-blank" data-answer="円"></span>
+        を <span class="code-sample">arc</span> で描きます。
+      </li>
+
+      <li>
+        <span class="code-sample">requestAnimationFrame(gameLoop)</span> は、
+        <span class="fill-blank" data-answer="ブラウザの描画"></span> のタイミングで次の描画をお願いする関数です。これにより
+        <span class="fill-blank" data-answer="gameLoop"></span> が繰り返し実行されます。
+      </li>
+    </ol>
+
+    <!-- ===== 応用・思考力問題（新規追加） ===== -->
+    <section>
+      <h2>応用・思考力問題</h2>
+      <ol>
+
+        <li>
+          プレイヤーの中央から弾を発射したい。式の空欄を埋めよ：<br>
+          <span class="code-sample">player.x + </span><span class="fill-blank"
+            data-answer="player.width / 2"></span><span class="code-sample"> - </span><span class="fill-blank"
+            data-answer="BULLET_SIZE / 2"></span>
+        </li>
+
+        <li>
+          自機が画面外に出ないようにする処理として正しい説明を一言で：
+          <span class="fill-blank" data-answer="player.x を 0〜(canvas.width-player.width) に収める"></span>
+        </li>
+
+        <li>
+          <span class="code-sample">bullets.splice(i, 1)</span> を「前から i++ でループ」中に実行すると、何が起きてバグにつながりやすいか。<br>
+          <span class="fill-blank" data-answer="要素が詰まり次の要素を飛ばす（インデックスずれ）"></span><br>
+          これを避ける安全な走査方法を1つ書け：
+          <span class="fill-blank" data-answer="後ろから（i--）でループ"></span>
+        </li>
+
+        <li>
+          <span class="code-sample">window.addEventListener("keydown", ...)</span> の判定で
+          <span class="code-sample">e.key</span> と <span class="code-sample">e.code</span> の違いを一言で：
+          <span class="fill-blank" data-answer="keyは入力文字／codeは物理キー"></span>。<br>
+          スペースキー検出に適しているのはどちらか：
+          <span class="fill-blank" data-answer="e.code"></span>
+        </li>
+
+        <li>
+          もしキャンバスの高さを <span class="code-sample">800</span> に変えたら、弾の消去条件 <span class="code-sample">bullet.y &lt; 0</span>
+          はそのままで良いか？理由とともに答えよ：<br>
+          <span class="fill-blank" data-answer="考え方は同じ（上端は0）。ただしこのコードは b.y+b.size&lt;0 を使う"></span>
+        </li>
+        <div class="page-break"></div>
+
+
+        <li>
+          自機の初期xは <span class="code-sample">canvas.width / 2 - 30 / 2</span>。キャンバス幅480のとき、初期xはいくつ？
+          <span class="fill-blank" data-answer="225"></span>
+        </li>
+
+        <li>
+          60fps環境で <span class="code-sample">vy = -8</span> の弾は、1秒で何ピクセル進むか（上方向）：<br>
+          <span class="fill-blank" data-answer="-480（ピクセル）"></span>
+        </li>
+        
+
+        <li>
+          update と draw の順序を逆にすると何が問題か、一言で：
+          <span class="fill-blank" data-answer="前フレームの状態を描くことになり見た目が遅れる"></span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 用語解説（穴埋め化） -->
+    <details open>
+      <summary>用語解説</summary>
+      <ul>
+        <li>canvas … <span class="fill-blank" data-answer="図形を描くための要素（HTML側）"></span></li>
+        <li>2Dコンテキスト（ctx）… <span class="fill-blank" data-answer="2D描画用のAPI（線や四角を描く）"></span></li>
+        <li>オブジェクト … <span class="fill-blank" data-answer="複数の情報をまとめた入れ物"></span>（<span class="code-sample">{ x:0, y:0,
+            ... }</span>）</li>
+        <li>配列 … <span class="fill-blank" data-answer="複数のデータを順番に並べる入れ物"></span>（<span class="code-sample">[]</span>）
+        </li>
+        <li>定数（const）… <span class="fill-blank" data-answer="値をあとで変えない変数"></span></li>
+        <li>イベントリスナー … <span class="fill-blank" data-answer="入力や出来事に反応する仕組み"></span></li>
+        <li>ゲームループ … <span class="fill-blank" data-answer="update()→draw()を繰り返す処理"></span></li>
+        <li>requestAnimationFrame … <span class="fill-blank" data-answer="ブラウザの描画タイミングで関数を呼ぶAPI"></span></li>
+        <li>Image … <span class="fill-blank" data-answer="画像を読み込むためのオブジェクト"></span></li>
+      </ul>
+    </details>
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+
+</html>

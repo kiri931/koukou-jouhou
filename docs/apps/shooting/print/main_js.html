@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>情プロ main.js</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="print2">
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>情プロ main.js</h1>
+
+    <pre><code class="code-sample">
+import { player, initPlayer, drawPlayer } from "./player.js";
+import { spawnEnemy, enemies, updateEnemies, drawEnemies } from "./enemies.js";
+import { handleCollisions } from "./collision.js";
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const mapImage = new Image();
+mapImage.src = "map.png";
+
+initPlayer(canvas);
+
+export const bullets = [];
+const BULLET_SPEED = -5;
+
+function tryShoot() {
+    bullets.push({
+        x: player.x + player.width / 2 - 5,
+        y: player.y,
+        width: 10,
+        height: 10,
+        vy: BULLET_SPEED,
+    })
+}
+
+function updateScore() {
+    const scoreBoard = document.getElementById("scoreBoard");
+    scoreBoard.innerText = `Score: ` + player.score;
+    const lifeBoard = document.getElementById("lifeBoard");
+    lifeBoard.innerText = `Life: ` + player.life;
+}
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+        if (player.x > 10) {
+            player.x -= 10;
+        }
+    } else if (e.key === "ArrowRight") {
+        if (player.x < canvas.width - player.width - 10) {
+            player.x += 10;
+        }
+    } else if (e.code === "Space") {
+        tryShoot();
+    }
+});
+
+function update() {
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        bullet.y += bullet.vy;
+        if (bullet.y < 0) {
+            bullets.splice(i, 1);
+        }
+    }
+    spawnEnemy(canvas);
+    updateEnemies(canvas);
+    handleCollisions();
+    updateScore();
+}
+
+function draw() {
+    ctx.fillStyle = "black";
+    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+
+    drawPlayer(ctx);
+
+    ctx.fillStyle = "white";
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+    }
+
+    drawEnemies(ctx);
+}
+
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+    </code></pre>
+    <details>
+      <summary>main.jsについて</summary><a href="https://codepen.io/tomohiro-adachi/pen/MYyGrEy">こちらをクリックしてください。</a>
+    </details>
+    <!-- ▼ 説明セクション ▼ -->
+
+    <h2>1. main.js の役割</h2>
+
+    <p>
+      <strong>main.js</strong> は、このシューティングゲームの「中心となる処理」を担当するファイルです。
+      具体的には次のような役割があります：
+    </p>
+
+    <ul>
+      <li>① 各モジュール（player・enemies・collision）を読み込む</li>
+      <li>② ゲーム画面（canvas）を準備する</li>
+      <li>③ キー入力（左右移動・弾発射）を管理する</li>
+      <li>④ 弾を動かし、敵を動かし、当たり判定を行う</li>
+      <li>⑤ スコアやライフを表示する</li>
+      <li>⑥ ゲームループ（毎フレームの更新と描画）を回す</li>
+    </ul>
+
+    <p>
+      このファイルがゲーム全体の動きをコントロールする「心臓部」です。
+    </p>
+
+    <h2>2. モジュールの読み込み（import）</h2>
+
+    <pre><code>import { player, initPlayer, drawPlayer } from "./player.js";
+import { spawnEnemy, enemies, updateEnemies, drawEnemies } from "./enemies.js";
+import { handleCollisions } from "./collision.js";</code></pre>
+
+    <p>
+      必要な機能を各ファイルから読み込みます。
+      これにより main.js から敵生成・自機描画・当たり判定が使えるようになります。
+    </p>
+
+    <h2>3. canvas（ゲーム画面）の準備</h2>
+
+    <pre><code>const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");</code></pre>
+
+    <ul>
+      <li>canvas … HTML にあるゲーム画面のこと</li>
+      <li>ctx … 図形や画像を描画するための「ペン」</li>
+    </ul>
+
+    <h3>背景画像（map.png）の読み込み</h3>
+
+    <pre><code>const mapImage = new Image();
+mapImage.src = "map.png";</code></pre>
+
+    <p>ゲームの背景として利用されています。</p>
+
+    <h2>4. プレイヤーの初期化</h2>
+
+    <pre><code>initPlayer(canvas);</code></pre>
+
+    <p>
+      この1行で、自機（player）の初期位置が画面中央に設定されます。
+      呼び出すだけで初期位置がバチッと決まるのは player.js がしっかり作られているおかげです。
+    </p>
+
+    <h2>5. 弾（bullets）の管理</h2>
+
+    <pre><code>export const bullets = [];
+const BULLET_SPEED = -5;</code></pre>
+
+    <p>
+      bullets は「画面上に存在する弾の一覧」を保存する配列です。
+      弾は上方向へ飛ぶため <code>BULLET_SPEED = -5</code> としています。
+    </p>
+
+    <h3>弾を撃つ関数 tryShoot()</h3>
+
+    <pre><code>function tryShoot() {
+    bullets.push({
+        x: player.x + player.width / 2 - 5,
+        y: player.y,
+        width: 10,
+        height: 10,
+        vy: BULLET_SPEED,
+    })
+}</code></pre>
+
+    <ul>
+      <li>弾を bullets 配列に追加する</li>
+      <li>自機の中央から発射されるよう位置を調整している</li>
+      <li>vy により上方向へ移動する</li>
+    </ul>
+
+    <h2>6. キー入力（左右移動・スペースで弾発射）</h2>
+
+    <pre><code>window.addEventListener("keydown", (e) => { ... });</code></pre>
+
+    <ul>
+      <li>← で左へ移動</li>
+      <li>→ で右へ移動</li>
+      <li>Space で弾を発射</li>
+    </ul>
+
+    <p>
+      プレイヤーの移動範囲を canvas 内に収めるため、<br>
+      <code>if (player.x > 10)</code> などの条件でガードしています。
+    </p>
+
+    <h2>7. update()：ゲームの「状態を更新」する部分</h2>
+
+    <pre><code>function update() {
+    // 弾の移動
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        bullet.y += bullet.vy;
+        if (bullet.y < 0) {
+            bullets.splice(i, 1);
+        }
+    }
+
+    spawnEnemy(canvas);
+    updateEnemies(canvas);
+    handleCollisions();
+    updateScore();
+}</code></pre>
+
+    <p>
+      update() はゲームの「中身の動き」をまとめた関数です。
+    </p>
+
+    <ul>
+      <li>① 弾を動かし、画面外に出たら削除する</li>
+      <li>② 新しい敵を生成する（spawnEnemy）</li>
+      <li>③ 敵を下に動かす（updateEnemies）</li>
+      <li>④ 当たり判定（衝突）を行う（handleCollisions）</li>
+      <li>⑤ スコアとライフ表示を更新する</li>
+    </ul>
+
+    <h2>8. draw()：画面に描画する部分</h2>
+
+    <pre><code>function draw() {
+    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+    drawPlayer(ctx);
+
+    ctx.fillStyle = "white";
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+    }
+
+    drawEnemies(ctx);
+}</code></pre>
+
+    <h3>描画の順番も重要</h3>
+
+    <ol>
+      <li>背景を描く</li>
+      <li>プレイヤーを描く</li>
+      <li>弾を描く</li>
+      <li>敵を描く</li>
+    </ol>
+
+    <p>
+      順番が違うと背景でプレイヤーが隠れたりするため、
+      正しい順で描くことはゲーム制作の基本です。
+    </p>
+
+    <h2>9. gameLoop()：ゲームを動かし続ける心臓部</h2>
+
+    <pre><code>function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}</code></pre>
+
+    <h3>ポイント</h3>
+
+    <ul>
+      <li><code>requestAnimationFrame()</code> が毎フレーム呼ばれる</li>
+      <li>それによりゲームが常に動き続ける</li>
+      <li>update → draw → update → draw … のループになる</li>
+    </ul>
+
+    <p>
+      最後に <code>gameLoop()</code> を1回だけ呼べば、永遠にループし続ける仕組みです。
+    </p>
+
+    <h2>基礎の穴埋め問題</h2>
+    <ol>
+      <li><code>canvas.getContext("2d")</code> は、図形や画像を描くための
+        <span class="fill-blank" data-answer="描画用オブジェクト（ctx）"></span> を取得する処理です。
+      </li>
+
+      <li>
+        <code>bullets</code> は画面上の
+        <span class="fill-blank" data-answer="弾の一覧（配列）"></span> を管理します。
+      </li>
+
+      <li>
+        <code>tryShoot()</code> は弾を
+        <span class="fill-blank" data-answer="bullets 配列に追加する"></span> 関数です。
+      </li>
+
+      <li>
+        <code>window.addEventListener("keydown")</code> は
+        <span class="fill-blank" data-answer="キー入力を処理する"></span> ための機能です。
+      </li>
+
+      <li>
+        <code>update()</code> はゲームの
+        <span class="fill-blank" data-answer="状態（弾の動き・敵の動き・当たり判定など）を更新する"></span> 関数です。
+      </li>
+
+      <li>
+        <code>draw()</code> は
+        <span class="fill-blank" data-answer="画面に描画する処理"></span> をまとめた関数です。
+      </li>
+
+      <li>
+        <code>requestAnimationFrame()</code> は毎フレームごとに
+        <span class="fill-blank" data-answer="gameLoop を呼び出す"></span> 関数です。
+      </li>
+    </ol>
+
+    <h2>応用問題</h2>
+    <ol>
+      <li>自機の移動速度（左右）をもっと速くしたい場合、どの値を変える？
+        <span class="fill-blank" data-answer="player.x += 10（10 の部分）"></span>
+      </li>
+
+      <li>敵の出現数を増やしたい場合、どのファイルのどの部分を変える？
+        <span class="fill-blank" data-answer="enemies.js の enemies.length < 10"></span>
+      </li>
+
+      <li>弾の大きさを変えたい場合、どこの値を変更する？
+        <span class="fill-blank" data-answer="tryShoot() 内の width と height"></span>
+      </li>
+
+      <li>ゲームオーバー後にリロードせずに「Game Over」と表示したい場合、どの関数を改造すればよい？
+        <span class="fill-blank" data-answer="collision.js の handleCollisions()"></span>
+      </li>
+
+      <li>背景画像を動かしてスクロール演出をしたい場合、どの処理を追加する必要がある？
+        <span class="fill-blank" data-answer="draw() 内で mapImage の描画位置を変える処理"></span>
+      </li>
+    </ol>
+
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+
+</html>

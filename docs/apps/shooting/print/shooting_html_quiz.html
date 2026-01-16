@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML構造クイズ - Step1（Canvasを表示する）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="toolbar">
+      <button id="toggle-preview">プレビュー表示</button>
+      <button id="show-answers">答えを表示</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>HTML構造クイズ（Step1: Canvasを表示する）</h1>
+
+    <ol>
+      <li>
+        <p><strong>Q1.</strong> <code>&lt;title&gt;シューティングゲーム&lt;/title&gt;</code> で設定したタイトルは、どこに表示されますか？</p>
+        <ul>
+          <li>① ページの中央</li>
+          <li>② ブラウザのタブ（タイトルバー）</li>
+          <li>③ ページの下部</li>
+          <li>④ 画像の上</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q2.</strong> <code>&lt;html lang="ja"&gt;</code> は日本語を指定しています。英語にするにはどのように書き換えますか？</p>
+        <ul>
+          <li>① &lt;html lang="en"&gt;</li>
+          <li>② &lt;html lang="jp"&gt;</li>
+          <li>③ &lt;html lang="eng"&gt;</li>
+          <li>④ &lt;html language="en"&gt;</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q3.</strong> <code>&lt;head&gt;</code> タグの中には何を記述すべきですか？</p>
+        <ul>
+          <li>① 画面に表示する内容</li>
+          <li>② スタイル・タイトルなどの設定情報</li>
+          <li>③ JavaScriptの関数のみ</li>
+          <li>④ bodyタグの中身</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q4.</strong> <code>charset</code> とは何を意味しますか？</p>
+        <ul>
+          <li>① ページの背景色</li>
+          <li>② 文字の大きさ</li>
+          <li>③ 文字コードの種類</li>
+          <li>④ ページのタイトル</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q5.</strong> <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</code> の目的として正しいものはどれ？</p>
+        <ul>
+          <li>① 文字コードをUTF-8にする</li>
+          <li>② スマホ等でも見やすいように表示領域（拡大率）を調整する</li>
+          <li>③ ページのタイトルを設定する</li>
+          <li>④ 画像を読み込む</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q6.</strong> <code>&lt;link rel="stylesheet" href="style.css" /&gt;</code> について正しい説明はどれ？</p>
+        <ul>
+          <li>① ページのデザイン（CSS）を読み込む</li>
+          <li>② JavaScriptを読み込む</li>
+          <li>③ 画像を読み込む</li>
+          <li>④ ページの言語を設定する</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q7.</strong> <code>&lt;canvas id="gameCanvas" width="480" height="640"&gt;&lt;/canvas&gt;</code> の横幅を <strong>1020</strong> に変更したい場合、どの部分を直せばよいですか？</p>
+        <ul>
+          <li>① height="1020"</li>
+          <li>② width="1020"</li>
+          <li>③ id="1020"</li>
+          <li>④ title="1020"</li>
+        </ul>
+      </li>
+
+      <li>
+        <p><strong>Q8.</strong> JavaScriptの外部ファイルを読み込むタグはどれ？</p>
+        <ul>
+          <li>① &lt;script src="main.js"&gt;&lt;/script&gt;</li>
+          <li>② &lt;link src="main.js"&gt;</li>
+          <li>③ &lt;meta src="main.js"&gt;</li>
+          <li>④ &lt;canvas src="main.js"&gt;</li>
+        </ul>
+      </li>
+    </ol>
+
+    <details open>
+      <summary>答え（確認用）</summary>
+      <ul>
+        <li>Q1 → ②</li>
+        <li>Q2 → ①</li>
+        <li>Q3 → ②</li>
+        <li>Q4 → ③</li>
+        <li>Q5 → ②</li>
+        <li>Q6 → ①</li>
+        <li>Q7 → ②</li>
+        <li>Q8 → ①</li>
+      </ul>
+    </details>
+  </main>
+
+  <script src="ui.js"></script>
+</body>
+</html>

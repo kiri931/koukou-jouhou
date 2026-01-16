@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>HTML 要素確認ページ（style.css / ui.js 用）</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* 説明枠 */
+  .explain-box {
+    border: 2px solid var(--border);
+    padding: 1em;
+    margin: 1.5em 0;
+    background: var(--panel-bg);
+    border-radius: 6px;
+  }
+  .ex-title {
+    font-weight: bold;
+    margin-bottom: .5em;
+  }
+</style>
+</head>
+
+<body class="print2">
+
+<header class="site-header">
+  <div class="toolbar">
+    <button id="toggle-preview">プレビュー表示</button>
+    <button id="show-answers">答えを表示</button>
+  </div>
+</header>
+
+<h1>HTML 要素一覧 ＋ style.css 表示確認</h1>
+
+
+
+<!-- ========================================================
+     1. 見出し h1〜h3
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 見出し（h1 / h2 / h3）</div>
+  <p>style.css では、<strong>h1 が中央揃え＋下線</strong>になり、教材タイトルに向いています。</p>
+</div>
+
+<h1>これは h1 です（ページタイトル）</h1>
+<h2>これは h2 です（章タイトル）</h2>
+<h3>これは h3 です（小見出し）</h3>
+
+
+
+<!-- ========================================================
+     2. 段落 <p>
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 段落（p）</div>
+  <p>行間・文字の見やすさが style.css で調整されています。教科書向きの読みやすいスタイルです。</p>
+</div>
+
+<p>これは通常の段落です。読みやすい行間と文字間が設定されています。</p>
+
+
+
+<!-- ========================================================
+     3. インラインコード <span class="code-sample">
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 インラインコード（span.code-sample）</div>
+  <p>文章中でコードを示したいときに使います。</p>
+</div>
+
+<p>JavaScript の変数宣言は <span class="code-sample">let</span> を使います。</p>
+
+
+
+<!-- ========================================================
+     4. コードブロック <pre><code class="code-sample">
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 コードブロック（pre &gt; code.code-sample）</div>
+  <p>プログラムコードを大きく表示したい場合に使用します。横スクロールも可能です。</p>
+</div>
+
+<pre><code class="code-sample">
+function hello() {
+  console.log("Hello!");
+}
+</code></pre>
+
+
+
+<!-- ========================================================
+     5. fill-blank（穴埋め）と data-answer
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 穴埋め（span.fill-blank）</div>
+  <p>答えを隠した状態でプリントしたいときに便利。<code>data-answer</code> 属性に答えを書くと、ボタンで表示できます。</p>
+</div>
+
+<p>
+  HTMLの段落タグは <span class="fill-blank" data-answer="p"></span> です。
+</p>
+
+<p>
+  CSS の文字色指定プロパティは <span class="fill-blank" data-answer="color"></span> です。
+</p>
+
+
+
+<!-- ========================================================
+     6. リスト（ol / ul）
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 リスト（ol / ul / li）</div>
+  <p>適度な余白がついて見やすいリストになります。</p>
+</div>
+
+<h3>順序ありリスト（ol）</h3>
+<ol>
+  <li>HTML を書く</li>
+  <li>CSS を当てる</li>
+  <li>JavaScript を加える</li>
+</ol>
+
+<h3>順序なしリスト（ul）</h3>
+<ul>
+  <li>ブラウザ</li>
+  <li>テキストエディタ</li>
+  <li>ローカルサーバー</li>
+</ul>
+
+
+
+<!-- ========================================================
+     7. details（用語まとめ）
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 details 要素（用語まとめ）</div>
+  <p>クリックで開閉できる用語まとめ。教材プリント向け。</p>
+</div>
+
+<details>
+  <summary>用語まとめ</summary>
+  <ul>
+    <li>DOM：文書構造の木構造モデル</li>
+    <li>API：機能を提供する仕組み</li>
+    <li>プロトコル：通信のルール</li>
+  </ul>
+</details>
+
+
+
+<!-- ========================================================
+     8. 印刷テスト（page-break）
+======================================================== -->
+<div class="explain-box">
+  <div class="ex-title">🟦 page-break（印刷時の改ページ）</div>
+  <p>印刷時、この下で必ず改ページされます。</p>
+</div>
+
+<div class="page-break"></div>
+
+<h2>これは印刷用ページ2です。</h2>
+<p>印刷時ヘッダーが自動で消えます。</p>
+
+
+<!-- JS は最後に -->
+<script src="ui.js"></script>
+</body>
+</html>
