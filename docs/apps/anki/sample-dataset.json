@@ -1,0 +1,29 @@
+{
+  "schema": "memory-dataset/v1",
+  "datasetId": "9e4e0a84-1cde-4c71-b6ad-6a1b3bbce5d3",
+  "title": "サンプル：計算技術検定3級 四則計算",
+  "description": "四則計算の一問一答カード（サンプル）",
+  "tags": ["math", "kentei"],
+  "cards": [
+    {
+      "id": "5f4c4d66-7c47-4c1f-9f6d-2b4b12f4a1a2",
+      "topic": "四則計算",
+      "question": "12 × (8 + 5) ÷ 3",
+      "answers": ["52"],
+      "explanation": "まず(8+5)=13。次に 12×13=156。最後に 156÷3=52。",
+      "tags": ["parentheses", "division"],
+      "createdAt": "2026-01-16T00:00:00.000Z",
+      "updatedAt": "2026-01-16T00:00:00.000Z"
+    },
+    {
+      "id": "c147c04d-9f5c-4d8c-9a2d-055cfcf9db0b",
+      "topic": "四則計算",
+      "question": "156 ÷ 3",
+      "answers": ["52"],
+      "explanation": "156を3で割ると52。",
+      "tags": ["division"],
+      "createdAt": "2026-01-16T00:00:00.000Z",
+      "updatedAt": "2026-01-16T00:00:00.000Z"
+    }
+  ]
+}
