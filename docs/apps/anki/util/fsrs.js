@@ -23,9 +23,10 @@ export function intervalFromTargetR({ targetR, stability }) {
 }
 
 function targetRWithExam({ baseR, examDateIso, now }) {
-  if (!examDateIso) return baseR;
+  const base = clamp(0.01, 0.99, Number(baseR) || 0.85);
+  if (!examDateIso) return base;
   const exam = Date.parse(examDateIso);
-  if (!Number.isFinite(exam)) return baseR;
+  if (!Number.isFinite(exam)) return base;
   const days = Math.ceil((exam - now.getTime()) / (1000 * 60 * 60 * 24));
 
   if (days > 30) return 0.85;
@@ -34,7 +35,7 @@ function targetRWithExam({ baseR, examDateIso, now }) {
   return 0.96;
 }
 
-export function fsrsScheduleNext({ now, cardState, grade }) {
+export function fsrsScheduleNext({ now, cardState, grade, baseTargetR = 0.85, examDateIso = null }) {
   // grade: 1..4 (Again/Hard/Good/Easy)
   const G = clamp(1, 4, Number(grade) || 1);
 
@@ -48,13 +49,18 @@ export function fsrsScheduleNext({ now, cardState, grade }) {
   if (!lastReviewAt || !S || !D || !Number.isFinite(S) || !Number.isFinite(D)) {
     const S0 = W[G - 1];
     const D0 = clamp(1, 10, W[4] - (G - 3) * W[5]);
-    const nextDays = clamp(0.0, 3650, intervalFromTargetR({ targetR: 0.85, stability: S0 }));
-    const dueAt = new Date(now.getTime() + nextDays * 24 * 60 * 60 * 1000).toISOString();
+    const targetR = targetRWithExam({ baseR: baseTargetR, examDateIso, now });
+    const nextDays = clamp(0.0, 3650, intervalFromTargetR({ targetR, stability: S0 }));
+    const dueAt = clipDueAt({
+      now,
+      dueAtMs: now.getTime() + nextDays * 24 * 60 * 60 * 1000,
+      examDateIso,
+    });
     return {
       stability: Math.max(0.1, S0),
       difficulty: D0,
       lastReviewAt: now.toISOString(),
-      dueAt,
+      dueAt: new Date(dueAt).toISOString(),
       reps: reps + 1,
       lapses,
     };
@@ -83,17 +89,32 @@ export function fsrsScheduleNext({ now, cardState, grade }) {
   Sp = Math.max(0.1, Sp);
 
   // 目標保持率（試験日考慮）
-  // settingsはdb側で持つが、MVPでは here では base=0.85 固定（mainが patch する余地あり）
-  const targetR = 0.85;
+  const targetR = targetRWithExam({ baseR: baseTargetR, examDateIso, now });
   const nextDays = clamp(0.0, 3650, intervalFromTargetR({ targetR, stability: Sp }));
-  const dueAt = new Date(now.getTime() + nextDays * 24 * 60 * 60 * 1000).toISOString();
+  const dueAtMs = clipDueAt({
+    now,
+    dueAtMs: now.getTime() + nextDays * 24 * 60 * 60 * 1000,
+    examDateIso,
+  });
 
   return {
     stability: Sp,
     difficulty: Dp,
     lastReviewAt: now.toISOString(),
-    dueAt,
+    dueAt: new Date(dueAtMs).toISOString(),
     reps: reps + 1,
     lapses: lapses + (G === 1 ? 1 : 0),
   };
+}
+
+function clipDueAt({ now, dueAtMs, examDateIso }) {
+  let ms = Math.max(now.getTime(), Number(dueAtMs) || now.getTime());
+  if (!examDateIso) return ms;
+  const exam = Date.parse(examDateIso);
+  if (!Number.isFinite(exam)) return ms;
+
+  const clip = exam - 24 * 60 * 60 * 1000;
+  if (ms > clip) ms = clip;
+  if (ms < now.getTime()) ms = now.getTime();
+  return ms;
 }

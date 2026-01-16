@@ -56,6 +56,43 @@ export async function openDb() {
       await txDone(tx);
     },
 
+    async exportAll() {
+      const tx = idb.transaction(['datasets', 'cards', 'cardState', 'reviews', 'confusions', 'settings'], 'readonly');
+      const datasets = await reqToPromise(tx.objectStore('datasets').getAll());
+      const cards = await reqToPromise(tx.objectStore('cards').getAll());
+      const cardState = await reqToPromise(tx.objectStore('cardState').getAll());
+      const reviews = await reqToPromise(tx.objectStore('reviews').getAll());
+      const confusions = await reqToPromise(tx.objectStore('confusions').getAll());
+      const settings = await reqToPromise(tx.objectStore('settings').getAll());
+      return { datasets, cards, cardState, reviews, confusions, settings };
+    },
+
+    async importAll(payload, { merge = false } = {}) {
+      const tx = idb.transaction(['datasets', 'cards', 'cardState', 'reviews', 'confusions', 'settings'], 'readwrite');
+      const stores = {
+        datasets: tx.objectStore('datasets'),
+        cards: tx.objectStore('cards'),
+        cardState: tx.objectStore('cardState'),
+        reviews: tx.objectStore('reviews'),
+        confusions: tx.objectStore('confusions'),
+        settings: tx.objectStore('settings'),
+      };
+
+      if (!merge) {
+        await Promise.all(Object.values(stores).map(s => reqToPromise(s.clear())));
+      }
+
+      for (const d of payload.datasets || []) stores.datasets.put(d);
+      for (const c of payload.cards || []) stores.cards.put(c);
+      for (const s of payload.cardState || []) stores.cardState.put(s);
+      // reviewsは keyPath が id なので、同一idがあれば上書きされる
+      for (const r of payload.reviews || []) stores.reviews.put(r);
+      for (const c of payload.confusions || []) stores.confusions.put(c);
+      for (const s of payload.settings || []) stores.settings.put(s);
+
+      await txDone(tx);
+    },
+
     async countDue(datasetId) {
       const now = Date.now();
       const endOfDay = new Date();
@@ -106,6 +143,7 @@ export async function openDb() {
             topic: c.topic,
             question: c.question,
             answers: c.answers,
+            explanation: c.explanation || '',
           },
           dueAtMs,
           priority,

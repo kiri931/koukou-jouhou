@@ -1,5 +1,5 @@
 import { openDb } from './storage/db.js';
-import { importDatasetJson, exportProgressJson } from './storage/io.js';
+import { importDatasetJson, exportProgressJson, importProgressJson } from './storage/io.js';
 import { fmtDateTimeLocal, nowIso, parseDateInputToIso } from './util/time.js';
 import { normalizeAnswer, scoreAnswer } from './util/answer.js';
 import { selectNextCard } from './util/queue.js';
@@ -188,6 +188,7 @@ async function renderStudy(app) {
     datasetId,
     queue,
     current: null,
+    lastTopic: null,
     startedAtMs: performance.now(),
   };
 
@@ -197,8 +198,9 @@ async function renderStudy(app) {
 function nextCard(container) {
   if (!state.session) return;
   const { queue } = state.session;
-  const next = selectNextCard(queue);
+  const next = selectNextCard(queue, { lastTopic: state.session.lastTopic });
   state.session.current = next;
+  state.session.lastTopic = next?.card?.topic || null;
 
   const startMs = performance.now();
 
@@ -212,6 +214,24 @@ function nextCard(container) {
 
   const feedback = el('div', { class: 'dg-note', style: 'display:none;' });
   const actions = el('div', { class: 'dg-row' });
+
+  const dialog = document.createElement('dialog');
+  dialog.style.border = 'none';
+  dialog.style.padding = '0';
+  dialog.style.width = 'min(720px, calc(100% - 24px))';
+  dialog.style.borderRadius = '12px';
+  dialog.innerHTML = `
+    <div class="dg-card" style="margin:0;">
+      <div class="dg-card__body dg-prose">
+        <div class="dg-row" style="justify-content: space-between; align-items: center;">
+          <strong>解説</strong>
+          <button class="dg-btn dg-btn--subtle" data-close>閉じる</button>
+        </div>
+        <div style="margin-top: var(--dg-space-4); white-space: pre-wrap;" data-body></div>
+      </div>
+    </div>
+  `;
+  dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
 
   async function grade(correct, rating) {
     const responseMs = Math.max(0, Math.round(performance.now() - startMs));
@@ -228,10 +248,13 @@ function nextCard(container) {
     });
 
     const priorState = await state.db.getCardState(state.session.datasetId, next.card.id);
+    const settings = await state.db.getSettings();
     const updated = fsrsScheduleNext({
       now: new Date(reviewedAt),
       cardState: priorState,
       grade: rating,
+      baseTargetR: settings.targetR ?? 0.85,
+      examDateIso: settings.examDate ?? null,
     });
 
     await state.db.upsertCardState(state.session.datasetId, next.card.id, {
@@ -243,10 +266,31 @@ function nextCard(container) {
     // 取り違え（誤答が別カードの答えに一致）
     if (!correct) {
       const confusion = await state.db.detectConfusion(state.session.datasetId, input.value, next.card.id);
-      if (confusion) await state.db.bumpConfusion(state.session.datasetId, next.card.id, confusion.cardId);
+      if (confusion) {
+        await state.db.bumpConfusion(state.session.datasetId, next.card.id, confusion.cardId);
+
+        // 直後に類似（取り違え先）を出して混同を潰す（interleaving補助）
+        const exists = state.session.queue.some(x => x.card.id === confusion.cardId);
+        if (!exists) {
+          const c = await state.db.getCard(state.session.datasetId, confusion.cardId);
+          if (c) {
+            state.session.queue.unshift({
+              card: {
+                id: c.cardId,
+                topic: c.topic,
+                question: c.question,
+                answers: c.answers,
+                explanation: c.explanation || '',
+              },
+              dueAtMs: 0,
+              priority: 1000000,
+            });
+          }
+        }
+      }
     }
 
-    // キューから消す
+    // キューから消す（採点が完了したら消す）
     const idx = state.session.queue.findIndex(x => x.card.id === next.card.id);
     if (idx >= 0) state.session.queue.splice(idx, 1);
 
@@ -317,10 +361,23 @@ function nextCard(container) {
       el('button', { class: 'dg-btn dg-btn--subtle', text: 'わからない', onclick: () => {
         showBack({ correct: false, expected: next.card.answers?.[0] ?? '', actual: input.value });
       } }),
+      ...(next.card.explanation
+        ? [el('button', {
+            class: 'dg-btn dg-btn--subtle',
+            text: '解説',
+            onclick: () => {
+              const body = dialog.querySelector('[data-body]');
+              if (body) body.textContent = next.card.explanation;
+              if (typeof dialog.showModal === 'function') dialog.showModal();
+              else dialog.setAttribute('open', '');
+            },
+          })]
+        : []),
     ]),
     feedback,
     actions,
     el('div', { class: 'dg-help', text: `残り: ${state.session.queue.length}` }),
+    dialog,
   ]);
 
   input.addEventListener('keydown', (e) => {
@@ -418,9 +475,17 @@ async function renderData(app) {
     render();
   });
 
-  const fileInput = el('input', { type: 'file', class: 'dg-input', accept: 'application/json,.json' });
-  const importBtn = el('button', { class: 'dg-btn', text: 'データセットをインポート' });
-  const exportBtn = el('button', { class: 'dg-btn dg-btn--subtle', text: '進捗をエクスポート' });
+  const datasetFileInput = el('input', { type: 'file', class: 'dg-input', accept: 'application/json,.json' });
+  const importDatasetBtn = el('button', { class: 'dg-btn', text: 'データセットをインポート' });
+
+  const progressFileInput = el('input', { type: 'file', class: 'dg-input', accept: 'application/json,.json' });
+  const mergeToggle = el('label', { class: 'dg-row' }, [
+    el('input', { type: 'checkbox' }),
+    el('span', { text: '既存データにマージ（通常はOFF）' }),
+  ]);
+  const importProgressBtn = el('button', { class: 'dg-btn', text: '進捗をインポート（復元）' });
+
+  const exportBtn = el('button', { class: 'dg-btn dg-btn--subtle', text: '完全バックアップをエクスポート（1ファイル）' });
   const wipeBtn = el('button', { class: 'dg-btn dg-btn--danger', text: '全データ削除' });
   const msg = el('div', { class: 'dg-note', style: 'display:none;' });
 
@@ -433,8 +498,8 @@ async function renderData(app) {
     msg.textContent = text;
   }
 
-  importBtn.addEventListener('click', async () => {
-    const f = fileInput.files?.[0];
+  importDatasetBtn.addEventListener('click', async () => {
+    const f = datasetFileInput.files?.[0];
     if (!f) return showMsg('JSONファイルを選択してください。', 'warn');
 
     try {
@@ -445,6 +510,30 @@ async function renderData(app) {
       showMsg(`インポート完了: ${title}`, 'ok');
     } catch (e) {
       showMsg(`インポート失敗: ${e?.message || e}`, 'ng');
+    }
+  });
+
+  importProgressBtn.addEventListener('click', async () => {
+    const f = progressFileInput.files?.[0];
+    if (!f) return showMsg('進捗JSONファイルを選択してください。', 'warn');
+
+    const merge = !!mergeToggle.querySelector('input')?.checked;
+    if (!merge) {
+      const ok = confirm('進捗を復元します。現在のデータは上書きされます。よろしいですか？');
+      if (!ok) return;
+    }
+
+    try {
+      const text = await f.text();
+      await importProgressJson(state.db, text, { merge });
+
+      const datasets = await state.db.listDatasets();
+      if (datasets.length) state.activeDatasetId = datasets[0].datasetId;
+      await refreshSelect();
+      showMsg('進捗を復元しました。', 'ok');
+      setTimeout(() => location.reload(), 500);
+    } catch (e) {
+      showMsg(`復元失敗: ${e?.message || e}`, 'ng');
     }
   });
 
@@ -471,9 +560,19 @@ async function renderData(app) {
     el('h2', { text: 'アクティブデータセット' }),
     datasetSelect,
     el('h2', { text: '教材データ（JSON）インポート' }),
-    fileInput,
-    el('div', { class: 'dg-row' }, [importBtn]),
-    el('h2', { text: 'バックアップ（進捗）' }),
+    el('div', { class: 'dg-note' }, [
+      el('div', { class: 'dg-row' }, [
+        el('span', { text: 'JSON形式の説明：' }),
+        el('a', { href: './dataset-format.html', text: 'dataset.json 形式（memory-dataset/v1）' }),
+      ]),
+    ]),
+    datasetFileInput,
+    el('div', { class: 'dg-row' }, [importDatasetBtn]),
+    el('h2', { text: '進捗の復元（バックアップJSON）' }),
+    progressFileInput,
+    mergeToggle,
+    el('div', { class: 'dg-row' }, [importProgressBtn]),
+    el('h2', { text: '完全バックアップ（教材＋進捗）' }),
     el('div', { class: 'dg-row' }, [exportBtn, wipeBtn]),
     msg
   );
