@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>暗記コア：dataset.json 形式</title>
+  <link rel="stylesheet" href="../../assets/css/digital.css" />
+</head>
+
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="./index.html#data">
+        <span class="dg-brand__title">暗記コア</span>
+        <span class="dg-brand__badge">dataset format</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="./index.html#data">データ管理へ戻る</a>
+        <a href="./demo-dataset.json">デモJSON</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <div class="dg-card">
+        <div class="dg-card__body dg-prose">
+          <h1 class="dg-page-title">dataset.json 形式（memory-dataset/v1）</h1>
+          <p class="dg-lead">暗記コアでインポートできる教材JSONの形式です。</p>
+
+          <h2>全体</h2>
+          <ul>
+            <li><code>schema</code>：固定で <code>memory-dataset/v1</code></li>
+            <li><code>datasetId</code>：UUID v4（データセットのID）</li>
+            <li><code>title</code>：データセット名</li>
+            <li><code>description</code>：説明（任意）</li>
+            <li><code>tags</code>：タグ配列（任意）</li>
+            <li><code>cards</code>：カード配列（必須）</li>
+          </ul>
+
+          <h2>カード（cards[] の各要素）</h2>
+          <ul>
+            <li><code>id</code>：UUID v4（カードID）</li>
+            <li><code>topic</code>：分野（任意）</li>
+            <li><code>question</code>：問題文（文字列）</li>
+            <li><code>answers</code>：正答候補（配列）。どれか一致で正解</li>
+            <li><code>explanation</code>：解説（任意）。学習画面の「解説」ボタンで表示</li>
+            <li><code>tags</code>：タグ配列（任意）</li>
+            <li><code>createdAt</code> / <code>updatedAt</code>：ISO文字列（任意）</li>
+          </ul>
+
+          <h2>例</h2>
+          <p>まずは <a href="./demo-dataset.json">demo-dataset.json</a> をそのままインポートして動作確認できます。</p>
+          <pre><code>{
+  "schema": "memory-dataset/v1",
+  "datasetId": "2f1b9f62-3a0b-4c36-9f1f-51b0d1f2a5b9",
+  "title": "デモ：情報 用語ミニ",
+  "description": "暗記コアの動作確認用・ミニデータセット",
+  "tags": ["demo"],
+  "cards": [
+    {
+      "id": "6c0f9c2e-9c75-4bb2-bb78-2d0c5d9f4f0e",
+      "topic": "ネットワーク",
+      "question": "IPアドレスの役割は？",
+      "answers": ["ネットワーク上の機器を識別する番号", "機器を識別する番号"],
+      "explanation": "IPアドレスは、通信相手を識別するための番号。"
+    }
+  ]
+}</code></pre>
+
+          <h2>注意</h2>
+          <ul>
+            <li><code>datasetId</code> と <code>id</code> はUUID v4にしてください（形式チェックします）。</li>
+            <li><code>answers</code> は1つ以上必要です（空だとインポートでエラー）。</li>
+            <li>正誤判定は「前後空白の除去」「連続空白の圧縮」「大小文字の統一」「Unicode正規化（NFKC）」をして比較します。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>暗記コア</title>
+  <meta name="description" content="短答入力×分散復習（FSRSベース）×混在出題の暗記アプリ（ローカル保存）" />
+  <link rel="stylesheet" href="../../assets/css/digital.css" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+</head>
+
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="./">
+        <span class="dg-brand__title">暗記コア</span>
+        <span class="dg-brand__badge">local</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="#home" data-route>ホーム</a>
+        <a href="#study" data-route>学習</a>
+        <a href="#dashboard" data-route>ダッシュボード</a>
+        <a href="#data" data-route>データ管理</a>
+        <a href="#settings" data-route>設定</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <div id="app" class="dg-stack" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <footer class="dg-footer">
+    <div class="dg-container dg-footer__inner">
+      <div class="dg-footer__meta">
+        ローカル保存（IndexedDB） / オフライン対応予定
+      </div>
+      <div class="dg-row">
+        <a class="dg-btn dg-btn--subtle" href="#data">バックアップ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+
+</html>
