@@ -8,6 +8,22 @@
   <link rel="stylesheet" href="style.css?v=20260113" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css" />
   <link id="cmThemeLink" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/eclipse.min.css" />
+  <style>
+    /* エディタのみモード用のスタイル */
+    body.editor-only-mode .col.guide,
+    body.editor-only-mode .col:has(#sampleFrame) {
+      display: none !important;
+    }
+    body.editor-only-mode .workspace {
+      grid-template-columns: 1fr !important;
+    }
+    body.editor-only-mode .col:has(#outFrame) {
+      max-width: 100% !important;
+    }
+    body.editor-only-mode .header-actions > *:not(#runBtn):not(#formatBtn):not(#themeSelect):not(#cmThemeSelect):not(.themeLabel):not(.controlGroup) {
+      display: none !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -30,6 +46,7 @@
       <label class="btn" for="importFile">インポート</label>
       <input id="importFile" class="fileInput" type="file" accept="application/json,.json" />
       <button id="resetStepBtn" class="btn" type="button">このStepをリセット</button>
+      <button id="popoutEditorBtn" class="btn" type="button" title="エディタを別ウィンドウで開く">📝 エディタ別窓</button>
 
       <a class="btnLink" href="viewer.html">提出ビューワー</a>
     </div>
@@ -178,6 +195,38 @@
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
   <script src="theme.js?v=20260113"></script>
   <script src="playground.js?v=20260113"></script>
+  <script>
+    // エディタ別窓機能
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isEditorOnly = urlParams.get('editor-only') === 'true';
+      
+      // エディタのみモードの場合、bodyにクラスを追加
+      if (isEditorOnly) {
+        document.body.classList.add('editor-only-mode');
+        document.getElementById('pageSub').textContent = 'エディタ専用ウィンドウ';
+      }
+      
+      // エディタ別窓ボタンのイベント
+      const popoutBtn = document.getElementById('popoutEditorBtn');
+      if (popoutBtn && !isEditorOnly) {
+        popoutBtn.addEventListener('click', function() {
+          const step = urlParams.get('step') || 'step1';
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.set('editor-only', 'true');
+          
+          // 別ウィンドウで開く（サイズは調整可能）
+          const features = 'width=900,height=800,menubar=no,toolbar=no,location=no,status=no';
+          window.open(newUrl.toString(), `editor_${step}`, features);
+        });
+      }
+      
+      // エディタのみモードの場合、別窓ボタンを非表示
+      if (isEditorOnly && popoutBtn) {
+        popoutBtn.style.display = 'none';
+      }
+    })();
+  </script>
 </body>
 
 </html>
