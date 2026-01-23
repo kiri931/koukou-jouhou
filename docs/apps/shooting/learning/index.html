@@ -78,31 +78,82 @@
   <script>
     const STORAGE_PREFIX = "shooting:learning:playground:v1";
 
+    // サンプルコードを読み込む
+    const sampleCache = {};
+    async function loadStepSample(step) {
+      if (sampleCache[step]) return sampleCache[step];
+      
+      try {
+        const [htmlRes, cssRes, jsRes] = await Promise.all([
+          fetch(`./${step}/index.html`).then(r => r.ok ? r.text() : ""),
+          fetch(`./${step}/style.css`).then(r => r.ok ? r.text() : ""),
+          fetch(`./${step}/main.js`).then(r => r.ok ? r.text() : "")
+        ]);
+        
+        sampleCache[step] = {
+          html: htmlRes || "",
+          css: cssRes || "",
+          js: jsRes || ""
+        };
+        return sampleCache[step];
+      } catch {
+        return { html: "", css: "", js: "" };
+      }
+    }
+
+    // コードが編集されているか判定（空白・改行を正規化して比較）
+    function normalizeCode(code) {
+      return String(code || "").trim().replace(/\s+/g, " ");
+    }
+
+    function isEdited(saved, sample) {
+      if (!saved) return false;
+      
+      const savedNorm = {
+        html: normalizeCode(saved.html),
+        css: normalizeCode(saved.css),
+        js: normalizeCode(saved.js)
+      };
+      
+      const sampleNorm = {
+        html: normalizeCode(sample.html),
+        css: normalizeCode(sample.css),
+        js: normalizeCode(sample.js)
+      };
+      
+      // いずれかが編集されていればtrue
+      return savedNorm.html !== sampleNorm.html ||
+             savedNorm.css !== sampleNorm.css ||
+             savedNorm.js !== sampleNorm.js;
+    }
+
     // ステップのチェック状態を更新
-    function updateStepStatus() {
+    async function updateStepStatus() {
       const steps = ["step1", "step2", "step3", "step4", "step5", "step6", "step7", "step8", "step9", "step10", "step11", "step12", "step13"];
       
-      steps.forEach((step) => {
+      for (const step of steps) {
         const statusEl = document.querySelector(`[data-step-status="${step}"]`);
-        if (!statusEl) return;
+        if (!statusEl) continue;
 
         const savedData = localStorage.getItem(`${STORAGE_PREFIX}:${step}`);
         
         if (savedData) {
           try {
             const data = JSON.parse(savedData);
-            // データが存在し、HTMLかCSSかJSのいずれかが入力されているかチェック
-            const hasContent = (data.html && data.html.trim()) || 
-                             (data.css && data.css.trim()) || 
-                             (data.js && data.js.trim());
             
-            if (hasContent) {
+            // サンプルコードを読み込んで比較
+            const sample = await loadStepSample(step);
+            
+            if (isEdited(data, sample)) {
               statusEl.textContent = "✓";
               statusEl.style.color = "#22c55e";
               statusEl.style.fontWeight = "bold";
-              statusEl.title = "保存済み";
+              statusEl.title = "編集済み";
             } else {
-              statusEl.textContent = "";
+              statusEl.textContent = "○";
+              statusEl.style.color = "#94a3b8";
+              statusEl.style.fontWeight = "normal";
+              statusEl.title = "未編集（サンプルのまま）";
             }
           } catch {
             statusEl.textContent = "";
@@ -110,7 +161,7 @@
         } else {
           statusEl.textContent = "";
         }
-      });
+      }
     }
 
     // インポート機能
