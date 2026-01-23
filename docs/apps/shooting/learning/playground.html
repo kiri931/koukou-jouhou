@@ -23,6 +23,24 @@
     body.editor-only-mode .header-actions > *:not(#runBtn):not(#formatBtn):not(#themeSelect):not(#cmThemeSelect):not(.themeLabel):not(.controlGroup) {
       display: none !important;
     }
+
+    /* サンプルのみモード用のスタイル */
+    body.sample-only-mode .col.guide,
+    body.sample-only-mode .col:has(#outFrame) {
+      display: none !important;
+    }
+    body.sample-only-mode .workspace {
+      grid-template-columns: 1fr !important;
+    }
+    body.sample-only-mode .col:has(#sampleFrame) {
+      max-width: 100% !important;
+    }
+    body.sample-only-mode .header-actions > *:not(#themeSelect):not(.themeLabel):not(.controlGroup):not(.back) {
+      display: none !important;
+    }
+    body.sample-only-mode #saveInfo {
+      display: none !important;
+    }
   </style>
 </head>
 
@@ -46,6 +64,7 @@
       <label class="btn" for="importFile">インポート</label>
       <input id="importFile" class="fileInput" type="file" accept="application/json,.json" />
       <button id="resetStepBtn" class="btn" type="button">このStepをリセット</button>
+      <button id="popoutSampleBtn" class="btn" type="button" title="サンプルを別ウィンドウで開く">📘 サンプル別窓</button>
       <button id="popoutEditorBtn" class="btn" type="button" title="エディタを別ウィンドウで開く">📝 エディタ別窓</button>
 
       <a class="btnLink" href="viewer.html">提出ビューワー</a>
@@ -196,10 +215,166 @@
   <script src="theme.js?v=20260113"></script>
   <script src="playground.js?v=20260113"></script>
   <script>
-    // エディタ別窓機能
+    // ウィンドウ間のリアルタイム同期機能
+    (function() {
+      const STORAGE_PREFIX = "shooting:learning:playground:v1";
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentStep = urlParams.get('step') || 'step1';
+      
+      // BroadcastChannelでウィンドウ間通信
+      let broadcastChannel = null;
+      try {
+        broadcastChannel = new BroadcastChannel(`playground-sync-${currentStep}`);
+      } catch (e) {
+        console.warn('BroadcastChannel not supported', e);
+      }
+      
+      // エディタの値を取得する関数（グローバルスコープから）
+      function getCurrentEditorValues() {
+        const htmlTextarea = document.getElementById('htmlText');
+        const cssTextarea = document.getElementById('cssText');
+        const jsTextarea = document.getElementById('jsText');
+        
+        return {
+          html: htmlTextarea ? htmlTextarea.value : '',
+          css: cssTextarea ? cssTextarea.value : '',
+          js: jsTextarea ? jsTextarea.value : ''
+        };
+      }
+      
+      // エディタの値を設定する関数
+      function setEditorValues(values) {
+        if (!values) return;
+        
+        // CodeMirrorインスタンスを取得して値を設定
+        const htmlTextarea = document.getElementById('htmlText');
+        const cssTextarea = document.getElementById('cssText');
+        const jsTextarea = document.getElementById('jsText');
+        
+        if (htmlTextarea) {
+          // CodeMirrorインスタンスがあればそれを使用
+          const htmlCM = htmlTextarea.nextSibling?.CodeMirror;
+          if (htmlCM && typeof htmlCM.setValue === 'function') {
+            const currentValue = htmlCM.getValue();
+            if (currentValue !== values.html) {
+              htmlCM.setValue(values.html || '');
+            }
+          } else if (htmlTextarea.value !== values.html) {
+            htmlTextarea.value = values.html || '';
+          }
+        }
+        
+        if (cssTextarea) {
+          const cssCM = cssTextarea.nextSibling?.CodeMirror;
+          if (cssCM && typeof cssCM.setValue === 'function') {
+            const currentValue = cssCM.getValue();
+            if (currentValue !== values.css) {
+              cssCM.setValue(values.css || '');
+            }
+          } else if (cssTextarea.value !== values.css) {
+            cssTextarea.value = values.css || '';
+          }
+        }
+        
+        if (jsTextarea) {
+          const jsCM = jsTextarea.nextSibling?.CodeMirror;
+          if (jsCM && typeof jsCM.setValue === 'function') {
+            const currentValue = jsCM.getValue();
+            if (currentValue !== values.js) {
+              jsCM.setValue(values.js || '');
+            }
+          } else if (jsTextarea.value !== values.js) {
+            jsTextarea.value = values.js || '';
+          }
+        }
+      }
+      
+      // localStorage変更を検知して他のウィンドウに通知
+      let lastSyncTime = 0;
+      const SYNC_THROTTLE = 100; // 100ms以内の連続更新は無視
+      
+      window.addEventListener('storage', function(e) {
+        const storageKey = `${STORAGE_PREFIX}:${currentStep}`;
+        if (e.key === storageKey && e.newValue) {
+          try {
+            const data = JSON.parse(e.newValue);
+            setEditorValues(data);
+          } catch (err) {
+            console.warn('Failed to parse storage data', err);
+          }
+        }
+      });
+      
+      // BroadcastChannelでのメッセージ受信
+      if (broadcastChannel) {
+        broadcastChannel.addEventListener('message', function(event) {
+          if (event.data && event.data.type === 'editor-update') {
+            const now = Date.now();
+            // 自分が送ったメッセージや短時間での連続更新は無視
+            if (event.data.timestamp && now - event.data.timestamp < 50) {
+              return;
+            }
+            if (now - lastSyncTime < SYNC_THROTTLE) {
+              return;
+            }
+            lastSyncTime = now;
+            
+            setEditorValues(event.data.values);
+          }
+        });
+      }
+      
+      // エディタの変更を他のウィンドウに通知（デバウンス付き）
+      let debounceTimer = null;
+      function notifyEditorChange() {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        
+        debounceTimer = setTimeout(function() {
+          if (broadcastChannel) {
+            const values = getCurrentEditorValues();
+            broadcastChannel.postMessage({
+              type: 'editor-update',
+              values: values,
+              timestamp: Date.now()
+            });
+          }
+        }, 200); // 200ms待ってから送信
+      }
+      
+      // CodeMirrorの初期化を待ってからイベントリスナーを設定
+      setTimeout(function() {
+        const htmlTextarea = document.getElementById('htmlText');
+        const cssTextarea = document.getElementById('cssText');
+        const jsTextarea = document.getElementById('jsText');
+        
+        [htmlTextarea, cssTextarea, jsTextarea].forEach(function(textarea) {
+          if (!textarea) return;
+          
+          // CodeMirrorインスタンスを探す
+          const cm = textarea.nextSibling?.CodeMirror;
+          if (cm && typeof cm.on === 'function') {
+            cm.on('change', notifyEditorChange);
+          } else {
+            // CodeMirrorがない場合は通常のtextareaイベント
+            textarea.addEventListener('input', notifyEditorChange);
+          }
+        });
+      }, 1000);
+      
+      // ページを離れるときにチャンネルをクローズ
+      window.addEventListener('beforeunload', function() {
+        if (broadcastChannel) {
+          broadcastChannel.close();
+        }
+      });
+    })();
+  </script>
+  <script>
+    // 別窓機能（エディタとサンプル）
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
       const isEditorOnly = urlParams.get('editor-only') === 'true';
+      const isSampleOnly = urlParams.get('sample-only') === 'true';
       
       // エディタのみモードの場合、bodyにクラスを追加
       if (isEditorOnly) {
@@ -207,10 +382,30 @@
         document.getElementById('pageSub').textContent = 'エディタ専用ウィンドウ';
       }
       
+      // サンプルのみモードの場合、bodyにクラスを追加
+      if (isSampleOnly) {
+        document.body.classList.add('sample-only-mode');
+        document.getElementById('pageSub').textContent = 'サンプル専用ウィンドウ';
+      }
+      
+      // サンプル別窓ボタンのイベント
+      const popoutSampleBtn = document.getElementById('popoutSampleBtn');
+      if (popoutSampleBtn && !isSampleOnly && !isEditorOnly) {
+        popoutSampleBtn.addEventListener('click', function() {
+          const step = urlParams.get('step') || 'step1';
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.set('sample-only', 'true');
+          
+          // 別ウィンドウで開く（サイズは調整可能）
+          const features = 'width=800,height=800,menubar=no,toolbar=no,location=no,status=no';
+          window.open(newUrl.toString(), `sample_${step}`, features);
+        });
+      }
+      
       // エディタ別窓ボタンのイベント
-      const popoutBtn = document.getElementById('popoutEditorBtn');
-      if (popoutBtn && !isEditorOnly) {
-        popoutBtn.addEventListener('click', function() {
+      const popoutEditorBtn = document.getElementById('popoutEditorBtn');
+      if (popoutEditorBtn && !isEditorOnly && !isSampleOnly) {
+        popoutEditorBtn.addEventListener('click', function() {
           const step = urlParams.get('step') || 'step1';
           const newUrl = new URL(window.location.href);
           newUrl.searchParams.set('editor-only', 'true');
@@ -221,9 +416,12 @@
         });
       }
       
-      // エディタのみモードの場合、別窓ボタンを非表示
-      if (isEditorOnly && popoutBtn) {
-        popoutBtn.style.display = 'none';
+      // 別窓モードの場合、別窓ボタンを非表示
+      if ((isEditorOnly || isSampleOnly) && popoutSampleBtn) {
+        popoutSampleBtn.style.display = 'none';
+      }
+      if ((isEditorOnly || isSampleOnly) && popoutEditorBtn) {
+        popoutEditorBtn.style.display = 'none';
       }
     })();
   </script>
