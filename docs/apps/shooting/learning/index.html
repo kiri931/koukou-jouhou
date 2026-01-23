@@ -26,28 +26,31 @@
         </select>
       </div>
     </div>
-    <p>
+    <div class="header-actions">
+      <label class="btn" for="importFileTop">インポート</label>
+      <input id="importFileTop" class="fileInput" type="file" accept="application/json,.json" />
       <a class="btnLink" href="viewer.html">提出ビューワー</a>
-    </p>
+      <a class="btnLink" href="selftest.html">自動ジャッジ</a>
+    </div>
   </header>
 
   <main class="container">
     <section class="panel">
       <h2>ステップ一覧</h2>
-      <ol class="steps">
-        <li><a href="playground.html?step=step1">Step1: Canvasを表示する</a></li>
-        <li><a href="playground.html?step=step2">Step2: 自機（四角）を表示する</a></li>
-        <li><a href="playground.html?step=step3">Step3: 自機を左右に動かす</a></li>
-        <li><a href="playground.html?step=step4">Step4: 画像で自機を表示する</a></li>
-        <li><a href="playground.html?step=step5">Step5: ゲームループ（更新→描画）</a></li>
-        <li><a href="playground.html?step=step6">Step6: 弾を1発撃つ（配列なし）</a></li>
-        <li><a href="playground.html?step=step7">Step7: 弾を複数（配列）</a></li>
-        <li><a href="playground.html?step=step8">Step8: 敵（直進）</a></li>
-        <li><a href="playground.html?step=step9">Step9: ファイルを分けよう（モジュール化）</a></li>
-        <li><a href="playground.html?step=step10">Step10: 当たり判定（弾×敵）</a></li>
-        <li><a href="playground.html?step=step11">Step11: スコア表示</a></li>
-        <li><a href="playground.html?step=step12">Step12: ライフ＋ゲームオーバー</a></li>
-        <li><a href="playground.html?step=step13">Step13: 仕上げ（完成版）</a></li>
+      <ol class="steps" id="stepsList">
+        <li><a href="playground.html?step=step1" data-step="step1">Step1: Canvasを表示する</a> <span class="step-status" data-step-status="step1"></span></li>
+        <li><a href="playground.html?step=step2" data-step="step2">Step2: 自機（四角）を表示する</a> <span class="step-status" data-step-status="step2"></span></li>
+        <li><a href="playground.html?step=step3" data-step="step3">Step3: 自機を左右に動かす</a> <span class="step-status" data-step-status="step3"></span></li>
+        <li><a href="playground.html?step=step4" data-step="step4">Step4: 画像で自機を表示する</a> <span class="step-status" data-step-status="step4"></span></li>
+        <li><a href="playground.html?step=step5" data-step="step5">Step5: ゲームループ（更新→描画）</a> <span class="step-status" data-step-status="step5"></span></li>
+        <li><a href="playground.html?step=step6" data-step="step6">Step6: 弾を1発撃つ（配列なし）</a> <span class="step-status" data-step-status="step6"></span></li>
+        <li><a href="playground.html?step=step7" data-step="step7">Step7: 弾を複数（配列）</a> <span class="step-status" data-step-status="step7"></span></li>
+        <li><a href="playground.html?step=step8" data-step="step8">Step8: 敵（直進）</a> <span class="step-status" data-step-status="step8"></span></li>
+        <li><a href="playground.html?step=step9" data-step="step9">Step9: ファイルを分けよう（モジュール化）</a> <span class="step-status" data-step-status="step9"></span></li>
+        <li><a href="playground.html?step=step10" data-step="step10">Step10: 当たり判定（弾×敵）</a> <span class="step-status" data-step-status="step10"></span></li>
+        <li><a href="playground.html?step=step11" data-step="step11">Step11: スコア表示</a> <span class="step-status" data-step-status="step11"></span></li>
+        <li><a href="playground.html?step=step12" data-step="step12">Step12: ライフ＋ゲームオーバー</a> <span class="step-status" data-step-status="step12"></span></li>
+        <li><a href="playground.html?step=step13" data-step="step13">Step13: 仕上げ（完成版）</a> <span class="step-status" data-step-status="step13"></span></li>
       </ol>
     </section>
 
@@ -60,9 +63,100 @@
         <li>事前に確認したい人向け：<a href="../print/guide.html">事前学習ガイド（print）</a></li>
       </ul>
     </section>
+
+    <section class="panel">
+      <h2>データ管理とジャッジ</h2>
+      <ul class="howto">
+        <li><b>インポート</b>：上部の「インポート」ボタンから、エクスポートしたJSONファイルを読み込めます。</li>
+        <li><b>自動ジャッジ</b>：<a href="selftest.html">自動ジャッジ</a> で、各Stepのコードが正しく動作するか自動テストできます。</li>
+        <li><b>提出ビューワー</b>：<a href="viewer.html">提出ビューワー</a> で、複数の提出JSONを一括で確認できます。</li>
+      </ul>
+    </section>
   </main>
 
   <script src="theme.js"></script>
+  <script>
+    const STORAGE_PREFIX = "shooting:learning:playground:v1";
+
+    // ステップのチェック状態を更新
+    function updateStepStatus() {
+      const steps = ["step1", "step2", "step3", "step4", "step5", "step6", "step7", "step8", "step9", "step10", "step11", "step12", "step13"];
+      
+      steps.forEach((step) => {
+        const statusEl = document.querySelector(`[data-step-status="${step}"]`);
+        if (!statusEl) return;
+
+        const savedData = localStorage.getItem(`${STORAGE_PREFIX}:${step}`);
+        
+        if (savedData) {
+          try {
+            const data = JSON.parse(savedData);
+            // データが存在し、HTMLかCSSかJSのいずれかが入力されているかチェック
+            const hasContent = (data.html && data.html.trim()) || 
+                             (data.css && data.css.trim()) || 
+                             (data.js && data.js.trim());
+            
+            if (hasContent) {
+              statusEl.textContent = "✓";
+              statusEl.style.color = "#22c55e";
+              statusEl.style.fontWeight = "bold";
+              statusEl.title = "保存済み";
+            } else {
+              statusEl.textContent = "";
+            }
+          } catch {
+            statusEl.textContent = "";
+          }
+        } else {
+          statusEl.textContent = "";
+        }
+      });
+    }
+
+    // インポート機能
+    document.getElementById("importFileTop")?.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+
+        if (!data || typeof data !== "object") {
+          alert("無効なJSONファイルです。");
+          return;
+        }
+
+        // Export形式（items配列）とStep配列両方に対応
+        let imported = 0;
+        const itemsData = data.items || data;
+        
+        for (const [key, value] of Object.entries(itemsData)) {
+          if (key.startsWith("step")) {
+            localStorage.setItem(`${STORAGE_PREFIX}:${key}`, JSON.stringify(value));
+            imported++;
+          }
+        }
+
+        if (imported > 0) {
+          alert(`${imported}個のStepデータをインポートしました。`);
+          e.target.value = ""; // リセット
+          updateStepStatus(); // チェック状態を更新
+        } else {
+          alert("インポート可能なStepデータが見つかりませんでした。");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("インポートに失敗しました: " + err.message);
+      }
+    });
+
+    // ページ読み込み時にチェック状態を更新
+    updateStepStatus();
+
+    // 定期的にチェック（他のタブで更新された場合に対応）
+    setInterval(updateStepStatus, 2000);
+  </script>
 </body>
 
 </html>

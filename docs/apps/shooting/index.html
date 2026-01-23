@@ -11,6 +11,10 @@
     <header>
         <h1>JavaScript（シューティング制作）</h1>
         <p>このページは <strong>shooting のトップページ</strong> です。学習は <strong>learning（ステップ教材）</strong> から始めてください。</p>
+        <div style="margin-top: 16px;">
+            <label for="importFileTop" class="btn" style="display: inline-block; padding: 8px 16px; background: #007acc; color: white; border-radius: 6px; cursor: pointer; text-decoration: none;">インポート</label>
+            <input id="importFileTop" type="file" accept="application/json,.json" style="display: none;" />
+        </div>
     </header>
     <main>
         <section>
@@ -27,7 +31,54 @@
                 うまく動かないときは、learning 側の「使い方」や、ブラウザの Console のエラー表示も確認してください。
             </p>
         </section>
+
+        <section>
+            <h2>データ管理とジャッジ</h2>
+            <ul>
+                <li><strong>インポート</strong>：上部の「インポート」ボタンから、エクスポートしたJSONファイルを読み込めます。</li>
+                <li><strong>自動ジャッジ</strong>：<a href="learning/selftest.html">自動ジャッジ</a> で、各Stepのコードが正しく動作するか自動テストできます。</li>
+                <li><strong>提出ビューワー</strong>：<a href="learning/viewer.html">提出ビューワー</a> で、複数の提出JSONを一括で確認できます。</li>
+            </ul>
+        </section>
     </main>
+
+    <script>
+        // インポート機能
+        document.getElementById("importFileTop")?.addEventListener("change", async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            try {
+                const text = await file.text();
+                const data = JSON.parse(text);
+
+                if (!data || typeof data !== "object") {
+                    alert("無効なJSONファイルです。");
+                    return;
+                }
+
+                // 各StepのデータをlocalStorageに保存
+                let imported = 0;
+                const prefix = "shooting:learning:playground:v1";
+                for (const [key, value] of Object.entries(data)) {
+                    if (key.startsWith("step")) {
+                        localStorage.setItem(`${prefix}:${key}`, JSON.stringify(value));
+                        imported++;
+                    }
+                }
+
+                if (imported > 0) {
+                    alert(`${imported}個のStepデータをインポートしました。\n学習ページに移動して確認してください。`);
+                    e.target.value = ""; // リセット
+                } else {
+                    alert("インポート可能なStepデータが見つかりませんでした。");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("インポートに失敗しました: " + err.message);
+            }
+        });
+    </script>
 </body>
 
 </html>
