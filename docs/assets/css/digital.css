@@ -7,7 +7,8 @@
 */
 
 :root {
-  color-scheme: light;
+  /* Light/Dark 自動追従 + data-theme で手動固定（learning.css の考え方を統合） */
+  color-scheme: light dark;
 
   --dg-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
@@ -32,6 +33,13 @@
   --dg-color-danger: #b42318;
   --dg-color-warning: #a15c07;
   --dg-color-success: #067647;
+
+  /* learning.css 相当の「読みやすさ」トークン */
+  --dg-color-code-bg: #0b1220;
+  --dg-color-code-text: #e5e7eb;
+  --dg-color-mark-bg: #fff3b0;
+  --dg-color-mark-text: #1f2937;
+  --dg-color-selection: rgba(11, 94, 215, 0.18);
 
   --dg-focus-ring: 0 0 0 3px rgba(11, 94, 215, 0.35);
 
@@ -64,6 +72,8 @@
 
 html, body { height: 100%; }
 
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
   font-family: var(--dg-font-sans);
@@ -74,6 +84,78 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--dg-color-selection); }
+
+/* Dark theme (OS設定に追従) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dg-color-bg: #0b0f14;
+    --dg-color-surface: #111826;
+    --dg-color-surface-2: #0e1522;
+    --dg-color-border: #243145;
+    --dg-color-text: #e7edf5;
+    --dg-color-muted: #a7b3c4;
+
+    --dg-color-link: #60a5fa;
+    --dg-color-link-visited: #c084fc;
+
+    /* primary は link と合わせて明るめに */
+    --dg-color-primary: #60a5fa;
+    --dg-color-primary-hover: #93c5fd;
+    --dg-color-primary-active: #3b82f6;
+    --dg-color-on-primary: #0b1220;
+
+    --dg-color-code-bg: #0b1220;
+    --dg-color-code-text: #e5e7eb;
+    --dg-color-mark-bg: #3a2e00;
+    --dg-color-mark-text: #ffe8a3;
+    --dg-color-selection: rgba(96, 165, 250, 0.22);
+  }
+}
+
+/* Manual Override: <html data-theme="light|dark"> */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --dg-color-bg: #ffffff;
+  --dg-color-surface: #f6f8fb;
+  --dg-color-surface-2: #eef2f7;
+  --dg-color-border: #d7dee8;
+  --dg-color-text: #0b1220;
+  --dg-color-muted: #4b5565;
+  --dg-color-link: #0b5ed7;
+  --dg-color-link-visited: #6f42c1;
+  --dg-color-primary: #0b5ed7;
+  --dg-color-primary-hover: #0a53be;
+  --dg-color-primary-active: #084298;
+  --dg-color-on-primary: #ffffff;
+  --dg-color-code-bg: #0b1220;
+  --dg-color-code-text: #e5e7eb;
+  --dg-color-mark-bg: #fff3b0;
+  --dg-color-mark-text: #1f2937;
+  --dg-color-selection: rgba(11, 94, 215, 0.18);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --dg-color-bg: #0b0f14;
+  --dg-color-surface: #111826;
+  --dg-color-surface-2: #0e1522;
+  --dg-color-border: #243145;
+  --dg-color-text: #e7edf5;
+  --dg-color-muted: #a7b3c4;
+  --dg-color-link: #60a5fa;
+  --dg-color-link-visited: #c084fc;
+  --dg-color-primary: #60a5fa;
+  --dg-color-primary-hover: #93c5fd;
+  --dg-color-primary-active: #3b82f6;
+  --dg-color-on-primary: #0b1220;
+  --dg-color-code-bg: #0b1220;
+  --dg-color-code-text: #e5e7eb;
+  --dg-color-mark-bg: #3a2e00;
+  --dg-color-mark-text: #ffe8a3;
+  --dg-color-selection: rgba(96, 165, 250, 0.22);
 }
 
 img, svg { max-width: 100%; height: auto; }
@@ -214,13 +296,58 @@ a:hover { text-decoration-thickness: 2px; }
   border-radius: 8px;
 }
 
+.dg-prose mark {
+  background: var(--dg-color-mark-bg);
+  color: var(--dg-color-mark-text);
+  padding: 0 0.2em;
+  border-radius: 0.35em;
+}
+
 .dg-prose pre {
-  background: var(--dg-color-surface);
-  border: 1px solid var(--dg-color-border);
+  background: var(--dg-color-code-bg);
+  color: var(--dg-color-code-text);
+  border: 1px solid color-mix(in srgb, var(--dg-color-border), transparent 35%);
   padding: var(--dg-space-4);
   border-radius: var(--dg-radius-md);
   overflow: auto;
 }
+
+.dg-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.dg-prose blockquote {
+  margin: 0 0 var(--dg-space-5) 0;
+  padding: var(--dg-space-3) var(--dg-space-4);
+  background: color-mix(in srgb, var(--dg-color-surface) 80%, transparent);
+  border-left: 5px solid color-mix(in srgb, var(--dg-color-primary) 70%, var(--dg-color-border) 30%);
+  border-radius: var(--dg-radius-sm);
+  color: color-mix(in srgb, var(--dg-color-text) 75%, var(--dg-color-muted) 25%);
+}
+
+/* learning.css の callout を dg-* として追加（既存 dg-note と併用可） */
+.dg-callout {
+  margin: 0 0 var(--dg-space-5);
+  padding: var(--dg-space-4);
+  border-radius: var(--dg-radius-md);
+  border: 1px solid var(--dg-color-border);
+  background: color-mix(in srgb, var(--dg-color-surface) 85%, transparent);
+  box-shadow: var(--dg-shadow-sm);
+}
+
+.dg-callout__title {
+  margin: 0 0 var(--dg-space-2);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.dg-callout--info { border-left: 6px solid color-mix(in srgb, var(--dg-color-primary), #fff 25%); }
+.dg-callout--success { border-left: 6px solid color-mix(in srgb, var(--dg-color-success), #fff 25%); }
+.dg-callout--warning { border-left: 6px solid color-mix(in srgb, var(--dg-color-warning), #fff 25%); }
+.dg-callout--danger { border-left: 6px solid color-mix(in srgb, var(--dg-color-danger), #fff 25%); }
 
 .dg-prose hr {
   border: none;
@@ -393,3 +520,167 @@ a:hover { text-decoration-thickness: 2px; }
 
   .dg-card__body { padding: var(--dg-space-5); }
 }
+
+/* =========================================================
+   top.css 統合（バランス重視）
+   - 既存の dg-* デザインは維持
+   - top.css 風のページは body などに .dg-top を付けて opt-in
+   ========================================================= */
+
+:root {
+  /* top.css 互換のトークン（digital の色から派生） */
+  --dg-top-bg: color-mix(in srgb, var(--dg-color-surface) 55%, var(--dg-color-bg) 45%);
+  --dg-top-card: var(--dg-color-bg);
+  --dg-top-fg: var(--dg-color-text);
+  --dg-top-muted: var(--dg-color-muted);
+  --dg-top-accent: color-mix(in srgb, var(--dg-color-primary) 65%, #38a169 35%);
+  --dg-top-accent-light: color-mix(in srgb, var(--dg-top-accent) 35%, #ffffff 65%);
+  --dg-top-border: var(--dg-color-border);
+}
+
+body.dg-top {
+  background: var(--dg-top-bg);
+  color: var(--dg-top-fg);
+  letter-spacing: 0.03em;
+}
+
+/* top.css の .wrap/.container 相当（既存 .dg-container と共存） */
+body.dg-top .wrap,
+body.dg-top .container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+body.dg-top h1,
+body.dg-top h2,
+body.dg-top h3,
+body.dg-top p {
+  margin: 0 0 0.8rem;
+}
+
+/* ヘッダー */
+body.dg-top header {
+  background: var(--dg-top-accent-light);
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+  border-bottom: 3px solid var(--dg-top-accent);
+  position: relative;
+  z-index: 10;
+}
+
+body.dg-top header h1 {
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+body.dg-top header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+}
+
+/* 見出し */
+body.dg-top h2 {
+  color: var(--dg-top-accent);
+  font-size: 1.4rem;
+  border-left: 5px solid var(--dg-top-accent);
+  padding-left: 0.6rem;
+}
+
+body.dg-top h3 {
+  color: var(--dg-top-muted);
+  font-size: 1.15rem;
+}
+
+/* カード */
+body.dg-top .card {
+  background: var(--dg-top-card);
+  border: 1px solid var(--dg-top-border);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin: 1.4rem 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* コード表示（top.css 互換） */
+body.dg-top code,
+body.dg-top pre {
+  font-family: var(--dg-font-mono);
+}
+
+body.dg-top pre {
+  background: color-mix(in srgb, var(--dg-color-surface) 70%, var(--dg-color-bg) 30%);
+  border: 1px solid var(--dg-top-border);
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* 注意書き */
+body.dg-top .note {
+  background: color-mix(in srgb, var(--dg-top-accent-light) 30%, var(--dg-color-bg) 70%);
+  border-left: 5px solid var(--dg-top-accent-light);
+  padding: 0.9rem 1rem;
+  color: color-mix(in srgb, var(--dg-color-text) 80%, #2f4f2f 20%);
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+/* フッター */
+body.dg-top .footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--dg-top-muted);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--dg-top-border);
+}
+
+/* 印刷（top.css 互換） */
+@media print {
+  body.dg-top {
+    background: #fff;
+    color: #000;
+  }
+  body.dg-top header {
+    background: none;
+    color: #000;
+    border: none;
+  }
+  body.dg-top .card { box-shadow: none; }
+}
+
+/* ナビゲーション（#menu）を壊さないよう dg-top の時だけ適用 */
+body.dg-top #menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #334;
+  color: #fff;
+  width: 220px;
+  height: 100%;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+body.dg-top #menu.show { transform: translateX(0); }
+
+body.dg-top #menu button {
+  width: 100%;
+  padding: 10px;
+  background: #223;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+body.dg-top #menu li {
+  padding: 10px;
+  border-bottom: 1px solid #445;
+}
+
+body.dg-top #menu li:hover { background: #445; }
