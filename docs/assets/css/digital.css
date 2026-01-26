@@ -254,6 +254,45 @@ a:hover { text-decoration-thickness: 2px; }
 
 .dg-card__body { padding: var(--dg-space-6); }
 
+/* Details（折りたたみ） */
+.dg-details {
+  background: var(--dg-color-bg);
+  border: 1px solid var(--dg-color-border);
+  border-radius: var(--dg-radius-md);
+  box-shadow: var(--dg-shadow-sm);
+  margin: var(--dg-space-5) 0;
+  overflow: clip;
+}
+
+.dg-details > summary {
+  cursor: pointer;
+  padding: var(--dg-space-5) var(--dg-space-6);
+  font-weight: 800;
+  background: color-mix(in srgb, var(--dg-color-surface) 80%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dg-space-3);
+}
+
+.dg-details > summary::-webkit-details-marker { display: none; }
+
+.dg-details > summary::after {
+  content: "▸";
+  color: var(--dg-color-muted);
+  flex: 0 0 auto;
+}
+
+.dg-details[open] > summary {
+  border-bottom: 1px solid var(--dg-color-border);
+}
+
+.dg-details[open] > summary::after { content: "▾"; }
+
+.dg-details__body {
+  padding: var(--dg-space-6);
+}
+
 .dg-stack { display: grid; gap: var(--dg-space-5); }
 
 .dg-grid {

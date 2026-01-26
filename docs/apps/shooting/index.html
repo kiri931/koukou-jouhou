@@ -3,109 +3,129 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript（シューティング制作）</title>
     <link rel="stylesheet" href="../../assets/css/digital.css">
 </head>
 
 <body>
-    <header>
-        <h1>JavaScript（シューティング制作）</h1>
-        <p>このページは <strong>shooting のトップページ</strong> です。学習は <strong>learning（ステップ教材）</strong> から始めてください。</p>
-        <div style="margin-top: 12px;">
-            <button id="themeToggle" type="button" class="dg-btn dg-btn--subtle">テーマ: 自動</button>
+    <header class="dg-header">
+        <div class="dg-container dg-header__inner">
+            <a class="dg-brand" href="./">
+                <span class="dg-brand__title">シューティング制作</span>
+                <span class="dg-brand__badge">top</span>
+            </a>
+            <nav class="dg-nav">
+                <a href="learning/">learning</a>
+                <a href="learning/playground.html?step=step1">Step1</a>
+                <a href="learning/selftest.html">自動ジャッジ</a>
+                <a href="learning/viewer.html">提出ビューワー</a>
+                <button id="themeToggle" type="button" class="dg-btn dg-btn--subtle">テーマ: 自動</button>
+            </nav>
         </div>
     </header>
-    <main>
-        <section>
-            <h2>learning（ステップ教材）へ</h2>
-            <p>
-                実際にゲームを作りながら学ぶ場合は、<a href="learning/">learning（ステップ教材）</a> から始めるのがおすすめです。
-                Step1〜Step13まで、左にサンプル・右に自分のコードを置いて、少しずつ完成形に近づけていきます。
+
+    <main class="dg-main">
+        <div class="dg-container">
+            <h1 class="dg-page-title">JavaScript（シューティング制作）</h1>
+            <p class="dg-lead">
+                基本は <strong>learning（ステップ教材）</strong> で作りながら学びます。ここでは、始める前の準備と JavaScript 基礎をまとめています。
             </p>
-            <ul>
-                <li><a href="learning/">learning を開く（ステップ一覧）</a></li>
-                <li><a href="learning/playground.html?step=step1">まずは Step1 を開く</a></li>
-            </ul>
-            <p>
-                うまく動かないときは、learning 側の「使い方」や、ブラウザの Console のエラー表示も確認してください。
-            </p>
-        </section>
 
-        <details style="margin: 16px 0;">
-            <summary style="cursor: pointer; font-weight: 700;">事前学習ガイド（準備とルール）</summary>
-            <section style="margin-top: 12px;">
-                <p>
-                    作り始める前に、<strong>実行方法</strong>と<strong>基本ルール</strong>を確認します。ここは「作り始める前の最低限の準備」のまとめです。
-                </p>
+            <div class="dg-card">
+                <div class="dg-card__body dg-prose">
+                    <h2>まずやること（最短ルート）</h2>
+                    <ol>
+                        <li><a href="learning/playground.html?step=step1">Step1</a> を開く</li>
+                        <li>Console を開き、エラーが出たら赤い行を読む</li>
+                        <li>詰まったら <a href="learning/selftest.html">自動ジャッジ</a> で原因を絞る</li>
+                    </ol>
 
-                <h3>このページの使い方</h3>
-                <ol>
-                    <li>まずは「JavaScriptの実行」を読み、Consoleに出力できる状態にする</li>
-                    <li>例をそのまま打って動くことを確認する（コピペでもOK）</li>
-                    <li>慣れてきたら、数値や文字を自分で変えて結果がどう変わるか確かめる</li>
-                    <li>最後に「モジュール（export/import）」を読み、ファイル分割の考え方を覚える</li>
-                </ol>
+                    <div class="dg-row" style="margin-top: var(--dg-space-4);">
+                        <a class="dg-btn" href="learning/playground.html?step=step1">Step1 を開く</a>
+                        <a class="dg-btn dg-btn--subtle" href="learning/">learning 一覧</a>
+                        <a class="dg-btn dg-btn--subtle" href="learning/selftest.html">自動ジャッジ</a>
+                        <a class="dg-btn dg-btn--subtle" href="learning/viewer.html">提出ビューワー</a>
+                    </div>
 
-                <h3>準備するもの</h3>
-                <ul>
-                    <li>ブラウザ（Chrome / Edge 推奨）</li>
-                    <li>テキストエディタ（VS Code 推奨）</li>
-                </ul>
+                    <div class="dg-note" style="margin-top: var(--dg-space-5);">
+                        うまく動かないときは、Console のエラー（例：<code>Uncaught ...</code>）を先に確認してください。
+                        全角記号（“ ” や ＝ など）が混ざると動かないことがあります。
+                    </div>
+                </div>
+            </div>
 
-                <h3>よく使う操作（ブラウザ）</h3>
-                <ul>
-                    <li>開発者ツールを開く：<strong>F12</strong>（ノートPCだと <strong>Fn + F12</strong> の場合あり）</li>
-                    <li>Consoleを表示：開発者ツール内の「Console」タブ</li>
-                    <li>画面を更新：<strong>F5</strong> / <strong>Ctrl + R</strong></li>
-                </ul>
+            <details class="dg-details">
+                <summary>事前学習ガイド（準備とルール）</summary>
+                <div class="dg-details__body dg-prose">
+                    <h2>このページの使い方</h2>
+                    <ol>
+                        <li>まずは「JavaScriptの実行」を読み、Consoleに出力できる状態にする</li>
+                        <li>例をそのまま打って動くことを確認する（コピペでもOK）</li>
+                        <li>慣れてきたら、数値や文字を自分で変えて結果がどう変わるか確かめる</li>
+                        <li>最後に「モジュール（export/import）」を読み、ファイル分割の考え方を覚える</li>
+                    </ol>
 
-                <h3>つまずきやすいポイント</h3>
-                <ul>
-                    <li>エラーが出たら、赤い表示の先頭行（例：<code>Uncaught ...</code>）を読む</li>
-                    <li>全角記号（“ ” や ＝ など）が混ざると動かないことがある（半角にする）</li>
-                    <li>ファイルを分ける場合、HTML側の <code>&lt;script type="module"&gt;</code> が必要</li>
-                </ul>
+                    <h2>準備するもの</h2>
+                    <ul>
+                        <li>ブラウザ（Chrome / Edge 推奨）</li>
+                        <li>テキストエディタ（VS Code 推奨）</li>
+                    </ul>
 
-                <h3>JavaScriptの実行</h3>
-                <p>
-                    JavaScriptを実行するためには、ブラウザを立ち上げて、
-                    開発者ツールを開いた後、「Console」画面を表示します。
-                </p>
+                    <h2>よく使う操作（ブラウザ）</h2>
+                    <ul>
+                        <li>開発者ツールを開く：<code>F12</code>（ノートPCだと <code>Fn + F12</code> の場合あり）</li>
+                        <li>Consoleを表示：開発者ツール内の「Console」タブ</li>
+                        <li>画面を更新：<code>F5</code> / <code>Ctrl + R</code></li>
+                    </ul>
 
-                <h3>JavaScriptにおける（C言語と同じ）基本ルール</h3>
-                <h4>文字列と変数</h4>
-                <p>文字列は <code>"</code>（ダブルクォーテーション）で挟みます。変数は、変数名をそのまま書きます（<code>""</code>で囲まない）。</p>
-                <pre><code>// 文字列の例
+                    <h2>つまずきやすいポイント</h2>
+                    <ul>
+                        <li>エラーが出たら、赤い表示の先頭行（例：<code>Uncaught ...</code>）を読む</li>
+                        <li>全角記号（“ ” や ＝ など）が混ざると動かないことがある（半角にする）</li>
+                        <li>ファイルを分ける場合、HTML側の <code>&lt;script type="module"&gt;</code> が必要</li>
+                    </ul>
+
+                    <h2>JavaScriptの実行</h2>
+                    <p>
+                        JavaScriptを実行するためには、ブラウザを立ち上げて開発者ツールを開き、「Console」画面を表示します。
+                    </p>
+
+                    <h2>基本ルール（C言語と同じ感覚）</h2>
+                    <h3>文字列と変数</h3>
+                    <p>文字列は <code>"</code>（ダブルクォーテーション）で挟みます。変数は変数名をそのまま書きます（<code>""</code>で囲まない）。</p>
+                    <pre><code>// 文字列の例
 console.log("Hello World!");
 
 // 変数の例（""で囲まない）
 let hensu = 10;
 console.log(hensu);</code></pre>
 
-                <h3>JavaScript独自のルール</h3>
-                <h4>変数の宣言方法</h4>
-                <ul>
-                    <li><code>let</code>：変数を宣言する（基本はこれ）</li>
-                    <li><code>const</code>：定数を宣言する（後から変えない値）</li>
-                    <li><code>var</code>：現在はあまり使われないが宣言に使える</li>
-                </ul>
-                <pre><code>let a = 5;
+                    <h2>JavaScript独自のルール</h2>
+                    <h3>変数の宣言方法</h3>
+                    <ul>
+                        <li><code>let</code>：変数を宣言する（基本はこれ）</li>
+                        <li><code>const</code>：定数を宣言する（後から変えない値）</li>
+                        <li><code>var</code>：現在はあまり使われないが宣言に使える</li>
+                    </ul>
+                    <pre><code>let a = 5;
 const b = 10;</code></pre>
 
-                <h3>ゲームを作る前に</h3>
-                <p>
-                    HTMLは文字や枠を表示する。CSSは見た目を変える。JavaScriptは動きをつける。
-                </p>
+                    <h2>ゲームを作る前に</h2>
+                    <p>HTMLは文字や枠を表示する。CSSは見た目を変える。JavaScriptは動きをつける。</p>
 
-                <h3>プログラムを分割しよう（モジュール）</h3>
-                <p>
-                    大きなプログラムは見づらくなるので、機能ごとにファイルを分けます。これを「モジュール」と呼びます。
-                </p>
-                <h4>export（外に出す）</h4>
-                <p>他のファイルから使えるように、関数や値を外に出します。</p>
-                <h4>import（取り込む）</h4>
-                <p>他のファイルから関数や値を読み込みます。</p>
-                <pre><code>// util.js（外に出す）
+                    <h2>プログラムを分割しよう（モジュール）</h2>
+                    <p>
+                        大きなプログラムは見づらくなるので、機能ごとにファイルを分けます。これを「モジュール」と呼びます。
+                    </p>
+
+                    <h3>export（外に出す）</h3>
+                    <p>他のファイルから使えるように、関数や値を外に出します。</p>
+
+                    <h3>import（取り込む）</h3>
+                    <p>他のファイルから関数や値を読み込みます。</p>
+
+                    <pre><code>// util.js（外に出す）
 export function add(a, b) {
   return a + b;
 }
@@ -113,57 +133,40 @@ export function add(a, b) {
 // main.js（取り込む）
 import { add } from "./util.js";
 console.log(add(2, 3));</code></pre>
-                <p>
-                    ブラウザで import/export を使う場合、HTMLは次のようにします。
-                </p>
-                <pre><code>&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code></pre>
 
-                <h3>次にやること</h3>
-                <ul>
-                    <li>変数・条件分岐（if）・繰り返し（for）を使って簡単な処理を書いてみる</li>
-                    <li>ゲーム制作では「表示」「入力」「当たり判定」「更新（ループ）」を分けて考える</li>
-                    <li>次は <a href="learning/">learning</a> に進んで Step1 から作り始める</li>
-                </ul>
-            </section>
-        </details>
+                    <p>ブラウザで import/export を使う場合、HTMLは次のようにします。</p>
+                    <pre><code>&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code></pre>
 
-        <details style="margin: 16px 0;">
-            <summary style="cursor: pointer; font-weight: 700;">JavaScript 基礎まとめ（このページだけで復習）</summary>
-            <section style="margin-top: 12px;">
-                <p>
-                    ここは <strong>シューティング制作</strong> の入口ですが、まずはゲーム制作で必ず使う <strong>JavaScript の基本</strong> をこのページで整理します。
-                    例はそのまま写して Console で試してOKです。
-                </p>
-                <p>
-                    <strong>Console の開き方</strong>（Chrome / Edge）：<strong>F12</strong> または <strong>Ctrl + Shift + I</strong> →「Console」タブ
-                </p>
+                    <h2>次にやること</h2>
+                    <ul>
+                        <li>変数・条件分岐（if）・繰り返し（for）を使って簡単な処理を書いてみる</li>
+                        <li>ゲーム制作では「表示」「入力」「当たり判定」「更新（ループ）」を分けて考える</li>
+                        <li>次は <a href="learning/">learning</a> に進んで Step1 から作り始める</li>
+                    </ul>
+                </div>
+            </details>
 
-            <h3>1. プログラミングとは</h3>
-            <ul>
-                <li><strong>プログラミング</strong>：コンピュータを制御する <strong>プログラム</strong> をつくること</li>
-                <li><strong>プログラム</strong>：コンピュータに動作を指示するための <strong>命令</strong> の集まり</li>
-                <li><strong>ソースコード</strong>：プログラムの記述内容</li>
-                <li><strong>プログラミング言語</strong>：ソースコードを書くための専用言語（この教材では JavaScript）</li>
-            </ul>
+            <details class="dg-details">
+                <summary>JavaScript 基礎まとめ（このページだけで復習）</summary>
+                <div class="dg-details__body dg-prose">
+                    <div class="dg-note" style="margin-bottom: var(--dg-space-5);">
+                        <strong>Console の開き方</strong>：<code>F12</code> または <code>Ctrl + Shift + I</code> →「Console」タブ
+                    </div>
 
-            <h3>2. メッセージを表示する（console.log）</h3>
-            <p>
-                プログラムは基本的に<strong>上から順番</strong>に実行されます。まずは Console に表示する命令を練習します。
-            </p>
-            <pre><code>console.log("Hello world");
+                    <h2>1. メッセージを表示する（console.log）</h2>
+                    <p>プログラムは基本的に<strong>上から順番</strong>に実行されます。</p>
+                    <pre><code>console.log("Hello world");
 console.log("冒険に出かけよう");</code></pre>
-            <ul>
-                <li><strong>console.log()</strong>：データを表示する命令（JavaScriptではこのような命令を <strong>関数</strong> と呼ぶ）</li>
-                <li>丸カッコの中に渡す値を <strong>引数（ひきすう）</strong> という</li>
-                <li>文字を表示するときは <strong>ダブルクォーテーション</strong> <code>"..."</code> で囲む</li>
-                <li>行末は基本 <strong>セミコロン</strong> <code>;</code> を付ける</li>
-            </ul>
+                    <ul>
+                        <li><code>console.log()</code>：データを表示する命令（関数）</li>
+                        <li>丸カッコの中の値は <strong>引数</strong></li>
+                        <li>文字は <code>"..."</code> で囲む</li>
+                        <li>行末は基本 <code>;</code></li>
+                    </ul>
 
-            <h3>3. よくあるエラー（間違いの見つけ方）</h3>
-            <p>
-                間違いがあると <strong>エラー</strong> になります。Console に出る <strong>エラーメッセージ</strong> を読んで、どこが原因か探します。
-            </p>
-            <pre><code>// つづりミス（×）
+                    <h2>2. よくあるエラー（見つけ方）</h2>
+                    <p>Console の赤い行（エラーメッセージ）を読んで原因を確認します。</p>
+                    <pre><code>// つづりミス（×）
 console.lo("Hello world");
 
 // セミコロンじゃなくて :（×）
@@ -175,64 +178,45 @@ console.log("Hello world);
 // 全角記号が混ざる（×）
 console.log("Hello world"）;</code></pre>
 
-            <h3>4. コメント（コードにメモを書く）</h3>
-            <p>コメントは実行されません。説明を書いたり、コードを一時的に無効化（コメントアウト）できます。</p>
-            <pre><code>// 1行コメント
+                    <h2>3. コメント</h2>
+                    <p>コメントは実行されません。説明を書いたり、一時的に無効化（コメントアウト）できます。</p>
+                    <pre><code>// 1行コメント
 console.log("Hello world");
 
 /* 複数行コメント
-    ここまでコメント */
+   ここまでコメント */
 console.log("Hello paiza");
 
-// コメントアウト（この行は実行されない）
+// コメントアウト
 // console.log("この行は表示されない");</code></pre>
 
-            <h3>5. 計算と文字列（クォーテーションの有無）</h3>
-            <p>
-                ダブルクォーテーションが <strong>ない</strong> と数値の計算、<strong>ある</strong> と文字列として扱われます。
-            </p>
-            <pre><code>console.log(100 + 30);   // 130
-console.log("100 + 30"); // 文字列としてそのまま表示</code></pre>
-            <p>
-                四則演算の演算子：<code>+</code>（足し算） / <code>-</code>（引き算） / <code>*</code>（掛け算） / <code>/</code>（割り算）
-            </p>
-            <pre><code>console.log(100 + 30 * 2);   // 掛け算が先
+                    <h2>4. 計算と文字列</h2>
+                    <p>ダブルクォーテーションが <strong>ない</strong> と計算、<strong>ある</strong> と文字列です。</p>
+                    <pre><code>console.log(100 + 30);    // 130
+console.log("100 + 30");  // 文字列としてそのまま</code></pre>
+                    <pre><code>console.log(100 + 30 * 2);   // 掛け算が先
 console.log((100 + 30) * 2); // カッコの中が先</code></pre>
-            <p>
-                割り算は無限小数になることがあり、その場合は一定の範囲で計算結果が表示されます。
-            </p>
 
-            <h3>6. 変数（データの入れ物）</h3>
-            <p>
-                変数は <strong>データの入れ物</strong>、変数名は入れ物の<strong>名前</strong>です。初めて使うときは <code>let</code> で宣言します。
-            </p>
-            <pre><code>let greeting = "Hello world";
+                    <h2>5. 変数（データの入れ物）</h2>
+                    <pre><code>let greeting = "Hello world";
 console.log(greeting);
 
-// 変数の中身を変更できる
 let message = "Hello";
 console.log(message);
 message = "Welcome";
 console.log(message);</code></pre>
-            <ul>
-                <li>変数名の1文字目：アルファベット or アンダーバー <code>_</code></li>
-                <li>2文字目以降：アルファベット / アンダーバー / 数字</li>
-                <li>慣習：日本語（全角）で書かない、先頭は小文字、2語目以降は先頭を大文字（camelCase）</li>
-                <li><strong>予約語</strong>（例：<code>let</code>）は変数名にできない</li>
-            </ul>
+                    <ul>
+                        <li>変数名：アルファベット / <code>_</code> / 数字（先頭は数字NG）</li>
+                        <li>慣習：先頭は小文字、2語目以降は大文字（camelCase）</li>
+                        <li><code>let</code> などの予約語は使えない</li>
+                    </ul>
 
-            <h3>7. テンプレートリテラル（文字列に変数を埋め込む）</h3>
-            <p>
-                バッククォート <code>`</code> を使い、<code>${...}</code> で変数の値を文字列に埋め込めます。
-            </p>
-            <pre><code>let userName = "paiza";
+                    <h2>6. テンプレートリテラル</h2>
+                    <pre><code>let userName = "paiza";
 console.log(`${userName}さん、冒険にようこそ`);</code></pre>
 
-            <h3>8. 条件分岐（if / else if / else）</h3>
-            <p>
-                <code>if</code> は、<strong>条件</strong>が成立したときだけ中の処理を実行します。
-            </p>
-            <pre><code>let name = "JavaScript";
+                    <h2>7. 条件分岐（if）</h2>
+                    <pre><code>let name = "JavaScript";
 console.log(`Hello ${name}`);
 
 if (name == "JavaScript") {
@@ -240,91 +224,77 @@ if (name == "JavaScript") {
 } else {
   console.log("Goodbye");
 }</code></pre>
-            <p>
-                よく使う比較演算子：<code>==</code>（等しい） / <code>!=</code>（等しくない） / <code>&gt;</code>（大なり） / <code>&lt;</code>（小なり） / <code>&gt;=</code>（以上） / <code>&lt;=</code>（以下）
-            </p>
-            <p>
-                注意：<code>=</code> は <strong>代入</strong>、<code>==</code> は <strong>比較</strong> です。
-            </p>
+                    <p>
+                        よく使う比較演算子：<code>==</code> / <code>!=</code> / <code>&gt;</code> / <code>&lt;</code> / <code>&gt;=</code> / <code>&lt;=</code>
+                    </p>
+                    <p>注意：<code>=</code> は代入、<code>==</code> は比較です。</p>
 
-            <h3>9. 繰り返し（for ループ）</h3>
-            <p>同じ処理を何度も実行したいときはループ（繰り返し）を使います。</p>
-            <pre><code>let greeting = "Hello world";
-
-for (let i = 0; i &lt; 5; i++) {
-  console.log(greeting);
-}</code></pre>
-            <ul>
-                <li><code>i = 0</code>：初期値</li>
-                <li><code>i &lt; 5</code>：繰り返し条件</li>
-                <li><code>i++</code>：変化分（1ずつ増える）</li>
-                <li><code>i</code> のような繰り返し回数を表す変数を <strong>カウンタ変数</strong> と呼ぶ</li>
-            </ul>
-            <pre><code>// for と if を組み合わせる例
-for (let i = 1; i &lt;= 3; i++) {
-  if (i &gt; 2) {
-    console.log("Big");
-  } else {
-    console.log("Small");
-  }
-}</code></pre>
-
-            <h3>10. 確認問題（自分で解いてみよう）</h3>
-            <details>
-                <summary>問題を開く（クリック）</summary>
-                <ol>
-                    <li>
-                        次のプログラムの表示内容を書きなさい。
-                        <pre><code>console.log("Hello");
-console.log("paiza");</code></pre>
-                    </li>
-                    <li>
-                        次のうち正しい説明をすべて選びなさい。
-                        <ul>
-                            <li>A. JavaScript は主に Web ブラウザで動作する</li>
-                            <li>B. JavaScript はスクリプト言語である</li>
-                            <li>C. JavaScript は日本語だけでプログラムを書く言語である</li>
-                            <li>D. JavaScript はサーバ側のプログラミングにも使われる</li>
-                        </ul>
-                    </li>
-                    <li>
-                        次のプログラムの表示内容を書きなさい。
-                        <pre><code>console.log(50 + 20);
-console.log("50 + 20");</code></pre>
-                    </li>
-                    <li>
-                        テンプレートリテラルを使って「Taroさん、こんにちは」と表示するようにしなさい。
-                        <pre><code>let name = "Taro";
-console.log(`(ここに何を書く？)さん、こんにちは`);</code></pre>
-                    </li>
-                    <li>
-                        次のプログラムの表示内容を書きなさい。
-                        <pre><code>for (let i = 0; i &lt; 3; i++) {
+                    <h2>8. 繰り返し（for）</h2>
+                    <pre><code>for (let i = 0; i &lt; 3; i++) {
   console.log(i);
 }</code></pre>
-                    </li>
-                </ol>
-            </details>
-            <details style="margin-top: 8px;">
-                <summary>解答例を開く（クリック）</summary>
-                <ol>
-                    <li>Hello / paiza（2行）</li>
-                    <li>A・B・D</li>
-                    <li>70 / 50 + 20（2行）</li>
-                    <li><code>${name}</code></li>
-                    <li>0 / 1 / 2（3行）</li>
-                </ol>
-            </details>
-            </section>
-        </details>
+                    <p><code>i</code> のような回数を表す変数を <strong>カウンタ変数</strong> と呼びます。</p>
 
-        <section>
-            <h2>データ管理とジャッジ</h2>
-            <ul>
-                <li><strong>自動ジャッジ</strong>：<a href="learning/selftest.html">自動ジャッジ</a> で、各Stepのコードが正しく動作するか自動テストできます。</li>
-                <li><strong>提出ビューワー</strong>：<a href="learning/viewer.html">提出ビューワー</a> で、複数の提出JSONを一括で確認できます。</li>
-            </ul>
-        </section>
+                    <h2>確認問題</h2>
+                    <details class="dg-details" style="margin: 0;">
+                        <summary>問題を開く</summary>
+                        <div class="dg-details__body">
+                            <ol>
+                                <li>
+                                    次のプログラムの表示内容を書きなさい。
+                                    <pre><code>console.log("Hello");
+console.log("paiza");</code></pre>
+                                </li>
+                                <li>
+                                    次のうち正しい説明をすべて選びなさい。
+                                    <ul>
+                                        <li>A. JavaScript は主に Web ブラウザで動作する</li>
+                                        <li>B. JavaScript はスクリプト言語である</li>
+                                        <li>C. JavaScript は日本語だけでプログラムを書く言語である</li>
+                                        <li>D. JavaScript はサーバ側のプログラミングにも使われる</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    次のプログラムの表示内容を書きなさい。
+                                    <pre><code>console.log(50 + 20);
+console.log("50 + 20");</code></pre>
+                                </li>
+                                <li>
+                                    テンプレートリテラルを使って「Taroさん、こんにちは」と表示するようにしなさい。
+                                    <pre><code>let name = "Taro";
+console.log(`(ここに何を書く？)さん、こんにちは`);</code></pre>
+                                </li>
+                            </ol>
+                        </div>
+                    </details>
+
+                    <details class="dg-details" style="margin-top: var(--dg-space-4);">
+                        <summary>解答例を開く</summary>
+                        <div class="dg-details__body">
+                            <ol>
+                                <li>Hello / paiza（2行）</li>
+                                <li>A・B・D</li>
+                                <li>70 / 50 + 20（2行）</li>
+                                <li><code>${name}</code></li>
+                            </ol>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <div class="dg-card" style="margin-top: var(--dg-space-6);">
+                <div class="dg-card__body dg-prose">
+                    <h2>データ管理とジャッジ</h2>
+                    <ul>
+                        <li><strong>自動ジャッジ</strong>：<a href="learning/selftest.html">自動ジャッジ</a> で、各Stepのコードが正しく動作するか自動テストできます。</li>
+                        <li><strong>提出ビューワー</strong>：<a href="learning/viewer.html">提出ビューワー</a> で、複数の提出JSONを一括で確認できます。</li>
+                    </ul>
+                    <div class="dg-note dg-note--success">
+                        まずは Step1〜Step3 を固めると、その後の作業が速くなります。
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script>
