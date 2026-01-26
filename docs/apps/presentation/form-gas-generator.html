@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Googleフォーム(GAS)生成ツール｜相互評価/自己評価/教師評価</title>
+  <link rel="stylesheet" href="../../assets/css/digital.css" />
+  <style>
+    :root { --pr-max: 1200px; }
+
+    /* ダークテーマ（このページ限定） */
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --dg-color-bg: #0b0f14;
+      --dg-color-surface: #0f172a;
+      --dg-color-surface-2: #111827;
+      --dg-color-border: #233047;
+      --dg-color-text: #e5e7eb;
+      --dg-color-muted: #9ca3af;
+      --dg-color-link: #93c5fd;
+      --dg-color-link-visited: #c4b5fd;
+      --dg-color-primary: #60a5fa;
+      --dg-color-primary-hover: #3b82f6;
+      --dg-color-primary-active: #2563eb;
+      --dg-color-on-primary: #0b1220;
+      --dg-shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+      --dg-shadow-md: 0 10px 28px rgba(0,0,0,.35);
+    }
+
+    .pr-container { width: min(var(--pr-max), calc(100% - 32px)); margin: 0 auto; }
+
+    .pr-grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: var(--dg-space-4);
+      align-items: start;
+    }
+    @media (max-width: 1040px) {
+      .pr-grid { grid-template-columns: 1fr; }
+    }
+
+    .pr-badges { display:flex; gap: 8px; flex-wrap: wrap; }
+    .pr-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      color: var(--dg-color-muted);
+      font-size: var(--dg-text-sm);
+      line-height: 1.2;
+    }
+
+    .pr-modeBox { display: grid; gap: 10px; }
+    .pr-modeBtn {
+      appearance: none;
+      border: 1px solid var(--dg-color-border);
+      background: var(--dg-color-surface);
+      color: inherit;
+      text-align: left;
+      border-radius: var(--dg-radius-md);
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+    .pr-modeBtn:hover { background: var(--dg-color-surface-2); }
+    .pr-modeBtn__title { font-weight: 800; }
+    .pr-modeBtn__desc { color: var(--dg-color-muted); font-size: var(--dg-text-sm); margin-top: 2px; }
+
+    .pr-inline { display:flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .pr-inline label { display:flex; gap: 8px; align-items: center; }
+
+    .pr-grid2 { display:grid; grid-template-columns: 1fr 1fr; gap: var(--dg-space-3); }
+    @media (max-width: 860px) { .pr-grid2 { grid-template-columns: 1fr; } }
+
+    .pr-divider { height: 1px; background: var(--dg-color-border); margin: var(--dg-space-5) 0; }
+    .pr-miniNote { color: var(--dg-color-muted); font-size: var(--dg-text-xs); margin-top: 6px; }
+
+    .pr-codeArea {
+      width: 100%;
+      min-height: 340px;
+      font-family: var(--dg-font-mono);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    details {
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      padding: 10px 12px;
+      background: var(--dg-color-surface);
+      margin-top: var(--dg-space-4);
+    }
+    summary { cursor: pointer; font-weight: 800; }
+    summary span { font-weight: 600; color: var(--dg-color-muted); }
+
+    .pr-items { display:flex; flex-direction:column; gap: 10px; margin-top: 10px; }
+    .pr-item {
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      padding: 10px;
+      background: color-mix(in srgb, var(--dg-color-surface), #fff 8%);
+    }
+    html[data-theme="dark"] .pr-item { background: color-mix(in srgb, var(--dg-color-surface), #000 12%); }
+
+    .pr-itemTop { display:flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .pr-itemToggles { display:flex; gap: 10px; flex-wrap: wrap; color: var(--dg-color-muted); font-size: var(--dg-text-sm); }
+    .pr-toggle { display:flex; gap: 6px; align-items: center; }
+    .pr-itemGrid2 { display:grid; grid-template-columns: 1fr 1fr; gap: var(--dg-space-3); margin-top: var(--dg-space-3); }
+    @media (max-width: 860px) { .pr-itemGrid2 { grid-template-columns: 1fr; } }
+
+    .pr-toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dg-color-text);
+      color: var(--dg-color-bg);
+      border: 1px solid color-mix(in srgb, var(--dg-color-border), #000 10%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      box-shadow: var(--dg-shadow-md);
+      display: none;
+      z-index: 9999;
+      font-size: var(--dg-text-sm);
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      .pr-toast { display: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="dg-header no-print">
+    <div class="pr-container dg-header__inner">
+      <a class="dg-brand" href="./">
+        <span class="dg-brand__title">プレゼン</span>
+        <span class="dg-brand__badge">forms</span>
+      </a>
+      <nav class="dg-nav" aria-label="ツールバー">
+        <a class="dg-btn dg-btn--subtle" href="./">戻る</a>
+        <button id="btnTheme" class="dg-btn dg-btn--subtle" type="button">ライト/ダーク</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="pr-container">
+      <h1 class="dg-page-title">Googleフォーム(GAS)生成ツール</h1>
+      <p class="dg-lead">設定を整えて「GAS用コードを作成」→ スプレッドシートの Apps Script に貼り付けて実行 → フォームURLが出ます。</p>
+
+      <div class="pr-grid">
+        <!-- Left: settings -->
+        <section class="dg-card">
+          <div class="dg-card__body dg-prose">
+            <h2 style="margin-top:0">① まず作る種類を選ぶ</h2>
+            <div class="pr-modeBox" id="modeBox"></div>
+
+            <div class="pr-divider"></div>
+
+            <h2 style="margin-top:0">② フォームの基本設定</h2>
+            <div class="dg-field">
+              <label class="dg-label" for="formTitle">フォームタイトル</label>
+              <input id="formTitle" class="dg-input" type="text" />
+            </div>
+
+            <div class="dg-field">
+              <label class="dg-label" for="formDesc">フォーム説明（任意）</label>
+              <textarea id="formDesc" class="dg-textarea" placeholder="例）スライドURLは先生が見られる共有設定で…"></textarea>
+            </div>
+
+            <div class="pr-grid2">
+              <div class="dg-field">
+                <label class="dg-label" for="linkSheetName">リンク出力シート名</label>
+                <input id="linkSheetName" class="dg-input" type="text" />
+                <div class="pr-miniNote">生成後、ここに <b>publishedUrl / editUrl</b> を書き出します。</div>
+              </div>
+              <div class="dg-field">
+                <label class="dg-label" for="confirmMsg">確認メッセージ（送信後表示）</label>
+                <input id="confirmMsg" class="dg-input" type="text" />
+              </div>
+            </div>
+
+            <div class="pr-inline" style="margin-top: var(--dg-space-4);">
+              <label><input id="forceLogin" type="checkbox" /> Googleログインを強制（メールアドレスをログインで取得）</label>
+            </div>
+            <div class="pr-miniNote">※ 環境差があるため、生成コードは <b>try/catch</b> で安全に処理します。</div>
+
+            <div class="pr-divider"></div>
+
+            <h2 style="margin-top:0">③ GASを生成</h2>
+            <div class="dg-row">
+              <button id="btnGenerate" class="dg-btn" type="button">GAS用コードを作成</button>
+              <button id="btnCopy" class="dg-btn dg-btn--subtle" type="button">コードをコピー</button>
+              <button id="btnReset" class="dg-btn dg-btn--subtle" type="button">テンプレに戻す</button>
+            </div>
+
+            <div class="dg-field" style="margin-top: var(--dg-space-4);">
+              <label class="dg-label" for="codeOut">生成されたGASコード（そのまま貼り付けOK）</label>
+              <textarea id="codeOut" class="dg-textarea pr-codeArea" spellcheck="false"></textarea>
+            </div>
+
+            <div class="pr-miniNote">※ このページはローカルで動く「コード生成器」です。生成されたGASをスプレッドシート側で実行するとフォームが作成されます。</div>
+          </div>
+        </section>
+
+        <!-- Right: question editor -->
+        <section class="dg-card">
+          <div class="dg-card__body dg-prose">
+            <h2 style="margin-top:0">質問項目の編集</h2>
+            <div class="pr-badges">
+              <span class="pr-badge">削除OK（使うOFF）</span>
+              <span class="pr-badge">必須ON/OFF</span>
+              <span class="pr-badge">評価項目は±で増減</span>
+            </div>
+
+            <details open>
+              <summary>基本項目 <span>（出席番号・名前など）</span></summary>
+              <div class="pr-items" id="basicItems"></div>
+            </details>
+
+            <details id="sampleSection" open>
+              <summary>サンプル相互評価 <span>（はい/いいえ）</span></summary>
+              <div class="pr-inline" style="margin-top: var(--dg-space-3);">
+                <label><input id="useSample" type="checkbox" /> サンプルの相互評価を利用する</label>
+              </div>
+              <div class="pr-items" id="sampleItems"></div>
+            </details>
+
+            <details open>
+              <summary>点数（スケール）評価項目 <span>（評価項目1〜 / 下限0 or 1 / 上限3〜10）</span></summary>
+
+              <div class="dg-row" style="justify-content: space-between; margin-top: var(--dg-space-3);">
+                <div class="pr-miniNote">※ スケール制約：下限は <b>0 または 1</b>、上限は <b>3〜10</b></div>
+                <div class="dg-row">
+                  <button id="btnAddRating" class="dg-btn dg-btn--subtle" type="button">＋ 追加</button>
+                  <button id="btnRemoveRating" class="dg-btn dg-btn--subtle" type="button">− 削除</button>
+                </div>
+              </div>
+
+              <div class="pr-items" id="ratingItems"></div>
+            </details>
+
+            <details open>
+              <summary>自由記述 <span>（良かった点 / 悪かった点 / コメント）</span></summary>
+              <div class="pr-items" id="freeItems"></div>
+            </details>
+
+            <details>
+              <summary>高度な設定 <span>（選択肢の編集など）</span></summary>
+              <ul class="pr-miniNote" style="margin: 10px 0 0 1.2em; padding: 0;">
+                <li>はい/いいえを別の選択肢に変えたい場合は、各項目の「選択肢（カンマ区切り）」を編集してください。</li>
+                <li>説明文（HelpText）も各項目で編集できます。</li>
+              </ul>
+            </details>
+
+            <div class="pr-divider"></div>
+
+            <h2 style="margin-top:0">スプレッドシートで実行するまでの手順（丁寧版）</h2>
+            <ol style="font-size: var(--dg-text-sm)">
+              <li>まずこのページで設定を整え、左側の <b>「GAS用コードを作成」</b> を押します。</li>
+              <li><b>Googleスプレッドシート</b>を開きます（回答を保存したいスプレッドシート）。</li>
+              <li>上メニューの <b>拡張機能 → Apps Script</b> を開きます。</li>
+              <li>表示された <b>Code.gs</b> に、ここで生成したGASコードを <b>全部貼り付け</b>、保存（💾）します。</li>
+              <li>Apps Script上部の関数選択で <b>createEvaluationForm</b> を選び、▶︎実行します。</li>
+              <li>初回は権限が必要です：アカウント選択 → 許可（フォーム作成/スプレッドシート編集）。</li>
+              <li>実行が成功すると、スプレッドシートに <b>リンク出力シート（例：FormLinks）</b> が作られ、2行目に <b>publishedUrl（提出用リンク）</b> と <b>editUrl（編集用）</b> が出ます。</li>
+              <li>生徒に配るのは <b>publishedUrl</b> です（Google Classroom 等に貼る）。</li>
+              <li>「スライドURLを提出させる」運用なら、スライドの共有設定は <b>先生が閲覧できる</b> ように注意喚起してください。</li>
+            </ol>
+
+            <div class="pr-miniNote">※ 生成コードは <b>FormApp.create()</b> でフォーム作成、<b>setDestination()</b> で回答保存先をこのスプレッドシートに設定し、最後にURLを書き出します。</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="dg-footer">
+    <div class="pr-container dg-footer__inner">
+      <div class="dg-footer__meta">© フォーム作成授業用：GASコード生成ツール</div>
+      <div class="dg-row">
+        <a class="dg-btn dg-btn--subtle" href="./submit-links.html">提出用リンク管理</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="pr-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script defer src="./form-gas-generator.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>提出用リンク（Googleフォーム） | プレゼン</title>
+  <link rel="stylesheet" href="../../assets/css/digital.css" />
+  <style>
+    :root { --pr-max: 980px; }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --dg-color-bg: #0b0f14;
+      --dg-color-surface: #0f172a;
+      --dg-color-surface-2: #111827;
+      --dg-color-border: #233047;
+      --dg-color-text: #e5e7eb;
+      --dg-color-muted: #9ca3af;
+      --dg-color-link: #93c5fd;
+      --dg-color-link-visited: #c4b5fd;
+      --dg-color-primary: #60a5fa;
+      --dg-color-primary-hover: #3b82f6;
+      --dg-color-primary-active: #2563eb;
+      --dg-color-on-primary: #0b1220;
+      --dg-shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+      --dg-shadow-md: 0 10px 28px rgba(0,0,0,.35);
+    }
+
+    .pr-container { width: min(var(--pr-max), calc(100% - 32px)); margin: 0 auto; }
+
+    .pr-toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dg-color-text);
+      color: var(--dg-color-bg);
+      border: 1px solid color-mix(in srgb, var(--dg-color-border), #000 10%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      box-shadow: var(--dg-shadow-md);
+      display: none;
+      z-index: 9999;
+      font-size: var(--dg-text-sm);
+    }
+
+    @media print {
+      .no-print { display:none !important; }
+      .pr-toast { display:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="dg-header no-print">
+    <div class="pr-container dg-header__inner">
+      <a class="dg-brand" href="./">
+        <span class="dg-brand__title">プレゼン</span>
+        <span class="dg-brand__badge">links</span>
+      </a>
+      <nav class="dg-nav" aria-label="ツールバー">
+        <a class="dg-btn dg-btn--subtle" href="./">戻る</a>
+        <button id="btnTheme" class="dg-btn dg-btn--subtle" type="button">ライト/ダーク</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="pr-container">
+      <h1 class="dg-page-title">提出用リンク（Googleフォーム）</h1>
+      <p class="dg-lead">ここにフォームURLを貼っておくと、授業中にすぐ開けます（この端末のローカル保存）。</p>
+
+      <div class="dg-stack">
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <h2 style="margin:0 0 10px 0; font-size: var(--dg-text-xl)">生徒用：提出フォーム</h2>
+            <div class="dg-field">
+              <label class="dg-label" for="studentUrl">フォームURL（publishedUrl）</label>
+              <input id="studentUrl" class="dg-input" type="url" placeholder="https://docs.google.com/forms/d/e/.../viewform" />
+              <div class="dg-help">生徒に配るのは通常こちら（提出用リンク）。</div>
+            </div>
+            <div class="dg-row" style="margin-top: var(--dg-space-4)">
+              <button id="openStudent" class="dg-btn" type="button">開く</button>
+              <button id="copyStudent" class="dg-btn dg-btn--subtle" type="button">コピー</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <h2 style="margin:0 0 10px 0; font-size: var(--dg-text-xl)">教師用：評価/管理フォーム</h2>
+            <div class="dg-field">
+              <label class="dg-label" for="teacherUrl">フォームURL（publishedUrl）</label>
+              <input id="teacherUrl" class="dg-input" type="url" placeholder="https://docs.google.com/forms/d/e/.../viewform" />
+              <div class="dg-help">先生が評価入力に使うフォームURL。</div>
+            </div>
+            <div class="dg-row" style="margin-top: var(--dg-space-4)">
+              <button id="openTeacher" class="dg-btn" type="button">開く</button>
+              <button id="copyTeacher" class="dg-btn dg-btn--subtle" type="button">コピー</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="dg-card">
+          <div class="dg-card__body dg-prose">
+            <h2 style="margin-top:0">フォームがまだ無い場合</h2>
+            <p>このプロジェクト内の生成器で、必要なフォーム（生徒用/先生用）を作れます。</p>
+            <div class="dg-row">
+              <a class="dg-btn" href="./form-gas-generator.html">フォーム生成器を開く</a>
+              <a class="dg-btn dg-btn--subtle" href="./">授業プリントへ戻る</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="dg-footer">
+    <div class="pr-container dg-footer__inner">
+      <div class="dg-footer__meta">ローカル保存（このブラウザ）</div>
+    </div>
+  </footer>
+
+  <div class="pr-toast" id="toast" role="status" aria-live="polite"></div>
+  <script defer src="./submit-links.js"></script>
+</body>
+</html>
