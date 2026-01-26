@@ -1,741 +1,1126 @@
 <!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Favorite プレゼン授業：スライド作成〜発表の極意＆評価基準</title>
-  <link rel="stylesheet" href="../../assets/css/digital.css" />
-  <style>
-    /* presentation/index.html: digital.css 準拠の上で、このページ固有の最小限スタイル */
-    :root { --pr-max: 1100px; }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>プレゼン：スライド作成〜発表の極意＆評価基準</title>
+    <link rel="stylesheet" href="../../assets/css/digital.css" />
+    <style>
+      /* presentation/index.html: digital.css 準拠の上で、このページ固有の最小限スタイル */
+      :root {
+        --pr-max: 1100px;
+      }
 
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
 
-    /* ダークテーマ（このページ限定） */
-    html[data-theme="dark"] {
-      color-scheme: dark;
+      /* ダークテーマ（このページ限定） */
+      html[data-theme="dark"] {
+        color-scheme: dark;
 
-      --dg-color-bg: #0b0f14;
-      --dg-color-surface: #0f172a;
-      --dg-color-surface-2: #111827;
-      --dg-color-border: #233047;
-      --dg-color-text: #e5e7eb;
-      --dg-color-muted: #9ca3af;
-      --dg-color-link: #93c5fd;
-      --dg-color-link-visited: #c4b5fd;
-      --dg-color-primary: #60a5fa;
-      --dg-color-primary-hover: #3b82f6;
-      --dg-color-primary-active: #2563eb;
-      --dg-color-on-primary: #0b1220;
-      --dg-shadow-sm: 0 1px 2px rgba(0,0,0,.25);
-      --dg-shadow-md: 0 10px 28px rgba(0,0,0,.35);
-    }
+        --dg-color-bg: #0b0f14;
+        --dg-color-surface: #0f172a;
+        --dg-color-surface-2: #111827;
+        --dg-color-border: #233047;
+        --dg-color-text: #e5e7eb;
+        --dg-color-muted: #9ca3af;
+        --dg-color-link: #93c5fd;
+        --dg-color-link-visited: #c4b5fd;
+        --dg-color-primary: #60a5fa;
+        --dg-color-primary-hover: #3b82f6;
+        --dg-color-primary-active: #2563eb;
+        --dg-color-on-primary: #0b1220;
+        --dg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+        --dg-shadow-md: 0 10px 28px rgba(0, 0, 0, 0.35);
+      }
 
-    .pr-container { width: min(var(--pr-max), calc(100% - 32px)); margin: 0 auto; }
-    .pr-toolbar { display:flex; gap: var(--dg-space-3); align-items:center; flex-wrap:wrap; }
-    .pr-toolbar .dg-field { min-width: 180px; }
-    .pr-subtitle { margin: 0; color: var(--dg-color-muted); }
-    .pr-printHint { margin: 0; color: var(--dg-color-muted); font-size: var(--dg-text-xs); }
+      .pr-container {
+        width: min(var(--pr-max), calc(100% - 32px));
+        margin: 0 auto;
+      }
+      .pr-toolbar {
+        display: flex;
+        gap: var(--dg-space-3);
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .pr-toolbar .dg-field {
+        min-width: 180px;
+      }
+      .pr-subtitle {
+        margin: 0;
+        color: var(--dg-color-muted);
+      }
+      .pr-printHint {
+        margin: 0;
+        color: var(--dg-color-muted);
+        font-size: var(--dg-text-xs);
+      }
 
-    .pr-badges { display:flex; gap: 8px; flex-wrap:wrap; margin: 8px 0 0 0; }
-    .pr-badge {
-      display:inline-flex; align-items:center;
-      padding: 4px 10px; border-radius: 999px;
-      background: var(--dg-color-surface);
-      border: 1px solid var(--dg-color-border);
-      color: var(--dg-color-muted);
-      font-size: var(--dg-text-sm);
-      line-height: 1.2;
-    }
+      .pr-badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 8px 0 0 0;
+      }
+      .pr-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--dg-color-surface);
+        border: 1px solid var(--dg-color-border);
+        color: var(--dg-color-muted);
+        font-size: var(--dg-text-sm);
+        line-height: 1.2;
+      }
 
-    .pr-check { display:grid; gap: 10px; }
-    .pr-check label {
-      display:flex; gap: 10px; align-items:flex-start;
-      padding: 10px 12px;
-      border: 1px solid var(--dg-color-border);
-      border-radius: var(--dg-radius-md);
-      background: var(--dg-color-surface);
-    }
-    .pr-check input { margin-top: 3px; }
+      .pr-check {
+        display: grid;
+        gap: 10px;
+      }
+      .pr-check label {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 10px 12px;
+        border: 1px solid var(--dg-color-border);
+        border-radius: var(--dg-radius-md);
+        background: var(--dg-color-surface);
+      }
+      .pr-check input {
+        margin-top: 3px;
+      }
 
-    .pr-score { display:flex; gap: 10px; flex-wrap:wrap; color: var(--dg-color-muted); font-size: var(--dg-text-sm); }
-    .pr-score b { color: var(--dg-color-text); }
+      .pr-score {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        color: var(--dg-color-muted);
+        font-size: var(--dg-text-sm);
+      }
+      .pr-score b {
+        color: var(--dg-color-text);
+      }
 
-    .pr-table { margin-top: var(--dg-space-4); }
+      .pr-table {
+        margin-top: var(--dg-space-4);
+      }
 
-    .pr-timerGrid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: var(--dg-space-4);
-      align-items: start;
-    }
-    @media (max-width: 860px) {
-      .pr-timerGrid { grid-template-columns: 1fr; }
-    }
+      .pr-timerGrid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--dg-space-4);
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .pr-timerGrid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-    .pr-timerDisplay { display:flex; gap: var(--dg-space-3); align-items: center; flex-wrap: wrap; }
-    .pr-timerDone .dg-timer { border-color: color-mix(in srgb, var(--dg-color-danger), #fff 55%); }
-    .pr-timerMeta { color: var(--dg-color-muted); font-size: var(--dg-text-sm); }
+      .pr-timerDisplay {
+        display: flex;
+        gap: var(--dg-space-3);
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .pr-timerDone .dg-timer {
+        border-color: color-mix(in srgb, var(--dg-color-danger), #fff 55%);
+      }
+      .pr-timerMeta {
+        color: var(--dg-color-muted);
+        font-size: var(--dg-text-sm);
+      }
 
-    /* 印刷：共通（ツールバー等を非表示） */
-    @media print {
-      .no-print { display:none !important; }
-      .dg-header { border-bottom: 1px solid #ddd; }
-      a { color: #111; }
-    }
+      /* 印刷：共通（ツールバー等を非表示） */
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        .dg-header {
+          border-bottom: 1px solid #ddd;
+        }
+        a {
+          color: #111;
+        }
+      }
 
-    /* 印刷：自己評価だけ複数枚モード */
-    .print-only { display:none; }
-    html[data-print-mode="evaluation"] .print-only { display:block; }
-    html[data-print-mode="evaluation"] #content { display:none; }
-    @media print {
-      html[data-print-mode="evaluation"] .print-only { display:block; }
-      html[data-print-mode="evaluation"] #content { display:none; }
-      .pr-copy { break-after: page; page-break-after: always; }
-      .pr-copy:last-child { break-after: auto; page-break-after: auto; }
-    }
-  </style>
-</head>
+      /* 印刷：自己評価だけ複数枚モード */
+      .print-only {
+        display: none;
+      }
+      html[data-print-mode="evaluation"] .print-only {
+        display: block;
+      }
+      html[data-print-mode="evaluation"] #content {
+        display: none;
+      }
+      @media print {
+        html[data-print-mode="evaluation"] .print-only {
+          display: block;
+        }
+        html[data-print-mode="evaluation"] #content {
+          display: none;
+        }
+        .pr-copy {
+          break-after: page;
+          page-break-after: always;
+        }
+        .pr-copy:last-child {
+          break-after: auto;
+          page-break-after: auto;
+        }
+      }
+    </style>
+  </head>
 
-<body>
-  <header class="dg-header no-print">
-    <div class="pr-container dg-header__inner">
-      <a class="dg-brand" href="./">
-        <span class="dg-brand__title">My Favorite プレゼン授業</span>
-        <span class="dg-brand__badge">handout</span>
-      </a>
-      <nav class="dg-nav pr-toolbar" aria-label="ツールバー">
-        <div class="dg-field" style="gap:4px">
-          <label class="dg-label" for="evalCopies">自己/相互評価の部数</label>
-          <select id="evalCopies" class="dg-select" aria-label="自己評価・相互評価の印刷部数">
-            <option value="1">1</option>
-            <option value="10">10</option>
-            <option value="20" selected>20</option>
-            <option value="30">30</option>
-            <option value="40">40</option>
-          </select>
+  <body>
+    <header class="dg-header no-print">
+      <div class="pr-container dg-header__inner">
+        <a class="dg-brand" href="./">
+          <span class="dg-brand__title">プレゼンテーション</span>
+        </a>
+        <nav class="dg-nav pr-toolbar" aria-label="ツールバー">
+          <div class="dg-field" style="gap: 4px">
+            <label class="dg-label" for="evalCopies">自己/相互評価の部数</label>
+            <select
+              id="evalCopies"
+              class="dg-select"
+              aria-label="自己評価・相互評価の印刷部数"
+            >
+              <option value="1">1</option>
+              <option value="10">10</option>
+              <option value="20" selected>20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+            </select>
+          </div>
+          <button id="btnTheme" class="dg-btn dg-btn--subtle" type="button">
+            ライト/ダーク
+          </button>
+          <button id="btnPrintAll" class="dg-btn" type="button">
+            全文印刷
+          </button>
+          <button id="btnPrintEval" class="dg-btn dg-btn--subtle" type="button">
+            自己/相互評価だけ印刷
+          </button>
+          <a class="dg-btn dg-btn--subtle" href="./submit-links.html"
+            >提出リンク</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="dg-main">
+      <div class="pr-container" id="content">
+        <h1 class="dg-page-title">
+          プレゼン：スライド作成〜発表の極意＆評価基準
+        </h1>
+        <p class="pr-subtitle">
+          目的：スライドは「読ませる資料」ではなく「視線誘導」。伝えたいことを、短時間で分かりやすく届ける。
+        </p>
+
+        <div class="dg-stack" style="margin-top: var(--dg-space-6)">
+          <!-- タイマー（授業進行用） -->
+          <section class="dg-card no-print" aria-label="授業用タイマー">
+            <div class="dg-card__body">
+              <div class="pr-timerGrid">
+                <div>
+                  <div class="dg-prose">
+                    <h2 style="margin: 0">タイマー</h2>
+                    <p class="pr-timerMeta" style="margin: 6px 0 0 0">
+                      発表・作業時間の管理用（印刷には出ません）。
+                    </p>
+                  </div>
+
+                  <div class="dg-row" style="margin-top: var(--dg-space-4)">
+                    <div class="dg-field" style="gap: 4px; min-width: 180px">
+                      <label class="dg-label" for="timerMode">モード</label>
+                      <select id="timerMode" class="dg-select">
+                        <option value="countdown">カウントダウン</option>
+                        <option value="stopwatch">ストップウォッチ</option>
+                      </select>
+                    </div>
+
+                    <div class="dg-field" style="gap: 4px; min-width: 180px">
+                      <label class="dg-label" for="timerMinutes"
+                        >分（カウントダウン用）</label
+                      >
+                      <input
+                        id="timerMinutes"
+                        class="dg-input"
+                        type="number"
+                        min="0"
+                        step="1"
+                        inputmode="numeric"
+                        placeholder="例：2"
+                      />
+                    </div>
+
+                    <button
+                      id="btnTimerSet"
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                    >
+                      時間をセット
+                    </button>
+                  </div>
+
+                  <div
+                    class="dg-row"
+                    style="margin-top: var(--dg-space-3)"
+                    role="group"
+                    aria-label="プリセット"
+                  >
+                    <button
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                      data-timer-preset="60"
+                    >
+                      1分
+                    </button>
+                    <button
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                      data-timer-preset="120"
+                    >
+                      2分
+                    </button>
+                    <button
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                      data-timer-preset="180"
+                    >
+                      3分
+                    </button>
+                    <button
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                      data-timer-preset="300"
+                    >
+                      5分
+                    </button>
+                    <button
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                      data-timer-preset="600"
+                    >
+                      10分
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <div
+                    id="timerBox"
+                    class="pr-timerDisplay"
+                    role="group"
+                    aria-label="タイマー表示と操作"
+                  >
+                    <div class="dg-timer" id="timerDisplay" aria-live="polite">
+                      00:00
+                    </div>
+                    <button id="btnTimerStart" class="dg-btn" type="button">
+                      開始
+                    </button>
+                    <button
+                      id="btnTimerReset"
+                      class="dg-btn dg-btn--subtle"
+                      type="button"
+                    >
+                      リセット
+                    </button>
+                  </div>
+                  <div
+                    class="pr-timerMeta"
+                    id="timerHint"
+                    style="margin-top: 8px"
+                  >
+                    カウントダウンは0で停止します。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 基本方針 -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">基本方針</h2>
+              <div class="pr-badges">
+                <span class="pr-badge">可読性</span>
+                <span class="pr-badge">1スライド1アイデア(主張)</span>
+                <span class="pr-badge">発表時間</span>
+              </div>
+              <ul>
+                <li>
+                  <b>文字を大きく：</b
+                  >空間にいる一番後ろの人が「一瞬で読める」ことが最優先（目安：最小30pt）。
+                </li>
+                <li>
+                  <b>1スライド＝1アイデア：</b
+                  >タイトルに主張（結論）、本文は根拠（図・写真・数字）中心。
+                </li>
+                <li>
+                  <b>1スライドの時間配分：</b
+                  >「論点の切れ目」でスライドを切る（結果として1枚のスライドに0.5〜2分かかる）。
+                </li>
+              </ul>
+
+              <div
+                class="dg-note dg-note--success"
+                style="margin-top: var(--dg-space-5)"
+              >
+                <b>合言葉：</b
+                >「スライドが説明しない。話し手が説明する。」<br />
+                スライドは“今見てほしい場所”を指示する装置。
+              </div>
+
+              <div
+                class="dg-note dg-note--warning"
+                style="margin-top: var(--dg-space-4)"
+              >
+                <b>よくある失敗：</b>
+                <ul>
+                  <li>文章だらけ（読む→聞かない）</li>
+                  <li>小さい文字・薄い色（見えない）</li>
+                  <li>1枚に主張が複数（何が言いたいか不明）</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 10/20/30 ルール -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">
+                10/20/30（伝わるプレゼンの最低ライン）
+              </h2>
+              <div class="dg-card__body">
+                <div class="dg-note" style="margin-bottom: var(--dg-space-4)">
+                  <b>10/20/30ルール：</b>20分のプレゼンテーションなら10枚程度のスライド数で、最小30ptの文字サイズにしましょう。
+                </div>
+              </div>
+              <div class="dg-grid dg-grid--3">
+                <div class="dg-card">
+                  <div class="dg-card__body">
+                    <div class="dg-badge">10</div>
+                    <h3 style="margin: 10px 0 6px 0">スライドは少なめ</h3>
+                    <p style="margin: 0">
+                      だらだら説明を防ぐ。1スライド＝1アイデアを徹底。
+                    </p>
+                  </div>
+                </div>
+                <div class="dg-card">
+                  <div class="dg-card__body">
+                    <div class="dg-badge">20</div>
+                    <h3 style="margin: 10px 0 6px 0">時間は短く</h3>
+                    <p style="margin: 0">
+                      1スライドで30秒〜2分の範囲内で。結論→理由→例→結論。
+                    </p>
+                  </div>
+                </div>
+                <div class="dg-card">
+                  <div class="dg-card__body">
+                    <div class="dg-badge">30</div>
+                    <h3 style="margin: 10px 0 6px 0">最小文字は30pt</h3>
+                    <p style="margin: 0">
+                      一番後ろが一瞬で読めることが最優先。
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="dg-note" style="margin-top: var(--dg-space-5)">
+                参考：<a
+                  href="https://guykawasaki.com/the_102030_rule/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Guy Kawasaki - The 10/20/30 Rule</a
+                >
+              </div>
+            </div>
+          </section>
+
+          <!-- 作成手順 -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">スライド資料の作り方</h2>
+              <ol>
+                <li>
+                  <b>ゴールを決める：</b
+                  >聞き手が最後に覚える「一言」を決める（例：<code>〇〇である。理由は△△</code>）。
+                </li>
+                <li>
+                  <b>持ち帰りポイント3つ：</b
+                  >（1）何が好き？（2）なぜ好き？（3）具体例（体験/特徴/おすすめ）。
+                </li>
+                <li>
+                  <b>構成テンプレ：</b>導入（掴み）→ 理由 → 具体例 →
+                  まとめ（もう一度結論）。
+                </li>
+                <li>
+                  <b>1スライド1メッセージで割る：</b
+                  >各スライドのタイトルは“主張の1文”にする。
+                </li>
+                <li>
+                  <b>見やすさ確認：</b
+                  >最小文字サイズ、コントラスト、余白、図の意味（装飾NG）。
+                </li>
+                <li>
+                  <b>リハで調整：</b
+                  >時間計測→言い換え→スライドと話が一致しているか最終確認。
+                </li>
+              </ol>
+
+              <h3>推奨スライド構成（4〜6枚）</h3>
+              <ul>
+                <li>① タイトル：〇〇</li>
+                <li>② 理由①：〇〇だから（写真/数字で根拠）</li>
+                <li>③ 理由②：〇〇だから（体験談/比較）</li>
+                <li>④ 具体例：おすすめの使い方・場面</li>
+                <li>⑤ まとめ：結論＋一言メッセージ（“だから私は〇〇推し”）</li>
+              </ul>
+
+              <div class="pr-score" style="margin-top: var(--dg-space-4)">
+                <div><b>時間目安：</b>30秒〜2分</div>
+                <div><b>枚数目安：</b>4〜6枚</div>
+                <div><b>最小文字：</b>30pt目安</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 発表時に気にすること -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">発表の時に気にすること（チェック）</h2>
+              <div class="pr-check">
+                <label
+                  ><input type="checkbox" />
+                  <span
+                    ><b>結論から言う：</b
+                    >「〇〇である。」→理由へ。</span
+                  ></label
+                >
+                <label
+                  ><input type="checkbox" />
+                  <span
+                    ><b>声：</b
+                    >後ろまで届く音量／速すぎない／抑揚をつける。</span
+                  ></label
+                >
+                <label
+                  ><input type="checkbox" />
+                  <span
+                    ><b>視線：</b
+                    >スクリーンではなく、聴衆へ（数秒ごとに視線を配る）。</span
+                  ></label
+                >
+                <label
+                  ><input type="checkbox" />
+                  <span
+                    ><b>姿勢：</b
+                    >落ち着いて立つ（動きすぎ・揺れすぎ注意）。</span
+                  ></label
+                >
+                <label
+                  ><input type="checkbox" />
+                  <span
+                    ><b>操作：</b
+                    >次のスライドに“話の切れ目”で送る（迷わない）。</span
+                  ></label
+                >
+                <label
+                  ><input type="checkbox" />
+                  <span
+                    ><b>時間：</b
+                    >時間内に終える（超過しそうなら例を削る）。</span
+                  ></label
+                >
+              </div>
+
+              <div class="dg-note" style="margin-top: var(--dg-space-5)">
+                <b>コツ：</b
+                >「スライドに書いてあるから読む」ではなく、<b>スライドは見せて、口で説明</b>する。
+              </div>
+            </div>
+          </section>
+
+          <!-- スライド評価ルーブリック -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">評価基準①：スライド（20点）</h2>
+              <p class="dg-lead" style="margin: 0 0 var(--dg-space-4) 0">
+                各観点4点満点（合計20点）。※表はそのまま授業用に利用可。
+              </p>
+
+              <table class="dg-table pr-table">
+                <caption class="sr-only">
+                  評価基準①：スライド（20点）
+                </caption>
+                <thead>
+                  <tr>
+                    <th style="width: 18%">観点（4点満点）</th>
+                    <th>4点（優）</th>
+                    <th>3点（良）</th>
+                    <th>2点（可）</th>
+                    <th>1点（要改善）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><b>① 1スライド1メッセージ（タイトルが結論）</b></td>
+                    <td>各スライドの主張が1つで、タイトルだけで要点が分かる</td>
+                    <td>ほぼ1主張。タイトルも概ね要点がわかる</td>
+                    <td>1枚に複数主張が混ざり、要点がぼやける</td>
+                    <td>何を言いたいか不明。箇条書き羅列になっている</td>
+                  </tr>
+                  <tr>
+                    <td><b>② 可読性（文字サイズ・コントラスト）</b></td>
+                    <td>後ろから一瞬で読める。小さすぎる文字がない</td>
+                    <td>ほぼ読めるが、一部小さい/薄い</td>
+                    <td>読みにくい箇所が複数ある</td>
+                    <td>読めない。文字が小さい/背景と同化</td>
+                  </tr>
+                  <tr>
+                    <td><b>③ 情報量（1スライド1アイデア）</b></td>
+                    <td>テキスト最小で、画像・数字などが効果的に補強</td>
+                    <td>やや多いが許容範囲</td>
+                    <td>文字多めで、読む時間が必要</td>
+                    <td>文章だらけ（資料化）で聞くより読む状態</td>
+                  </tr>
+                  <tr>
+                    <td><b>④ ビジュアルの適切さ（写真・図の意味）</b></td>
+                    <td>画像/図が主張の根拠になり、選択が的確</td>
+                    <td>関連はあるが、やや弱い/説明不足</td>
+                    <td>関連が薄い、または装飾目的が多い</td>
+                    <td>逆に混乱させる（関係ない、荒い、意味不明）</td>
+                  </tr>
+                  <tr>
+                    <td><b>⑤ 流れと枚数（話と一致・配分）</b></td>
+                    <td>話の展開と完全一致。枚数も時間配分に合う</td>
+                    <td>概ね一致。偏りは小さい</td>
+                    <td>一部ズレや偏りがある</td>
+                    <td>スライドと話が噛み合わず、枚数/配分も不適切</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="dg-note" style="margin-top: var(--dg-space-5)">
+                <b>採点メモ（先生/相互評価向け）：</b
+                >「読める？」「主張1つ？」「図は根拠？」の3点を見ると速い。
+              </div>
+            </div>
+          </section>
+
+          <!-- 発表評価ルーブリック -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">
+                評価基準②：プレゼンテーション（20点）
+              </h2>
+              <p class="dg-lead" style="margin: 0 0 var(--dg-space-4) 0">
+                各観点4点満点（合計20点）。※表はそのまま授業用に利用可。
+              </p>
+
+              <table class="dg-table pr-table">
+                <caption class="sr-only">
+                  評価基準②：プレゼンテーション（20点）
+                </caption>
+                <thead>
+                  <tr>
+                    <th style="width: 18%">観点（4点満点）</th>
+                    <th>4点（優）</th>
+                    <th>3点（良）</th>
+                    <th>2点（可）</th>
+                    <th>1点（要改善）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><b>① 構成（導入→理由→具体例→まとめ）</b></td>
+                    <td>1分で筋が通り、聞き手が迷わない</td>
+                    <td>概ね分かるが、つなぎが弱い所がある</td>
+                    <td>話が飛ぶ/順序が分かりにくい</td>
+                    <td>何を伝える発表か分からない</td>
+                  </tr>
+                  <tr>
+                    <td><b>② 分かりやすさ（自分の言葉・明瞭さ）</b></td>
+                    <td>自分の言葉で常に理解できる</td>
+                    <td>ほぼ理解できるが、言い回しが曖昧な所がある</td>
+                    <td>ところどころ聞き取り/理解が難しい</td>
+                    <td>原稿依存が強く、内容が伝わらない</td>
+                  </tr>
+                  <tr>
+                    <td><b>③ 声・速さ・抑揚（聞き取りやすさ）</b></td>
+                    <td>音量・速度・抑揚が最適で聴きやすい</td>
+                    <td>概ね適切。少し速い/小さい等がある</td>
+                    <td>改善が必要（単調/速すぎ/小さすぎ）</td>
+                    <td>聞き取れない、または極端に不適切</td>
+                  </tr>
+                  <tr>
+                    <td><b>④ 視線・姿勢・ジェスチャー</b></td>
+                    <td>聴衆を見て、自然な姿勢と動きで伝える</td>
+                    <td>視線はあるが、時々画面/原稿に戻る</td>
+                    <td>視線が少ない/落ち着きがない</td>
+                    <td>ほぼ見ない、姿勢も崩れている</td>
+                  </tr>
+                  <tr>
+                    <td><b>⑤ 時間管理・操作（スライドと同期）</b></td>
+                    <td>時間内でテンポ良く、操作もスムーズ</td>
+                    <td>ほぼ時間内。操作に少し迷い</td>
+                    <td>時間超過/短すぎ、操作もぎこちない</td>
+                    <td>大きく時間を外れ、進行が止まる</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div
+                class="dg-note dg-note--warning"
+                style="margin-top: var(--dg-space-5)"
+              >
+                <b>減点になりやすいポイント：</b>
+                <ul>
+                  <li>スライドの文章を読み上げる</li>
+                  <li>声が小さい/早口で聞き取れない</li>
+                  <li>結論が最後まで出てこない</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 自己/相互評価用の短い欄 -->
+          <section class="dg-card" id="peerReview">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">自己評価・相互評価（短く）</h2>
+              <p class="dg-lead" style="margin: 0 0 var(--dg-space-4) 0">
+                発表を見た人は、必ず「良かった点1つ」「次に直す点1つ」を書く。
+              </p>
+
+              <table class="dg-table pr-table">
+                <caption class="sr-only">
+                  自己評価・相互評価（短く） チェック表
+                </caption>
+                <thead>
+                  <tr>
+                    <th style="width: 28%">チェック</th>
+                    <th>はい / いいえ</th>
+                    <th style="width: 44%">メモ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>後ろから読めた（文字が大きい）</td>
+                    <td>はい □ / いいえ □</td>
+                    <td style="color: var(--dg-color-muted)">
+                      （例）小さい文字があった / 色が薄かった など
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>1スライド1メッセージだった</td>
+                    <td>はい □ / いいえ □</td>
+                    <td style="color: var(--dg-color-muted)">
+                      （例）2つ主張が混ざっていた など
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>結論が最初に言えていた</td>
+                    <td>はい □ / いいえ □</td>
+                    <td style="color: var(--dg-color-muted)">
+                      （例）導入が長かった / 最初に言うと良い など
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>声・速さが聞き取りやすかった</td>
+                    <td>はい □ / いいえ □</td>
+                    <td style="color: var(--dg-color-muted)">
+                      （例）速い/小さい/単調 など
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>時間内に終わった</td>
+                    <td>はい □ / いいえ □</td>
+                    <td style="color: var(--dg-color-muted)">
+                      （例）具体例を1つ減らすと収まる など
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3>コメント欄</h3>
+              <p>
+                <b>良かった点（1つ）：</b
+                >＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+              </p>
+              <p>
+                <b>次に直す点（1つ）：</b
+                >＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+              </p>
+            </div>
+          </section>
+
+          <!-- 参考（HTML内） -->
+          <section class="dg-card">
+            <div class="dg-card__body dg-prose">
+              <h2 style="margin-top: 0">参考（先生用）</h2>
+              <ul style="font-size: var(--dg-text-sm)">
+                <li>
+                  10/20/30（最小30pt目安）：<a
+                    href="https://guykawasaki.com/the_102030_rule/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Guy Kawasaki</a
+                  >
+                </li>
+                <li>
+                  1アイデア/1スライド：<a
+                    href="https://www.duarte.com/blog/perfect-your-slide-design/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Duarte</a
+                  >
+                </li>
+                <li>
+                  発表評価（明瞭さ・声・視線など）：<a
+                    href="https://ccdn.toastmasters.org/medias/files/department-documents/education-documents/evaluation-resources/english/8053-generic-evaluation-resource.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Toastmasters</a
+                  >
+                </li>
+                <li>
+                  口頭発表ルーブリック例：<a
+                    href="https://www.purdue.edu/science/Current_Students/curriculum_and_degree_requirements/oral_rubrics_gray.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Purdue</a
+                  >
+                </li>
+                <li>
+                  日本語のプレゼン用ルーブリック例：<a
+                    href="https://www.innov.nagasaki-u.ac.jp/teacher/files/AL2/AL2B_8_tmp2.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >長崎大学</a
+                  >
+                </li>
+                <li>
+                  ルーブリックの説明（定義）：<a
+                    href="https://www.mext.go.jp/b_menu/shingi/chousa/shotou/112/shiryo/__icsFiles/afieldfile/2016/06/06/1371753_10.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >文部科学省</a
+                  >
+                </li>
+              </ul>
+              <p
+                class="dg-lead"
+                style="
+                  margin: var(--dg-space-4) 0 0 0;
+                  font-size: var(--dg-text-sm);
+                "
+              >
+                ※このページは授業用に再編集したテンプレです。学年・時間・目的に合わせて枚数や配点を調整してください。
+              </p>
+            </div>
+          </section>
         </div>
-        <button id="btnTheme" class="dg-btn dg-btn--subtle" type="button">ライト/ダーク</button>
-        <button id="btnPrintAll" class="dg-btn" type="button">全文印刷</button>
-        <button id="btnPrintEval" class="dg-btn dg-btn--subtle" type="button">自己/相互評価だけ印刷</button>
-        <a class="dg-btn dg-btn--subtle" href="./submit-links.html">提出リンク</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="dg-main">
-    <div class="pr-container" id="content">
-      <h1 class="dg-page-title">My Favorite プレゼン授業：スライド作成〜発表の極意＆評価基準</h1>
-      <p class="pr-subtitle">目的：スライドは「読ませる資料」ではなく「視線誘導」。伝えたいことを、短時間で分かりやすく届ける。</p>
-      <p class="pr-printHint">※印刷：A4縦でOK。配布にも使えます。</p>
-
-      <div class="dg-stack" style="margin-top: var(--dg-space-6);">
-
-        <!-- タイマー（授業進行用） -->
-        <section class="dg-card no-print" aria-label="授業用タイマー">
-          <div class="dg-card__body">
-            <div class="pr-timerGrid">
-              <div>
-                <div class="dg-prose">
-                  <h2 style="margin:0">タイマー</h2>
-                  <p class="pr-timerMeta" style="margin:6px 0 0 0">発表・作業時間の管理用（印刷には出ません）。</p>
-                </div>
-
-                <div class="dg-row" style="margin-top: var(--dg-space-4)">
-                  <div class="dg-field" style="gap:4px; min-width: 180px">
-                    <label class="dg-label" for="timerMode">モード</label>
-                    <select id="timerMode" class="dg-select">
-                      <option value="countdown">カウントダウン</option>
-                      <option value="stopwatch">ストップウォッチ</option>
-                    </select>
-                  </div>
-
-                  <div class="dg-field" style="gap:4px; min-width: 180px">
-                    <label class="dg-label" for="timerMinutes">分（カウントダウン用）</label>
-                    <input id="timerMinutes" class="dg-input" type="number" min="0" step="1" inputmode="numeric" placeholder="例：2" />
-                  </div>
-
-                  <button id="btnTimerSet" class="dg-btn dg-btn--subtle" type="button">時間をセット</button>
-                </div>
-
-                <div class="dg-row" style="margin-top: var(--dg-space-3)" role="group" aria-label="プリセット">
-                  <button class="dg-btn dg-btn--subtle" type="button" data-timer-preset="60">1分</button>
-                  <button class="dg-btn dg-btn--subtle" type="button" data-timer-preset="120">2分</button>
-                  <button class="dg-btn dg-btn--subtle" type="button" data-timer-preset="180">3分</button>
-                  <button class="dg-btn dg-btn--subtle" type="button" data-timer-preset="300">5分</button>
-                  <button class="dg-btn dg-btn--subtle" type="button" data-timer-preset="600">10分</button>
-                </div>
-              </div>
-
-              <div>
-                <div id="timerBox" class="pr-timerDisplay" role="group" aria-label="タイマー表示と操作">
-                  <div class="dg-timer" id="timerDisplay" aria-live="polite">00:00</div>
-                  <button id="btnTimerStart" class="dg-btn" type="button">開始</button>
-                  <button id="btnTimerReset" class="dg-btn dg-btn--subtle" type="button">リセット</button>
-                </div>
-                <div class="pr-timerMeta" id="timerHint" style="margin-top:8px">カウントダウンは0で停止します。</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-    <!-- 基本方針 -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">基本方針（授業の3原則）</h2>
-            <div class="pr-badges">
-              <span class="pr-badge">可読性</span>
-              <span class="pr-badge">1メッセージ</span>
-              <span class="pr-badge">テンポ</span>
-            </div>
-            <ul>
-        <li><b>文字を大きく：</b>一番後ろが「一瞬で読める」ことが最優先（目安：最小30pt）。</li>
-        <li><b>1スライド＝1メッセージ：</b>タイトルに主張（結論）、本文は根拠（図・写真・数字）中心。</li>
-        <li><b>1分＝1論点：</b>時間ではなく「論点の切れ目」でスライドを切る（結果として0.5〜2枚/分が多い）。</li>
-      </ul>
-
-            <div class="dg-note dg-note--success" style="margin-top: var(--dg-space-5);">
-              <b>合言葉：</b>「スライドが説明しない。話し手が説明する。」<br />
-              スライドは“今見てほしい場所”を指示する装置。
-            </div>
-
-            <div class="dg-note dg-note--warning" style="margin-top: var(--dg-space-4);">
-              <b>よくある失敗：</b>
-              <ul>
-                <li>文章だらけ（読む→聞かない）</li>
-                <li>小さい文字・薄い色（見えない）</li>
-                <li>1枚に主張が複数（何が言いたいか不明）</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- 10/20/30 ルール -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">10/20/30（伝わるプレゼンの最低ライン）</h2>
-            <p class="dg-lead" style="margin:0 0 var(--dg-space-4) 0">授業向けに「守れるところだけ」採用。特に <b>30pt</b> は強制寄り。</p>
-            <div class="dg-grid dg-grid--3">
-              <div class="dg-card">
-                <div class="dg-card__body">
-                  <div class="dg-badge">10</div>
-                  <h3 style="margin:10px 0 6px 0">スライドは少なめ</h3>
-                  <p style="margin:0">だらだら説明を防ぐ。1スライド＝1主張を徹底。</p>
-                </div>
-              </div>
-              <div class="dg-card">
-                <div class="dg-card__body">
-                  <div class="dg-badge">20</div>
-                  <h3 style="margin:10px 0 6px 0">時間は短く</h3>
-                  <p style="margin:0">授業では 1〜2分でもOK。結論→理由→例→結論。</p>
-                </div>
-              </div>
-              <div class="dg-card">
-                <div class="dg-card__body">
-                  <div class="dg-badge">30</div>
-                  <h3 style="margin:10px 0 6px 0">最小文字は30pt</h3>
-                  <p style="margin:0">一番後ろが一瞬で読めることが最優先。</p>
-                </div>
-              </div>
-            </div>
-            <div class="dg-note" style="margin-top: var(--dg-space-5);">
-              参考：<a href="https://guykawasaki.com/the_102030_rule/" target="_blank" rel="noreferrer">Guy Kawasaki - The 10/20/30 Rule</a>
-            </div>
-          </div>
-        </section>
-
-    <!-- 作成手順 -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">スライド資料の作り方（手順）</h2>
-            <ol>
-        <li><b>ゴールを決める：</b>聞き手が最後に覚える「一言」を決める（例：<code>私のfavoriteは〇〇、理由は△△</code>）。</li>
-        <li><b>持ち帰りポイント3つ：</b>（1）何が好き？（2）なぜ好き？（3）具体例（体験/特徴/おすすめ）。</li>
-        <li><b>構成テンプレ：</b>導入（掴み）→ 理由 → 具体例 → まとめ（もう一度結論）。</li>
-        <li><b>1スライド1メッセージで割る：</b>各スライドのタイトルは“主張の1文”にする。</li>
-        <li><b>見やすさ確認：</b>最小文字サイズ、コントラスト、余白、図の意味（装飾NG）。</li>
-        <li><b>リハで調整：</b>時間計測→言い換え→スライドと話が一致しているか最終確認。</li>
-      </ol>
-
-            <h3>My Favorite（例）推奨スライド構成（4〜6枚）</h3>
-            <ul>
-        <li>① タイトル：私のfavoriteは〇〇</li>
-        <li>② 理由①：〇〇だから（写真/数字で根拠）</li>
-        <li>③ 理由②：〇〇だから（体験談/比較）</li>
-        <li>④ 具体例：おすすめの使い方・場面</li>
-        <li>⑤ まとめ：結論＋一言メッセージ（“だから私は〇〇推し”）</li>
-      </ul>
-
-            <div class="pr-score" style="margin-top: var(--dg-space-4);">
-              <div><b>時間目安：</b>1〜2分</div>
-              <div><b>枚数目安：</b>4〜6枚</div>
-              <div><b>最小文字：</b>30pt目安</div>
-            </div>
-          </div>
-        </section>
-
-    <!-- 発表時に気にすること -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">発表の時に気にすること（チェック）</h2>
-            <div class="pr-check">
-              <label><input type="checkbox" /> <span><b>結論から言う：</b>「私のfavoriteは〇〇です」→理由へ。</span></label>
-              <label><input type="checkbox" /> <span><b>声：</b>後ろまで届く音量／速すぎない／抑揚をつける。</span></label>
-              <label><input type="checkbox" /> <span><b>視線：</b>スクリーンではなく、聴衆へ（数秒ごとに視線を配る）。</span></label>
-              <label><input type="checkbox" /> <span><b>姿勢：</b>落ち着いて立つ（動きすぎ・揺れすぎ注意）。</span></label>
-              <label><input type="checkbox" /> <span><b>操作：</b>次のスライドに“話の切れ目”で送る（迷わない）。</span></label>
-              <label><input type="checkbox" /> <span><b>時間：</b>時間内に終える（超過しそうなら例を削る）。</span></label>
-            </div>
-
-            <div class="dg-note" style="margin-top: var(--dg-space-5);">
-              <b>コツ：</b>「スライドに書いてあるから読む」ではなく、<b>スライドは見せて、口で説明</b>する。
-            </div>
-          </div>
-        </section>
-
-    <!-- スライド評価ルーブリック -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">評価基準①：スライド（20点）</h2>
-            <p class="dg-lead" style="margin:0 0 var(--dg-space-4) 0">各観点4点満点（合計20点）。※表はそのまま授業用に利用可。</p>
-
-      <table class="dg-table pr-table">
-        <caption class="sr-only">評価基準①：スライド（20点）</caption>
-        <thead>
-          <tr>
-            <th style="width:18%">観点（4点満点）</th>
-            <th>4点（優）</th>
-            <th>3点（良）</th>
-            <th>2点（可）</th>
-            <th>1点（要改善）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>① 1スライド1メッセージ（タイトルが結論）</b></td>
-            <td>各スライドの主張が1つで、タイトルだけで要点が分かる</td>
-            <td>ほぼ1主張。タイトルも概ね要点</td>
-            <td>1枚に複数主張が混ざり、要点がぼやける</td>
-            <td>何を言いたいか不明。箇条書き羅列になっている</td>
-          </tr>
-          <tr>
-            <td><b>② 可読性（文字サイズ・コントラスト）</b></td>
-            <td>後ろから一瞬で読める。小さすぎる文字がない</td>
-            <td>ほぼ読めるが、一部小さい/薄い</td>
-            <td>読みにくい箇所が複数ある</td>
-            <td>読めない。文字が小さい/背景と同化</td>
-          </tr>
-          <tr>
-            <td><b>③ 情報量（ワンページ＝要点＋証拠）</b></td>
-            <td>テキスト最小で、画像・数字などが効果的に補強</td>
-            <td>やや多いが許容範囲</td>
-            <td>文字多めで、読む時間が必要</td>
-            <td>文章だらけ（資料化）で聞くより読む状態</td>
-          </tr>
-          <tr>
-            <td><b>④ ビジュアルの適切さ（写真・図の意味）</b></td>
-            <td>画像/図が主張の根拠になり、選択が的確</td>
-            <td>関連はあるが、やや弱い/説明不足</td>
-            <td>関連が薄い、または装飾目的が多い</td>
-            <td>逆に混乱させる（関係ない、荒い、意味不明）</td>
-          </tr>
-          <tr>
-            <td><b>⑤ 流れと枚数（話と一致・配分）</b></td>
-            <td>話の展開と完全一致。枚数も時間配分に合う</td>
-            <td>概ね一致。偏りは小さい</td>
-            <td>一部ズレや偏りがある</td>
-            <td>スライドと話が噛み合わず、枚数/配分も不適切</td>
-          </tr>
-        </tbody>
-      </table>
-
-            <div class="dg-note" style="margin-top: var(--dg-space-5);">
-              <b>採点メモ（先生/相互評価向け）：</b>「読める？」「主張1つ？」「図は根拠？」の3点を見ると速い。
-            </div>
-          </div>
-        </section>
-
-    <!-- 発表評価ルーブリック -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">評価基準②：プレゼンテーション（20点）</h2>
-            <p class="dg-lead" style="margin:0 0 var(--dg-space-4) 0">各観点4点満点（合計20点）。※表はそのまま授業用に利用可。</p>
-
-      <table class="dg-table pr-table">
-        <caption class="sr-only">評価基準②：プレゼンテーション（20点）</caption>
-        <thead>
-          <tr>
-            <th style="width:18%">観点（4点満点）</th>
-            <th>4点（優）</th>
-            <th>3点（良）</th>
-            <th>2点（可）</th>
-            <th>1点（要改善）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>① 構成（導入→理由→具体例→まとめ）</b></td>
-            <td>1分で筋が通り、聞き手が迷わない</td>
-            <td>概ね分かるが、つなぎが弱い所がある</td>
-            <td>話が飛ぶ/順序が分かりにくい</td>
-            <td>何を伝える発表か分からない</td>
-          </tr>
-          <tr>
-            <td><b>② 分かりやすさ（自分の言葉・明瞭さ）</b></td>
-            <td>自分の言葉で常に理解できる</td>
-            <td>ほぼ理解できるが、言い回しが曖昧な所がある</td>
-            <td>ところどころ聞き取り/理解が難しい</td>
-            <td>原稿依存が強く、内容が伝わらない</td>
-          </tr>
-          <tr>
-            <td><b>③ 声・速さ・抑揚（聞き取りやすさ）</b></td>
-            <td>音量・速度・抑揚が最適で聴きやすい</td>
-            <td>概ね適切。少し速い/小さい等がある</td>
-            <td>改善が必要（単調/速すぎ/小さすぎ）</td>
-            <td>聞き取れない、または極端に不適切</td>
-          </tr>
-          <tr>
-            <td><b>④ 視線・姿勢・ジェスチャー</b></td>
-            <td>聴衆を見て、自然な姿勢と動きで伝える</td>
-            <td>視線はあるが、時々画面/原稿に戻る</td>
-            <td>視線が少ない/落ち着きがない</td>
-            <td>ほぼ見ない、姿勢も崩れている</td>
-          </tr>
-          <tr>
-            <td><b>⑤ 時間管理・操作（スライドと同期）</b></td>
-            <td>時間内でテンポ良く、操作もスムーズ</td>
-            <td>ほぼ時間内。操作に少し迷い</td>
-            <td>時間超過/短すぎ、操作もぎこちない</td>
-            <td>大きく時間を外れ、進行が止まる</td>
-          </tr>
-        </tbody>
-      </table>
-
-            <div class="dg-note dg-note--warning" style="margin-top: var(--dg-space-5);">
-              <b>減点になりやすいポイント：</b>
-              <ul>
-                <li>スライドの文章を読み上げる</li>
-                <li>声が小さい/早口で聞き取れない</li>
-                <li>結論が最後まで出てこない</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-    <!-- 自己/相互評価用の短い欄 -->
-        <section class="dg-card" id="peerReview">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">自己評価・相互評価（短く）</h2>
-            <p class="dg-lead" style="margin:0 0 var(--dg-space-4) 0">発表を見た人は、必ず「良かった点1つ」「次に直す点1つ」を書く。</p>
-
-      <table class="dg-table pr-table">
-        <caption class="sr-only">自己評価・相互評価（短く） チェック表</caption>
-        <thead>
-          <tr>
-            <th style="width:28%">チェック</th>
-            <th>はい / いいえ</th>
-            <th style="width:44%">メモ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>後ろから読めた（文字が大きい）</td>
-            <td>はい □ / いいえ □</td>
-            <td style="color: var(--dg-color-muted)">（例）小さい文字があった / 色が薄かった など</td>
-          </tr>
-          <tr>
-            <td>1スライド1メッセージだった</td>
-            <td>はい □ / いいえ □</td>
-            <td style="color: var(--dg-color-muted)">（例）2つ主張が混ざっていた など</td>
-          </tr>
-          <tr>
-            <td>結論が最初に言えていた</td>
-            <td>はい □ / いいえ □</td>
-            <td style="color: var(--dg-color-muted)">（例）導入が長かった / 最初に言うと良い など</td>
-          </tr>
-          <tr>
-            <td>声・速さが聞き取りやすかった</td>
-            <td>はい □ / いいえ □</td>
-            <td style="color: var(--dg-color-muted)">（例）速い/小さい/単調 など</td>
-          </tr>
-          <tr>
-            <td>時間内に終わった</td>
-            <td>はい □ / いいえ □</td>
-            <td style="color: var(--dg-color-muted)">（例）具体例を1つ減らすと収まる など</td>
-          </tr>
-        </tbody>
-      </table>
-
-            <h3>コメント欄</h3>
-            <p><b>良かった点（1つ）：</b>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿</p>
-            <p><b>次に直す点（1つ）：</b>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿</p>
-          </div>
-        </section>
-
-    <!-- 参考（HTML内） -->
-        <section class="dg-card">
-          <div class="dg-card__body dg-prose">
-            <h2 style="margin-top:0">参考（先生用）</h2>
-      <ul style="font-size: var(--dg-text-sm)">
-        <li>10/20/30（最小30pt目安）：<a href="https://guykawasaki.com/the_102030_rule/" target="_blank" rel="noreferrer">Guy Kawasaki</a></li>
-        <li>1アイデア/1スライド：<a href="https://www.duarte.com/blog/perfect-your-slide-design/" target="_blank" rel="noreferrer">Duarte</a></li>
-        <li>発表評価（明瞭さ・声・視線など）：<a href="https://ccdn.toastmasters.org/medias/files/department-documents/education-documents/evaluation-resources/english/8053-generic-evaluation-resource.pdf" target="_blank" rel="noreferrer">Toastmasters</a></li>
-        <li>口頭発表ルーブリック例：<a href="https://www.purdue.edu/science/Current_Students/curriculum_and_degree_requirements/oral_rubrics_gray.pdf" target="_blank" rel="noreferrer">Purdue</a></li>
-        <li>日本語のプレゼン用ルーブリック例：<a href="https://www.innov.nagasaki-u.ac.jp/teacher/files/AL2/AL2B_8_tmp2.pdf" target="_blank" rel="noreferrer">長崎大学</a></li>
-        <li>ルーブリックの説明（定義）：<a href="https://www.mext.go.jp/b_menu/shingi/chousa/shotou/112/shiryo/__icsFiles/afieldfile/2016/06/06/1371753_10.pdf" target="_blank" rel="noreferrer">文部科学省</a></li>
-      </ul>
-      <p class="dg-lead" style="margin: var(--dg-space-4) 0 0 0; font-size: var(--dg-text-sm)">※このページは授業用に再編集したテンプレです。学年・時間・目的に合わせて枚数や配点を調整してください。</p>
-          </div>
-        </section>
-
       </div>
-    </div>
 
-    <!-- 印刷専用：自己/相互評価だけ複数枚 -->
-    <div class="pr-container print-only" id="printOnly">
-      <div class="dg-stack" id="printCopies" role="region" aria-label="自己評価・相互評価 印刷用"></div>
-    </div>
-  </main>
-
-  <footer class="dg-footer">
-    <div class="pr-container dg-footer__inner">
-      <div class="dg-footer__meta">© 授業用テンプレ：My Favorite プレゼン（HTML 1枚）</div>
-      <div class="dg-row no-print">
-        <a class="dg-btn dg-btn--subtle" href="../../">サイトトップへ</a>
+      <!-- 印刷専用：自己/相互評価だけ複数枚 -->
+      <div class="pr-container print-only" id="printOnly">
+        <div
+          class="dg-stack"
+          id="printCopies"
+          role="region"
+          aria-label="自己評価・相互評価 印刷用"
+        ></div>
       </div>
-    </div>
-  </footer>
+    </main>
 
-  <script>
-    const STORAGE_KEY_THEME = 'presentation.theme';
-    const STORAGE_KEY_COPIES = 'presentation.evalCopies';
-    const STORAGE_KEY_TIMER_MODE = 'presentation.timer.mode';
-    const STORAGE_KEY_TIMER_BASE = 'presentation.timer.baseSeconds';
+    <footer class="dg-footer">
+      <div class="pr-container dg-footer__inner">
+        <div class="dg-footer__meta">
+          © 授業用テンプレ：My Favorite プレゼン（HTML 1枚）
+        </div>
+        <div class="dg-row no-print">
+          <a class="dg-btn dg-btn--subtle" href="../../">サイトトップへ</a>
+        </div>
+      </div>
+    </footer>
 
-    function getTheme() {
-      const saved = localStorage.getItem(STORAGE_KEY_THEME);
-      if (saved === 'light' || saved === 'dark') return saved;
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    <script>
+      const STORAGE_KEY_THEME = "presentation.theme";
+      const STORAGE_KEY_COPIES = "presentation.evalCopies";
+      const STORAGE_KEY_TIMER_MODE = "presentation.timer.mode";
+      const STORAGE_KEY_TIMER_BASE = "presentation.timer.baseSeconds";
 
-    function applyTheme(theme) {
-      document.documentElement.dataset.theme = theme;
-      localStorage.setItem(STORAGE_KEY_THEME, theme);
-    }
-
-    function setPrintMode(mode) {
-      if (!mode) {
-        delete document.documentElement.dataset.printMode;
-        return;
+      function getTheme() {
+        const saved = localStorage.getItem(STORAGE_KEY_THEME);
+        if (saved === "light" || saved === "dark") return saved;
+        return window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
       }
-      document.documentElement.dataset.printMode = mode;
-    }
 
-    function buildEvaluationCopies(count) {
-      const src = document.getElementById('peerReview');
-      const target = document.getElementById('printCopies');
-      target.replaceChildren();
-      if (!src) return;
-
-      const clean = src.cloneNode(true);
-      clean.removeAttribute('id');
-
-      for (let i = 0; i < count; i++) {
-        const wrapper = document.createElement('section');
-        wrapper.className = 'pr-copy dg-card';
-        const body = document.createElement('div');
-        body.className = 'dg-card__body dg-prose';
-
-        const inner = clean.querySelector('.dg-card__body') ? clean.querySelector('.dg-card__body').cloneNode(true) : clean.cloneNode(true);
-        body.appendChild(inner);
-        wrapper.appendChild(body);
-        target.appendChild(wrapper);
+      function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem(STORAGE_KEY_THEME, theme);
       }
-    }
 
-    function printAll() {
-      setPrintMode(null);
-      window.print();
-    }
-
-    function printEvaluation() {
-      const select = document.getElementById('evalCopies');
-      const count = Math.max(1, Math.min(200, Number(select?.value ?? 1) || 1));
-      buildEvaluationCopies(count);
-      setPrintMode('evaluation');
-      window.print();
-    }
-
-    // 初期化
-    applyTheme(getTheme());
-    const copiesSelect = document.getElementById('evalCopies');
-    const savedCopies = Number(localStorage.getItem(STORAGE_KEY_COPIES));
-    if (copiesSelect && Number.isFinite(savedCopies) && savedCopies > 0) copiesSelect.value = String(savedCopies);
-
-    copiesSelect?.addEventListener('change', () => {
-      localStorage.setItem(STORAGE_KEY_COPIES, String(copiesSelect.value));
-    });
-
-    document.getElementById('btnTheme')?.addEventListener('click', () => {
-      const next = (document.documentElement.dataset.theme === 'dark') ? 'light' : 'dark';
-      applyTheme(next);
-    });
-
-    document.getElementById('btnPrintAll')?.addEventListener('click', printAll);
-    document.getElementById('btnPrintEval')?.addEventListener('click', printEvaluation);
-
-    // ---- タイマー ----
-    const timerDisplay = document.getElementById('timerDisplay');
-    const timerBox = document.getElementById('timerBox');
-    const timerHint = document.getElementById('timerHint');
-    const timerModeSelect = document.getElementById('timerMode');
-    const timerMinutesInput = document.getElementById('timerMinutes');
-    const timerStartBtn = document.getElementById('btnTimerStart');
-    const timerResetBtn = document.getElementById('btnTimerReset');
-    const timerSetBtn = document.getElementById('btnTimerSet');
-
-    function clampInt(n, min, max) {
-      const v = Number(n);
-      if (!Number.isFinite(v)) return min;
-      return Math.max(min, Math.min(max, Math.trunc(v)));
-    }
-
-    function formatMMSS(seconds) {
-      const s = Math.max(0, Math.trunc(seconds));
-      const mm = String(Math.floor(s / 60)).padStart(2, '0');
-      const ss = String(s % 60).padStart(2, '0');
-      return `${mm}:${ss}`;
-    }
-
-    let timerMode = (localStorage.getItem(STORAGE_KEY_TIMER_MODE) === 'stopwatch') ? 'stopwatch' : 'countdown';
-    let baseSeconds = clampInt(localStorage.getItem(STORAGE_KEY_TIMER_BASE) || 120, 0, 60 * 60);
-    let running = false;
-    let startedAtMs = 0;
-    let carriedSeconds = 0;
-    let tickId = null;
-
-    function getCurrentSeconds() {
-      const now = Date.now();
-      const delta = Math.floor((now - startedAtMs) / 1000);
-      if (timerMode === 'stopwatch') return carriedSeconds + Math.max(0, delta);
-      return baseSeconds - (carriedSeconds + Math.max(0, delta));
-    }
-
-    function renderTimer() {
-      if (!timerDisplay) return;
-      const cur = running ? getCurrentSeconds() : (timerMode === 'stopwatch' ? carriedSeconds : baseSeconds - carriedSeconds);
-      timerDisplay.textContent = formatMMSS(cur);
-
-      const done = (timerMode === 'countdown') && (cur <= 0);
-      timerBox?.classList.toggle('pr-timerDone', done);
-      if (timerHint) {
-        timerHint.textContent = timerMode === 'stopwatch'
-          ? 'ストップウォッチは加算します。'
-          : (done ? '終了（0になりました）' : 'カウントダウンは0で停止します。');
-      }
-    }
-
-    function stopTimer(skipCarry = false) {
-      if (!running) return;
-      if (!skipCarry) {
-        const delta = Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000));
-        carriedSeconds = carriedSeconds + delta;
-        if (timerMode === 'countdown') carriedSeconds = Math.min(baseSeconds, carriedSeconds);
-      }
-      running = false;
-      if (tickId) window.clearInterval(tickId);
-      tickId = null;
-      if (timerStartBtn) timerStartBtn.textContent = '開始';
-      renderTimer();
-    }
-
-    function startTimer() {
-      if (running) return;
-      // カウントダウンが0なら、まずリセットしてから開始
-      if (timerMode === 'countdown') {
-        const cur = baseSeconds - carriedSeconds;
-        if (cur <= 0) carriedSeconds = 0;
-      }
-      running = true;
-      startedAtMs = Date.now();
-      if (timerStartBtn) timerStartBtn.textContent = '一時停止';
-      if (tickId) window.clearInterval(tickId);
-      tickId = window.setInterval(() => {
-        if (!running) return;
-        if (timerMode === 'countdown' && getCurrentSeconds() <= 0) {
-          // 0で自動停止
-          carriedSeconds = baseSeconds;
-          stopTimer(true);
+      function setPrintMode(mode) {
+        if (!mode) {
+          delete document.documentElement.dataset.printMode;
           return;
         }
-        renderTimer();
-      }, 200);
-      renderTimer();
-    }
+        document.documentElement.dataset.printMode = mode;
+      }
 
-    function resetTimer() {
-      stopTimer();
-      carriedSeconds = 0;
-      renderTimer();
-    }
+      function buildEvaluationCopies(count) {
+        const src = document.getElementById("peerReview");
+        const target = document.getElementById("printCopies");
+        target.replaceChildren();
+        if (!src) return;
 
-    function setCountdownSeconds(seconds) {
-      baseSeconds = clampInt(seconds, 0, 60 * 60);
-      localStorage.setItem(STORAGE_KEY_TIMER_BASE, String(baseSeconds));
-      carriedSeconds = 0;
-      renderTimer();
-    }
+        const clean = src.cloneNode(true);
+        clean.removeAttribute("id");
 
-    function setMode(nextMode) {
-      const mode = (nextMode === 'stopwatch') ? 'stopwatch' : 'countdown';
-      if (mode === timerMode) return;
-      stopTimer();
-      timerMode = mode;
-      localStorage.setItem(STORAGE_KEY_TIMER_MODE, timerMode);
-      carriedSeconds = 0;
-      renderTimer();
-    }
+        for (let i = 0; i < count; i++) {
+          const wrapper = document.createElement("section");
+          wrapper.className = "pr-copy dg-card";
+          const body = document.createElement("div");
+          body.className = "dg-card__body dg-prose";
 
-    // 初期表示
-    if (timerModeSelect) timerModeSelect.value = timerMode;
-    if (timerMinutesInput) timerMinutesInput.value = String(Math.floor(baseSeconds / 60));
-    renderTimer();
+          const inner = clean.querySelector(".dg-card__body")
+            ? clean.querySelector(".dg-card__body").cloneNode(true)
+            : clean.cloneNode(true);
+          body.appendChild(inner);
+          wrapper.appendChild(body);
+          target.appendChild(wrapper);
+        }
+      }
 
-    timerModeSelect?.addEventListener('change', () => setMode(timerModeSelect.value));
-    timerStartBtn?.addEventListener('click', () => (running ? stopTimer() : startTimer()));
-    timerResetBtn?.addEventListener('click', resetTimer);
+      function printAll() {
+        setPrintMode(null);
+        window.print();
+      }
 
-    timerSetBtn?.addEventListener('click', () => {
-      setMode('countdown');
-      const mins = clampInt(timerMinutesInput?.value || 0, 0, 60);
-      setCountdownSeconds(mins * 60);
-    });
+      function printEvaluation() {
+        const select = document.getElementById("evalCopies");
+        const count = Math.max(
+          1,
+          Math.min(200, Number(select?.value ?? 1) || 1),
+        );
+        buildEvaluationCopies(count);
+        setPrintMode("evaluation");
+        window.print();
+      }
 
-    document.querySelectorAll('[data-timer-preset]')?.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        setMode('countdown');
-        const sec = clampInt(btn.getAttribute('data-timer-preset'), 0, 60 * 60);
-        setCountdownSeconds(sec);
-        if (timerMinutesInput) timerMinutesInput.value = String(Math.floor(sec / 60));
+      // 初期化
+      applyTheme(getTheme());
+      const copiesSelect = document.getElementById("evalCopies");
+      const savedCopies = Number(localStorage.getItem(STORAGE_KEY_COPIES));
+      if (copiesSelect && Number.isFinite(savedCopies) && savedCopies > 0)
+        copiesSelect.value = String(savedCopies);
+
+      copiesSelect?.addEventListener("change", () => {
+        localStorage.setItem(STORAGE_KEY_COPIES, String(copiesSelect.value));
       });
-    });
 
-    // 印刷後は必ず通常表示へ戻す
-    window.addEventListener('afterprint', () => {
-      setPrintMode(null);
-      const target = document.getElementById('printCopies');
-      target?.replaceChildren();
-    });
-  </script>
-</body>
+      document.getElementById("btnTheme")?.addEventListener("click", () => {
+        const next =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(next);
+      });
+
+      document
+        .getElementById("btnPrintAll")
+        ?.addEventListener("click", printAll);
+      document
+        .getElementById("btnPrintEval")
+        ?.addEventListener("click", printEvaluation);
+
+      // ---- タイマー ----
+      const timerDisplay = document.getElementById("timerDisplay");
+      const timerBox = document.getElementById("timerBox");
+      const timerHint = document.getElementById("timerHint");
+      const timerModeSelect = document.getElementById("timerMode");
+      const timerMinutesInput = document.getElementById("timerMinutes");
+      const timerStartBtn = document.getElementById("btnTimerStart");
+      const timerResetBtn = document.getElementById("btnTimerReset");
+      const timerSetBtn = document.getElementById("btnTimerSet");
+
+      function clampInt(n, min, max) {
+        const v = Number(n);
+        if (!Number.isFinite(v)) return min;
+        return Math.max(min, Math.min(max, Math.trunc(v)));
+      }
+
+      function formatMMSS(seconds) {
+        const s = Math.max(0, Math.trunc(seconds));
+        const mm = String(Math.floor(s / 60)).padStart(2, "0");
+        const ss = String(s % 60).padStart(2, "0");
+        return `${mm}:${ss}`;
+      }
+
+      let timerMode =
+        localStorage.getItem(STORAGE_KEY_TIMER_MODE) === "stopwatch"
+          ? "stopwatch"
+          : "countdown";
+      let baseSeconds = clampInt(
+        localStorage.getItem(STORAGE_KEY_TIMER_BASE) || 120,
+        0,
+        60 * 60,
+      );
+      let running = false;
+      let startedAtMs = 0;
+      let carriedSeconds = 0;
+      let tickId = null;
+
+      function getCurrentSeconds() {
+        const now = Date.now();
+        const delta = Math.floor((now - startedAtMs) / 1000);
+        if (timerMode === "stopwatch")
+          return carriedSeconds + Math.max(0, delta);
+        return baseSeconds - (carriedSeconds + Math.max(0, delta));
+      }
+
+      function renderTimer() {
+        if (!timerDisplay) return;
+        const cur = running
+          ? getCurrentSeconds()
+          : timerMode === "stopwatch"
+            ? carriedSeconds
+            : baseSeconds - carriedSeconds;
+        timerDisplay.textContent = formatMMSS(cur);
+
+        const done = timerMode === "countdown" && cur <= 0;
+        timerBox?.classList.toggle("pr-timerDone", done);
+        if (timerHint) {
+          timerHint.textContent =
+            timerMode === "stopwatch"
+              ? "ストップウォッチは加算します。"
+              : done
+                ? "終了（0になりました）"
+                : "カウントダウンは0で停止します。";
+        }
+      }
+
+      function stopTimer(skipCarry = false) {
+        if (!running) return;
+        if (!skipCarry) {
+          const delta = Math.max(
+            0,
+            Math.floor((Date.now() - startedAtMs) / 1000),
+          );
+          carriedSeconds = carriedSeconds + delta;
+          if (timerMode === "countdown")
+            carriedSeconds = Math.min(baseSeconds, carriedSeconds);
+        }
+        running = false;
+        if (tickId) window.clearInterval(tickId);
+        tickId = null;
+        if (timerStartBtn) timerStartBtn.textContent = "開始";
+        renderTimer();
+      }
+
+      function startTimer() {
+        if (running) return;
+        // カウントダウンが0なら、まずリセットしてから開始
+        if (timerMode === "countdown") {
+          const cur = baseSeconds - carriedSeconds;
+          if (cur <= 0) carriedSeconds = 0;
+        }
+        running = true;
+        startedAtMs = Date.now();
+        if (timerStartBtn) timerStartBtn.textContent = "一時停止";
+        if (tickId) window.clearInterval(tickId);
+        tickId = window.setInterval(() => {
+          if (!running) return;
+          if (timerMode === "countdown" && getCurrentSeconds() <= 0) {
+            // 0で自動停止
+            carriedSeconds = baseSeconds;
+            stopTimer(true);
+            return;
+          }
+          renderTimer();
+        }, 200);
+        renderTimer();
+      }
+
+      function resetTimer() {
+        stopTimer();
+        carriedSeconds = 0;
+        renderTimer();
+      }
+
+      function setCountdownSeconds(seconds) {
+        baseSeconds = clampInt(seconds, 0, 60 * 60);
+        localStorage.setItem(STORAGE_KEY_TIMER_BASE, String(baseSeconds));
+        carriedSeconds = 0;
+        renderTimer();
+      }
+
+      function setMode(nextMode) {
+        const mode = nextMode === "stopwatch" ? "stopwatch" : "countdown";
+        if (mode === timerMode) return;
+        stopTimer();
+        timerMode = mode;
+        localStorage.setItem(STORAGE_KEY_TIMER_MODE, timerMode);
+        carriedSeconds = 0;
+        renderTimer();
+      }
+
+      // 初期表示
+      if (timerModeSelect) timerModeSelect.value = timerMode;
+      if (timerMinutesInput)
+        timerMinutesInput.value = String(Math.floor(baseSeconds / 60));
+      renderTimer();
+
+      timerModeSelect?.addEventListener("change", () =>
+        setMode(timerModeSelect.value),
+      );
+      timerStartBtn?.addEventListener("click", () =>
+        running ? stopTimer() : startTimer(),
+      );
+      timerResetBtn?.addEventListener("click", resetTimer);
+
+      timerSetBtn?.addEventListener("click", () => {
+        setMode("countdown");
+        const mins = clampInt(timerMinutesInput?.value || 0, 0, 60);
+        setCountdownSeconds(mins * 60);
+      });
+
+      document.querySelectorAll("[data-timer-preset]")?.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          setMode("countdown");
+          const sec = clampInt(
+            btn.getAttribute("data-timer-preset"),
+            0,
+            60 * 60,
+          );
+          setCountdownSeconds(sec);
+          if (timerMinutesInput)
+            timerMinutesInput.value = String(Math.floor(sec / 60));
+        });
+      });
+
+      // 印刷後は必ず通常表示へ戻す
+      window.addEventListener("afterprint", () => {
+        setPrintMode(null);
+        const target = document.getElementById("printCopies");
+        target?.replaceChildren();
+      });
+    </script>
+  </body>
 </html>
