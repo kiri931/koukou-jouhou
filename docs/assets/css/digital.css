@@ -194,6 +194,20 @@ a:hover { text-decoration-thickness: 2px; }
   padding: var(--dg-space-5) 0;
 }
 
+/* Topbar actions (optional, injected by dg-topbar.js) */
+.dg-topbar .dg-topbar__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dg-space-2);
+  flex-wrap: wrap;
+}
+
+.dg-topbar .dg-topbar__actions .dg-btn {
+  padding: 8px 12px;
+  min-height: 36px;
+}
+
 .dg-brand {
   display: flex;
   align-items: baseline;

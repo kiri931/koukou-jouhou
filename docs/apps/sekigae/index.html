@@ -14,7 +14,25 @@
     <meta property="og:title" content="席替えアプリ | サポート・紹介" />
     <meta property="og:description" content="教室の席替えを、かんたん・柔軟・実用的に。名簿作成→座席配置→席替え→微調整→PDF/CSV共有まで。" />
     <meta property="og:url" content="https://koukou-jouhou.org/apps/sekigae/" />
-  </head>
+  <script id="dg-topbar-loader">
+(function () {
+  const firstSeg = (location.pathname.split("/")[1] || "").trim();
+  const candidates = ["/assets/js/dg-topbar.js"];
+  if (firstSeg) candidates.push("/" + firstSeg + "/assets/js/dg-topbar.js");
+
+  function load(i) {
+    if (i >= candidates.length) return;
+    const s = document.createElement("script");
+    s.src = candidates[i];
+    s.defer = true;
+    s.onerror = () => load(i + 1);
+    document.head.appendChild(s);
+  }
+
+  load(0);
+})();
+</script>
+</head>
 
   <body>
     <a class="dg-skip-link" href="#main">本文へスキップ</a>

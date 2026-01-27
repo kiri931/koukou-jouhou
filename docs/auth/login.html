@@ -8,6 +8,24 @@
 
   <!-- 任意: e-net Googleログイン（既存 /docs/e-net を踏襲） -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script id="dg-topbar-loader">
+(function () {
+  const firstSeg = (location.pathname.split("/")[1] || "").trim();
+  const candidates = ["/assets/js/dg-topbar.js"];
+  if (firstSeg) candidates.push("/" + firstSeg + "/assets/js/dg-topbar.js");
+
+  function load(i) {
+    if (i >= candidates.length) return;
+    const s = document.createElement("script");
+    s.src = candidates[i];
+    s.defer = true;
+    s.onerror = () => load(i + 1);
+    document.head.appendChild(s);
+  }
+
+  load(0);
+})();
+</script>
 </head>
 <body>
   <header class="dg-header">
