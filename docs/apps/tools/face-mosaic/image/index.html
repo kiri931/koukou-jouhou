@@ -3,58 +3,127 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>画像の顔モザイク</title>
-    <link href="../../../assets/css/html-css.css" rel="stylesheet">
-    <script src="main.js" onload="console.log('main.js loaded');"></script>
+    <link rel="stylesheet" href="../../../../assets/css/digital.css">
+    <script src="main.js" defer onload="console.log('main.js loaded');"></script>
 
     <!-- 🔥 opencv.js は main.js の後に読み込む -->
-    <script src="opencv.js" onload="console.log('opencv.js loaded'); onOpenCvReady();"
+    <script src="opencv.js" defer onload="console.log('opencv.js loaded'); onOpenCvReady();"
         onerror="console.error('opencv.js failed to load');"></script>
 
     <style>
         #canvas {
-            max-width: 500px;
-            max-height: 500px;
-            border: 1px solid #ccc;
-            display: block;
-            margin: 10px auto;
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--dg-color-border);
+            border-radius: var(--dg-radius-md);
+            background: var(--dg-color-bg);
+        }
+
+        #effects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            align-items: center;
+        }
+
+        #effects label {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            padding: 6px 10px;
+            border: 1px solid var(--dg-color-border);
+            border-radius: 999px;
+            background: var(--dg-color-surface);
+        }
+
+        #error {
+            color: var(--dg-color-danger);
+            font-size: var(--dg-text-sm);
+            white-space: pre-wrap;
         }
     </style>
 
 </head>
 
 <body>
+    <header class="dg-header">
+        <div class="dg-container dg-header__inner">
+            <a class="dg-brand" href="../../../../">
+                <span class="dg-brand__title">高校情報</span>
+                <span class="dg-brand__badge">顔モザイク</span>
+            </a>
+        </div>
+    </header>
 
-    <h1>画像の顔モザイク処理（OpenCV.js）</h1>
+    <main class="dg-main">
+        <div class="dg-container dg-stack">
+            <h1 class="dg-page-title">画像の顔モザイク処理（OpenCV.js）</h1>
 
-    <input type="file" id="fileInput" accept="image/*"><br>
-    
-    <div style="margin: 10px 0;">
-        <label>検出感度 (minNeighbors): <span id="minNeighborsValue">2</span></label><br>
-        <input type="range" id="minNeighbors" min="1" max="5" value="2" step="1" style="width: 200px;">
-        <small style="display: block; color: #666;">小さいほど多く検出（誤検出も増える）</small>
-    </div>
+            <div class="dg-callout dg-callout--info">
+                <div class="dg-callout__title">プライバシー</div>
+                <p class="dg-lead">このツールは画像をサーバーに送信せず、ブラウザ内（ローカル）で顔検出と加工を行います。</p>
+            </div>
 
-    <div style="margin: 10px 0;">
-        <label>検出精度 (scaleFactor): <span id="scaleFactorValue">1.1</span></label><br>
-        <input type="range" id="scaleFactor" min="1.05" max="1.3" value="1.1" step="0.05" style="width: 200px;">
-        <small style="display: block; color: #666;">小さいほど精度高い（処理は遅くなる）</small>
-    </div>
+            <div class="dg-card">
+                <div class="dg-card__body dg-stack">
+                    <div class="dg-field">
+                        <label class="dg-label" for="fileInput">画像ファイル</label>
+                        <input class="dg-input" type="file" id="fileInput" accept="image/*">
+                        <div class="dg-help">端末内の画像を選択してください。</div>
+                    </div>
 
-    <div id="effects">
-        <label><input type="checkbox" id="fx_mosaic"> モザイク</label>
-        <label><input type="checkbox" id="fx_blur"> ぼかし</label>
-        <label><input type="checkbox" id="fx_black"> 黒塗り</label>
-        <label><input type="checkbox" id="fx_rect"> 枠線</label>
-    </div>
+                    <div class="dg-grid">
+                        <div class="dg-field">
+                            <label class="dg-label" for="minNeighbors">検出感度 (minNeighbors): <span id="minNeighborsValue">2</span></label>
+                            <input type="range" id="minNeighbors" min="1" max="5" value="2" step="1">
+                            <div class="dg-help">小さいほど多く検出（誤検出も増える）</div>
+                        </div>
 
-    <div id="status">OpenCV.js 読み込み中...</div>
-    <div id="error"></div>
+                        <div class="dg-field">
+                            <label class="dg-label" for="scaleFactor">検出精度 (scaleFactor): <span id="scaleFactorValue">1.1</span></label>
+                            <input type="range" id="scaleFactor" min="1.05" max="1.3" value="1.1" step="0.05">
+                            <div class="dg-help">小さいほど精度高い（処理は遅くなる）</div>
+                        </div>
+                    </div>
 
-    <canvas id="canvas"></canvas><br>
-    <button id="download" disabled>画像を保存</button>
+                    <div class="dg-field">
+                        <div class="dg-label">エフェクト</div>
+                        <div id="effects">
+                            <label><input type="checkbox" id="fx_mosaic"> モザイク</label>
+                            <label><input type="checkbox" id="fx_blur"> ぼかし</label>
+                            <label><input type="checkbox" id="fx_black"> 黒塗り</label>
+                            <label><input type="checkbox" id="fx_rect"> 枠線</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="dg-card">
+                <div class="dg-card__body dg-stack">
+                    <div class="dg-row" style="justify-content: space-between;">
+                        <div id="status" class="dg-help">OpenCV.js 読み込み中...</div>
+                        <button class="dg-btn" id="download" disabled>画像を保存</button>
+                    </div>
 
+                    <div id="error" aria-live="polite"></div>
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="dg-row">
+                <a class="dg-btn dg-btn--subtle" href="../">ツール一覧へ</a>
+                <a class="dg-btn dg-btn--subtle" href="../../../../">トップへ戻る</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="dg-footer">
+        <div class="dg-container dg-footer__inner">
+            <div class="dg-footer__meta">© 2026 高校情報</div>
+        </div>
+    </footer>
 </body>
 
 </html>

@@ -3,6 +3,8 @@ let classifier = null;
 let originalImage = null;
 let originalImageData = null; // ★ canvasのImageDataも保存
 
+let appStarted = false;
+
 // ★ 顔の位置を保存して再利用する
 let savedFaces = [];
 
@@ -12,14 +14,26 @@ window.onOpenCvReady = onOpenCvReady;
 function onOpenCvReady() {
     if (typeof cv === "undefined") {
         console.error("cv is undefined");
+        const errorEl = document.getElementById("error");
+        if (errorEl) errorEl.textContent = "OpenCV.js の初期化に失敗しました（cv が未定義です）。";
         return;
     }
 
-    cv['onRuntimeInitialized'] = () => {
+    const startAppOnce = () => {
+        if (appStarted) return;
+        appStarted = true;
         startApp();
     };
 
-    if (cv.Mat) startApp();
+    // OpenCV.js は「スクリプト読み込み完了」と「WASM/runtime初期化完了」が別。
+    // runtime初期化前に startApp() を走らせると、カスケード読み込みが失敗して
+    // その後に正常起動してもエラー表示だけ残ることがある。
+    cv.onRuntimeInitialized = startAppOnce;
+
+    // すでに初期化済みの場合はコールバックが呼ばれないことがあるので、存在確認して起動。
+    if (cv.Mat && typeof cv.FS_createDataFile === "function") {
+        startAppOnce();
+    }
 }
 
 function startApp() {
