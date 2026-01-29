@@ -168,6 +168,25 @@ a {
 
 a:visited { color: var(--dg-color-link-visited); }
 
+/* ボタンリンクは訪問済みでも色を変えない */
+a.dg-btn:visited,
+.dg-btn:visited {
+  color: var(--dg-color-on-primary);
+}
+
+/* subtle ボタンも */
+a.dg-btn--subtle:visited,
+.dg-btn--subtle:visited {
+  color: var(--dg-color-text);
+}
+
+/* danger ボタンも */
+a.dg-btn--danger:visited,
+.dg-btn--danger:visited {
+  color: var(--dg-color-on-primary);
+}
+
+
 a:hover { text-decoration-thickness: 2px; }
 
 :focus-visible {

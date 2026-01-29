@@ -565,6 +565,10 @@ async function renderData(app) {
         el('span', { text: 'JSON形式の説明：' }),
         el('a', { href: './dataset-format.html', text: 'dataset.json 形式（memory-dataset/v1）' }),
       ]),
+      el('div', { class: 'dg-row' }, [
+        el('span', { text: '作成ツール：' }),
+        el('a', { href: './dataset-builder.html', text: 'データセット作成（新規/結合）' }),
+      ]),
     ]),
     datasetFileInput,
     el('div', { class: 'dg-row' }, [importDatasetBtn]),

@@ -1,6 +1,6 @@
 {
-  "name": "暗記コア",
-  "short_name": "暗記コア",
+  "name": "覚える君",
+  "short_name": "覚える君",
   "start_url": "./index.html#home",
   "display": "standalone",
   "background_color": "#ffffff",

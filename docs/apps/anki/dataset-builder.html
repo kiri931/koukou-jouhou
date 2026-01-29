@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>覚える君：データ作成</title>
+  <meta name="description" content="覚える君用のdataset.jsonをブラウザで作成・結合します。" />
+  <link rel="stylesheet" href="../../assets/css/digital.css" />
+  <script id="dg-topbar-loader">
+    (function () {
+      const firstSeg = (location.pathname.split("/")[1] || "").trim();
+      const candidates = ["/assets/js/dg-topbar.js"];
+      if (firstSeg) candidates.push("/" + firstSeg + "/assets/js/dg-topbar.js");
+
+      function load(i) {
+        if (i >= candidates.length) return;
+        const s = document.createElement("script");
+        s.src = candidates[i];
+        s.defer = true;
+        s.onerror = () => load(i + 1);
+        document.head.appendChild(s);
+      }
+
+      load(0);
+    })();
+  </script>
+</head>
+
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="./index.html#data">
+        <span class="dg-brand__title">覚える君</span>
+        <span class="dg-brand__badge">dataset builder</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="./index.html#data">データ管理へ戻る</a>
+        <a href="./dataset-format.html">形式（v1）</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <div class="dg-card">
+        <div class="dg-card__body dg-prose">
+          <h1 class="dg-page-title">データセット作成（dataset.json）</h1>
+          <p class="dg-lead">入力フォームで <code>memory-dataset/v1</code> のJSONを作り、ダウンロードできます。複数JSONの結合にも対応します。</p>
+
+          <div class="dg-note" id="msg" style="display:none;"></div>
+
+          <h2>1) 新規作成</h2>
+
+          <div class="dg-field">
+            <label class="dg-label" for="dsTitle">タイトル（必須）</label>
+            <input class="dg-input" id="dsTitle" type="text" placeholder="例：情報 用語（ネットワーク）" />
+          </div>
+
+          <div class="dg-field">
+            <label class="dg-label" for="dsDescription">説明（任意）</label>
+            <textarea class="dg-input" id="dsDescription" rows="2" placeholder="例：第1章の重要語句"></textarea>
+          </div>
+
+          <div class="dg-field">
+            <label class="dg-label" for="dsTags">タグ（任意）</label>
+            <input class="dg-input" id="dsTags" type="text" placeholder="例：joho, network" />
+            <div class="dg-help">カンマ区切り（例：<code>joho, network</code>）</div>
+          </div>
+
+          <div class="dg-field">
+            <label class="dg-label" for="dsId">datasetId（UUID v4）</label>
+            <div class="dg-row">
+              <input class="dg-input" id="dsId" type="text" placeholder="自動生成" style="flex: 1;" />
+              <button class="dg-btn dg-btn--subtle" type="button" id="regenDatasetId">再生成</button>
+            </div>
+          </div>
+
+          <div class="dg-row">
+            <label class="dg-row" style="gap: 8px;">
+              <input type="checkbox" id="autoTimestamps" checked />
+              <span>createdAt / updatedAt を自動付与</span>
+            </label>
+            <label class="dg-row" style="gap: 8px;">
+              <input type="checkbox" id="regenCardIds" checked />
+              <span>カードIDを自動生成（推奨）</span>
+            </label>
+          </div>
+
+          <hr />
+
+          <div class="dg-row" style="justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;">カード</h3>
+            <button class="dg-btn" type="button" id="addCard">＋ 追加</button>
+          </div>
+
+          <div id="cards" class="dg-stack"></div>
+
+          <div class="dg-row" style="margin-top: var(--dg-space-4);">
+            <button class="dg-btn" type="button" id="buildJson">JSON作成</button>
+            <button class="dg-btn dg-btn--subtle" type="button" id="downloadJson" disabled>dataset.json をダウンロード</button>
+            <button class="dg-btn dg-btn--subtle" type="button" id="copyJson" disabled>JSONをコピー</button>
+          </div>
+
+          <div class="dg-field" style="margin-top: var(--dg-space-4);">
+            <label class="dg-label" for="jsonOut">生成JSON</label>
+            <textarea class="dg-input" id="jsonOut" rows="12" spellcheck="false" placeholder="ここにJSONが表示されます"></textarea>
+          </div>
+
+          <hr />
+
+          <h2>2) 複数JSONを結合</h2>
+          <p>複数の <code>dataset.json</code> を読み込み、カードを1つのデータセットにまとめます（必要に応じてカードIDを自動で衝突回避）。</p>
+
+          <div class="dg-field">
+            <label class="dg-label" for="mergeFiles">結合したいJSONファイル（複数選択可）</label>
+            <input class="dg-input" id="mergeFiles" type="file" accept="application/json,.json" multiple />
+          </div>
+
+          <div class="dg-field">
+            <label class="dg-label" for="mergePaste">またはJSONを貼り付け（複数OK）</label>
+            <textarea class="dg-input" id="mergePaste" rows="6" spellcheck="false" placeholder="{...}\n\n{...}"></textarea>
+            <div class="dg-help">複数貼る場合は空行で区切ってOK（JSON配列でもOK）</div>
+          </div>
+
+          <div class="dg-row">
+            <button class="dg-btn dg-btn--subtle" type="button" id="loadMerge">読み込み</button>
+            <button class="dg-btn" type="button" id="mergeBuild" disabled>結合してJSON作成</button>
+            <button class="dg-btn dg-btn--subtle" type="button" id="mergeDownload" disabled>結合dataset.jsonをダウンロード</button>
+          </div>
+
+          <div class="dg-note" id="mergeSummary" style="display:none;"></div>
+
+          <div class="dg-field" style="margin-top: var(--dg-space-4);">
+            <label class="dg-label" for="mergeTitle">結合後タイトル（必須）</label>
+            <input class="dg-input" id="mergeTitle" type="text" placeholder="例：結合データセット" />
+          </div>
+
+          <div class="dg-field">
+            <label class="dg-label" for="mergeDescription">結合後説明（任意）</label>
+            <textarea class="dg-input" id="mergeDescription" rows="2"></textarea>
+          </div>
+
+          <div class="dg-field">
+            <label class="dg-label" for="mergeTags">結合後タグ（任意）</label>
+            <input class="dg-input" id="mergeTags" type="text" placeholder="例：merged" />
+            <div class="dg-help">空のときは「読み込んだデータセットのタグを全部まとめたもの」を自動で入れます。</div>
+          </div>
+
+          <div class="dg-row">
+            <label class="dg-row" style="gap: 8px;">
+              <input type="checkbox" id="mergeRegenDatasetId" checked />
+              <span>結合後datasetIdを新規発行</span>
+            </label>
+            <label class="dg-row" style="gap: 8px;">
+              <input type="checkbox" id="mergeFixCardIds" checked />
+              <span>カードIDの重複を自動で回避</span>
+            </label>
+          </div>
+
+          <div class="dg-field" style="margin-top: var(--dg-space-4);">
+            <label class="dg-label" for="mergeOut">結合JSON</label>
+            <textarea class="dg-input" id="mergeOut" rows="12" spellcheck="false" placeholder="ここに結合JSONが表示されます"></textarea>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="./dataset-builder.js"></script>
+</body>
+
+</html>

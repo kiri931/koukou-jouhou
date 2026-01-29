@@ -1,9 +1,12 @@
-const CACHE_NAME = 'anki-core-v1';
+const CACHE_NAME = 'anki-core-v2';
 
 const ASSETS = [
   './',
   './index.html',
   './main.js',
+  './dataset-builder.html',
+  './dataset-builder.js',
+  './dataset-format.html',
   './manifest.webmanifest',
   '../../assets/css/digital.css',
 ];
