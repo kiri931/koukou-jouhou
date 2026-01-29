@@ -1,5 +1,7 @@
 User-agent: *
 Disallow: /apps/QR/
 
+Sitemap: https://koukou-jouhou.org/sitemap.xml
+
 # 審査中に低品質/実験コンテンツを除外する目的。
 # 審査通過後に公開対象にする場合は、この行を削除してください。
