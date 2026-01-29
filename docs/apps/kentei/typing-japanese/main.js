@@ -17,6 +17,25 @@ document.getElementById("startButton").addEventListener("click", startGame);
 document.getElementById("download").addEventListener("click", downloadLog);
 document.getElementById("loadFile").addEventListener("change", loadLogFile);
 
+const homeSection = document.getElementById("home");
+const gameSection = document.getElementById("game");
+const resultSection = document.getElementById("result");
+
+function isEditableTarget(target) {
+  if (!(target instanceof Element)) return false;
+  const tag = target.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  return target.isContentEditable;
+}
+
+function isPlaying() {
+  return gameSection?.style.display === "block";
+}
+
+function isHomeVisible() {
+  return homeSection?.style.display !== "none";
+}
+
 let currentIndex = 0;
 let userInput = "";
 
@@ -34,8 +53,8 @@ function startGame() {
   
 
 function initGame() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  homeSection.style.display = "none";
+  gameSection.style.display = "block";
 
   correctCount = 0;
   wrongCount = 0;
@@ -70,8 +89,8 @@ function nextProblem() {
   
   function finishGame() {
     clearInterval(timerInterval);
-    document.getElementById("game").style.display = "none";
-    document.getElementById("result").style.display = "block";
+    gameSection.style.display = "none";
+    resultSection.style.display = "block";
   
     const accuracy = ((correctCount / (correctCount + wrongCount)) * 100 || 0).toFixed(2);
     statsElement.innerHTML = `
@@ -110,35 +129,43 @@ function nextProblem() {
       alert(`記録読み込み成功\n正解: ${data.correctCount}\nミス: ${data.wrongCount}\n正確率: ${data.accuracy}%`);
     };
     reader.readAsText(file);
-  }document.addEventListener("keydown", (e) => {
-    if (!current || !document.getElementById("game").style.display.includes('block')) return;
-    const key = e.key;
-  
-    if (key.length !== 1) return;
-  
-    userInput += key;
-  
-    const isCorrectSoFar = current.answers.some(ans => ans.startsWith(userInput));
-    log.push({
-      time: Date.now() - startTime,
-      key,
-      expected: current.answers[0][userInput.length - 1],
-      correct: isCorrectSoFar
-    });
-  
-    if (!isCorrectSoFar) {
-      wrongCount++;
-      userInput = userInput.slice(0, -1);
-      return;
-    }
-  
-    inputArea.textContent = userInput;
-  
-    if (current.answers.includes(userInput)) {
-      correctCount++;
-      nextProblem();
-    }
+  }
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space" && !isPlaying() && isHomeVisible() && !isEditableTarget(e.target)) {
+    e.preventDefault();
+    startGame();
+    return;
+  }
+
+  if (!current || !isPlaying()) return;
+  const key = e.key;
+
+  if (key.length !== 1) return;
+
+  userInput += key;
+
+  const isCorrectSoFar = current.answers.some(ans => ans.startsWith(userInput));
+  log.push({
+    time: Date.now() - startTime,
+    key,
+    expected: current.answers[0][userInput.length - 1],
+    correct: isCorrectSoFar
   });
+
+  if (!isCorrectSoFar) {
+    wrongCount++;
+    userInput = userInput.slice(0, -1);
+    return;
+  }
+
+  inputArea.textContent = userInput;
+
+  if (current.answers.includes(userInput)) {
+    correctCount++;
+    nextProblem();
+  }
+});
   
   function shuffleArray(array) {
     const copy = [...array];
@@ -150,7 +177,8 @@ function nextProblem() {
   }
   
 
-  document.getElementById("loadProblemFile").addEventListener("change", (event) => {
+  const loadProblemFile = document.getElementById("loadProblemFile");
+  if (loadProblemFile) loadProblemFile.addEventListener("change", (event) => {
     duration = parseInt(document.getElementById("duration").value) || 60;
     const file = event.target.files[0];
     if (!file) return;

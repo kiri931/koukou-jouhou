@@ -25,24 +25,24 @@
     <title>高校情報 - 教材・資料集</title>
     <meta name="description" content="高校『情報』向けの教材・資料・学習ツール集。HTML/プログラミング教材、検定対策、授業用テンプレートなどを掲載。" />
     <link rel="stylesheet" href="assets/css/digital.css">
-<script id="dg-topbar-loader">
-(function () {
-  const firstSeg = (location.pathname.split("/")[1] || "").trim();
-  const candidates = ["/assets/js/dg-topbar.js"];
-  if (firstSeg) candidates.push("/" + firstSeg + "/assets/js/dg-topbar.js");
+    <script id="dg-topbar-loader">
+        (function () {
+            const firstSeg = (location.pathname.split("/")[1] || "").trim();
+            const candidates = ["/assets/js/dg-topbar.js"];
+            if (firstSeg) candidates.push("/" + firstSeg + "/assets/js/dg-topbar.js");
 
-  function load(i) {
-    if (i >= candidates.length) return;
-    const s = document.createElement("script");
-    s.src = candidates[i];
-    s.defer = true;
-    s.onerror = () => load(i + 1);
-    document.head.appendChild(s);
-  }
+            function load(i) {
+                if (i >= candidates.length) return;
+                const s = document.createElement("script");
+                s.src = candidates[i];
+                s.defer = true;
+                s.onerror = () => load(i + 1);
+                document.head.appendChild(s);
+            }
 
-  load(0);
-})();
-</script>
+            load(0);
+        })();
+    </script>
 </head>
 
 
@@ -69,16 +69,6 @@
                         <ul>
                             <li><a href="apps/sekigae/">席替えアプリ（サポート・紹介）</a></li>
                             <li><a href="apps/tools/face-mosaic/">顔モザイク（ローカル処理）</a></li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="dg-card">
-                    <div class="dg-card__body dg-prose">
-                        <h2>授業・クラス</h2>
-                        <p>授業で使用する資料やクラス活動に関する情報です。</p>
-                        <ul>
-                            <li><a href="lessons/class/fieldtrip/2025/">校外学習用テンプレート</a></li>
                         </ul>
                     </div>
                 </section>
@@ -114,37 +104,6 @@
                                 <a href="apps/kentei/joho-gijutsukentei/">情報技術検定（情技検）3級 問題集</a>
                                 <span class="dg-badge">検定対策</span>
                             </li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="dg-card">
-                    <div class="dg-card__body dg-prose">
-                        <h2>ゲーム</h2>
-                        <p>プログラミング学習用のゲームや娯楽コンテンツです。</p>
-                        <ul>
-                            <li><span>現在準備中</span></li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="dg-card">
-                    <div class="dg-card__body dg-prose">
-                        <h2>学習資料</h2>
-                        <p>各種学習用のドキュメントや資料集です。</p>
-                        <ul>
-                            <li><a href="md/github.md">GitHub学習テキスト</a></li>
-                            <li><a href="md/word.md">Word学習用テキスト</a></li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="dg-card">
-                    <div class="dg-card__body dg-prose">
-                        <h2>実験・その他</h2>
-                        <p>QRコードを使った謎解きなど、実験的なコンテンツです。</p>
-                        <ul>
-                            <li><a href="apps/QR/">文化祭で使用したもの</a></li>
                         </ul>
                     </div>
                 </section>
