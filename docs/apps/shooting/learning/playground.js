@@ -1932,6 +1932,9 @@ function setupPersistence({ step, getValues, setValues, onAnyChange }) {
       const m = String(step).match(/^step(\d+)$/);
       const n = m ? Number(m[1]) : 1;
       const prevStep = Number.isFinite(n) && n >= 2 ? `step${n - 1}` : null;
+      const isModuleStep = Number.isFinite(n) && n >= 9;
+      const prevIsModuleStep = Number.isFinite(n) && n - 1 >= 9;
+      const allowPrevStep = !isModuleStep || prevIsModuleStep;
 
       removeSavedStep(step);
 
@@ -1960,17 +1963,26 @@ function setupPersistence({ step, getValues, setValues, onAnyChange }) {
         return;
       }
 
-      const prev = loadSavedStep(prevStep);
-      if (prev && (prev.html || prev.css || prev.js)) {
-        // JS だけ前stepから復元し、HTML/CSS はこのStepの完成形
-        setValues({ html: baseHtml, css: baseCss, js: prev.js });
-        const updatedAt = saveStep(step, getValues());
-        updateSaveInfo(updatedAt);
-        setStatus(`リセットしました（HTML/CSSはこのStep完成形、JSは${prevStep}の入力）。`);
-        return;
+      if (allowPrevStep) {
+        const prev = loadSavedStep(prevStep);
+        if (prev && (prev.html || prev.css || prev.js)) {
+          // JS だけ前stepから復元し、HTML/CSS はこのStepの完成形
+          setValues({ html: baseHtml, css: baseCss, js: prev.js });
+          const updatedAt = saveStep(step, getValues());
+          updateSaveInfo(updatedAt);
+          setStatus(`リセットしました（HTML/CSSはこのStep完成形、JSは${prevStep}の入力）。`);
+          return;
+        }
       }
 
       // 前stepに保存が無い場合は、前stepのサンプルを復元する
+      if (!allowPrevStep) {
+        setValues({ html: baseHtml, css: baseCss, js: baseJs });
+        const updatedAt = saveStep(step, getValues());
+        updateSaveInfo(updatedAt);
+        setStatus("このStepの入力をリセットしました（HTML/CSSは完成形、JSはサンプルに戻しました）。");
+        return;
+      }
       try {
         setStatus(`${prevStep} の内容を読み込んでいます...`);
         const { html, css, js } = await loadStepSources(prevStep);
@@ -2471,7 +2483,10 @@ async function main() {
       const m = String(step).match(/^step(\d+)$/);
       const n = m ? Number(m[1]) : 1;
       const prevStep = Number.isFinite(n) && n >= 2 ? `step${n - 1}` : null;
-      const prev = prevStep ? loadSavedStep(prevStep) : null;
+      const isModuleStep = Number.isFinite(n) && n >= 9;
+      const prevIsModuleStep = Number.isFinite(n) && n - 1 >= 9;
+      const allowPrevStep = !isModuleStep || prevIsModuleStep;
+      const prev = prevStep && allowPrevStep ? loadSavedStep(prevStep) : null;
       if (prev && (prev.html || prev.css || prev.js)) {
         wrappedEditors.setValues({ html: prev.html, css: prev.css, js: prev.js });
         // 引き継いだ状態も、このStepとして保存しておく（次回以降も同じ状態で開ける）
