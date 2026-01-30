@@ -279,7 +279,15 @@ function stripStepExternalRefs(html) {
 }
 
 function ensureBaseHref(html, baseHref) {
-  const baseTag = `<base href="${baseHref}">`;
+  let href = baseHref;
+  try {
+    // srcdoc では相対 base が無効になるため、絶対URLにする
+    href = new URL(String(baseHref || ""), window.location.href).toString();
+  } catch {
+    // 失敗時はそのまま使う
+    href = baseHref;
+  }
+  const baseTag = `<base href="${href}">`;
 
   // すでに base があるなら追加しない
   if (/<base\b[^>]*>/i.test(html)) return html;
