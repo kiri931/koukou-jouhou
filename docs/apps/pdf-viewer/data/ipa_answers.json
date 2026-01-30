@@ -1,0 +1,506 @@
+{
+  "exam": "令和7年度 ITパスポート試験 公開問題 解答例",
+  "source_pdf": "2025r07_ip_ans.pdf",
+  "answers": [
+    {
+      "q": 1,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 2,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 3,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 4,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 5,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 6,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 7,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 8,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 9,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 10,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 11,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 12,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 13,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 14,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 15,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 16,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 17,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 18,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 19,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 20,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 21,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 22,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 23,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 24,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 25,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 26,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 27,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 28,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 29,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 30,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 31,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 32,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 33,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 34,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 35,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 36,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 37,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 38,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 39,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 40,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 41,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 42,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 43,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 44,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 45,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 46,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 47,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 48,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 49,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 50,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 51,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 52,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 53,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 54,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 55,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 56,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 57,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 58,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 59,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 60,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 61,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 62,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 63,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 64,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 65,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 66,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 67,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 68,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 69,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 70,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 71,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 72,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 73,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 74,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 75,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 76,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 77,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 78,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 79,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 80,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 81,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 82,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 83,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 84,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 85,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 86,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 87,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 88,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 89,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 90,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 91,
+      "answer": "エ",
+      "choice": 4
+    },
+    {
+      "q": 92,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 93,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 94,
+      "answer": "イ",
+      "choice": 2
+    },
+    {
+      "q": 95,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 96,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 97,
+      "answer": "ア",
+      "choice": 1
+    },
+    {
+      "q": 98,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 99,
+      "answer": "ウ",
+      "choice": 3
+    },
+    {
+      "q": 100,
+      "answer": "ア",
+      "choice": 1
+    }
+  ]
+}

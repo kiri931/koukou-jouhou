@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>テスト結果確認 | PDF参照モード</title>
+  <link rel="stylesheet" href="../../assets/css/digital.css" />
+  <style>
+    .result-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .score-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .score-number {
+      font-size: 72px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .info-item {
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .info-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .info-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+    .warning-badge {
+      display: inline-block;
+      background: #ffc107;
+      color: #856404;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .valid-badge {
+      display: inline-block;
+      background: #28a745;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .invalid-badge {
+      display: inline-block;
+      background: #dc3545;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header class="dg-header">
+    <div class="dg-container dg-header__inner">
+      <a class="dg-brand" href="./">
+        <span class="dg-brand__title">テスト結果確認</span>
+        <span class="dg-brand__badge">教員用</span>
+      </a>
+      <nav class="dg-nav">
+        <a href="./">戻る</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dg-main">
+    <div class="dg-container">
+      <h1 class="dg-page-title">テスト結果確認（教員用）</h1>
+      <p class="dg-lead">生徒が提出したテスト結果ファイル（JSON）を開いて確認します。</p>
+
+      <div class="dg-stack">
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <h2 class="dg-page-title" style="font-size:var(--dg-text-xl); margin-top:0">結果ファイルを読み込む</h2>
+            <input type="file" id="fileInput" accept=".json" class="dg-input" style="margin-bottom:12px" />
+            <div class="dg-help">生徒から提出された test-result-*.json ファイルを選択してください。</div>
+          </div>
+        </section>
+
+        <div id="resultDisplay"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="dg-footer">
+    <div class="dg-container dg-footer__inner">
+      <div class="dg-footer__meta">テスト結果確認（教員用）</div>
+      <div class="dg-footer__meta">最終更新: 2026-01-30</div>
+    </div>
+  </footer>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const resultDisplay = document.getElementById('resultDisplay');
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        displayResult(data, file.name);
+      } catch (error) {
+        resultDisplay.innerHTML = `
+          <div class="dg-card">
+            <div class="dg-card__body" style="color:#dc3545">
+              <strong>エラー:</strong> ファイルの読み込みに失敗しました。<br>
+              ${error.message}
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    function displayResult(data, fileName) {
+      // チェックサム検証（簡易的）
+      let isValid = true;
+      try {
+        const expectedChecksum = btoa(JSON.stringify({
+          score: data.score,
+          startTime: data.startTime,
+          endTime: data.endTime,
+          answers: Object.keys(data.studentAnswers || {}).length
+        }));
+        isValid = expectedChecksum === data.checksum;
+      } catch (e) {
+        isValid = false;
+      }
+
+      const startTime = new Date(data.startTime);
+      const endTime = new Date(data.endTime);
+      const duration = Math.round((endTime - startTime) / 1000 / 60);
+
+      const validityBadge = isValid 
+        ? '<span class="valid-badge">✓ 有効</span>'
+        : '<span class="invalid-badge">✗ 改ざんの可能性</span>';
+
+      const tabSwitchWarning = data.tabSwitches > 0
+        ? `<span class="warning-badge">⚠ タブ切り替え: ${data.tabSwitches}回</span>`
+        : '';
+
+      resultDisplay.innerHTML = `
+        <section class="dg-card">
+          <div class="dg-card__body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+              <h2 class="dg-page-title" style="font-size:var(--dg-text-xl); margin:0">テスト結果</h2>
+              <div>${validityBadge} ${tabSwitchWarning}</div>
+            </div>
+
+            <div class="score-display">
+              <div class="score-number">${data.score}点</div>
+              <div style="font-size:24px">正解数: ${data.correct} / ${data.total}</div>
+            </div>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">ファイル名</div>
+                <div class="info-value">${fileName}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">試験名</div>
+                <div class="info-value">${data.examTitle || data.examId}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">範囲</div>
+                <div class="info-value">${data.scope || '-'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">開始時刻</div>
+                <div class="info-value">${startTime.toLocaleString('ja-JP')}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">終了時刻</div>
+                <div class="info-value">${endTime.toLocaleString('ja-JP')}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">所要時間</div>
+                <div class="info-value">${duration}分</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">回答数</div>
+                <div class="info-value">${Object.keys(data.studentAnswers || {}).length}問</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">タブ切り替え</div>
+                <div class="info-value" style="color:${data.tabSwitches > 0 ? '#ffc107' : '#28a745'}">${data.tabSwitches}回</div>
+              </div>
+            </div>
+
+            <details style="margin-top:24px">
+              <summary style="cursor:pointer; font-weight:bold; margin-bottom:12px">詳細情報を表示</summary>
+              <div style="background:#f8f9fa; padding:16px; border-radius:8px; margin-top:12px">
+                <div style="margin-bottom:8px"><strong>バージョン:</strong> ${data.version || '-'}</div>
+                <div style="margin-bottom:8px"><strong>試験ID:</strong> ${data.examId || '-'}</div>
+                <div style="margin-bottom:8px"><strong>チェックサム:</strong> <code>${data.checksum || '-'}</code></div>
+                <div style="margin-bottom:8px"><strong>UserAgent:</strong> <code style="font-size:12px">${data.userAgent || '-'}</code></div>
+              </div>
+            </details>
+          </div>
+        </section>
+      `;
+    }
+  </script>
+</body>
+</html>

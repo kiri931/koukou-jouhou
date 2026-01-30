@@ -1,0 +1,133 @@
+[
+  {
+    "id": "ipa-2025r07-ip",
+    "title": "令和7年度 ITパスポート試験（IPA CBT）",
+    "path": "https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf",
+    "answerPath": "https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf",
+    "note": "IPA情報処理技術者試験 ITパスポート 令和7年度公開問題",
+    "scopes": [
+      {"id":"all","label":"全問題","questionCount":100,"pageFrom":1,"pageTo":null,"note":"問1〜問100（4択問題）"}
+    ]
+  },
+  {
+    "id": "kekka-64",
+    "title": "第64回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/64joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-65",
+    "title": "第65回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/65joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-66",
+    "title": "第66回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/66joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-67",
+    "title": "第67回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/67joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-68",
+    "title": "第68回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/68joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-69",
+    "title": "第69回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/69joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-70",
+    "title": "第70回 情報技術検定（結果）",
+    "path": "https://zenkoukyo.or.jp/web/content/uploads/70joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-71",
+    "title": "第71回 情報技術検定（結果）",
+    "path": "http://zenkoukyo.or.jp/web/content/uploads/71joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-72",
+    "title": "第72回 情報技術検定（結果）",
+    "path": "http://zenkoukyo.or.jp/web/content/uploads/72joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-73",
+    "title": "第73回 情報技術検定（結果）",
+    "path": "http://zenkoukyo.or.jp/web/content/uploads/73joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  },
+  {
+    "id": "kekka-74",
+    "title": "第74回 情報技術検定（結果）",
+    "path": "http://zenkoukyo.or.jp/web/content/uploads/74joho_kekka.pdf",
+    "note": "外部PDF（結果PDF）。表示できない場合はPDFを直接開いてください。",
+    "scopes": [
+      {"id":"g1","label":"1級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の1級の掲載ページ範囲を設定"},
+      {"id":"g2","label":"2級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の2級の掲載ページ範囲を設定"},
+      {"id":"g3","label":"3級","questionCount":50,"pageFrom":null,"pageTo":null,"note":"このPDF内の3級の掲載ページ範囲を設定"}
+    ]
+  }
+]
