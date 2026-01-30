@@ -393,20 +393,35 @@ function injectCssAndJsIntoHtml({ step, html, css, js }) {
 
 async function loadText(path) {
   const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) throw new Error(`${path} の読み込みに失敗しました (${res.status})`);
+  if (!res.ok) {
+    const err = new Error(`${path} の読み込みに失敗しました (${res.status})`);
+    console.error("[playground] loadText failed", { path, status: res.status, statusText: res.statusText });
+    throw err;
+  }
   return await res.text();
 }
 
 async function loadOptionalText(path) {
   const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    console.warn("[playground] loadOptionalText not found", { path, status: res.status });
+    return null;
+  }
   return await res.text();
 }
 
 async function loadOptionalJson(path) {
   const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) return null;
-  return await res.json();
+  if (!res.ok) {
+    console.warn("[playground] loadOptionalJson not found", { path, status: res.status });
+    return null;
+  }
+  try {
+    return await res.json();
+  } catch (e) {
+    console.error("[playground] loadOptionalJson parse failed", { path, error: e });
+    return null;
+  }
 }
 
 function setupSampleTabs({ onChange } = {}) {
@@ -2540,6 +2555,7 @@ async function main() {
       });
     }
   } catch (e) {
+    console.error("[playground] main init failed", e);
     setStatus(
       "読み込みに失敗しました。Live Server等で開いているか確認してください。\n" +
         String(e)
