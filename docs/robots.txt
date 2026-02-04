@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /apps/QR/
+
 
 Sitemap: https://koukou-jouhou.org/sitemap.xml
 

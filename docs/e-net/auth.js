@@ -1,23 +1,13 @@
-// =============================
-// e-net 認証チェック 共通スクリプト
-// =============================
-
-// 現在のページのパスを取得
-const path = location.pathname;
-
-// GitHub Pages の project pages でも動くように、必要なら `/<repo>` を付ける
-// 例: /<repo>/e-net/home.html の場合 base = /<repo>
-const segs = (path || "").split("/");
-const base = segs[1] && segs[2] === "e-net" ? `/${segs[1]}` : "";
-
-// ログインページ(index.html)は除外
-const isLoginPage = path.endsWith("/e-net/") || path.endsWith("/index.html");
-
-// 認証情報の取得
-const email = sessionStorage.getItem("e-net-auth");
-
-// ログインしていない場合
-if (!email && !isLoginPage) {
-  // 強制的にログインページへ
-  location.href = `${base}/e-net/index.html`;
-}
+// 互換入口: 旧 /e-net/auth.js を維持しつつ、実体は /assets/js/e-net/auth.js に集約。
+(function () {
+  try {
+    const current = document.currentScript?.src ? new URL(document.currentScript.src) : new URL(location.href);
+    const target = new URL("../assets/js/e-net/auth.js", current).href;
+    const s = document.createElement("script");
+    s.src = target;
+    s.onerror = () => { };
+    document.head.appendChild(s);
+  } catch {
+    // no-op
+  }
+})();

@@ -1,22 +1,13 @@
-// ichimon.js - 一問一答の答え表示制御
-document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".toggle");
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const answer = btn.nextElementSibling;
-      const isVisible = answer.style.display === "block";
-
-      // すべて非表示にしたい場合は以下のコメントアウトを外す
-      // document.querySelectorAll(".answer").forEach(a => a.style.display = "none");
-
-      if (isVisible) {
-        answer.style.display = "none";
-        btn.textContent = "答えを表示";
-      } else {
-        answer.style.display = "block";
-        btn.textContent = "答えを隠す";
-      }
-    });
-  });
-});
+// 互換入口: 旧 /js/ichimon.js を維持しつつ、実体は /assets/js/ichimon.js に集約。
+(function () {
+  try {
+    const current = document.currentScript?.src ? new URL(document.currentScript.src) : new URL(location.href);
+    const target = new URL("../assets/js/ichimon.js", current).href;
+    const s = document.createElement("script");
+    s.defer = true;
+    s.src = target;
+    document.head.appendChild(s);
+  } catch {
+    // no-op
+  }
+})();

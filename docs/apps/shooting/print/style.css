@@ -3,7 +3,7 @@
    - 既定: プレビュー/印刷向けの白黒
    - body.mode-edit で VSCode風（ダーク）に切替
    ========================================================= */
-@import url("../../shared/design-system.css");
+@import url("../../../../assets/css/digital.css");
 
 :root {
   /* print/ はページ内で独自トークンを使っているので、共通トークンから派生させる */
