@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Scheduler - タイムスケジューラ</title>
+  <link rel="stylesheet" href="../../assets/css/digital.css">
+  <style>
+    /* Time Scheduler 専用スタイル */
+    .ts-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--dg-space-6);
+      padding: var(--dg-space-5) var(--dg-space-4);
+    }
+
+    .ts-display {
+      text-align: center;
+      width: 100%;
+    }
+
+    .ts-current-task {
+      font-size: var(--dg-text-2xl);
+      font-weight: 800;
+      margin-bottom: var(--dg-space-3);
+      color: var(--dg-color-primary);
+      min-height: 2.5em;
+    }
+
+    .ts-time-info {
+      display: flex;
+      gap: var(--dg-space-5);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--dg-space-4);
+    }
+
+    .ts-time-box {
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-md);
+      padding: var(--dg-space-4);
+      min-width: 140px;
+    }
+
+    .ts-time-label {
+      font-size: var(--dg-text-sm);
+      color: var(--dg-color-muted);
+      margin-bottom: var(--dg-space-2);
+    }
+
+    .ts-time-value {
+      font-family: var(--dg-font-mono);
+      font-size: var(--dg-text-xl);
+      font-weight: 700;
+    }
+
+    .ts-chart-container {
+      position: relative;
+      width: min(560px, calc(100vw - 16px));
+      height: min(560px, calc(100vw - 16px));
+      margin: var(--dg-space-6) auto;
+      padding: 48px;
+      border-radius: 50%;
+      background: var(--dg-color-bg);
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .ts-chart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: calc(100% - 96px);
+      height: calc(100% - 96px);
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+    }
+
+    .ts-clock-marks {
+      position: absolute;
+      width: calc(100% - 96px);
+      height: calc(100% - 96px);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .ts-clock-mark {
+      position: absolute;
+      background: var(--dg-color-border);
+      transform-origin: center;
+    }
+
+    .ts-clock-mark.major {
+      width: 2px;
+      height: 12px;
+      background: var(--dg-color-text);
+      opacity: 0.3;
+    }
+
+    .ts-clock-mark.minor {
+      width: 1px;
+      height: 6px;
+      opacity: 0.2;
+    }
+
+    .ts-clock-center {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--dg-color-primary);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .ts-clock-hand {
+      position: absolute;
+      width: 4px;
+      background: var(--dg-color-primary);
+      top: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      border-radius: 2px;
+      z-index: 9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .ts-chart-label {
+      position: absolute;
+      font-size: var(--dg-text-sm);
+      font-weight: 700;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      max-width: 140px;
+      text-align: center;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: color-mix(in srgb, var(--dg-color-bg) 85%, transparent);
+      padding: 2px 6px;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    .ts-controls {
+      display: flex;
+      gap: var(--dg-space-3);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .ts-btn-large {
+      padding: var(--dg-space-4) var(--dg-space-6);
+      font-size: var(--dg-text-lg);
+      min-width: 140px;
+    }
+
+    /* ボトムシート */
+    .ts-bottom-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 100%);
+      width: min(700px, 100vw);
+      background: var(--dg-color-bg);
+      border-top: 1px solid var(--dg-color-border);
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease-out;
+      z-index: 1000;
+      max-height: 70vh;
+      overflow-y: auto;
+      border-radius: var(--dg-radius-md) var(--dg-radius-md) 0 0;
+    }
+
+    .ts-bottom-sheet.ts-open {
+      transform: translate(-50%, 0);
+    }
+
+    .ts-bottom-sheet__header {
+      position: sticky;
+      top: 0;
+      background: var(--dg-color-surface);
+      border-bottom: 1px solid var(--dg-color-border);
+      padding: var(--dg-space-4) var(--dg-space-5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .ts-bottom-sheet__title {
+      font-size: var(--dg-text-lg);
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .ts-bottom-sheet__body {
+      padding: var(--dg-space-5);
+    }
+
+    .ts-section {
+      margin-bottom: var(--dg-space-6);
+    }
+
+    .ts-section-title {
+      font-size: var(--dg-text-md);
+      font-weight: 700;
+      margin-bottom: var(--dg-space-3);
+      color: var(--dg-color-primary);
+    }
+
+    .ts-slider-group {
+      display: grid;
+      gap: var(--dg-space-3);
+    }
+
+    .ts-slider-row {
+      display: flex;
+      gap: var(--dg-space-3);
+      align-items: center;
+    }
+
+    .ts-slider {
+      flex: 1;
+      height: 10px;
+    }
+
+    .ts-slider-input {
+      width: 80px;
+      text-align: center;
+    }
+
+    .ts-task-list {
+      display: grid;
+      gap: var(--dg-space-3);
+    }
+
+    .ts-task-item {
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+      padding: var(--dg-space-3);
+      display: grid;
+      gap: var(--dg-space-3);
+      cursor: move;
+      transition: background 0.2s;
+    }
+
+    .ts-task-item.dragging {
+      opacity: 0.5;
+    }
+
+    .ts-task-item:hover {
+      background: var(--dg-color-surface-2);
+    }
+
+    .ts-task-header {
+      display: flex;
+      gap: var(--dg-space-2);
+      align-items: center;
+    }
+
+    .ts-drag-handle {
+      cursor: grab;
+      color: var(--dg-color-muted);
+      font-size: var(--dg-text-lg);
+    }
+
+    .ts-task-header input {
+      flex: 1;
+    }
+
+    .ts-task-time {
+      display: flex;
+      gap: var(--dg-space-2);
+      align-items: center;
+    }
+
+    .ts-task-duration-row {
+      display: flex;
+      gap: var(--dg-space-2);
+      align-items: center;
+    }
+
+    .ts-task-duration-row .ts-slider {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ts-color-btn {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .ts-color-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .ts-color-btn.active {
+      border-color: var(--dg-color-primary);
+      border-width: 3px;
+    }
+
+    .ts-task-colors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--dg-space-2);
+      align-items: center;
+    }
+
+    .ts-total-end {
+      font-size: var(--dg-text-sm);
+      color: var(--dg-color-muted);
+      white-space: nowrap;
+    }
+
+    .ts-total-warning {
+      font-size: var(--dg-text-sm);
+      color: var(--dg-color-danger);
+      white-space: nowrap;
+    }
+
+    .ts-mode-selector {
+      display: grid;
+      gap: var(--dg-space-3);
+    }
+
+    .ts-radio-group {
+      display: grid;
+      gap: var(--dg-space-2);
+    }
+
+    .ts-radio-label {
+      display: flex;
+      align-items: center;
+      gap: var(--dg-space-2);
+      padding: var(--dg-space-3);
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .ts-radio-label:hover {
+      background: var(--dg-color-surface-2);
+    }
+
+    .ts-toggle-list {
+      display: grid;
+      gap: var(--dg-space-2);
+    }
+
+    .ts-toggle-item {
+      display: flex;
+      align-items: center;
+      gap: var(--dg-space-2);
+      padding: var(--dg-space-3);
+      background: var(--dg-color-surface);
+      border: 1px solid var(--dg-color-border);
+      border-radius: var(--dg-radius-sm);
+    }
+
+    .ts-preset-actions {
+      display: flex;
+      gap: var(--dg-space-3);
+      flex-wrap: wrap;
+    }
+
+    .ts-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .ts-overlay.ts-show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 640px) {
+      .ts-time-info {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .ts-time-box {
+        min-width: auto;
+      }
+
+      .ts-chart-container {
+        width: min(480px, calc(100vw - 16px));
+        height: min(480px, calc(100vw - 16px));
+        padding: 40px;
+      }
+
+      .ts-bottom-sheet__body {
+        padding: var(--dg-space-4);
+      }
+
+      .ts-bottom-sheet {
+        width: 100vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="dg-header">
+    <div class="dg-container">
+      <div class="dg-header__inner">
+        <a href="/" class="dg-brand">
+          <span class="dg-brand__title">Time Scheduler</span>
+          <span class="dg-brand__badge">v1.0</span>
+        </a>
+        <nav class="dg-nav">
+          <a href="/">ホーム</a>
+          <a href="/apps/">アプリ一覧</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="dg-main">
+    <div class="dg-container">
+      <div class="ts-main">
+        <!-- 現在の状態表示 -->
+        <div class="ts-display">
+          <div class="ts-current-task" id="currentTask">準備完了</div>
+          <div class="ts-time-info">
+            <div class="ts-time-box" id="taskTimeBox">
+              <div class="ts-time-label">タスク時間</div>
+              <div class="ts-time-value" id="taskDuration">--:--</div>
+            </div>
+            <div class="ts-time-box" id="remainingTimeBox">
+              <div class="ts-time-label">残り時間</div>
+              <div class="ts-time-value" id="remainingTime">--:--</div>
+            </div>
+            <div class="ts-time-box" id="currentTimeBox">
+              <div class="ts-time-label">現在時刻</div>
+              <div class="ts-time-value" id="currentTime">--:--:--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 円グラフ -->
+        <div class="ts-chart-container" id="chartContainer">
+          <svg class="ts-chart" id="chart" viewBox="0 0 200 200">
+            <!-- 円グラフはJavaScriptで描画 -->
+          </svg>
+        </div>
+
+        <!-- コントロールボタン -->
+        <div class="ts-controls">
+          <button class="dg-btn dg-btn--subtle ts-btn-large" id="settingsBtn">⚙️ 設定</button>
+          <button class="dg-btn ts-btn-large" id="startBtn">▶️ スタート</button>
+          <button class="dg-btn dg-btn--subtle ts-btn-large" id="pauseBtn" style="display: none;">⏸️ 一時停止</button>
+          <button class="dg-btn dg-btn--danger ts-btn-large" id="resetBtn">🔄 リセット</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- オーバーレイ -->
+  <div class="ts-overlay" id="overlay"></div>
+
+  <!-- 設定ボトムシート -->
+  <div class="ts-bottom-sheet" id="bottomSheet">
+    <div class="ts-bottom-sheet__header">
+      <h2 class="ts-bottom-sheet__title">設定</h2>
+      <button class="dg-btn dg-btn--subtle" id="closeSheetBtn">✕ 閉じる</button>
+    </div>
+    <div class="ts-bottom-sheet__body">
+      
+      <!-- 合計時間設定 -->
+      <div class="ts-section">
+        <h3 class="ts-section-title">合計時間</h3>
+        <div class="ts-slider-group">
+          <div class="ts-slider-row">
+            <input type="range" class="ts-slider" id="totalTimeSlider" min="1" max="480" value="60">
+            <input type="number" class="dg-input ts-slider-input" id="totalTimeInput" min="1" max="480" value="60">
+            <span>分</span>
+            <span class="ts-total-end" id="totalEndTime">終了 --:--</span>
+            <span class="ts-total-warning" id="totalWarning" style="display: none;">タスク合計が超えています</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- タスク設定 -->
+      <div class="ts-section">
+        <h3 class="ts-section-title">タスク設定</h3>
+        <div class="ts-task-list" id="taskList">
+          <!-- タスクアイテムはJavaScriptで生成 -->
+        </div>
+        <button class="dg-btn dg-btn--subtle" id="addTaskBtn" style="width: 100%; margin-top: var(--dg-space-3);">
+          ➕ タスクを追加
+        </button>
+      </div>
+
+      <!-- スタートモード -->
+      <div class="ts-section">
+        <h3 class="ts-section-title">スタートモード</h3>
+        <div class="ts-mode-selector">
+          <div class="ts-radio-group">
+            <label class="ts-radio-label">
+              <input type="radio" name="startMode" value="now" checked>
+              <span>今から開始</span>
+            </label>
+            <label class="ts-radio-label">
+              <input type="radio" name="startMode" value="scheduled">
+              <span>指定時刻から開始</span>
+            </label>
+          </div>
+          <div id="scheduledTimeContainer" style="display: none;">
+            <label class="dg-field">
+              <span class="dg-label">開始時刻</span>
+              <input type="time" class="dg-input" id="scheduledTime">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 表示設定 -->
+      <div class="ts-section">
+        <h3 class="ts-section-title">表示</h3>
+        <div class="ts-toggle-list">
+          <label class="ts-toggle-item">
+            <input type="checkbox" id="toggleTaskTime" checked>
+            <span>タスク時間の表示</span>
+          </label>
+          <label class="ts-toggle-item">
+            <input type="checkbox" id="toggleRemainingTime" checked>
+            <span>残り時間の表示</span>
+          </label>
+          <label class="ts-toggle-item">
+            <input type="checkbox" id="toggleCurrentTime" checked>
+            <span>現在時刻の表示</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- プリセット保存/読み込み -->
+      <div class="ts-section">
+        <h3 class="ts-section-title">プリセット管理</h3>
+        <div class="ts-preset-actions">
+          <button class="dg-btn dg-btn--subtle" id="savePresetBtn">💾 現在の設定を保存</button>
+          <button class="dg-btn dg-btn--subtle" id="loadPresetBtn">📂 保存した設定を読み込み</button>
+          <button class="dg-btn dg-btn--danger" id="clearPresetBtn">🗑️ 保存データを削除</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
