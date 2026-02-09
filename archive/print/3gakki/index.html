@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shooting Step8 プログラム内容（印刷用）</title>
+  <link rel="stylesheet" href="../../../docs/assets/css/digital.css" />
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    body {
+      margin: var(--space-24) auto;
+      padding: 0 var(--space-16) var(--space-24);
+      max-width: 960px;
+      font-family: var(--font-family-sans, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif);
+      background: var(--color-surface-2, #f5f6f8);
+      color: var(--color-text, #111);
+    }
+
+    header {
+      margin-bottom: var(--space-24);
+      padding: var(--space-16);
+      background: var(--color-surface-1, #fff);
+      border: 1px solid var(--color-border, #ddd);
+      border-radius: var(--radius-8, 8px);
+      box-shadow: var(--elevation-1, 0 1px 2px rgba(0, 0, 0, 0.08));
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 var(--space-8);
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--color-text-muted, #444);
+    }
+
+    section {
+      margin: var(--space-24) 0;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 0 0 var(--space-8);
+      border-bottom: 1px solid var(--color-border, #ccc);
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: var(--space-12) 0 var(--space-6);
+    }
+
+    pre {
+      background: var(--color-surface-1, #f7f7f7);
+      border: 1px solid var(--color-border, #ddd);
+      border-radius: var(--radius-8, 8px);
+      padding: var(--space-12);
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    code {
+      font-family: var(--font-family-mono, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace);
+    }
+
+    ul {
+      margin: 6px 0 0 18px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--color-text, #333);
+    }
+
+    @media print {
+      body {
+        margin: 12mm;
+        padding: 0;
+        max-width: none;
+        background: #fff;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      pre {
+        background: #fff;
+        border-color: #aaa;
+      }
+
+      header {
+        box-shadow: none;
+      }
+
+      section {
+        page-break-inside: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>情報プログレス</h1>
+  </header>
+
+
+
+  <section>
+    <h2>main.js</h2>
+    <pre><code>const canvas = document.getElementById(&quot;gameCanvas&quot;);
+const ctx = canvas.getContext(&quot;2d&quot;);
+
+const player = {
+  width: 30,
+  height: 30,
+  x: canvas.width / 2 - 30 / 2,
+  y: canvas.height - 60,
+  speed: 5,
+};
+
+const input = {
+  left: false,
+  right: false,
+};
+
+const bullets = [];
+const BULLET_SIZE = 10;
+const BULLET_SPEED = -8;
+let shootCooldown = 0;
+
+const enemies = [];
+const ENEMY_SIZE = 50;
+const ENEMY_SPEED = 4;
+
+const mapImage = new Image();
+mapImage.src = &quot;../image/map.png&quot;;
+
+const playerImage = new Image();
+playerImage.src = &quot;../image/player.png&quot;;
+
+const enemyImage = new Image();
+enemyImage.src = &quot;../image/enemy_straight.png&quot;;
+
+function spawnBullet() {
+  bullets.push({
+    size: BULLET_SIZE,
+    x: player.x + player.width / 2 - BULLET_SIZE / 2,
+    y: player.y,
+    vy: BULLET_SPEED,
+  });
+}
+
+function spawnEnemy() {
+  if (enemies.length &gt;= 5) return;
+
+  if (Math.random() &lt; 0.03) {
+    enemies.push({
+      x: Math.random() * (canvas.width - ENEMY_SIZE),
+      y: -ENEMY_SIZE,
+      width: ENEMY_SIZE,
+      height: ENEMY_SIZE,
+      vy: ENEMY_SPEED,
+    });
+  }
+}
+
+function updatePlayer() {
+  if (input.left) player.x -= player.speed;
+  if (input.right) player.x += player.speed;
+
+  if (player.x &lt; 0) player.x = 0;
+  if (player.x &gt; canvas.width - player.width) {
+    player.x = canvas.width - player.width;
+  }
+}
+
+function updateBullets() {
+  for (let i = bullets.length - 1; i &gt;= 0; i--) {
+    const b = bullets[i];
+    b.y += b.vy;
+    if (b.y + b.size &lt; 0) {
+      bullets.splice(i, 1);
+    }
+  }
+}
+
+function updateEnemies() {
+  for (let i = enemies.length - 1; i &gt;= 0; i--) {
+    const e = enemies[i];
+    e.y += e.vy;
+
+    if (e.y &gt; canvas.height) {
+      enemies.splice(i, 1);
+    }
+  }
+}
+
+function draw() {
+  if (mapImage.complete) {
+    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+  } else {
+    ctx.fillStyle = &quot;black&quot;;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  if (playerImage.complete) {
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+  } else {
+    ctx.fillStyle = &quot;yellow&quot;;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+  }
+
+  ctx.fillStyle = &quot;white&quot;;
+  for (let i = 0; i &lt; bullets.length; i++) {
+    const b = bullets[i];
+    const r = b.size / 2;
+    const cx = b.x + r;
+    const cy = b.y + r;
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  for (let i = 0; i &lt; enemies.length; i++) {
+    const e = enemies[i];
+    if (enemyImage.complete) {
+      ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
+    } else {
+      ctx.fillStyle = &quot;crimson&quot;;
+      ctx.fillRect(e.x, e.y, e.width, e.height);
+    }
+  }
+}
+
+function update() {
+  if (shootCooldown &gt; 0) shootCooldown--;
+
+  updatePlayer();
+  spawnEnemy();
+  updateBullets();
+  updateEnemies();
+}
+
+window.addEventListener(&quot;keydown&quot;, (e) =&gt; {
+  if (e.key === &quot;ArrowLeft&quot;) input.left = true;
+  if (e.key === &quot;ArrowRight&quot;) input.right = true;
+
+  if (e.code === &quot;Space&quot;) {
+    if (shootCooldown === 0) {
+      spawnBullet();
+      shootCooldown = 8;
+    }
+  }
+});
+
+window.addEventListener(&quot;keyup&quot;, (e) =&gt; {
+  if (e.key === &quot;ArrowLeft&quot;) input.left = false;
+  if (e.key === &quot;ArrowRight&quot;) input.right = false;
+});
+
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+</code></pre>
+  </section>
+
+  <section>
+    <h2>チェック問題</h2>
+    <h3>問題</h3>
+    <ol>
+      <li>弾の大きさを決めている定数はどれですか？</li>
+      <br><br>
+      <li>弾が発射される間隔を制御している変数はどれですか？</li>
+      <br><br>
+      <li>敵が画面下に到達したときに実行される処理として正しいものはどれですか？</li>
+      <br><br>
+      <li>プレイヤーが画面外に出ないようにしている関数はどれですか？</li>
+
+      <br><br>
+      <li>敵が最大何体まで同時に存在できますか？</li>
+      <br><br>
+      <li>スペースキーを押したときに弾が出るまでの流れを、関数名と変数を使って説明してください。</li>
+      <br><br>
+      <li>弾が画面外に出たときに配列から削除される仕組みを説明してください。</li>
+      <br><br>
+      <li>敵がランダムに出現する条件を、具体的な数値を含めて説明してください。</li>
+      <br><br>
+      <li>プレイヤーの移動が左端・右端で止まる理由を、座標の更新処理に触れて説明してください。</li>
+      <br><br>
+      <li>背景画像やキャラクター画像が読み込めていないときに、画面はどのように描画されますか？</li>
+      <br><br>
+      <li>1秒間に発射される弾の数を答えなさい。ただし、ブラウザのフレームレートを60fpsとする。</li>
+      <br><br>
+      <li>1秒間に自機が左右に移動することのできる最大値を答えなさい。ただし、ブラウザのフレームレートを60fpsとする。</li>
+      <br><br>
+      <li>敵が画面下に到達したときにどうなるか。説明しなさい。</li>
+      <br><br>
+      <li>`player` オブジェクトはどのように作成されていますか？</li>
+      <br><br>
+      <li>弾のオブジェクトはどこで作成され、どの配列に追加されますか？</li>
+      <br><br>
+      <li>敵オブジェクトが持つ主なプロパティを4つ以上挙げなさい。</li>
+      <br><br>
+      <li>プレイヤーの位置を更新する際に参照している `player` のプロパティは何ですか？</li>
+      <br><br>
+    </ol>
+
+    <h3>答え</h3>
+    <ol>
+      <li>
+        <div class="note">`BULLET_SIZE`。</div>
+      </li>
+      <li>
+        <div class="note">`shootCooldown`。</div>
+      </li>
+      <li>
+        <div class="note">`updateEnemies()` 内で `e.y &gt; canvas.height` の敵が `enemies.splice(i, 1)` で削除される。</div>
+      </li>
+      <li>
+        <div class="note">`updatePlayer()`。</div>
+      </li>
+      <li>
+        <div class="note">5体（`spawnEnemy()` の `enemies.length &gt;= 5` で制限）。</div>
+      </li>
+      <li>
+        <div class="note">`keydown` で `e.code === "Space"` のとき、`shootCooldown === 0` なら `spawnBullet()`
+          を呼び、`shootCooldown = 8` に設定する。</div>
+      </li>
+      <li>
+        <div class="note">`updateBullets()` で `b.y + b.size &lt; 0` になった弾を `bullets.splice(i, 1)` で削除する。</div>
+      </li>
+      <li>
+        <div class="note">`enemies.length &lt; 5` のとき、`Math.random() &lt; 0.03` で確率3%のフレームに出現する。</div>
+      </li>
+      <li>
+        <div class="note">`updatePlayer()` で `player.x &lt; 0` は0に、`player.x &gt; canvas.width - player.width` は右端に戻すため。
+        </div>
+      </li>
+      <li>
+        <div class="note">背景は黒の矩形、プレイヤーは黄色の矩形、敵は赤色の矩形で描画される。</div>
+      </li>
+      <li>
+        <div class="note">8フレームごとに1発なので、$60/8=7.5$ 発/秒。</div>
+      </li>
+      <li>
+        <div class="note">`player.speed = 5` なので $5\times60=300$ px/秒。</div>
+      </li>
+      <li>
+        <div class="note">`updateEnemies()` 内で `e.y &gt; canvas.height` になった敵は `enemies.splice(i, 1)` で削除される。</div>
+      </li>
+      <li>
+        <div class="note">オブジェクトリテラルで `const player = { ... }` として作成している。</div>
+      </li>
+      <li>
+        <div class="note">`spawnBullet()` 内で弾オブジェクトを作成し、`bullets` 配列に `push` している。</div>
+      </li>
+      <li>
+        <div class="note">例: `x`, `y`, `width`, `height`, `vy`（5つ全てが設定されている）。</div>
+      </li>
+      <li>
+        <div class="note">`player.x`, `player.speed`, `player.width`。</div>
+      </li>
+    </ol>
+  </section>
+</body>
+
+</html>
