@@ -1955,71 +1955,58 @@ function setupPersistence({ step, getValues, setValues, onAnyChange }) {
       const m = String(step).match(/^step(\d+)$/);
       const n = m ? Number(m[1]) : 1;
       const prevStep = Number.isFinite(n) && n >= 2 ? `step${n - 1}` : null;
-      const isModuleStep = Number.isFinite(n) && n >= 9;
-      const prevIsModuleStep = Number.isFinite(n) && n - 1 >= 9;
-      const allowPrevStep = !isModuleStep || prevIsModuleStep;
-
       removeSavedStep(step);
 
-      // HTML/CSS は「このStepの完成形（サンプル）」を入れる
-      let baseHtml = "";
-      let baseCss = "";
-      let baseJs = "";
-      try {
-        const cur = await loadStepSources(step);
-        baseHtml = stripLiveServerInjection(String(cur.html ?? ""));
-        baseCss = String(cur.css ?? "");
-        baseJs = String(cur.js ?? "");
-      } catch {
-        // 読めない場合は空で続行
-        baseHtml = "";
-        baseCss = "";
-        baseJs = "";
-      }
-
       if (!prevStep) {
-        // step1 など前stepが無い場合は、このStepのサンプルJSを入れる
-        setValues({ html: baseHtml, css: baseCss, js: baseJs });
-        const updatedAt = saveStep(step, getValues());
-        updateSaveInfo(updatedAt);
-        setStatus("このStepの入力をリセットしました（HTML/CSSは完成形、JSはサンプルに戻しました）。");
-        return;
-      }
-
-      if (allowPrevStep) {
-        const prev = loadSavedStep(prevStep);
-        if (prev && (prev.html || prev.css || prev.js)) {
-          // JS だけ前stepから復元し、HTML/CSS はこのStepの完成形
-          setValues({ html: baseHtml, css: baseCss, js: prev.js });
-          const updatedAt = saveStep(step, getValues());
-          updateSaveInfo(updatedAt);
-          setStatus(`リセットしました（HTML/CSSはこのStep完成形、JSは${prevStep}の入力）。`);
-          return;
+        // step1 など前stepが無い場合は、このStepのサンプルを入れる
+        try {
+          const cur = await loadStepSources(step);
+          const baseHtml = stripLiveServerInjection(String(cur.html ?? ""));
+          const baseCss = String(cur.css ?? "");
+          const baseJs = String(cur.js ?? "");
+          setValues({ html: baseHtml, css: baseCss, js: baseJs });
+        } catch {
+          setValues({ html: "", css: "", js: "" });
         }
-      }
-
-      // 前stepに保存が無い場合は、前stepのサンプルを復元する
-      if (!allowPrevStep) {
-        setValues({ html: baseHtml, css: baseCss, js: baseJs });
         const updatedAt = saveStep(step, getValues());
         updateSaveInfo(updatedAt);
-        setStatus("このStepの入力をリセットしました（HTML/CSSは完成形、JSはサンプルに戻しました）。");
+        setStatus("このStepの入力をリセットしました（このStepのサンプルを反映）。");
         return;
       }
+
+      // 前stepの保存があれば、ポップアップで選択させる
+      const prev = loadSavedStep(prevStep);
+      const hasPrevInput = !!(prev && (prev.html || prev.css || prev.js));
+      const usePrevInput = hasPrevInput
+        ? window.confirm(`${prevStep} の入力内容を使いますか？\nOK: 入力内容 / キャンセル: サンプル`)
+        : false;
+
+      if (usePrevInput && hasPrevInput) {
+        setValues({
+          html: String(prev.html ?? ""),
+          css: String(prev.css ?? ""),
+          js: String(prev.js ?? ""),
+        });
+        const updatedAt = saveStep(step, getValues());
+        updateSaveInfo(updatedAt);
+        setStatus(`リセットしました（${prevStep} の入力内容を反映）。`);
+        return;
+      }
+
+      // 前stepのサンプルを反映
       try {
-        setStatus(`${prevStep} の内容を読み込んでいます...`);
+        setStatus(`${prevStep} のサンプルを読み込んでいます...`);
         const { html, css, js } = await loadStepSources(prevStep);
         const cleanedHtml = stripLiveServerInjection(String(html ?? ""));
-        // JS だけ前stepのサンプル、HTML/CSS はこのStepの完成形
-        setValues({ html: baseHtml, css: baseCss, js: String(js ?? "") });
+        setValues({ html: cleanedHtml, css: String(css ?? ""), js: String(js ?? "") });
         const updatedAt = saveStep(step, getValues());
         updateSaveInfo(updatedAt);
-        setStatus(`リセットしました（HTML/CSSはこのStep完成形、JSは${prevStep}のサンプル）。`);
+        setStatus(`リセットしました（${prevStep} のサンプルを反映）。`);
       } catch (e) {
-        setValues({ html: baseHtml, css: baseCss, js: "" });
+        setValues({ html: "", css: "", js: "" });
         const updatedAt = saveStep(step, getValues());
         updateSaveInfo(updatedAt);
-        setStatus("このStepの入力をリセットしました（HTML/CSSは完成形に戻しました）。\n" + String(e));
+        setStatus("このStepの入力をリセットしました（前stepの読み込みに失敗）。\n" + String(e));
       }
     });
   }
@@ -2137,6 +2124,19 @@ async function loadStepSources(step) {
 function setupRunner({ step, htmlText, cssText, jsText, fallbackHtml = "", fallbackCss = "" }) {
   const run = () => {
     const outFrame = document.getElementById("outFrame");
+    if (outFrame && !outFrame.dataset.focusBound) {
+      outFrame.dataset.focusBound = "true";
+      const focusFrame = () => {
+        try {
+          outFrame.focus();
+          outFrame.contentWindow?.focus();
+        } catch {
+          // ignore
+        }
+      };
+      outFrame.addEventListener("pointerdown", focusFrame);
+      outFrame.addEventListener("load", focusFrame);
+    }
     // 右側は初期状態が空なので、HTML/CSSが空のときは step の素材を土台として使う。
     // （JSだけ書いても実行できるようにする）
     const userHtml = htmlText.value;
