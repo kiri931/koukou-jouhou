@@ -62,7 +62,7 @@
       border-radius: var(--radius-8, 8px);
       padding: var(--space-12);
       overflow: auto;
-      font-size: 12px;
+      font-size: 19px;
       line-height: 1.5;
       white-space: pre-wrap;
       word-break: break-word;
@@ -114,11 +114,8 @@
   <header>
     <h1>情報プログレス</h1>
   </header>
-
-
-
   <section>
-    <h2>main.js</h2>
+
     <pre><code>const canvas = document.getElementById(&quot;gameCanvas&quot;);
 const ctx = canvas.getContext(&quot;2d&quot;);
 
@@ -280,48 +277,44 @@ function gameLoop() {
 gameLoop();
 </code></pre>
   </section>
-
+  <div style="page-break-after: always;"></div>
   <section>
     <h2>チェック問題</h2>
-    <h3>問題</h3>
     <ol>
       <li>弾の大きさを決めている定数はどれですか？</li>
-      <br><br>
+      <br>
       <li>弾が発射される間隔を制御している変数はどれですか？</li>
-      <br><br>
+      <br>
       <li>敵が画面下に到達したときに実行される処理として正しいものはどれですか？</li>
-      <br><br>
+      <br>
       <li>プレイヤーが画面外に出ないようにしている関数はどれですか？</li>
-
-      <br><br>
+      <br>
       <li>敵が最大何体まで同時に存在できますか？</li>
-      <br><br>
+      <br>
       <li>スペースキーを押したときに弾が出るまでの流れを、関数名と変数を使って説明してください。</li>
-      <br><br>
+      <br>
       <li>弾が画面外に出たときに配列から削除される仕組みを説明してください。</li>
-      <br><br>
+      <br>
       <li>敵がランダムに出現する条件を、具体的な数値を含めて説明してください。</li>
-      <br><br>
+      <br>
       <li>プレイヤーの移動が左端・右端で止まる理由を、座標の更新処理に触れて説明してください。</li>
-      <br><br>
+      <br>
       <li>背景画像やキャラクター画像が読み込めていないときに、画面はどのように描画されますか？</li>
-      <br><br>
+      <br>
       <li>1秒間に発射される弾の数を答えなさい。ただし、ブラウザのフレームレートを60fpsとする。</li>
-      <br><br>
+      <br>
       <li>1秒間に自機が左右に移動することのできる最大値を答えなさい。ただし、ブラウザのフレームレートを60fpsとする。</li>
-      <br><br>
+      <br>
       <li>敵が画面下に到達したときにどうなるか。説明しなさい。</li>
-      <br><br>
-      <li>`player` オブジェクトはどのように作成されていますか？</li>
-      <br><br>
+      <br>
       <li>弾のオブジェクトはどこで作成され、どの配列に追加されますか？</li>
-      <br><br>
+      <br>
       <li>敵オブジェクトが持つ主なプロパティを4つ以上挙げなさい。</li>
-      <br><br>
+      <br>
       <li>プレイヤーの位置を更新する際に参照している `player` のプロパティは何ですか？</li>
-      <br><br>
+      <br>
     </ol>
-
+<div style="page-break-after: always;"></div>
     <h3>答え</h3>
     <ol>
       <li>
@@ -364,9 +357,6 @@ gameLoop();
       </li>
       <li>
         <div class="note">`updateEnemies()` 内で `e.y &gt; canvas.height` になった敵は `enemies.splice(i, 1)` で削除される。</div>
-      </li>
-      <li>
-        <div class="note">オブジェクトリテラルで `const player = { ... }` として作成している。</div>
       </li>
       <li>
         <div class="note">`spawnBullet()` 内で弾オブジェクトを作成し、`bullets` 配列に `push` している。</div>
