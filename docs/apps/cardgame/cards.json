@@ -1,0 +1,488 @@
+{
+  "version": 2,
+  "meta": {
+    "name": "Static TCG Card Pool (MVP) - With Flavor & Detailed Rules",
+    "notes": "2-player local, mana for magic/equipment/stadium, power for attack/counter/special. Stadium: replace. Equipment falls with character."
+  },
+  "balanceDefaults": {
+    "attackCostPower": 1,
+    "counterCostPower": 1,
+    "manaPerTurn": 1,
+    "manaMax": 10,
+    "powerPerTurn": 1
+  },
+  "glossary": {
+    "power": "パワー。毎ターン開始時に+1され、持ち越される。攻撃/反撃/必殺技に支払う。",
+    "mana": "マナ。毎ターン開始時に+1され、上限10で持ち越される（上限はbalanceDefaults参照）。マジック/装備/スタジアムに支払う。",
+    "shield": "シールド。ダメージを受ける時、HPより先にシールドを減らす。シールドが残る限りHPは減らない。",
+    "stun": "スタン。次の自分のアタックフェーズで攻撃宣言できない。",
+    "equipment": "装備。キャラクターに付けて継続効果を与える。装備先が倒れたら装備も墓地へ。",
+    "stadium": "スタジアム。場に各1枚のみ。新しいスタジアムが出たら古いものは墓地へ。効果は場にある限り適用。"
+  },
+  "cards": [
+    /* =========================
+       Characters (100-199)
+       ========================= */
+    {
+      "id": 101,
+      "type": "character",
+      "name": "ブレードナイト",
+      "hp": 8,
+      "atk": 3,
+      "special": {
+        "name": "斬鉄",
+        "costPower": 3,
+        "effect": { "kind": "damageMultiplier", "value": 2 }
+      },
+      "rulesText": [
+        "【必殺技：斬鉄】(パワー3) このキャラクターの今回の攻撃ダメージを2倍にする。",
+        "※反撃で必殺技を使う場合も同様に、反撃ダメージを2倍にしてよい。"
+      ],
+      "flavor": "刃の軌跡は、決闘場の空気すら裂く。",
+      "tags": ["warrior"]
+    },
+    {
+      "id": 102,
+      "type": "character",
+      "name": "シールドガード",
+      "hp": 10,
+      "atk": 2,
+      "special": {
+        "name": "鉄壁",
+        "costPower": 2,
+        "effect": { "kind": "gainShield", "value": 3 }
+      },
+      "rulesText": [
+        "【必殺技：鉄壁】(パワー2) 自分にシールド+3を得る。",
+        "シールドはダメージを受けるたびに先に減る（HPは減らない）。"
+      ],
+      "flavor": "守ることは、折れない意志を積むことだ。",
+      "tags": ["tank"]
+    },
+    {
+      "id": 103,
+      "type": "character",
+      "name": "アーチャー",
+      "hp": 6,
+      "atk": 4,
+      "special": {
+        "name": "急所狙い",
+        "costPower": 3,
+        "effect": { "kind": "pierce", "value": 2 }
+      },
+      "rulesText": [
+        "【必殺技：急所狙い】(パワー3) 今回の攻撃ダメージに+2する。",
+        "この+2は『追加ダメージ』として扱う（通常ATKに上乗せ）。"
+      ],
+      "flavor": "狙うのは敵ではない。勝利への一点だ。",
+      "tags": ["ranged"]
+    },
+    {
+      "id": 104,
+      "type": "character",
+      "name": "ファイアメイジ",
+      "hp": 5,
+      "atk": 3,
+      "special": {
+        "name": "灼熱弾",
+        "costPower": 2,
+        "effect": { "kind": "bonusDamage", "value": 3 }
+      },
+      "rulesText": [
+        "【必殺技：灼熱弾】(パワー2) 今回の攻撃ダメージに+3する。",
+        "反撃で使ってもよい（反撃ダメージに+3）。"
+      ],
+      "flavor": "炎は意思を持つ。放てば、答えは焦げ跡になる。",
+      "tags": ["mage"]
+    },
+    {
+      "id": 105,
+      "type": "character",
+      "name": "ヒーラー",
+      "hp": 7,
+      "atk": 2,
+      "special": {
+        "name": "癒しの波動",
+        "costPower": 2,
+        "effect": { "kind": "healAlly", "value": 4 }
+      },
+      "rulesText": [
+        "【必殺技：癒しの波動】(パワー2) 自分の場のキャラクター1体をHP+4回復する（自分自身でもよい）。",
+        "回復は最大HPを超えない（最大HPはカードのhp）。"
+      ],
+      "flavor": "治療は祈りではない。手順であり、覚悟だ。",
+      "tags": ["support"]
+    },
+    {
+      "id": 106,
+      "type": "character",
+      "name": "アサシン",
+      "hp": 5,
+      "atk": 5,
+      "special": {
+        "name": "影斬り",
+        "costPower": 4,
+        "effect": { "kind": "assassinateIfWounded", "thresholdHp": 4 }
+      },
+      "rulesText": [
+        "【必殺技：影斬り】(パワー4) 対象の相手キャラクターの現在HPが4以下なら、そのキャラクターを破壊する（墓地へ）。",
+        "対象の現在HPが5以上なら、必殺は失敗し、通常攻撃として処理する（ダメージはATKぶん）。"
+      ],
+      "flavor": "影は背中に落ちる。気づいた時には、もう遅い。",
+      "tags": ["rogue"]
+    },
+    {
+      "id": 107,
+      "type": "character",
+      "name": "ゴーレム",
+      "hp": 12,
+      "atk": 2,
+      "special": {
+        "name": "地鳴り",
+        "costPower": 3,
+        "effect": { "kind": "aoeToAllEnemies", "value": 2 }
+      },
+      "rulesText": [
+        "【必殺技：地鳴り】(パワー3) 相手の場のキャラクター全てに2ダメージを与える。",
+        "この必殺は『攻撃』の代わりに使ってよい（対象指定なし）。"
+      ],
+      "flavor": "一歩で大地を叩き、勝負の流れを揺らす。",
+      "tags": ["construct"]
+    },
+    {
+      "id": 108,
+      "type": "character",
+      "name": "サンダードラゴン",
+      "hp": 9,
+      "atk": 4,
+      "special": {
+        "name": "雷撃",
+        "costPower": 4,
+        "effect": { "kind": "damageAndStun", "damage": 4, "stunTurns": 1 }
+      },
+      "rulesText": [
+        "【必殺技：雷撃】(パワー4) 相手キャラクター1体に4ダメージを与え、さらにスタン(1ターン)を与える。",
+        "スタンしたキャラは次の自分のアタックフェーズで攻撃できない。"
+      ],
+      "flavor": "轟音は合図。翼が影を落とした瞬間、稲妻が答えになる。",
+      "tags": ["dragon"]
+    },
+    {
+      "id": 109,
+      "type": "character",
+      "name": "ネクロマンサー",
+      "hp": 6,
+      "atk": 3,
+      "special": {
+        "name": "死者再生",
+        "costPower": 3,
+        "effect": { "kind": "reviveFromGrave", "target": "allyCharacter", "hp": 3 }
+      },
+      "rulesText": [
+        "【必殺技：死者再生】(パワー3) 自分の墓地のキャラクター1体を選び、HP3で自分の場に戻す。",
+        "場が3体で埋まっている場合は発動できない。"
+      ],
+      "flavor": "終わりは扉ではない。次の手を呼ぶ合図だ。",
+      "tags": ["dark"]
+    },
+    {
+      "id": 110,
+      "type": "character",
+      "name": "ビーストライダー",
+      "hp": 7,
+      "atk": 4,
+      "special": {
+        "name": "突撃",
+        "costPower": 2,
+        "effect": { "kind": "selfBuffAtkThisTurn", "value": 2 }
+      },
+      "rulesText": [
+        "【必殺技：突撃】(パワー2) このターン、このキャラクターのATKを+2する（このターンの攻撃/反撃に適用）。"
+      ],
+      "flavor": "踏み込みの一瞬で、獣も騎手も同じ呼吸になる。",
+      "tags": ["beast"]
+    },
+    {
+      "id": 111,
+      "type": "character",
+      "name": "ミラージュ",
+      "hp": 6,
+      "atk": 3,
+      "special": {
+        "name": "幻影回避",
+        "costPower": 2,
+        "effect": { "kind": "evadeNextHit" }
+      },
+      "rulesText": [
+        "【必殺技：幻影回避】(パワー2) 次にこのキャラクターが受けるダメージを0にする（1回だけ）。",
+        "0化した後、この効果は消える。"
+      ],
+      "flavor": "見えているものほど、当たらない。",
+      "tags": ["trick"]
+    },
+    {
+      "id": 112,
+      "type": "character",
+      "name": "バトルモンク",
+      "hp": 8,
+      "atk": 3,
+      "special": {
+        "name": "気功掌",
+        "costPower": 3,
+        "effect": { "kind": "bonusDamage", "value": 4 }
+      },
+      "rulesText": [
+        "【必殺技：気功掌】(パワー3) 今回の攻撃（または反撃）ダメージに+4する。"
+      ],
+      "flavor": "静けさの中で育った一撃は、音より速い。",
+      "tags": ["martial"]
+    },
+
+    /* =========================
+       Magic (200-299)
+       ========================= */
+    {
+      "id": 201,
+      "type": "magic",
+      "name": "火球",
+      "costMana": 2,
+      "effect": { "kind": "dealDamage", "value": 4, "target": "enemyCharacter" },
+      "rulesText": [
+        "【単発】(マナ2) 相手キャラクター1体に4ダメージ。",
+        "ダメージでHPが0以下になった場合、そのキャラは破壊され墓地へ行く（撃破ポイント判定あり）。"
+      ],
+      "flavor": "小さな火種で十分だ。勝負を燃やすには。",
+      "tags": ["damage"]
+    },
+    {
+      "id": 202,
+      "type": "magic",
+      "name": "回復",
+      "costMana": 2,
+      "effect": { "kind": "heal", "value": 4, "target": "allyCharacter" },
+      "rulesText": [
+        "【単発】(マナ2) 自分キャラクター1体をHP+4回復。",
+        "回復は最大HPを超えない。"
+      ],
+      "flavor": "傷は塞げる。でも戦う理由は、塞げない。",
+      "tags": ["heal"]
+    },
+    {
+      "id": 203,
+      "type": "magic",
+      "name": "凍結",
+      "costMana": 3,
+      "effect": { "kind": "stun", "turns": 1, "target": "enemyCharacter" },
+      "rulesText": [
+        "【単発】(マナ3) 相手キャラクター1体をスタン(1ターン)にする。",
+        "スタン中は次の自分のアタックフェーズで攻撃宣言できない。"
+      ],
+      "flavor": "凍るのは氷だけじゃない。迷いも、指も。",
+      "tags": ["control"]
+    },
+    {
+      "id": 204,
+      "type": "magic",
+      "name": "稲妻",
+      "costMana": 1,
+      "effect": { "kind": "dealDamage", "value": 2, "target": "enemyCharacter" },
+      "rulesText": [
+        "【単発】(マナ1) 相手キャラクター1体に2ダメージ。",
+        "低コストで削りたい時に使う。"
+      ],
+      "flavor": "一瞬でいい。視界が白むほどの一瞬で。",
+      "tags": ["damage"]
+    },
+    {
+      "id": 205,
+      "type": "magic",
+      "name": "破壊",
+      "costMana": 4,
+      "effect": { "kind": "destroyIfHpBelowOrEqual", "thresholdHp": 5, "target": "enemyCharacter" },
+      "rulesText": [
+        "【単発】(マナ4) 相手キャラクター1体の現在HPが5以下なら、そのキャラを破壊する（墓地へ）。",
+        "現在HPが6以上なら不発（何も起きない）。"
+      ],
+      "flavor": "強い者ではなく、揺らいだ者から崩れる。",
+      "tags": ["removal"]
+    },
+    {
+      "id": 206,
+      "type": "magic",
+      "name": "強化の号令",
+      "costMana": 2,
+      "effect": { "kind": "buffAllAllies", "atk": 1, "hp": 0, "durationTurns": 1 },
+      "rulesText": [
+        "【単発】(マナ2) 自分の場のキャラクター全てのATKをこのターン中+1する。",
+        "この効果はターン終了時に消える（次のターンには残らない）。"
+      ],
+      "flavor": "声は刃より軽い。でも、士気は刃より重い。",
+      "tags": ["buff"]
+    },
+    {
+      "id": 207,
+      "type": "magic",
+      "name": "弱体化",
+      "costMana": 2,
+      "effect": { "kind": "debuff", "atk": -2, "hp": 0, "durationTurns": 1, "target": "enemyCharacter" },
+      "rulesText": [
+        "【単発】(マナ2) 相手キャラクター1体のATKをこのターン中-2する。",
+        "この効果はターン終了時に消える。"
+      ],
+      "flavor": "剣を鈍らせるのに、時間はいらない。",
+      "tags": ["debuff"]
+    },
+    {
+      "id": 208,
+      "type": "magic",
+      "name": "マナチャージ",
+      "costMana": 0,
+      "effect": { "kind": "gainMana", "value": 2 },
+      "rulesText": [
+        "【単発】(マナ0) 自分のマナを+2する。",
+        "上限（既定10）を超える分は失われる。"
+      ],
+      "flavor": "溜めた力は、次の一手を速くする。",
+      "tags": ["resource"]
+    },
+
+    /* =========================
+       Equipment (300-399)
+       ========================= */
+    {
+      "id": 301,
+      "type": "equipment",
+      "name": "鋼の剣",
+      "costMana": 1,
+      "effect": { "kind": "equipBuff", "atk": 1, "hp": 0 },
+      "rulesText": [
+        "【装備】(マナ1) 自分キャラクター1体に装備する。装備中、そのキャラのATK+1。",
+        "装備先が破壊されたら、この装備も墓地へ行く。"
+      ],
+      "flavor": "切れ味は金で買える。覚悟は買えない。",
+      "tags": ["equipment", "buff"]
+    },
+    {
+      "id": 302,
+      "type": "equipment",
+      "name": "守護の盾",
+      "costMana": 2,
+      "effect": { "kind": "equipBuff", "atk": 0, "hp": 3 },
+      "rulesText": [
+        "【装備】(マナ2) 自分キャラクター1体に装備する。装備中、そのキャラの最大HP+3（現在HPも+3してよい）。",
+        "最大HPが増えた分、回復上限も増える。"
+      ],
+      "flavor": "盾は壁ではない。味方の時間を買う道具だ。",
+      "tags": ["equipment", "tank"]
+    },
+    {
+      "id": 303,
+      "type": "equipment",
+      "name": "炎のルーン",
+      "costMana": 2,
+      "effect": { "kind": "equipOnHitBonus", "bonusDamage": 1 },
+      "rulesText": [
+        "【装備】(マナ2) 自分キャラクター1体に装備する。",
+        "装備中、そのキャラが攻撃または反撃でダメージを与えるたび、追加で+1ダメージを与える。"
+      ],
+      "flavor": "刻まれた火は、刃の先で息をする。",
+      "tags": ["equipment", "damage"]
+    },
+    {
+      "id": 304,
+      "type": "equipment",
+      "name": "迅速のブーツ",
+      "costMana": 2,
+      "effect": { "kind": "equipGrant", "canAttackOnSummon": true },
+      "rulesText": [
+        "【装備】(マナ2) 自分キャラクター1体に装備する。",
+        "装備中、そのキャラは『召喚したターンでも攻撃できる』ようになる。"
+      ],
+      "flavor": "一歩早い者が、二歩先を取る。",
+      "tags": ["equipment", "tempo"]
+    },
+    {
+      "id": 305,
+      "type": "equipment",
+      "name": "呪いの首飾り",
+      "costMana": 1,
+      "effect": { "kind": "equipAura", "enemyAtkDelta": -1, "scope": "allEnemies" },
+      "rulesText": [
+        "【装備】(マナ1) 自分キャラクター1体に装備する。",
+        "装備中、相手の場のキャラクター全てのATKを-1する（最低0）。"
+      ],
+      "flavor": "美しいほど、禍々しい。だから目が離せない。",
+      "tags": ["equipment", "control"]
+    },
+    {
+      "id": 306,
+      "type": "equipment",
+      "name": "秘奥の小手",
+      "costMana": 3,
+      "effect": { "kind": "equipReduceSpecialCost", "value": 1, "minCost": 1 },
+      "rulesText": [
+        "【装備】(マナ3) 自分キャラクター1体に装備する。",
+        "装備中、そのキャラの必殺技に必要なパワーを-1する（最低1）。"
+      ],
+      "flavor": "技の理屈がわかると、力は少しで済む。",
+      "tags": ["equipment", "special"]
+    },
+
+    /* =========================
+       Stadium (400-499)
+       ========================= */
+    {
+      "id": 401,
+      "type": "stadium",
+      "name": "闘技場",
+      "costMana": 2,
+      "effect": { "kind": "onTurnStart", "gainPower": 1, "owner": "self" },
+      "rulesText": [
+        "【スタジアム】(マナ2) 自分のスタジアム枠に置く（既にある場合は貼り替え）。",
+        "自分のターン開始時、追加でパワー+1を得る（通常の+1に加えて合計+2になる）。"
+      ],
+      "flavor": "観衆の視線は、戦士の背中を押す。",
+      "tags": ["stadium", "power"]
+    },
+    {
+      "id": 402,
+      "type": "stadium",
+      "name": "魔力の泉",
+      "costMana": 2,
+      "effect": { "kind": "onTurnStart", "gainMana": 1, "owner": "self" },
+      "rulesText": [
+        "【スタジアム】(マナ2) 自分のスタジアム枠に置く（貼り替え可）。",
+        "自分のターン開始時、追加でマナ+1を得る（通常の+1に加えて合計+2になる）。",
+        "上限（既定10）を超える分は失われる。"
+      ],
+      "flavor": "水面に映る光は、呪文の形をしている。",
+      "tags": ["stadium", "mana"]
+    },
+    {
+      "id": 403,
+      "type": "stadium",
+      "name": "治癒の庭園",
+      "costMana": 3,
+      "effect": { "kind": "onTurnStart", "healAllAllies": 1, "owner": "self" },
+      "rulesText": [
+        "【スタジアム】(マナ3) 自分のスタジアム枠に置く（貼り替え可）。",
+        "自分のターン開始時、自分の場のキャラクター全てをHP+1回復する。"
+      ],
+      "flavor": "花の香りは戦場に似合わない。だからこそ、尊い。",
+      "tags": ["stadium", "heal"]
+    },
+    {
+      "id": 404,
+      "type": "stadium",
+      "name": "嵐の高台",
+      "costMana": 3,
+      "effect": { "kind": "global", "atkDelta": 1, "scope": "allCharacters" },
+      "rulesText": [
+        "【スタジアム】(マナ3) 自分のスタジアム枠に置く（貼り替え可）。",
+        "このスタジアムが場にある限り、場のキャラクター全てのATKを+1する（双方に適用）。"
+      ],
+      "flavor": "高い場所では、迷いも誤魔化せない。",
+      "tags": ["stadium", "global"]
+    }
+  ]
+}
