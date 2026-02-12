@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>PDFマージ | ローカル専用</title>
+		<link rel="stylesheet" href="../../../assets/css/digital.css" />
+		<style>
+			.drop-area {
+				border: 2px dashed var(--dg-color-border);
+				background: var(--dg-color-surface);
+				border-radius: 14px;
+				padding: 28px;
+				text-align: center;
+				transition: border-color 0.2s, background 0.2s;
+			}
+
+			.drop-area.is-active {
+				border-color: var(--dg-color-primary);
+				background: color-mix(in srgb, var(--dg-color-primary) 8%, var(--dg-color-surface));
+			}
+
+			.drop-area.is-global-active {
+				border-color: var(--dg-color-primary);
+				background: color-mix(in srgb, var(--dg-color-primary) 12%, var(--dg-color-surface));
+				box-shadow: 0 0 0 4px color-mix(in srgb, var(--dg-color-primary) 18%, transparent);
+			}
+
+			.drop-area__title {
+				font-size: var(--dg-text-lg);
+				font-weight: 800;
+				margin: 0 0 var(--dg-space-2);
+			}
+
+			.file-list {
+				display: grid;
+				gap: var(--dg-space-4);
+			}
+
+			.file-card {
+				display: grid;
+				grid-template-columns: 220px 1fr;
+				gap: var(--dg-space-4);
+				padding: var(--dg-space-4);
+				border-radius: var(--dg-radius-md);
+				border: 1px solid var(--dg-color-border);
+				background: var(--dg-color-bg);
+				box-shadow: var(--dg-shadow-sm);
+			}
+
+			.file-card[draggable="true"] {
+				cursor: grab;
+			}
+
+			.file-card.is-dragging {
+				opacity: 0.6;
+			}
+
+			.preview {
+				border: 1px solid var(--dg-color-border);
+				background: var(--dg-color-surface);
+				border-radius: 10px;
+				padding: 10px;
+				display: grid;
+				gap: 10px;
+				align-content: start;
+			}
+
+			.preview canvas {
+				width: 100%;
+				height: auto;
+				border-radius: 8px;
+				background: #fff;
+			}
+
+			.preview__controls {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				justify-content: space-between;
+			}
+
+			.preview__meta {
+				font-size: var(--dg-text-sm);
+				color: var(--dg-color-muted);
+			}
+
+			.file-meta {
+				display: grid;
+				gap: var(--dg-space-3);
+			}
+
+			.file-meta__name {
+				font-weight: 800;
+				word-break: break-all;
+			}
+
+			.file-meta__actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--dg-space-2);
+			}
+
+			.output-row {
+				display: flex;
+				gap: var(--dg-space-3);
+				flex-wrap: wrap;
+				align-items: flex-end;
+			}
+
+			.output-row .dg-field {
+				flex: 1 1 260px;
+			}
+
+			.dg-input,
+			.dg-select,
+			.dg-textarea {
+				color: var(--dg-color-text);
+				background: var(--dg-color-bg);
+			}
+
+			@media (max-width: 720px) {
+				.file-card {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header class="dg-header">
+			<div class="dg-container dg-header__inner">
+				<a class="dg-brand" href="/">
+					<span class="dg-brand__title">PDFマージ</span>
+					<span class="dg-brand__badge">ローカル専用</span>
+				</a>
+				<nav class="dg-nav">
+					<a href="/apps/tools/">ツール一覧</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="dg-main">
+			<div class="dg-container dg-stack">
+				<section class="dg-card">
+					<div class="dg-card__body dg-prose">
+						<h1 class="dg-page-title">PDFを並べ替えて結合</h1>
+						<p class="dg-lead">ファイルはこのブラウザ内だけで処理されます。外部に送信されません。</p>
+						<div class="dg-callout dg-callout--info">
+							<p class="dg-callout__title">安心して使えるローカル処理</p>
+							<p>アップロードや通信でPDFを送ることはありません。処理はこの端末内で完結します。</p>
+						</div>
+					</div>
+				</section>
+
+				<section class="dg-card">
+					<div class="dg-card__body dg-stack">
+						<div id="dropArea" class="drop-area" role="button" aria-label="PDFを追加">
+							<p class="drop-area__title">PDFをドラッグ＆ドロップ</p>
+							<p class="dg-lead">または下のボタンから複数選択</p>
+							<label class="dg-btn" for="pdfInput">PDFを選択</label>
+							<input id="pdfInput" type="file" accept="application/pdf" multiple hidden />
+						</div>
+						<div class="dg-note dg-note--warning">
+							<strong>ヒント:</strong> カードをドラッグして順番を入れ替えできます。
+						</div>
+					</div>
+				</section>
+
+				<section class="dg-card">
+					<div class="dg-card__body dg-stack">
+						<div class="dg-row">
+							<span class="dg-badge" id="fileCount">0件</span>
+							<span class="dg-badge" id="pageCount">合計0ページ</span>
+						</div>
+						<div id="fileList" class="file-list"></div>
+					</div>
+				</section>
+
+				<section class="dg-card">
+					<div class="dg-card__body dg-stack">
+						<div class="output-row">
+							<div class="dg-field">
+								<label class="dg-label" for="outputName">保存ファイル名</label>
+								<input class="dg-input" id="outputName" type="text" placeholder="merged.pdf" />
+								<div class="dg-help">.pdf は自動で補完します。</div>
+							</div>
+							<button id="mergeBtn" class="dg-btn">ダウンロード</button>
+							<button id="clearBtn" class="dg-btn dg-btn--subtle" type="button">リセット</button>
+						</div>
+						<div id="status" class="dg-help"></div>
+					</div>
+				</section>
+			</div>
+		</main>
+
+		<footer class="dg-footer">
+			<div class="dg-container dg-footer__inner">
+				<span class="dg-footer__meta">PDFは端末内で処理されます。</span>
+			</div>
+		</footer>
+
+		<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+		<script type="module">
+			let pdfjsLib = null;
+			let pdfjsUnavailable = false;
+			const loadPdfJs = async () => {
+				try {
+					pdfjsLib = await import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs");
+					pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
+				} catch (error) {
+					console.warn("pdfjsLib is not available. Preview is disabled.", error);
+					pdfjsLib = null;
+					pdfjsUnavailable = true;
+				}
+			};
+
+			await loadPdfJs();
+
+			const dropArea = document.getElementById("dropArea");
+			const pdfInput = document.getElementById("pdfInput");
+			const fileList = document.getElementById("fileList");
+			const fileCount = document.getElementById("fileCount");
+			const pageCount = document.getElementById("pageCount");
+			const outputName = document.getElementById("outputName");
+			const mergeBtn = document.getElementById("mergeBtn");
+			const clearBtn = document.getElementById("clearBtn");
+			const status = document.getElementById("status");
+
+			const items = [];
+			let globalDragDepth = 0;
+
+			const setStatus = (text) => {
+				status.textContent = text;
+			};
+
+			if (pdfjsUnavailable) {
+				setStatus("プレビューを表示するにはネット接続でPDF.jsを読み込める必要があります。");
+			}
+
+			const updateCounts = () => {
+				fileCount.textContent = `${items.length}件`;
+				const totalPages = items.reduce((sum, item) => sum + item.pageCount, 0);
+				pageCount.textContent = `合計${totalPages}ページ`;
+			};
+
+			const normalizeFileName = (name) => {
+				if (!name.trim()) return "merged.pdf";
+				return name.toLowerCase().endsWith(".pdf") ? name : `${name}.pdf`;
+			};
+
+			const renderPage = async (item, pageNumber) => {
+				if (!item.pdfDoc || !item.canvas) return;
+				const page = await item.pdfDoc.getPage(pageNumber);
+				const viewport = page.getViewport({ scale: 1.2 });
+				const canvas = item.canvas;
+				const context = canvas.getContext("2d");
+				canvas.width = viewport.width;
+				canvas.height = viewport.height;
+				await page.render({ canvasContext: context, viewport }).promise;
+				item.currentPage = pageNumber;
+				item.pageLabel.textContent = `${pageNumber} / ${item.pageCount}`;
+				item.prevBtn.disabled = pageNumber <= 1;
+				item.nextBtn.disabled = pageNumber >= item.pageCount;
+			};
+
+			const buildCard = (item) => {
+				const card = document.createElement("article");
+				card.className = "file-card";
+				card.draggable = true;
+				card.dataset.id = item.id;
+
+				const preview = document.createElement("div");
+				preview.className = "preview";
+				const canvas = document.createElement("canvas");
+
+				const controls = document.createElement("div");
+				controls.className = "preview__controls";
+
+				const prevBtn = document.createElement("button");
+				prevBtn.type = "button";
+				prevBtn.className = "dg-btn dg-btn--subtle";
+				prevBtn.textContent = "前";
+
+				const nextBtn = document.createElement("button");
+				nextBtn.type = "button";
+				nextBtn.className = "dg-btn dg-btn--subtle";
+				nextBtn.textContent = "次";
+
+				const pageLabel = document.createElement("span");
+				pageLabel.className = "preview__meta";
+
+				controls.append(prevBtn, pageLabel, nextBtn);
+				preview.append(canvas, controls);
+
+				const meta = document.createElement("div");
+				meta.className = "file-meta";
+
+				const name = document.createElement("div");
+				name.className = "file-meta__name";
+				name.textContent = item.file.name;
+
+				const detail = document.createElement("div");
+				detail.className = "dg-help";
+				detail.textContent = `${item.pageCount}ページ / ${(item.file.size / 1024 / 1024).toFixed(2)}MB`;
+
+				const actions = document.createElement("div");
+				actions.className = "file-meta__actions";
+
+				const removeBtn = document.createElement("button");
+				removeBtn.type = "button";
+				removeBtn.className = "dg-btn dg-btn--danger";
+				removeBtn.textContent = "削除";
+
+				actions.append(removeBtn);
+				meta.append(name, detail, actions);
+
+				card.append(preview, meta);
+
+				item.element = card;
+				item.canvas = canvas;
+				item.pageLabel = pageLabel;
+				item.prevBtn = prevBtn;
+				item.nextBtn = nextBtn;
+				item.removeBtn = removeBtn;
+
+				prevBtn.addEventListener("click", () => {
+					renderPage(item, Math.max(1, item.currentPage - 1));
+				});
+
+				nextBtn.addEventListener("click", () => {
+					renderPage(item, Math.min(item.pageCount, item.currentPage + 1));
+				});
+
+				removeBtn.addEventListener("click", () => {
+					const index = items.findIndex((value) => value.id === item.id);
+					if (index >= 0) {
+						items.splice(index, 1);
+						card.remove();
+						updateCounts();
+					}
+				});
+
+				card.addEventListener("dragstart", (event) => {
+					card.classList.add("is-dragging");
+					event.dataTransfer.setData("text/plain", item.id);
+					event.dataTransfer.effectAllowed = "move";
+				});
+
+				card.addEventListener("dragend", () => {
+					card.classList.remove("is-dragging");
+				});
+
+				return card;
+			};
+
+			const rebuildList = () => {
+				const fragment = document.createDocumentFragment();
+				items.forEach((item) => fragment.appendChild(item.element));
+				fileList.innerHTML = "";
+				fileList.appendChild(fragment);
+			};
+
+			const setupDropzone = () => {
+				["dragover", "drop"].forEach((eventName) => {
+					document.addEventListener(eventName, (event) => {
+						event.preventDefault();
+					});
+				});
+
+				window.addEventListener("dragenter", (event) => {
+					if (!event.dataTransfer || !Array.from(event.dataTransfer.types).includes("Files")) {
+						return;
+					}
+					globalDragDepth += 1;
+					dropArea.classList.add("is-global-active");
+				});
+
+				window.addEventListener("dragleave", (event) => {
+					if (!event.dataTransfer || !Array.from(event.dataTransfer.types).includes("Files")) {
+						return;
+					}
+					globalDragDepth = Math.max(0, globalDragDepth - 1);
+					if (globalDragDepth === 0) {
+						dropArea.classList.remove("is-global-active");
+					}
+				});
+
+				window.addEventListener("drop", () => {
+					globalDragDepth = 0;
+					dropArea.classList.remove("is-global-active");
+				});
+
+				["dragenter", "dragover"].forEach((eventName) => {
+					dropArea.addEventListener(eventName, (event) => {
+						event.preventDefault();
+						dropArea.classList.add("is-active");
+					});
+				});
+
+				["dragleave", "drop"].forEach((eventName) => {
+					dropArea.addEventListener(eventName, () => {
+						dropArea.classList.remove("is-active");
+					});
+				});
+
+				dropArea.addEventListener("drop", (event) => {
+					event.preventDefault();
+					handleFiles(event.dataTransfer.files);
+				});
+			};
+
+			const handleFiles = async (fileListObj) => {
+				const files = Array.from(fileListObj);
+				if (!files.length) return;
+				setStatus("読み込み中...");
+
+				for (const file of files) {
+					if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+						continue;
+					}
+					await addFile(file);
+				}
+
+				updateCounts();
+				setStatus("");
+			};
+
+			const addFile = async (file) => {
+				const arrayBuffer = await file.arrayBuffer();
+				const previewBytes = new Uint8Array(arrayBuffer);
+				const mergeBytes = previewBytes.slice();
+				let pdfDoc = null;
+				let pageCount = 0;
+
+				if (pdfjsLib) {
+					pdfDoc = await pdfjsLib.getDocument({ data: previewBytes }).promise;
+					pageCount = pdfDoc.numPages;
+				} else {
+					const pdf = await PDFLib.PDFDocument.load(mergeBytes);
+					pageCount = pdf.getPageCount();
+				}
+
+				const item = {
+					id: crypto.randomUUID(),
+					file,
+					bytes: mergeBytes,
+					pdfDoc,
+					pageCount,
+					currentPage: 1,
+					element: null,
+					canvas: null,
+					pageLabel: null,
+					prevBtn: null,
+					nextBtn: null,
+					removeBtn: null,
+				};
+				buildCard(item);
+				items.push(item);
+				fileList.appendChild(item.element);
+				if (pdfDoc) {
+					await renderPage(item, 1);
+				} else {
+					item.pageLabel.textContent = `1 / ${item.pageCount}`;
+					item.prevBtn.disabled = true;
+					item.nextBtn.disabled = true;
+					const context = item.canvas.getContext("2d");
+					item.canvas.width = 600;
+					item.canvas.height = 380;
+					context.fillStyle = "#f8fafc";
+					context.fillRect(0, 0, item.canvas.width, item.canvas.height);
+					context.fillStyle = "#475569";
+					context.font = "16px sans-serif";
+					context.textAlign = "center";
+					context.textBaseline = "middle";
+					context.fillText("プレビューはオフラインです", item.canvas.width / 2, item.canvas.height / 2);
+				}
+			};
+
+			fileList.addEventListener("dragover", (event) => {
+				event.preventDefault();
+				const dragging = fileList.querySelector(".is-dragging");
+				const afterElement = Array.from(fileList.children)
+					.filter((child) => child !== dragging)
+					.find((child) => {
+						const rect = child.getBoundingClientRect();
+						return event.clientY < rect.top + rect.height / 2;
+					});
+
+				if (!dragging) return;
+				if (afterElement) {
+					fileList.insertBefore(dragging, afterElement);
+				} else {
+					fileList.appendChild(dragging);
+				}
+			});
+
+			fileList.addEventListener("drop", () => {
+				const newOrder = Array.from(fileList.children).map((child) => child.dataset.id);
+				items.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
+				rebuildList();
+			});
+
+			mergeBtn.addEventListener("click", async () => {
+				if (!items.length) {
+					setStatus("PDFを追加してください。");
+					return;
+				}
+
+				mergeBtn.disabled = true;
+				setStatus("結合しています...");
+
+				const merged = await PDFLib.PDFDocument.create();
+				for (const item of items) {
+					const pdf = await PDFLib.PDFDocument.load(item.bytes);
+					const copiedPages = await merged.copyPages(pdf, pdf.getPageIndices());
+					copiedPages.forEach((page) => merged.addPage(page));
+				}
+
+				const mergedBytes = await merged.save();
+				const blob = new Blob([mergedBytes], { type: "application/pdf" });
+				const url = URL.createObjectURL(blob);
+
+				const link = document.createElement("a");
+				link.href = url;
+				link.download = normalizeFileName(outputName.value);
+				document.body.appendChild(link);
+				link.click();
+				link.remove();
+				URL.revokeObjectURL(url);
+				mergeBtn.disabled = false;
+				setStatus("ダウンロードが開始されました。");
+			});
+
+			clearBtn.addEventListener("click", () => {
+				items.splice(0, items.length);
+				fileList.innerHTML = "";
+				outputName.value = "";
+				updateCounts();
+				setStatus("");
+			});
+
+			pdfInput.addEventListener("change", (event) => {
+				handleFiles(event.target.files);
+				pdfInput.value = "";
+			});
+
+			setupDropzone();
+		</script>
+	</body>
+</html>
