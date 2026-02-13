@@ -86,9 +86,18 @@ async function loadPdfQuestions() {
   }
 }
 
-async function loadAnswerData() {
+const ANSWER_DATA_BY_PDF = {
+  "ipa-2025r07-ip": "./data/ipa_answers7.json",
+  "ipa-2024r06-ip": "./data/ipa_answers6.json",
+  "fe-2023r05-a-short": "./data/it_answers5a.json",
+  "fe-2023r05-b-short": "./data/it_answers5b.json",
+};
+
+async function loadAnswerDataForPdf(pdfId) {
+  const path = ANSWER_DATA_BY_PDF[pdfId];
+  if (!path) return null;
   try {
-    return await fetchJson("./data/ipa_answers.json");
+    return await fetchJson(path);
   } catch (e) {
     console.error("Failed to load answers:", e);
     return null;
@@ -648,12 +657,23 @@ function setCurrentPdf(pdf) {
   const scopes = normalizeScopes(pdf);
   el.scope.innerHTML = scopes.map((s) => `<option value="${s.id}">${s.label}</option>`).join("");
   setCurrentScope(scopes[0]?.id);
+
+  state.answerData = null;
+  el.grading.disabled = true;
+  el.startTest.disabled = true;
+
+  loadAnswerDataForPdf(pdf.id).then((data) => {
+    if (state.current?.id !== pdf.id) return;
+    state.answerData = data;
+    el.grading.disabled = !state.answerData;
+    el.startTest.disabled = !state.answerData;
+  });
 }
 
 async function init() {
   state.pdfList = await loadPdfList();
   state.pdfQuestions = await loadPdfQuestions();
-  state.answerData = await loadAnswerData();
+  state.answerData = null;
 
   renderPdfList(el.pdfList, state.pdfList);
 
