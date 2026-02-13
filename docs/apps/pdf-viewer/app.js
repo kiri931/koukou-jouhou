@@ -409,6 +409,31 @@ function handleWindowBlur() {
   // visibilitychange のみで検出する
 }
 
+function cancelTestMode() {
+  if (!state.testMode) return;
+  if (!confirm('テストモードを中止しますか？\n\n現在の回答は破棄されます。')) {
+    return;
+  }
+
+  if (state.testTimer) {
+    clearInterval(state.testTimer);
+    state.testTimer = null;
+  }
+
+  state.testMode = false;
+  state.testStartTime = null;
+  state.testTabSwitches = 0;
+  state.answers = {};
+
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+  window.removeEventListener('resize', updateTestLayout);
+
+  el.testHeader.style.display = 'none';
+  el.testModeContainer.style.display = 'none';
+  el.normalHeader.style.display = 'block';
+  el.normalMain.style.display = 'block';
+}
+
 function endTestMode() {
   if (!confirm('テストを終了して提出しますか？')) {
     return;
@@ -533,14 +558,19 @@ function normalizeScopes(pdf) {
 function buildPlaceholderQuestions(pdfId, scope, count) {
   const n = Math.max(1, Number(count || 50));
   const scopeId = scope?.id ?? "all";
+  const isChoice = pdfId.startsWith("ipa-") || pdfId.startsWith("fe-");
   const list = [];
   for (let i = 1; i <= n; i++) {
-    list.push({
+    const item = {
       id: `pdf-${pdfId}-${scopeId}-${String(i).padStart(2, "0")}`,
-      format: "text",
+      format: isChoice ? "choice" : "text",
       stem: "",
       source: { type: "pdf", pdfId, page: "", label: `問${i}` },
-    });
+    };
+    if (isChoice) {
+      item.choices = ["ア", "イ", "ウ", "エ"];
+    }
+    list.push(item);
   }
   return list;
 }

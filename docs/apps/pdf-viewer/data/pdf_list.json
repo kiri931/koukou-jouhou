@@ -10,6 +10,51 @@
     ]
   },
   {
+    "id": "ipa-2024r06-ip",
+    "title": "令和6年度 ITパスポート試験（IPA CBT）",
+    "path": "https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2024r06_ip_qs.pdf",
+    "note": "IPA情報処理技術者試験 ITパスポート 令和6年度公開問題",
+    "scopes": [
+      {"id":"all","label":"全問題","questionCount":100,"pageFrom":1,"pageTo":null,"note":"問1〜問100（4択問題）"}
+    ]
+  },
+  {
+    "id": "ipa-2023r05-ip",
+    "title": "令和5年度 ITパスポート試験（IPA CBT）",
+    "path": "https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2023r05_ip_qs.pdf",
+    "note": "IPA情報処理技術者試験 ITパスポート 令和5年度公開問題",
+    "scopes": [
+      {"id":"all","label":"全問題","questionCount":100,"pageFrom":1,"pageTo":null,"note":"問1〜問100（4択問題）"}
+    ]
+  },
+  {
+    "id": "ipa-2022r04-ip",
+    "title": "令和4年度 ITパスポート試験（IPA CBT）",
+    "path": "https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2022r04_ip_qs.pdf",
+    "note": "IPA情報処理技術者試験 ITパスポート 令和4年度公開問題",
+    "scopes": [
+      {"id":"all","label":"全問題","questionCount":100,"pageFrom":1,"pageTo":null,"note":"問1〜問100（4択問題）"}
+    ]
+  },
+  {
+    "id": "fe-2023r05-a-short",
+    "title": "令和5年度 基本情報技術者試験 科目A（20問版）",
+    "path": "https://www.ipa.go.jp/shiken/mondai-kaiotu/sg_fe/koukai/t6hhco0000003zx0-att/2023r05_fe_kamoku_a_qs.pdf",
+    "note": "基本情報技術者試験 科目A（問題数調整版）",
+    "scopes": [
+      {"id":"all","label":"全問題","questionCount":20,"pageFrom":1,"pageTo":null,"note":"問1〜問20（4択問題）"}
+    ]
+  },
+  {
+    "id": "fe-2023r05-b-short",
+    "title": "令和5年度 基本情報技術者試験 科目B（6問版）",
+    "path": "https://www.ipa.go.jp/shiken/mondai-kaiotu/sg_fe/koukai/t6hhco0000003zx0-att/2023r05_fe_kamoku_b_qs.pdf",
+    "note": "基本情報技術者試験 科目B（問題数調整版）",
+    "scopes": [
+      {"id":"all","label":"全問題","questionCount":6,"pageFrom":1,"pageTo":null,"note":"問1〜問6（4択問題）"}
+    ]
+  },
+  {
     "id": "kekka-64",
     "title": "第64回 情報技術検定（結果）",
     "path": "https://zenkoukyo.or.jp/web/content/uploads/64joho_kekka.pdf",

@@ -1,0 +1,12 @@
+{
+  "exam": "令和5年度 基本情報技術者試験 公開問題 解答例 科目B",
+  "source_pdf": "2023r05_fe_kamoku_b_ans.pdf",
+  "answers": [
+    { "q": 1, "answer": "ア", "choice": 1 },
+    { "q": 2, "answer": "ク", "choice": 5 },
+    { "q": 3, "answer": "エ", "choice": 4 },
+    { "q": 4, "answer": "エ", "choice": 4 },
+    { "q": 5, "answer": "エ", "choice": 4 },
+    { "q": 6, "answer": "ア", "choice": 1 }
+  ]
+}

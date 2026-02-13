@@ -1,0 +1,26 @@
+{
+  "exam": "令和5年度 基本情報技術者試験 公開問題 解答例 科目A",
+  "source_pdf": "2023r05_fe_kamoku_a_ans.pdf",
+  "answers": [
+    { "q": 1, "answer": "ウ", "choice": 3 },
+    { "q": 2, "answer": "ウ", "choice": 3 },
+    { "q": 3, "answer": "エ", "choice": 4 },
+    { "q": 4, "answer": "エ", "choice": 4 },
+    { "q": 5, "answer": "イ", "choice": 2 },
+    { "q": 6, "answer": "ウ", "choice": 3 },
+    { "q": 7, "answer": "イ", "choice": 2 },
+    { "q": 8, "answer": "エ", "choice": 4 },
+    { "q": 9, "answer": "ウ", "choice": 3 },
+    { "q": 10, "answer": "ウ", "choice": 3 },
+    { "q": 11, "answer": "エ", "choice": 4 },
+    { "q": 12, "answer": "ウ", "choice": 3 },
+    { "q": 13, "answer": "エ", "choice": 4 },
+    { "q": 14, "answer": "ウ", "choice": 3 },
+    { "q": 15, "answer": "エ", "choice": 4 },
+    { "q": 16, "answer": "イ", "choice": 2 },
+    { "q": 17, "answer": "ウ", "choice": 3 },
+    { "q": 18, "answer": "ウ", "choice": 3 },
+    { "q": 19, "answer": "エ", "choice": 4 },
+    { "q": 20, "answer": "ア", "choice": 1 }
+  ]
+}
