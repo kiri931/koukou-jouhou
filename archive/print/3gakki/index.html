@@ -116,165 +116,166 @@
   </header>
   <section>
 
-    <pre><code>const canvas = document.getElementById(&quot;gameCanvas&quot;);
-const ctx = canvas.getContext(&quot;2d&quot;);
-
-const player = {
-  width: 30,
-  height: 30,
-  x: canvas.width / 2 - 30 / 2,
-  y: canvas.height - 60,
-  speed: 5,
-};
-
-const input = {
-  left: false,
-  right: false,
-};
-
-const bullets = [];
-const BULLET_SIZE = 10;
-const BULLET_SPEED = -8;
-let shootCooldown = 0;
-
-const enemies = [];
-const ENEMY_SIZE = 50;
-const ENEMY_SPEED = 4;
-
-const mapImage = new Image();
-mapImage.src = &quot;../image/map.png&quot;;
-
-const playerImage = new Image();
-playerImage.src = &quot;../image/player.png&quot;;
-
-const enemyImage = new Image();
-enemyImage.src = &quot;../image/enemy_straight.png&quot;;
-
-function spawnBullet() {
-  bullets.push({
-    size: BULLET_SIZE,
-    x: player.x + player.width / 2 - BULLET_SIZE / 2,
-    y: player.y,
-    vy: BULLET_SPEED,
-  });
-}
-
-function spawnEnemy() {
-  if (enemies.length &gt;= 5) return;
-
-  if (Math.random() &lt; 0.03) {
-    enemies.push({
-      x: Math.random() * (canvas.width - ENEMY_SIZE),
-      y: -ENEMY_SIZE,
-      width: ENEMY_SIZE,
-      height: ENEMY_SIZE,
-      vy: ENEMY_SPEED,
-    });
-  }
-}
-
-function updatePlayer() {
-  if (input.left) player.x -= player.speed;
-  if (input.right) player.x += player.speed;
-
-  if (player.x &lt; 0) player.x = 0;
-  if (player.x &gt; canvas.width - player.width) {
-    player.x = canvas.width - player.width;
-  }
-}
-
-function updateBullets() {
-  for (let i = bullets.length - 1; i &gt;= 0; i--) {
-    const b = bullets[i];
-    b.y += b.vy;
-    if (b.y + b.size &lt; 0) {
-      bullets.splice(i, 1);
-    }
-  }
-}
-
-function updateEnemies() {
-  for (let i = enemies.length - 1; i &gt;= 0; i--) {
-    const e = enemies[i];
-    e.y += e.vy;
-
-    if (e.y &gt; canvas.height) {
-      enemies.splice(i, 1);
-    }
-  }
-}
-
-function draw() {
-  if (mapImage.complete) {
-    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
-  } else {
-    ctx.fillStyle = &quot;black&quot;;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
-
-  if (playerImage.complete) {
-    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-  } else {
-    ctx.fillStyle = &quot;yellow&quot;;
-    ctx.fillRect(player.x, player.y, player.width, player.height);
-  }
-
-  ctx.fillStyle = &quot;white&quot;;
-  for (let i = 0; i &lt; bullets.length; i++) {
-    const b = bullets[i];
-    const r = b.size / 2;
-    const cx = b.x + r;
-    const cy = b.y + r;
-
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  for (let i = 0; i &lt; enemies.length; i++) {
-    const e = enemies[i];
-    if (enemyImage.complete) {
-      ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
-    } else {
-      ctx.fillStyle = &quot;crimson&quot;;
-      ctx.fillRect(e.x, e.y, e.width, e.height);
-    }
-  }
-}
-
-function update() {
-  if (shootCooldown &gt; 0) shootCooldown--;
-
-  updatePlayer();
-  spawnEnemy();
-  updateBullets();
-  updateEnemies();
-}
-
-window.addEventListener(&quot;keydown&quot;, (e) =&gt; {
-  if (e.key === &quot;ArrowLeft&quot;) input.left = true;
-  if (e.key === &quot;ArrowRight&quot;) input.right = true;
-
-  if (e.code === &quot;Space&quot;) {
-    if (shootCooldown === 0) {
-      spawnBullet();
-      shootCooldown = 8;
-    }
-  }
-});
-
-window.addEventListener(&quot;keyup&quot;, (e) =&gt; {
-  if (e.key === &quot;ArrowLeft&quot;) input.left = false;
-  if (e.key === &quot;ArrowRight&quot;) input.right = false;
-});
-
-function gameLoop() {
-  update();
-  draw();
-  requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
+    <pre><code>
+ 1: const canvas = document.getElementById(&quot;gameCanvas&quot;);
+ 2: const ctx = canvas.getContext(&quot;2d&quot;);
+ 3:
+ 4: const player = {
+ 5:   width: 30,
+ 6:   height: 30,
+ 7:   x: canvas.width / 2 - 30 / 2,
+ 8:   y: canvas.height - 60,
+ 9:   speed: 5,
+10: };
+11:
+12: const input = {
+13:   left: false,
+14:   right: false,
+15: };
+16:
+17: const bullets = [];
+18: const BULLET_SIZE = 10;
+19: const BULLET_SPEED = -8;
+20: let shootCooldown = 0;
+21:
+22: const enemies = [];
+23: const ENEMY_SIZE = 50;
+24: const ENEMY_SPEED = 4;
+25:
+26: const mapImage = new Image();
+27: mapImage.src = &quot;../image/map.png&quot;;
+28:
+29: const playerImage = new Image();
+30: playerImage.src = &quot;../image/player.png&quot;;
+31:
+32: const enemyImage = new Image();
+33: enemyImage.src = &quot;../image/enemy_straight.png&quot;;
+34:
+35: function spawnBullet() {
+36:   bullets.push({
+37:     size: BULLET_SIZE,
+38:     x: player.x + player.width / 2 - BULLET_SIZE / 2,
+39:     y: player.y,
+40:     vy: BULLET_SPEED,
+41:   });
+42: }
+43:
+44: function spawnEnemy() {
+45:   if (enemies.length &gt;= 5) return;
+46:
+47:   if (Math.random() &lt; 0.03) {
+48:     enemies.push({
+49:       x: Math.random() * (canvas.width - ENEMY_SIZE),
+50:       y: -ENEMY_SIZE,
+51:       width: ENEMY_SIZE,
+52:       height: ENEMY_SIZE,
+53:       vy: ENEMY_SPEED,
+54:     });
+55:   }
+56: }
+57:
+58: function updatePlayer() {
+59:   if (input.left) player.x -= player.speed;
+60:   if (input.right) player.x += player.speed;
+61:
+62:   if (player.x &lt; 0) player.x = 0;
+63:   if (player.x &gt; canvas.width - player.width) {
+64:     player.x = canvas.width - player.width;
+65:   }
+66: }
+67:
+68: function updateBullets() {
+69:   for (let i = bullets.length - 1; i &gt;= 0; i--) {
+70:     const b = bullets[i];
+71:     b.y += b.vy;
+72:     if (b.y + b.size &lt; 0) {
+73:       bullets.splice(i, 1);
+74:     }
+75:   }
+76: }
+77:
+78: function updateEnemies() {
+79:   for (let i = enemies.length - 1; i &gt;= 0; i--) {
+80:     const e = enemies[i];
+81:     e.y += e.vy;
+82:
+83:     if (e.y &gt; canvas.height) {
+84:       enemies.splice(i, 1);
+85:     }
+86:   }
+87: }
+88:
+89: function draw() {
+90:   if (mapImage.complete) {
+91:     ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+92:   } else {
+93:     ctx.fillStyle = &quot;black&quot;;
+94:     ctx.fillRect(0, 0, canvas.width, canvas.height);
+95:   }
+96:
+97:   if (playerImage.complete) {
+98:     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+99:   } else {
+100:     ctx.fillStyle = &quot;yellow&quot;;
+101:     ctx.fillRect(player.x, player.y, player.width, player.height);
+102:   }
+103:
+104:   ctx.fillStyle = &quot;white&quot;;
+105:   for (let i = 0; i &lt; bullets.length; i++) {
+106:     const b = bullets[i];
+107:     const r = b.size / 2;
+108:     const cx = b.x + r;
+109:     const cy = b.y + r;
+110:
+111:     ctx.beginPath();
+112:     ctx.arc(cx, cy, r, 0, Math.PI * 2);
+113:     ctx.fill();
+114:   }
+115:
+116:   for (let i = 0; i &lt; enemies.length; i++) {
+117:     const e = enemies[i];
+118:     if (enemyImage.complete) {
+119:       ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
+120:     } else {
+121:       ctx.fillStyle = &quot;crimson&quot;;
+122:       ctx.fillRect(e.x, e.y, e.width, e.height);
+123:     }
+124:   }
+125: }
+126:
+127: function update() {
+128:   if (shootCooldown &gt; 0) shootCooldown--;
+129:
+130:   updatePlayer();
+131:   spawnEnemy();
+132:   updateBullets();
+133:   updateEnemies();
+134: }
+135:
+136: window.addEventListener(&quot;keydown&quot;, (e) =&gt; {
+137:   if (e.key === &quot;ArrowLeft&quot;) input.left = true;
+138:   if (e.key === &quot;ArrowRight&quot;) input.right = true;
+139:
+140:   if (e.code === &quot;Space&quot;) {
+141:     if (shootCooldown === 0) {
+142:       spawnBullet();
+143:       shootCooldown = 8;
+144:     }
+145:   }
+146: });
+147:
+148: window.addEventListener(&quot;keyup&quot;, (e) =&gt; {
+149:   if (e.key === &quot;ArrowLeft&quot;) input.left = false;
+150:   if (e.key === &quot;ArrowRight&quot;) input.right = false;
+151: });
+152:
+153: function gameLoop() {
+154:   update();
+155:   draw();
+156:   requestAnimationFrame(gameLoop);
+157: }
+158:
+159: gameLoop();
 </code></pre>
   </section>
   <div style="page-break-after: always;"></div>
@@ -313,8 +314,15 @@ gameLoop();
       <br>
       <li>プレイヤーの位置を更新する際に参照している `player` のプロパティは何ですか？</li>
       <br>
+      <li>次のプログラムを実行すると、コンソール画面で次のような内容が表示されるプログラムを記述しなさい。<br>
+        <code>console.log(cat.age); //3</code><br>
+        <code>console.log(cat.cry()); // にゃ～</code><br>
+        <code>console.log(power(2,2)); //4</code><br>
+      </li>
+      <br>
+      <li>左右の矢印キーを押している際の挙動を答えなさい。</li>
     </ol>
-<div style="page-break-after: always;"></div>
+    <div style="page-break-after: always;"></div>
     <h3>答え</h3>
     <ol>
       <li>
@@ -366,6 +374,13 @@ gameLoop();
       </li>
       <li>
         <div class="note">`player.x`, `player.speed`, `player.width`。</div>
+      </li>
+      <li>
+        <div class="note">例: `const cat = { age: 3, cry: () => "にゃ～" };` と `function power(a, b) { return a ** b; }`
+          を用意する。</div>
+      </li>
+      <li>
+        <div class="note">`keydown` で `input.left` / `input.right` が `true` になり、player.xの値に加算と減算が行われるため動かない。</div>
       </li>
     </ol>
   </section>

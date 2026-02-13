@@ -154,6 +154,56 @@ function openPdfUrlInNewTab(filePath, page = 1) {
   window.open(buildViewerUrl(filePath, page), "_blank");
 }
 
+function loadTestPdfWithFallback(filePath, page) {
+  if (!el.testPdfViewer) return;
+
+  const iframe = el.testPdfViewer;
+  const openInNewTab = () => openPdfUrlInNewTab(filePath, page);
+  let settled = false;
+
+  const showFallback = () => {
+    if (settled) return;
+    settled = true;
+    iframe.src = "about:blank";
+    if (el.testPdfNotice) el.testPdfNotice.hidden = false;
+    if (el.openTestPdfNewTab) el.openTestPdfNewTab.onclick = openInNewTab;
+    openInNewTab();
+  };
+
+  const showEmbedded = () => {
+    if (settled) return;
+    settled = true;
+    if (el.testPdfNotice) el.testPdfNotice.hidden = true;
+  };
+
+  if (el.testPdfNotice) el.testPdfNotice.hidden = true;
+  if (el.openTestPdfNewTab) el.openTestPdfNewTab.onclick = openInNewTab;
+
+  iframe.addEventListener(
+    "load",
+    () => {
+      let href = "";
+      try {
+        href = iframe.contentWindow?.location?.href || "";
+      } catch (e) {
+        showEmbedded();
+        return;
+      }
+      if (!href || href === "about:blank") {
+        showFallback();
+        return;
+      }
+      showEmbedded();
+    },
+    { once: true }
+  );
+
+  iframe.addEventListener("error", showFallback, { once: true });
+
+  iframe.src = buildViewerUrl(filePath, page);
+  setTimeout(showFallback, 5000);
+}
+
 function getScopeText(pdf) {
   const scopes = Array.isArray(pdf.scopes) ? pdf.scopes : [];
   if (!scopes.length) return "-";
@@ -368,19 +418,9 @@ function startTestMode() {
   // 画面サイズを計算して設定
   updateTestLayout();
   
-  // PDFをiframeに読み込む（IPAは埋め込み不可なので別タブへ）
+  // PDFをiframeに読み込む（ブロックされたら別タブへ自動フォールバック）
   const jumpPage = Number(state.scope?.pageFrom || "1");
-  if (isIpaPdfUrl(state.current.path)) {
-    el.testPdfViewer.src = "about:blank";
-    el.testPdfNotice.hidden = false;
-    if (el.openTestPdfNewTab) {
-      el.openTestPdfNewTab.onclick = () => openPdfUrlInNewTab(state.current.path, jumpPage);
-    }
-    openPdfUrlInNewTab(state.current.path, jumpPage);
-  } else {
-    el.testPdfNotice.hidden = true;
-    el.testPdfViewer.src = buildViewerUrl(state.current.path, jumpPage);
-  }
+  loadTestPdfWithFallback(state.current.path, jumpPage);
   
   // 問題をシンプルに表示
   renderTestQuestions();
