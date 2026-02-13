@@ -160,16 +160,26 @@ function renderPdfList(mountEl, pdfList) {
 function renderPdfQuestions(mountEl, pdfQuestions) {
   mountEl.innerHTML = "";
 
-  if (!pdfQuestions.length) {
-    mountEl.innerHTML = `<div class="dg-note">このPDFに紐づく問題がまだありません。</div>`;
+function isIpaPdfUrl(url) {
+  return typeof url === "string" && url.includes("ipa.go.jp");
+}
+
+function openPdfUrlInNewTab(filePath, page = 1) {
+  if (isIpaPdfUrl(filePath)) {
+    window.open(filePath, "_blank");
     return;
   }
+  window.open(buildViewerUrl(filePath, page), "_blank");
+}
+
+  if (!pdfQuestions.length) {
+    mountEl.innerHTML = `<div class="dg-note">このPDFに紐づく問題がまだありません。</div>`;
+  openPdfUrlInNewTab(state.current.path, page);
 
   const table = document.createElement("table");
   table.className = "dg-table";
 
-  table.innerHTML = `
-    <thead>
+  openPdfUrlInNewTab(state.current.answerPath, 1);
       <tr>
         <th>問</th>
         <th>参照</th>
@@ -186,6 +196,17 @@ function renderPdfQuestions(mountEl, pdfQuestions) {
     const page = q.source?.page ?? "";
     const label = q.source?.label ?? q.id;
 
+  if (isIpaPdfUrl(state.current.path)) {
+    el.testPdfViewer.src = "about:blank";
+    el.testPdfNotice.hidden = false;
+    if (el.openTestPdfNewTab) {
+      el.openTestPdfNewTab.onclick = () => openPdfUrlInNewTab(state.current.path, jumpPage);
+    }
+    openPdfUrlInNewTab(state.current.path, jumpPage);
+  } else {
+    el.testPdfNotice.hidden = true;
+    el.testPdfViewer.src = buildViewerUrl(state.current.path, jumpPage);
+  }
     // 4択問題の場合はラジオボタン、それ以外はテキスト入力
     let answerHtml = '';
     if (q.format === 'choice' && Array.isArray(q.choices)) {
@@ -209,25 +230,25 @@ function renderPdfQuestions(mountEl, pdfQuestions) {
         <span class="dg-badge">p.${page}</span>
         <div class="dg-help">${richTextToHtml(q.stem ?? "")}</div>
       </td>
-      <td>
+    questionDiv.className = 'dg-test-question';
         ${answerHtml}
       </td>
     `;
 
     tbody.appendChild(tr);
-  }
+          <label class="dg-test-choice">
 
   mountEl.appendChild(table);
   renderMathIn(mountEl);
 }
 
 function exportPdfAnswersCsv(pdfId, questions, answers) {
-  const rows = [["pdfId", "label", "page", "questionId", "answer"]];
+      choicesHtml = `<input class="dg-input dg-test-input" data-answer-id="${q.id}" placeholder="回答を入力" />`;
   for (const q of questions) {
     rows.push([
       pdfId,
-      q.source?.label ?? "",
-      q.source?.page ?? "",
+      <div class="dg-test-question__meta">
+        <strong>${questionNum}</strong>
       q.id,
       answers[q.id] ?? "",
     ]);
@@ -535,6 +556,8 @@ const el = {
   testHeader: document.getElementById("testHeader"),
   testModeContainer: document.getElementById("testModeContainer"),
   testPdfViewer: document.getElementById("testPdfViewer"),
+  testPdfNotice: document.getElementById("testPdfNotice"),
+  openTestPdfNewTab: document.getElementById("openTestPdfNewTab"),
   testQuestions: document.getElementById("testQuestions"),
   testQuestionsContainer: document.getElementById("testQuestionsContainer"),
   testMainGrid: document.getElementById("testMainGrid"),

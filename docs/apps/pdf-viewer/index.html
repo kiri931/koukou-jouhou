@@ -104,14 +104,21 @@
   <!-- テストモード用レイアウト -->
   <div id="testModeContainer" style="display:none">
     <!-- 2カラムレイアウト -->
-    <div id="testMainGrid" style="display:grid; grid-template-columns:1fr 500px; overflow:hidden">
+    <div id="testMainGrid" class="dg-test-grid">
       <!-- 左側: PDF表示 -->
-      <div style="border-right:2px solid #ddd; overflow:hidden">
+      <div class="dg-test-pdf" id="testPdfPane">
+        <div class="dg-test-pdf__notice" id="testPdfNotice" hidden>
+          <div class="dg-stack" style="max-width:360px; text-align:center">
+            <div class="dg-page-title" style="font-size:var(--dg-text-lg); margin:0">IPAのPDFは埋め込み不可</div>
+            <div class="dg-help">別タブでPDFを開いて解答を続けてください。</div>
+            <button id="openTestPdfNewTab" class="dg-btn" type="button">別タブで開く</button>
+          </div>
+        </div>
         <iframe id="testPdfViewer" style="width:100%; height:100%; border:none"></iframe>
       </div>
 
       <!-- 右側: 問題と選択肢 -->
-      <div id="testQuestionsContainer" style="overflow-y:auto; padding:20px; background:#f8f9fa">
+      <div id="testQuestionsContainer" class="dg-test-questions">
         <div id="testQuestions"></div>
       </div>
     </div>
