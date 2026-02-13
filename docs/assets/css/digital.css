@@ -265,6 +265,47 @@ a:hover { text-decoration-thickness: 2px; }
 
 .dg-nav a:hover { background: var(--dg-color-surface); }
 
+/* Tabs */
+.dg-tabs {
+  display: grid;
+  gap: var(--dg-space-4);
+}
+
+.dg-tabs__list {
+  display: flex;
+  gap: var(--dg-space-2);
+  flex-wrap: wrap;
+}
+
+.dg-tab {
+  border: 1px solid var(--dg-color-border);
+  background: var(--dg-color-surface);
+  color: var(--dg-color-text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.dg-tab:hover {
+  background: var(--dg-color-surface-2);
+}
+
+.dg-tab.is-active,
+.dg-tab[aria-selected="true"] {
+  border-color: var(--dg-color-primary);
+  background: color-mix(in srgb, var(--dg-color-primary) 18%, var(--dg-color-surface));
+}
+
+.dg-tabs__panel {
+  background: var(--dg-color-bg);
+  border: 1px solid var(--dg-color-border);
+  border-radius: var(--dg-radius-md);
+  padding: var(--dg-space-5);
+  box-shadow: var(--dg-shadow-sm);
+}
+
 /* PDF viewer test mode */
 .dg-test-grid {
   display: grid;

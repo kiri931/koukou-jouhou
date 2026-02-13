@@ -114,51 +114,33 @@ function buildViewerUrl(filePath, page = 1) {
 function renderPdfList(mountEl, pdfList) {
   mountEl.innerHTML = "";
 
-  const table = document.createElement("table");
-  table.className = "dg-table";
+  const tabs = document.createElement("div");
+  tabs.className = "dg-tabs";
 
-  table.innerHTML = `
-    <thead>
-      <tr>
-        <th>PDF</th>
-        <th>範囲</th>
-        <th>メモ</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  `;
-
-  const tbody = table.querySelector("tbody");
+  const tabList = document.createElement("div");
+  tabList.className = "dg-tabs__list";
+  tabList.setAttribute("role", "tablist");
 
   for (const p of pdfList) {
-    const scopes = Array.isArray(p.scopes) ? p.scopes : [];
-    const scopeText = scopes.length
-      ? scopes
-          .map((s) => {
-            const from = s.pageFrom ? `p.${s.pageFrom}` : "";
-            const to = s.pageTo ? `p.${s.pageTo}` : "";
-            const range = from || to ? `${from}${to ? `〜${to}` : ""}` : "（未設定）";
-            return `${s.label}: ${range}`;
-          })
-          .join("<br>")
-      : "-";
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td><strong>${p.title}</strong><div class="dg-help">id: ${p.id}</div></td>
-      <td><div class="dg-help">${scopeText}</div></td>
-      <td>${richTextToHtml(p.note ?? "")}</td>
-      <td><button class="dg-btn dg-btn--subtle" type="button" data-open="${p.id}">開く</button></td>
-    `;
-    tbody.appendChild(tr);
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = "dg-tab";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", "false");
+    tab.dataset.tab = p.id;
+    tab.textContent = p.title;
+    tabList.appendChild(tab);
   }
 
-  mountEl.appendChild(table);
-}
+  const tabPanel = document.createElement("div");
+  tabPanel.className = "dg-tabs__panel";
+  tabPanel.id = "pdfTabPanel";
+  tabPanel.innerHTML = '<div class="dg-help">PDFを選択してください。</div>';
 
-function renderPdfQuestions(mountEl, pdfQuestions) {
-  mountEl.innerHTML = "";
+  tabs.appendChild(tabList);
+  tabs.appendChild(tabPanel);
+  mountEl.appendChild(tabs);
+}
 
 function isIpaPdfUrl(url) {
   return typeof url === "string" && url.includes("ipa.go.jp");
@@ -172,14 +154,68 @@ function openPdfUrlInNewTab(filePath, page = 1) {
   window.open(buildViewerUrl(filePath, page), "_blank");
 }
 
+function getScopeText(pdf) {
+  const scopes = Array.isArray(pdf.scopes) ? pdf.scopes : [];
+  if (!scopes.length) return "-";
+  return scopes
+    .map((s) => {
+      const from = s.pageFrom ? `p.${s.pageFrom}` : "";
+      const to = s.pageTo ? `p.${s.pageTo}` : "";
+      const range = from || to ? `${from}${to ? `〜${to}` : ""}` : "（未設定）";
+      return `${s.label}: ${range}`;
+    })
+    .join("<br>");
+}
+
+function renderPdfTabPanel(pdf) {
+  const panel = document.getElementById("pdfTabPanel");
+  if (!panel) return;
+  if (!pdf) {
+    panel.innerHTML = '<div class="dg-help">PDFを選択してください。</div>';
+    return;
+  }
+
+  const scopeText = getScopeText(pdf);
+  panel.innerHTML = `
+    <div class="dg-stack">
+      <div class="dg-row" style="flex-wrap:wrap; gap:12px; align-items:center">
+        <div>
+          <div class="dg-page-title" style="font-size:var(--dg-text-lg); margin:0">${richTextToHtml(pdf.title)}</div>
+          <div class="dg-help">id: ${richTextToHtml(pdf.id)}</div>
+        </div>
+        <button class="dg-btn" type="button" data-open="${pdf.id}">別タブで開く</button>
+      </div>
+      <div class="dg-help">${richTextToHtml(pdf.note ?? "")}</div>
+      <div class="dg-help">${scopeText}</div>
+    </div>
+  `;
+}
+
+function setActivePdfTab(pdfId) {
+  const tabs = el.pdfList?.querySelectorAll(".dg-tab") ?? [];
+  tabs.forEach((tab) => {
+    const isActive = tab.dataset.tab === pdfId;
+    tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    tab.classList.toggle("is-active", isActive);
+  });
+
+  const pdf = state.pdfList.find((item) => item.id === pdfId);
+  renderPdfTabPanel(pdf ?? null);
+}
+
+function renderPdfQuestions(mountEl, pdfQuestions) {
+  mountEl.innerHTML = "";
+
   if (!pdfQuestions.length) {
     mountEl.innerHTML = `<div class="dg-note">このPDFに紐づく問題がまだありません。</div>`;
-  openPdfUrlInNewTab(state.current.path, page);
+    return;
+  }
 
   const table = document.createElement("table");
   table.className = "dg-table";
 
-  openPdfUrlInNewTab(state.current.answerPath, 1);
+  table.innerHTML = `
+    <thead>
       <tr>
         <th>問</th>
         <th>参照</th>
@@ -196,20 +232,8 @@ function openPdfUrlInNewTab(filePath, page = 1) {
     const page = q.source?.page ?? "";
     const label = q.source?.label ?? q.id;
 
-  if (isIpaPdfUrl(state.current.path)) {
-    el.testPdfViewer.src = "about:blank";
-    el.testPdfNotice.hidden = false;
-    if (el.openTestPdfNewTab) {
-      el.openTestPdfNewTab.onclick = () => openPdfUrlInNewTab(state.current.path, jumpPage);
-    }
-    openPdfUrlInNewTab(state.current.path, jumpPage);
-  } else {
-    el.testPdfNotice.hidden = true;
-    el.testPdfViewer.src = buildViewerUrl(state.current.path, jumpPage);
-  }
-    // 4択問題の場合はラジオボタン、それ以外はテキスト入力
-    let answerHtml = '';
-    if (q.format === 'choice' && Array.isArray(q.choices)) {
+    let answerHtml = "";
+    if (q.format === "choice" && Array.isArray(q.choices)) {
       answerHtml = '<div class="dg-row" style="gap:8px">';
       for (const choice of q.choices) {
         answerHtml += `
@@ -219,7 +243,7 @@ function openPdfUrlInNewTab(filePath, page = 1) {
           </label>
         `;
       }
-      answerHtml += '</div>';
+      answerHtml += "</div>";
     } else {
       answerHtml = `<input class="dg-input" style="max-width:160px" data-answer-id="${q.id}" placeholder="例: A / 3 / 10" />`;
     }
@@ -230,25 +254,25 @@ function openPdfUrlInNewTab(filePath, page = 1) {
         <span class="dg-badge">p.${page}</span>
         <div class="dg-help">${richTextToHtml(q.stem ?? "")}</div>
       </td>
-    questionDiv.className = 'dg-test-question';
+      <td>
         ${answerHtml}
       </td>
     `;
 
     tbody.appendChild(tr);
-          <label class="dg-test-choice">
+  }
 
   mountEl.appendChild(table);
   renderMathIn(mountEl);
 }
 
 function exportPdfAnswersCsv(pdfId, questions, answers) {
-      choicesHtml = `<input class="dg-input dg-test-input" data-answer-id="${q.id}" placeholder="回答を入力" />`;
+  const rows = [["pdfId", "label", "page", "questionId", "answer"]];
   for (const q of questions) {
     rows.push([
       pdfId,
-      <div class="dg-test-question__meta">
-        <strong>${questionNum}</strong>
+      q.source?.label ?? "",
+      q.source?.page ?? "",
       q.id,
       answers[q.id] ?? "",
     ]);
@@ -344,9 +368,19 @@ function startTestMode() {
   // 画面サイズを計算して設定
   updateTestLayout();
   
-  // PDFをiframeに読み込む
+  // PDFをiframeに読み込む（IPAは埋め込み不可なので別タブへ）
   const jumpPage = Number(state.scope?.pageFrom || "1");
-  el.testPdfViewer.src = buildViewerUrl(state.current.path, jumpPage);
+  if (isIpaPdfUrl(state.current.path)) {
+    el.testPdfViewer.src = "about:blank";
+    el.testPdfNotice.hidden = false;
+    if (el.openTestPdfNewTab) {
+      el.openTestPdfNewTab.onclick = () => openPdfUrlInNewTab(state.current.path, jumpPage);
+    }
+    openPdfUrlInNewTab(state.current.path, jumpPage);
+  } else {
+    el.testPdfNotice.hidden = true;
+    el.testPdfViewer.src = buildViewerUrl(state.current.path, jumpPage);
+  }
   
   // 問題をシンプルに表示
   renderTestQuestions();
@@ -387,25 +421,25 @@ function renderTestQuestions() {
     const page = q.source?.page ?? '';
     
     const questionDiv = document.createElement('div');
-    questionDiv.style.cssText = 'background:white; padding:16px; margin-bottom:12px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1)';
+    questionDiv.className = 'dg-test-question';
     
     let choicesHtml = '';
     if (q.format === 'choice' && Array.isArray(q.choices)) {
       for (const choice of q.choices) {
         choicesHtml += `
-          <label style="display:block; padding:8px; margin:4px 0; background:#f8f9fa; border-radius:4px; cursor:pointer; transition:background 0.2s">
-            <input type="radio" name="answer-${q.id}" value="${choice}" data-answer-id="${q.id}" style="margin-right:8px" />
-            <span style="font-size:16px">${choice}</span>
+          <label class="dg-test-choice">
+            <input type="radio" name="answer-${q.id}" value="${choice}" data-answer-id="${q.id}" />
+            <span>${choice}</span>
           </label>
         `;
       }
     } else {
-      choicesHtml = `<input class="dg-input" style="width:100%" data-answer-id="${q.id}" placeholder="回答を入力" />`;
+      choicesHtml = `<input class="dg-input dg-test-input" data-answer-id="${q.id}" placeholder="回答を入力" />`;
     }
     
     questionDiv.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
-        <strong style="font-size:18px">${questionNum}</strong>
+      <div class="dg-test-question__meta">
+        <strong>${questionNum}</strong>
         <span class="dg-badge">p.${page}</span>
       </div>
       ${choicesHtml}
@@ -543,6 +577,7 @@ const el = {
   startTest: document.getElementById("startTest"),
   currentPdf: document.getElementById("currentPdf"),
   scope: document.getElementById("scope"),
+  answerSection: document.getElementById("answerSection"),
   scopeNote: document.getElementById("scopeNote"),
   pdfQuestions: document.getElementById("pdfQuestions"),
   grading: document.getElementById("grading"),
@@ -609,14 +644,17 @@ function buildPlaceholderQuestions(pdfId, scope, count) {
 
 function openPdfInNewTab(page) {
   if (!state.current) return;
-  const url = buildViewerUrl(state.current.path, page);
-  window.open(url, '_blank');
+  openPdfUrlInNewTab(state.current.path, page);
 }
 
 function openAnswerPdfInNewTab() {
   if (!state.current || !state.current.answerPath) return;
-  const url = buildViewerUrl(state.current.answerPath, 1);
-  window.open(url, '_blank');
+  openPdfUrlInNewTab(state.current.answerPath, 1);
+}
+
+function scrollToAnswerSection() {
+  if (!el.answerSection) return;
+  el.answerSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function setCurrentScope(scopeId) {
@@ -676,6 +714,7 @@ function setCurrentScope(scopeId) {
 function setCurrentPdf(pdf) {
   state.current = pdf;
   el.currentPdf.textContent = `${pdf.title} (${pdf.id})`;
+  setActivePdfTab(pdf.id);
 
   const scopes = normalizeScopes(pdf);
   el.scope.innerHTML = scopes.map((s) => `<option value="${s.id}">${s.label}</option>`).join("");
@@ -701,11 +740,21 @@ async function init() {
   renderPdfList(el.pdfList, state.pdfList);
 
   el.pdfList.addEventListener("click", (e) => {
+    const tab = e.target.closest("button[data-tab]");
+    if (tab) {
+      const pdf = state.pdfList.find((p) => p.id === tab.dataset.tab);
+      if (pdf) setCurrentPdf(pdf);
+      return;
+    }
+
     const btn = e.target.closest("button[data-open]");
     if (!btn) return;
     const id = btn.dataset.open;
     const pdf = state.pdfList.find((p) => p.id === id);
-    if (pdf) setCurrentPdf(pdf);
+    if (!pdf) return;
+    setCurrentPdf(pdf);
+    openPdfUrlInNewTab(pdf.path, pdf.scopes?.[0]?.pageFrom || 1);
+    scrollToAnswerSection();
   });
 }
 
